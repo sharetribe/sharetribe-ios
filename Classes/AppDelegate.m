@@ -86,6 +86,7 @@
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(newListingPosted:) name:kNotificationForPostingNewListing object:nil];
+    [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [notificationCenter addObserver:self selector:@selector(showLogin) name:kNotificationForUserDidLogOut object:nil];
     
     self.window.rootViewController = self.tabBarController;
@@ -94,6 +95,7 @@
     if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
         [self showLogin];
     } else {
+        [[SharetribeAPIClient sharedClient] getListings];
         // [[SharetribeAPIClient sharedClient] refreshCurrentUser];
     }
     
@@ -118,6 +120,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)showLogin
@@ -143,6 +146,11 @@
     } else {
         targetController.listings = [NSArray arrayWithObject:listing];
     }
+}
+
+- (void)userDidLogIn:(NSNotification *)notification
+{
+    [[SharetribeAPIClient sharedClient] getListings];
 }
 
 @end

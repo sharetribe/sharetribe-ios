@@ -11,7 +11,7 @@
 #import "Message.h"
 #import "MessageThread.h"
 #import "User.h"
-#import "NSDate+Extras.h"
+#import "NSDate+Sharetribe.h"
 #import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 

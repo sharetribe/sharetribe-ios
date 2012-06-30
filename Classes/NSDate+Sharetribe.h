@@ -1,5 +1,5 @@
 //
-//  NSDate+Extras.h
+//  NSDate+Sharetribe.h
 //  Kassi
 //
 //  Created by Janne Käki on 2/26/12.
@@ -12,7 +12,7 @@
 #define kOneHour   (60*60)
 #define kOneDay    (60*60*24)
 
-@interface NSDate (Extras)
+@interface NSDate (Sharetribe)
 
 - (NSString *)agestamp;
 

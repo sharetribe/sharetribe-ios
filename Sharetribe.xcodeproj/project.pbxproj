@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		481DEAB614F99F6200B2CA5D /* listings-data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 481DEAB514F99F6100B2CA5D /* listings-data.plist */; };
 		481DEABA14F9A11100B2CA5D /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAB914F9A11100B2CA5D /* Message.m */; };
 		481DEAC114F9B9D500B2CA5D /* ListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAC014F9B9D400B2CA5D /* ListingViewController.m */; };
-		481DEAC414F9CB2900B2CA5D /* NSDate+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAC314F9CB2800B2CA5D /* NSDate+Extras.m */; };
+		481DEAC414F9CB2900B2CA5D /* NSDate+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAC314F9CB2800B2CA5D /* NSDate+Sharetribe.m */; };
 		481DEAC714F9D0B300B2CA5D /* arrow-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 481DEAC514F9D0B300B2CA5D /* arrow-back.png */; };
 		481DEAC814F9D0B300B2CA5D /* arrow-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 481DEAC614F9D0B300B2CA5D /* arrow-back@2x.png */; };
 		48228DE014F030D3001DC893 /* icon-accommodation.png in Resources */ = {isa = PBXBuildFile; fileRef = 48228DD814F030D2001DC893 /* icon-accommodation.png */; };
@@ -116,6 +115,7 @@
 		48C9F6C21504185C001F785A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C9F6C11504185C001F785A /* User.m */; };
 		48C9F6C515042395001F785A /* MessagesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C9F6C415042393001F785A /* MessagesListViewController.m */; };
 		48D004E9159E91A30063E372 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D004E8159E91A30063E372 /* ProfileViewController.m */; };
+		48D004F1159ED2580063E372 /* NSDictionary+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */; };
 		48FF001D14FB046400AFB1AC /* MessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FF001C14FB046400AFB1AC /* MessagesView.m */; };
 		48FF002414FB106800AFB1AC /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002214FB106800AFB1AC /* default-avatar.png */; };
 		48FF002514FB106800AFB1AC /* default-avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002314FB106800AFB1AC /* default-avatar@2x.png */; };
@@ -127,13 +127,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		481DEAB514F99F6100B2CA5D /* listings-data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "listings-data.plist"; path = "Resources/listings-data.plist"; sourceTree = SOURCE_ROOT; };
 		481DEAB814F9A11000B2CA5D /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		481DEAB914F9A11100B2CA5D /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		481DEABF14F9B9D300B2CA5D /* ListingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingViewController.h; sourceTree = "<group>"; };
 		481DEAC014F9B9D400B2CA5D /* ListingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingViewController.m; sourceTree = "<group>"; };
-		481DEAC214F9CB2800B2CA5D /* NSDate+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extras.h"; sourceTree = "<group>"; };
-		481DEAC314F9CB2800B2CA5D /* NSDate+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extras.m"; sourceTree = "<group>"; };
+		481DEAC214F9CB2800B2CA5D /* NSDate+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Sharetribe.h"; sourceTree = "<group>"; };
+		481DEAC314F9CB2800B2CA5D /* NSDate+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Sharetribe.m"; sourceTree = "<group>"; };
 		481DEAC514F9D0B300B2CA5D /* arrow-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back.png"; sourceTree = "<group>"; };
 		481DEAC614F9D0B300B2CA5D /* arrow-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back@2x.png"; sourceTree = "<group>"; };
 		48228DD814F030D2001DC893 /* icon-accommodation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accommodation.png"; sourceTree = "<group>"; };
@@ -278,6 +277,8 @@
 		48C9F6C415042393001F785A /* MessagesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesListViewController.m; sourceTree = "<group>"; };
 		48D004E7159E91A20063E372 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		48D004E8159E91A30063E372 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		48D004EF159ED2570063E372 /* NSDictionary+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Sharetribe.h"; sourceTree = "<group>"; };
+		48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Sharetribe.m"; sourceTree = "<group>"; };
 		48FF001B14FB046400AFB1AC /* MessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesView.h; sourceTree = "<group>"; };
 		48FF001C14FB046400AFB1AC /* MessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesView.m; sourceTree = "<group>"; };
 		48FF002214FB106800AFB1AC /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
@@ -374,7 +375,6 @@
 				48482634159BFF2C00B15207 /* Sharetribe-Prefix.pch */,
 				487AA3AA14B7B608007C4CCF /* main.m */,
 				48894F5314DF5717009CD965 /* Localizable.strings */,
-				481DEAB514F99F6100B2CA5D /* listings-data.plist */,
 				48228DEE14F06CFE001DC893 /* Form Descriptions */,
 			);
 			name = "Supporting Files";
@@ -523,8 +523,10 @@
 				48C9F6BE15041694001F785A /* MessageThread.m */,
 				48C9F6C01504185B001F785A /* User.h */,
 				48C9F6C11504185C001F785A /* User.m */,
-				481DEAC214F9CB2800B2CA5D /* NSDate+Extras.h */,
-				481DEAC314F9CB2800B2CA5D /* NSDate+Extras.m */,
+				481DEAC214F9CB2800B2CA5D /* NSDate+Sharetribe.h */,
+				481DEAC314F9CB2800B2CA5D /* NSDate+Sharetribe.m */,
+				48D004EF159ED2570063E372 /* NSDictionary+Sharetribe.h */,
+				48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -692,7 +694,6 @@
 				486773BE14F1D85000D7EFD8 /* arrow-dashed.png in Resources */,
 				486773BF14F1D85000D7EFD8 /* arrow-dashed@2x.png in Resources */,
 				486773C414F1EEB900D7EFD8 /* ListingCell.xib in Resources */,
-				481DEAB614F99F6200B2CA5D /* listings-data.plist in Resources */,
 				481DEAC714F9D0B300B2CA5D /* arrow-back.png in Resources */,
 				481DEAC814F9D0B300B2CA5D /* arrow-back@2x.png in Resources */,
 				48FF002414FB106800AFB1AC /* default-avatar.png in Resources */,
@@ -735,7 +736,7 @@
 				4867740414F2F97200D7EFD8 /* LocationPickerViewController.m in Sources */,
 				481DEABA14F9A11100B2CA5D /* Message.m in Sources */,
 				481DEAC114F9B9D500B2CA5D /* ListingViewController.m in Sources */,
-				481DEAC414F9CB2900B2CA5D /* NSDate+Extras.m in Sources */,
+				481DEAC414F9CB2900B2CA5D /* NSDate+Sharetribe.m in Sources */,
 				48FF001D14FB046400AFB1AC /* MessagesView.m in Sources */,
 				48FF002814FB155300AFB1AC /* ListingAnnotationView.m in Sources */,
 				48C9F66815037847001F785A /* ButtonTabBarController.m in Sources */,
@@ -760,6 +761,7 @@
 				48482629159BF09F00B15207 /* LoginViewController.m in Sources */,
 				48482638159C105D00B15207 /* Community.m in Sources */,
 				48D004E9159E91A30063E372 /* ProfileViewController.m in Sources */,
+				48D004F1159ED2580063E372 /* NSDictionary+Sharetribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

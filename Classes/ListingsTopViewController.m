@@ -10,6 +10,14 @@
 
 #import "Listing.h"
 #import "ListingViewController.h"
+#import "SharetribeAPIClient.h"
+
+@interface ListingsTopViewController () {
+    
+    UIViewController *frontViewer;
+}
+
+@end
 
 @implementation ListingsTopViewController
 
@@ -25,8 +33,14 @@
 {
     if ((self = [super init])) {
         self.listingType = type;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveListings:) name:kNotificationForDidReceiveListings object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,6 +60,19 @@
 {
     listViewer.listings = newListings;
     mapViewer.listings = newListings;
+}
+
+- (void)didReceiveListings:(NSNotification *)notification
+{
+    NSArray *receivedListings = notification.object;
+    NSMutableArray *suitableListings = [NSMutableArray array];
+    for (Listing *listing in receivedListings) {
+        if (listing.type == self.listingType) {
+            [suitableListings addObject:listing];
+        }
+    }
+    self.listings = suitableListings;
+    // TODO what about paginaton, incremental fetching of new listings?
 }
 
 #pragma mark - View lifecycle
@@ -95,16 +122,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-map"] style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForFlippingView object:nil];
-    
-    // dummy data for demo purposes:
-    NSArray *allListings = [Listing listingsFromArrayOfDicts:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"listings-data" ofType:@"plist"]]];
-    NSMutableArray *relevantListings = [NSMutableArray array];
-    for (Listing *listing in allListings) {
-        if (listing.type == self.listingType) {
-            [relevantListings addObject:listing];
-        }
-    }
-    self.listings = relevantListings;
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -19,10 +19,7 @@
 - (void)viewController:(UIViewController *)viewer didSelectListing:(Listing *)listing;
 @end
 
-@interface ListingsTopViewController : UIViewController <UISearchBarDelegate, ListingSelectionDelegate> {
-
-    UIViewController *frontViewer;
-}
+@interface ListingsTopViewController : UIViewController <UISearchBarDelegate, ListingSelectionDelegate>
 
 @property (strong, nonatomic) ListingsListViewController *listViewer;
 @property (strong, nonatomic) ListingsMapViewController *mapViewer;

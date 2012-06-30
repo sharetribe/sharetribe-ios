@@ -1,14 +1,14 @@
 //
-//  NSDate+Extras.m
+//  NSDate+Sharetribe.m
 //  Kassi
 //
 //  Created by Janne Käki on 2/26/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "NSDate+Extras.h"
+#import "NSDate+Sharetribe.h"
 
-@implementation NSDate (Extras)
+@implementation NSDate (Sharetribe)
 
 - (NSString *)agestamp
 {

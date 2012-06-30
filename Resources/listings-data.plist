@@ -18,7 +18,7 @@ It is easy to take! </string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string></string>
+		<array></array>
 		<key>share_type</key>
 		<string>selling</string>
 		<key>imageURL</key>
@@ -59,7 +59,7 @@ Email: andy2163@163.com</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>flat-tv,hdmi,ps3</string>
+		<array></array>
 		<key>share_type</key>
 		<string>selling</string>
 		<key>imageURL</key>
@@ -90,7 +90,7 @@ Email: andy2163@163.com</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string></string>
+		<array></array>
 		<key>share_type</key>
 		<string>giving</string>
 		<key>imageURL</key>
@@ -121,7 +121,7 @@ Email: andy2163@163.com</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string></string>
+		<array></array>
 		<key>share_type</key>
 		<string>selling</string>
 		<key>imageURL</key>
@@ -156,7 +156,7 @@ krista.kauhaniemi(a)aalto.fi</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>fitness,puma,fitness shoes</string>
+		<array></array>
 		<key>share_type</key>
 		<string>selling</string>
 		<key>imageURL</key>
@@ -197,7 +197,7 @@ More information about technical specifications: http://www.apple.com/iphone/iph
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>apple,mobile phone,phone,iphone,cellphone</string>
+		<array></array>
 		<key>share_type</key>
 		<string>selling</string>
 		<key>imageURL</key>
@@ -237,7 +237,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>accommodation</string>
 		<key>tags</key>
-		<string>vuokra-asunto,annetaan,leppävaara,vuokralle,espoo,alivuokraus</string>
+		<array></array>
 		<key>share_type</key>
 		<string>renting out</string>
 		<key>imageURL</key>
@@ -268,7 +268,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>borrow,data,laptop,drive bay,hard disc,pocket,2.5″</string>
+		<array></array>
 		<key>share_type</key>
 		<string>borrowing</string>
 		<key>imageURL</key>
@@ -299,7 +299,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string></string>
+		<array></array>
 		<key>share_type</key>
 		<string>buying</string>
 		<key>address</key>
@@ -328,7 +328,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string></string>
+		<array></array>
 		<key>share_type</key>
 		<string>buying</string>
 		<key>address</key>
@@ -357,7 +357,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>favor</string>
 		<key>tags</key>
-		<string>sport,badminton,unisport</string>
+		<array></array>
 		<key>imageURL</key>
 		<string>http://aalto.kassi.eu/system/images/1686/medium/Badminton.gif</string>
 		<key>address</key>
@@ -388,7 +388,7 @@ Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>cheap,backpack,trip,pack,back,rucksack,trips,weekend </string>
+		<array></array>
 		<key>share_type</key>
 		<string>buying</string>
 		<key>imageURL</key>
@@ -443,7 +443,7 @@ Auttakee nyt mies pinteestä, jotta saan tuonkin kurssin pois roikkumasta! </str
 		<key>category</key>
 		<string>item</string>
 		<key>tags</key>
-		<string>kirjat,kemia,oppikirjat</string>
+		<array></array>
 		<key>share_type</key>
 		<string>buying</string>
 		<key>address</key>

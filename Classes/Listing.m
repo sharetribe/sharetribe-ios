@@ -10,6 +10,7 @@
 
 #import "Message.h"
 #import "User.h"
+#import "NSDictionary+Sharetribe.h"
 
 @implementation Listing
 
@@ -51,14 +52,14 @@
 {
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
     
-    [JSON setValue:title forKey:@"title"];
-    [JSON setValue:description forKey:@"description"];
-    [JSON setValue:[Listing stringFromCategory:category] forKey:@"category"];
-    [JSON setValue:[Listing stringFromType:type] forKey:@"listing_type"];
+    [JSON setObject:title forKey:@"title"];
+    [JSON setObject:description forKey:@"description"];
+    [JSON setObject:[Listing stringFromCategory:category] forKey:@"category"];
+    [JSON setObject:[Listing stringFromType:type] forKey:@"listing_type"];
     
     NSString *shareTypeForJSON = [shareType lowercaseString];
     shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    [JSON setValue:shareTypeForJSON forKey:@"share_type"];
+    [JSON setObject:shareTypeForJSON forKey:@"share_type"];
     
     return JSON;
 }
@@ -125,28 +126,28 @@
 {
     Listing *listing = [[Listing alloc] init];
     
-    listing.category = [Listing categoryFromString:[dict valueForKey:@"category"]];
-    listing.type = [Listing typeFromString:[dict valueForKey:@"listing_type"]];
-    listing.shareType = [dict valueForKey:@"share_type"];
+    listing.category = [Listing categoryFromString:[dict objectOrNilForKey:@"category"]];
+    listing.type = [Listing typeFromString:[dict objectOrNilForKey:@"listing_type"]];
+    listing.shareType = [[dict objectOrNilForKey:@"share_type"] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     
-    listing.listingId = [[dict valueForKey:@"id"] intValue];
-    listing.title = [dict valueForKey:@"title"];
-    listing.description = [dict valueForKey:@"description"];
-    listing.tags = [[dict valueForKey:@"tags"] componentsSeparatedByString:@","];
-    listing.address = [dict valueForKey:@"address"];
+    listing.listingId = [[dict objectOrNilForKey:@"id"] intValue];
+    listing.title = [dict objectOrNilForKey:@"title"];
+    listing.description = [dict objectOrNilForKey:@"description"];
+    listing.tags = [dict objectOrNilForKey:@"tags"];
+    listing.address = [dict objectOrNilForKey:@"address"];
     
-    NSDictionary *coordinates = [dict valueForKey:@"coordinates"];
+    NSDictionary *coordinates = [dict objectOrNilForKey:@"coordinates"];
     if (coordinates != nil) {
-        listing.location = [[CLLocation alloc] initWithLatitude:[[coordinates valueForKey:@"latitude"] doubleValue] longitude:[[coordinates valueForKey:@"longitude"] doubleValue]];
+        listing.location = [[CLLocation alloc] initWithLatitude:[[coordinates objectOrNilForKey:@"latitude"] doubleValue] longitude:[[coordinates objectOrNilForKey:@"longitude"] doubleValue]];
     }
         
-    listing.author = [User userFromDict:[dict valueForKey:@"author"]];
+    listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"dd.MM.yyyy HH:mm";
-    listing.date = [formatter dateFromString:[dict valueForKey:@"createdAt"]];
+    listing.date = [formatter dateFromString:[dict objectOrNilForKey:@"createdAt"]];
     
-    listing.comments = [Message messagesFromArrayOfDicts:[dict valueForKey:@"comments"]];
+    listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
     
     return listing;
 }

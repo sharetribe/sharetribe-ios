@@ -9,7 +9,7 @@
 #import "ListingCell.h"
 
 #import "User.h"
-#import "NSDate+Extras.h"
+#import "NSDate+Sharetribe.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation ListingCell
