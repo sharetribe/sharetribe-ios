@@ -8,11 +8,15 @@
 
 #import "CreateListingViewController.h"
 
+#import "SharetribeAPIClient.h"
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface CreateListingViewController ()
 - (void)dismissDatePicker;
+@end
+
+@interface CustomTextField : UITextField
 @end
 
 @implementation CreateListingViewController
@@ -107,7 +111,7 @@
         [table setContentOffset:CGPointZero animated:NO];
         
         [header setListingType:listing.type];
-        [header setListingTarget:kNoListingTarget];
+        [header setListingCategory:kNoListingCategory];
     }
         
     self.title = NSLocalizedString(@"Tabs.NewListing", @"");
@@ -142,8 +146,8 @@
 - (void)reloadFormItems
 {
     NSString *typeName = [Listing stringFromType:listing.type];
-    NSString *targetName = [Listing stringFromTarget:listing.target];
-    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", targetName, typeName];
+    NSString *categoryName = [Listing stringFromCategory:listing.category];
+    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", categoryName, typeName];
     self.formItems = [FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]];
     
     [table reloadData];
@@ -233,7 +237,7 @@
         
         if (formItem.type == FormItemTypeTextField) {
             
-            UITextField *textField = [[UITextField alloc] init];
+            UITextField *textField = [[CustomTextField alloc] init];
             textField.font = [UIFont systemFontOfSize:15];
             textField.tag = kCellTextFieldTag;
             textField.backgroundColor = kKassiLightBrownColor;
@@ -659,9 +663,9 @@
     [self reloadFormItems];
 }
 
-- (void)listingTargetSelected:(ListingTarget)target
+- (void)listingCategorySelected:(ListingCategory)category
 {
-    listing.target = target;
+    listing.category = category;
     [self reloadFormItems];
 }
 
@@ -752,16 +756,16 @@
     listing.author = [User currentUser];
     listing.date = [NSDate date];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForPostingNewListing object:listing];
-    
-    self.listing = nil;
+    [[SharetribeAPIClient sharedClient] postNewListing:listing];
+        
+    // self.listing = nil;
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender
 {
-    if (listing.title != nil || listing.text != nil || listing.image != nil) {
+    if (listing.title != nil || listing.description != nil || listing.image != nil) {
         
         UIAlertView *alertViewForCanceling = [[UIAlertView alloc] initWithTitle:@"Cancel" message:@"Are you sure you want to cancel?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         alertViewForCanceling.tag = kAlertViewTagForCanceling;
@@ -812,7 +816,7 @@
 
 @end
 
-@implementation UITextField (Insetful)
+@implementation CustomTextField
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {

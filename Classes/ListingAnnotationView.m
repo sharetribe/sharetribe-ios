@@ -33,7 +33,7 @@
             [self addSubview:iconView];
         }
                 
-        iconView.image = [Listing iconForTarget:[(Listing *) annotation target]];
+        iconView.image = [Listing iconForCategory:[(Listing *) annotation category]];
     }
 }
 

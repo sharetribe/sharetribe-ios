@@ -44,12 +44,12 @@
 {
     listing = newListing;
     
-    if (listing.transactionType != nil) {
-        titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.transactionType.capitalizedString, listing.title];
+    if (listing.shareType != nil) {
+        titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.shareType.capitalizedString, listing.title];
     } else {
         titleLabel.text = listing.title;
     }
-    subtitleLabel.text = [listing.text stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
+    subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
     usernameLabel.text = listing.author.name;
     timeLabel.text = [listing.date agestamp];
     
@@ -57,7 +57,7 @@
         imageView.image = listing.image;
         imageView.contentMode = UIViewContentModeScaleToFill;
     } else {
-        imageView.image = [Listing iconForTarget:listing.target];
+        imageView.image = [Listing iconForCategory:listing.category];
         imageView.contentMode = UIViewContentModeCenter;
     }
     

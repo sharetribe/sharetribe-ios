@@ -37,8 +37,8 @@
 		48482638159C105D00B15207 /* Community.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482637159C105C00B15207 /* Community.m */; };
 		486773AC14F1AC9300D7EFD8 /* FormItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 486773AB14F1AC9300D7EFD8 /* FormItem.m */; };
 		486773AF14F1BE7400D7EFD8 /* form-item-offer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773AE14F1BE7400D7EFD8 /* form-item-offer.plist */; };
-		486773B114F1BF8800D7EFD8 /* form-service-request.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B014F1BF8800D7EFD8 /* form-service-request.plist */; };
-		486773B314F1BFD200D7EFD8 /* form-service-offer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B214F1BFD200D7EFD8 /* form-service-offer.plist */; };
+		486773B114F1BF8800D7EFD8 /* form-favor-request.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B014F1BF8800D7EFD8 /* form-favor-request.plist */; };
+		486773B314F1BFD200D7EFD8 /* form-favor-offer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B214F1BFD200D7EFD8 /* form-favor-offer.plist */; };
 		486773B614F1C03F00D7EFD8 /* form-accommodation-offer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B414F1C03F00D7EFD8 /* form-accommodation-offer.plist */; };
 		486773B714F1C03F00D7EFD8 /* form-accommodation-request.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B514F1C03F00D7EFD8 /* form-accommodation-request.plist */; };
 		486773BA14F1C18200D7EFD8 /* form-ride-offer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486773B814F1C18200D7EFD8 /* form-ride-offer.plist */; };
@@ -165,8 +165,8 @@
 		486773AA14F1AC9300D7EFD8 /* FormItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItem.h; sourceTree = "<group>"; };
 		486773AB14F1AC9300D7EFD8 /* FormItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItem.m; sourceTree = "<group>"; };
 		486773AE14F1BE7400D7EFD8 /* form-item-offer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-item-offer.plist"; path = "Resources/form-item-offer.plist"; sourceTree = SOURCE_ROOT; };
-		486773B014F1BF8800D7EFD8 /* form-service-request.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-service-request.plist"; path = "Resources/form-service-request.plist"; sourceTree = SOURCE_ROOT; };
-		486773B214F1BFD200D7EFD8 /* form-service-offer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-service-offer.plist"; path = "Resources/form-service-offer.plist"; sourceTree = SOURCE_ROOT; };
+		486773B014F1BF8800D7EFD8 /* form-favor-request.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-favor-request.plist"; path = "Resources/form-favor-request.plist"; sourceTree = SOURCE_ROOT; };
+		486773B214F1BFD200D7EFD8 /* form-favor-offer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-favor-offer.plist"; path = "Resources/form-favor-offer.plist"; sourceTree = SOURCE_ROOT; };
 		486773B414F1C03F00D7EFD8 /* form-accommodation-offer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-accommodation-offer.plist"; path = "Resources/form-accommodation-offer.plist"; sourceTree = SOURCE_ROOT; };
 		486773B514F1C03F00D7EFD8 /* form-accommodation-request.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-accommodation-request.plist"; path = "Resources/form-accommodation-request.plist"; sourceTree = SOURCE_ROOT; };
 		486773B814F1C18200D7EFD8 /* form-ride-offer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "form-ride-offer.plist"; path = "Resources/form-ride-offer.plist"; sourceTree = SOURCE_ROOT; };
@@ -318,8 +318,8 @@
 				48228DEF14F06D37001DC893 /* form-item-request.plist */,
 				486773B814F1C18200D7EFD8 /* form-ride-offer.plist */,
 				486773B914F1C18200D7EFD8 /* form-ride-request.plist */,
-				486773B214F1BFD200D7EFD8 /* form-service-offer.plist */,
-				486773B014F1BF8800D7EFD8 /* form-service-request.plist */,
+				486773B214F1BFD200D7EFD8 /* form-favor-offer.plist */,
+				486773B014F1BF8800D7EFD8 /* form-favor-request.plist */,
 			);
 			name = "Form Descriptions";
 			sourceTree = "<group>";
@@ -683,8 +683,8 @@
 				48228DFF14F18EF6001DC893 /* pointing-corner-brown.png in Resources */,
 				48228E0014F18EF6001DC893 /* pointing-corner-brown@2x.png in Resources */,
 				486773AF14F1BE7400D7EFD8 /* form-item-offer.plist in Resources */,
-				486773B114F1BF8800D7EFD8 /* form-service-request.plist in Resources */,
-				486773B314F1BFD200D7EFD8 /* form-service-offer.plist in Resources */,
+				486773B114F1BF8800D7EFD8 /* form-favor-request.plist in Resources */,
+				486773B314F1BFD200D7EFD8 /* form-favor-offer.plist in Resources */,
 				486773B614F1C03F00D7EFD8 /* form-accommodation-offer.plist in Resources */,
 				486773B714F1C03F00D7EFD8 /* form-accommodation-request.plist in Resources */,
 				486773BA14F1C18200D7EFD8 /* form-ride-offer.plist in Resources */,

@@ -14,7 +14,7 @@
 		<key>title</key>
 		<string>Offer type</string>
 		<key>mapsTo</key>
-		<string>transactionType</string>
+		<string>shareType</string>
         <key>mandatory</key>
         <true/>
         <key>whatIsThis</key>
@@ -36,7 +36,7 @@
 		<key>title</key>
 		<string>Detailed description</string>
 		<key>mapsTo</key>
-		<string>text</string>
+		<string>description</string>
 	</dict>
     <dict>
 		<key>type</key>

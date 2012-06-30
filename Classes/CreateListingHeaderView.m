@@ -24,19 +24,19 @@
 @synthesize listingTypeButtonForRequests;
 @synthesize listingTypeButtonForOffers;
 
-@synthesize listingTargetButtonForItems;
-@synthesize listingTargetButtonForServices;
-@synthesize listingTargetButtonForRides;
-@synthesize listingTargetButtonForAccommodation;
+@synthesize listingCategoryButtonForItems;
+@synthesize listingCategoryButtonForFavors;
+@synthesize listingCategoryButtonForRides;
+@synthesize listingCategoryButtonForAccommodation;
 
-@synthesize listingTargetPointerView;
-@synthesize listingTargetIntroLabel;
-@synthesize listingTargetTypeLabel;
-@synthesize listingTargetBackgroundView;
+@synthesize listingCategoryPointerView;
+@synthesize listingCategoryIntroLabel;
+@synthesize listingCategoryTypeLabel;
+@synthesize listingCategoryBackgroundView;
 
 @synthesize formBackgroundView;
 
-@synthesize listingTargetButtons;
+@synthesize listingCategoryButtons;
 
 @synthesize delegate;
 
@@ -55,7 +55,7 @@
     
     self.backgroundColor = [UIColor clearColor];
     formBackgroundView.backgroundColor = kKassiBrownColor;
-    listingTargetBackgroundView.backgroundColor = kKassiLightBrownColor;
+    listingCategoryBackgroundView.backgroundColor = kKassiLightBrownColor;
     
     UIView *topBackgroundView = [[UIView alloc] init];
     topBackgroundView.backgroundColor = kKassiLightBrownColor;
@@ -64,10 +64,10 @@
     [self addSubview:topBackgroundView];
     [self sendSubviewToBack:topBackgroundView];
     
-    listingTargetButtonForItems.tag = ListingTargetItem;
-    listingTargetButtonForServices.tag = ListingTargetService;
-    listingTargetButtonForRides.tag = ListingTargetRide;
-    listingTargetButtonForAccommodation.tag = ListingTargetAccommodation;
+    listingCategoryButtonForItems.tag = ListingCategoryItem;
+    listingCategoryButtonForFavors.tag = ListingCategoryFavor;
+    listingCategoryButtonForRides.tag = ListingCategoryRide;
+    listingCategoryButtonForAccommodation.tag = ListingCategoryAccommodation;
     
     listingTypeTabForRequests.layer.cornerRadius = 7;
     listingTypeTabForRequests.layer.borderColor = kKassiBrownColor.CGColor;
@@ -75,9 +75,9 @@
     listingTypeTabForOffers.layer.cornerRadius = 7;
     listingTypeTabForOffers.layer.borderColor = kKassiBrownColor.CGColor;
     
-    self.listingTargetButtons = [NSArray arrayWithObjects:listingTargetButtonForItems, listingTargetButtonForServices, listingTargetButtonForRides, listingTargetButtonForAccommodation, nil];
+    self.listingCategoryButtons = [NSArray arrayWithObjects:listingCategoryButtonForItems, listingCategoryButtonForFavors, listingCategoryButtonForRides, listingCategoryButtonForAccommodation, nil];
     
-    for (UIButton *button in listingTargetButtons) {
+    for (UIButton *button in listingCategoryButtons) {
         [button setImage:[button imageForState:UIControlStateNormal] forState:UIControlStateHighlighted];
     }
 }
@@ -97,11 +97,11 @@
     [delegate listingTypeSelected:type];
 }
 
-- (IBAction)listingTargetSelected:(UIButton *)sender
+- (IBAction)listingCategorySelected:(UIButton *)sender
 {       
-    [self setListingTarget:sender.tag];
+    [self setListingCategory:sender.tag];
     
-    [delegate listingTargetSelected:target];
+    [delegate listingCategorySelected:category];
 }
 
 - (void)setListingType:(ListingType)newType
@@ -110,38 +110,38 @@
     [self refreshVisuals];
 }
 
-- (void)setListingTarget:(ListingTarget)newTarget
+- (void)setListingCategory:(ListingCategory)newCategory
 {
-    target = newTarget;
+    category = newCategory;
     [self refreshVisuals];
 }
 
 - (void)refreshVisuals
 {
-    if (target == kNoListingTarget) {
-        listingTargetPointerView.hidden = YES;
-        listingTargetTypeLabel.hidden = YES;
+    if (category == kNoListingCategory) {
+        listingCategoryPointerView.hidden = YES;
+        listingCategoryTypeLabel.hidden = YES;
         self.height = 416;
     } else {
-        listingTargetPointerView.hidden = NO;
-        listingTargetTypeLabel.hidden = NO;
+        listingCategoryPointerView.hidden = NO;
+        listingCategoryTypeLabel.hidden = NO;
         self.height = 250;
     }
     
-    if (target == ListingTargetItem) {
-        listingTargetTypeLabel.text = @"an item";
-    } else if (target == ListingTargetService) {
-        listingTargetTypeLabel.text = @"a service";
-    } else if (target == ListingTargetRide) {
-        listingTargetTypeLabel.text = @"a ride";
-    } else if (target == ListingTargetAccommodation) {
-        listingTargetTypeLabel.text = @"accommodation";
-    } else if (target == kNoListingTarget) {
-        listingTargetTypeLabel.text = nil;
+    if (category == ListingCategoryItem) {
+        listingCategoryTypeLabel.text = @"an item";
+    } else if (category == ListingCategoryFavor) {
+        listingCategoryTypeLabel.text = @"a favor";
+    } else if (category == ListingCategoryRide) {
+        listingCategoryTypeLabel.text = @"a ride";
+    } else if (category == ListingCategoryAccommodation) {
+        listingCategoryTypeLabel.text = @"accommodation";
+    } else if (category == kNoListingCategory) {
+        listingCategoryTypeLabel.text = nil;
     }
     
-    for (ButtonWithBackgroundView *button in listingTargetButtons) {
-        if (button.tag == target) {
+    for (ButtonWithBackgroundView *button in listingCategoryButtons) {
+        if (button.tag == category) {
             
             button.backgroundView.backgroundColor = kKassiLightBrownColor;
             button.backgroundView.layer.borderColor = [UIColor orangeColor].CGColor;
@@ -150,7 +150,7 @@
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.1];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-            listingTargetPointerView.x = button.x + button.width/2 - listingTargetPointerView.width/2;
+            listingCategoryPointerView.x = button.x + button.width/2 - listingCategoryPointerView.width/2;
             [UIView commitAnimations];
             
         } else {
@@ -162,37 +162,37 @@
     }
     
     if (type == ListingTypeRequest) {
-        listingTargetIntroLabel.text = @"I need ";
+        listingCategoryIntroLabel.text = @"I need ";
         listingTypeTabForRequests.backgroundColor = kKassiBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 0;
         listingTypeTabForOffers.backgroundColor = kKassiLightishBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 1;
     } else {
-        listingTargetIntroLabel.text = @"I want to offer ";
+        listingCategoryIntroLabel.text = @"I want to offer ";
         listingTypeTabForRequests.backgroundColor = kKassiLightishBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 1;
         listingTypeTabForOffers.backgroundColor = kKassiBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 0;
     }
     
-    if (target == kNoListingTarget) {
-        listingTargetIntroLabel.text = @"Item, service, ride, or accommodation?";
-        listingTargetIntroLabel.textColor = kKassiDarkBrownColor;
-        listingTargetBackgroundView.backgroundColor = kKassiLightishBrownColor;
+    if (category == kNoListingCategory) {
+        listingCategoryIntroLabel.text = @"Item, favor, ride, or accommodation?";
+        listingCategoryIntroLabel.textColor = kKassiDarkBrownColor;
+        listingCategoryBackgroundView.backgroundColor = kKassiLightishBrownColor;
     } else {
-        listingTargetIntroLabel.textColor = [UIColor blackColor];
-        listingTargetBackgroundView.backgroundColor = kKassiLightBrownColor;
+        listingCategoryIntroLabel.textColor = [UIColor blackColor];
+        listingCategoryBackgroundView.backgroundColor = kKassiLightBrownColor;
     }
     
-    listingTargetIntroLabel.width = [listingTargetIntroLabel.text sizeWithFont:listingTargetIntroLabel.font].width;
-    if (listingTargetIntroLabel.width > 280) {
-        listingTargetIntroLabel.width = 280;
+    listingCategoryIntroLabel.width = [listingCategoryIntroLabel.text sizeWithFont:listingCategoryIntroLabel.font].width;
+    if (listingCategoryIntroLabel.width > 280) {
+        listingCategoryIntroLabel.width = 280;
     }
-    listingTargetTypeLabel.width = [listingTargetTypeLabel.text sizeWithFont:listingTargetTypeLabel.font].width;
+    listingCategoryTypeLabel.width = [listingCategoryTypeLabel.text sizeWithFont:listingCategoryTypeLabel.font].width;
     
-    int totalLabelWidth = listingTargetIntroLabel.width + listingTargetTypeLabel.width;
-    listingTargetIntroLabel.x = (320 - totalLabelWidth)/2;
-    listingTargetTypeLabel.x = listingTargetIntroLabel.x + listingTargetIntroLabel.width;
+    int totalLabelWidth = listingCategoryIntroLabel.width + listingCategoryTypeLabel.width;
+    listingCategoryIntroLabel.x = (320 - totalLabelWidth)/2;
+    listingCategoryTypeLabel.x = listingCategoryIntroLabel.x + listingCategoryIntroLabel.width;
 }
 
 @end

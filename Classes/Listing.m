@@ -15,11 +15,13 @@
 
 @synthesize listingId;
 @synthesize title;
-@synthesize text;
+@synthesize description;
+
+@synthesize category;
 @synthesize type;
-@synthesize target;
+@synthesize shareType;
+
 @synthesize tags;
-@synthesize transactionType;
 @synthesize thumbnailImage;
 @synthesize image;
 @synthesize address;
@@ -42,7 +44,23 @@
 
 - (NSString *)subtitle
 {
-    return text;
+    return description;
+}
+
+- (NSDictionary *)asJSON
+{
+    NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
+    
+    [JSON setValue:title forKey:@"title"];
+    [JSON setValue:description forKey:@"description"];
+    [JSON setValue:[Listing stringFromCategory:category] forKey:@"category"];
+    [JSON setValue:[Listing stringFromType:type] forKey:@"listing_type"];
+    
+    NSString *shareTypeForJSON = [shareType lowercaseString];
+    shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    [JSON setValue:shareTypeForJSON forKey:@"share_type"];
+    
+    return JSON;
 }
 
 + (NSString *)stringFromType:(ListingType)type
@@ -67,39 +85,39 @@
     return kNoListingType;
 }
 
-+ (NSString *)stringFromTarget:(ListingTarget)target
++ (NSString *)stringFromCategory:(ListingCategory)category
 {
-    switch (target) {
-        case ListingTargetItem:
+    switch (category) {
+        case ListingCategoryItem:
             return @"item";
-        case ListingTargetService:
-            return @"service";
-        case ListingTargetRide:
+        case ListingCategoryFavor:
+            return @"favor";
+        case ListingCategoryRide:
             return @"ride";
-        case ListingTargetAccommodation:
+        case ListingCategoryAccommodation:
             return @"accommodation";
         default:
             return nil;
     }
 }
 
-+ (ListingTarget)targetFromString:(NSString *)string
++ (ListingCategory)categoryFromString:(NSString *)string
 {
     if ([string isEqualToString:@"item"]) {
-        return ListingTargetItem;
-    } else if ([string isEqualToString:@"service"]) {
-        return ListingTargetService;
+        return ListingCategoryItem;
+    } else if ([string isEqualToString:@"favor"]) {
+        return ListingCategoryFavor;
     } else if ([string isEqualToString:@"ride"]) {
-        return ListingTargetRide;
+        return ListingCategoryRide;
     } else if ([string isEqualToString:@"accommodation"]) {
-        return ListingTargetAccommodation;
+        return ListingCategoryAccommodation;
     }
-    return kNoListingTarget;
+    return kNoListingCategory;
 }
 
-+ (UIImage *)iconForTarget:(ListingTarget)target
++ (UIImage *)iconForCategory:(ListingCategory)target
 {
-    NSString *targetName = [self stringFromTarget:target];
+    NSString *targetName = [self stringFromCategory:target];
     return [UIImage imageNamed:[NSString stringWithFormat:@"icon-%@", targetName]];
 }
 
@@ -107,13 +125,13 @@
 {
     Listing *listing = [[Listing alloc] init];
     
-    listing.type = [Listing typeFromString:[dict valueForKey:@"type"]];
-    listing.target = [Listing targetFromString:[dict valueForKey:@"target"]];
-    listing.transactionType = [dict valueForKey:@"transactionType"];
+    listing.category = [Listing categoryFromString:[dict valueForKey:@"category"]];
+    listing.type = [Listing typeFromString:[dict valueForKey:@"listing_type"]];
+    listing.shareType = [dict valueForKey:@"share_type"];
     
     listing.listingId = [[dict valueForKey:@"id"] intValue];
     listing.title = [dict valueForKey:@"title"];
-    listing.text = [dict valueForKey:@"description"];
+    listing.description = [dict valueForKey:@"description"];
     listing.tags = [[dict valueForKey:@"tags"] componentsSeparatedByString:@","];
     listing.address = [dict valueForKey:@"address"];
     

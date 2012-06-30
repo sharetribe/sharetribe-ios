@@ -113,8 +113,8 @@
     [super viewWillAppear:animated];
     
     imageView.image = listing.image;
-    titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.transactionType.capitalizedString, listing.title];
-    textLabel.text = listing.text;
+    titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.shareType.capitalizedString, listing.title];
+    textLabel.text = listing.description;
     commentsView.messages = listing.comments;
     
     if (imageView.image != nil) {

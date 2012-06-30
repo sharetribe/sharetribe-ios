@@ -40,7 +40,7 @@
 		<key>title</key>
 		<string>Detailed description</string>
 		<key>mapsTo</key>
-		<string>text</string>
+		<string>description</string>
 	</dict>
     <dict>
 		<key>type</key>

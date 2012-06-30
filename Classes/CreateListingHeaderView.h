@@ -11,13 +11,13 @@
 
 @protocol ListingTypeSelectionDelegate <NSObject>
 - (void)listingTypeSelected:(ListingType)type;
-- (void)listingTargetSelected:(ListingTarget)target;
+- (void)listingCategorySelected:(ListingCategory)category;
 @end
 
 @interface CreateListingHeaderView : UIView {
 
     ListingType type;
-    ListingTarget target;
+    ListingCategory category;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *listingTypeLabelForRequests;
@@ -27,29 +27,29 @@
 @property (strong, nonatomic) IBOutlet UIView *listingTypeButtonForRequests;
 @property (strong, nonatomic) IBOutlet UIView *listingTypeButtonForOffers;
 
-@property (strong, nonatomic) IBOutlet UIButton *listingTargetButtonForItems;
-@property (strong, nonatomic) IBOutlet UIButton *listingTargetButtonForServices;
-@property (strong, nonatomic) IBOutlet UIButton *listingTargetButtonForRides;
-@property (strong, nonatomic) IBOutlet UIButton *listingTargetButtonForAccommodation;
+@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForItems;
+@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForFavors;
+@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForRides;
+@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForAccommodation;
 
-@property (strong, nonatomic) IBOutlet UIView *listingTargetPointerView;
-@property (strong, nonatomic) IBOutlet UILabel *listingTargetIntroLabel;
-@property (strong, nonatomic) IBOutlet UILabel *listingTargetTypeLabel;
-@property (strong, nonatomic) IBOutlet UIView *listingTargetBackgroundView;
+@property (strong, nonatomic) IBOutlet UIView *listingCategoryPointerView;
+@property (strong, nonatomic) IBOutlet UILabel *listingCategoryIntroLabel;
+@property (strong, nonatomic) IBOutlet UILabel *listingCategoryTypeLabel;
+@property (strong, nonatomic) IBOutlet UIView *listingCategoryBackgroundView;
 
 @property (strong, nonatomic) IBOutlet UIView *formBackgroundView;
 
-@property (strong, nonatomic) NSArray *listingTargetButtons;
+@property (strong, nonatomic) NSArray *listingCategoryButtons;
 
 @property (unsafe_unretained, nonatomic) id<ListingTypeSelectionDelegate> delegate;
 
 + (CreateListingHeaderView *)instance;
 
 - (void)setListingType:(ListingType)newType;
-- (void)setListingTarget:(ListingTarget)newTarget;
+- (void)setListingCategory:(ListingCategory)newCategory;
 
 - (IBAction)listingTypeSelected:(UIButton *)sender;
-- (IBAction)listingTargetSelected:(UIButton *)sender;
+- (IBAction)listingCategorySelected:(UIButton *)sender;
 
 @end
 

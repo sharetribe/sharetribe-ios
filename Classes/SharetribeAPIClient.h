@@ -18,6 +18,8 @@
 #define kNotificationForLoginConnectionDidFail     @"login connection did fail"
 #define kNotificationForLoginAuthDidFail           @"login auth did fail"
 
+@class Listing;
+
 @interface SharetribeAPIClient : AFHTTPClient
 
 CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient);
@@ -29,5 +31,10 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 
 - (void)getListings;
 - (void)getListingWithId:(NSInteger)listingId;
+
+- (void)postNewListing:(Listing *)listing;
+
+- (void)getUserWithId:(NSString *)userId;
+- (void)refreshCurrentUser;
 
 @end

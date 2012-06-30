@@ -90,6 +90,8 @@
     
     if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
         [self showLogin];
+    } else {
+        [[SharetribeAPIClient sharedClient] refreshCurrentUser];
     }
     
     return YES;

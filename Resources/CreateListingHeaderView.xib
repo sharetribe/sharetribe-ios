@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1280</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<int key="IBDocument.SystemTarget">1296</int>
+		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">933</string>
+			<string key="NS.object.0">1181</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUIButton</string>
@@ -66,7 +66,6 @@
 								</object>
 								<string key="IBUIShadowOffset">{0, 0}</string>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUINumberOfLines">2</int>
 								<int key="IBUITextAlignment">1</int>
@@ -80,6 +79,7 @@
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
 								</object>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
 						<string key="NSFrame">{{10, 11}, {145, 62}}</string>
@@ -120,13 +120,13 @@
 								<reference key="IBUIShadowColor" ref="730046165"/>
 								<string key="IBUIShadowOffset">{0, 0}</string>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUINumberOfLines">2</int>
 								<int key="IBUITextAlignment">1</int>
 								<int key="IBUILineBreakMode">0</int>
 								<reference key="IBUIFontDescription" ref="605154625"/>
 								<reference key="IBUIFont" ref="289495396"/>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
 						<string key="NSFrame">{{165, 11}, {145, 62}}</string>
@@ -411,10 +411,10 @@
 								<reference key="IBUITextColor" ref="449206928"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">10</float>
 								<reference key="IBUIFontDescription" ref="605154625"/>
 								<reference key="IBUIFont" ref="289495396"/>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUIImageView" id="427250014">
 								<reference key="NSNextResponder" ref="66780619"/>
@@ -461,62 +461,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetPointerView</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="427250014"/>
-					</object>
-					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetTypeLabel</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="237820139"/>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetIntroLabel</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="471610773"/>
-					</object>
-					<int key="connectionID">27</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetButtonForItems</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="939813902"/>
-					</object>
-					<int key="connectionID">12</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetButtonForAccommodation</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="200610080"/>
-					</object>
-					<int key="connectionID">15</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetButtonForRides</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="64661201"/>
-					</object>
-					<int key="connectionID">14</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetButtonForServices</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="315933275"/>
-					</object>
-					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">formBackgroundView</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="66780619"/>
@@ -530,14 +474,6 @@
 						<reference key="destination" ref="382366673"/>
 					</object>
 					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingTargetBackgroundView</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="529257802"/>
-					</object>
-					<int key="connectionID">61</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -580,13 +516,68 @@
 					<int key="connectionID">70</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">listingTargetSelected:</string>
-						<reference key="source" ref="939813902"/>
-						<reference key="destination" ref="191373211"/>
-						<int key="IBEventType">7</int>
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryButtonForItems</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="939813902"/>
 					</object>
-					<int key="connectionID">31</int>
+					<int key="connectionID">74</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryButtonForFavors</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="315933275"/>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryButtonForRides</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="64661201"/>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryButtonForAccommodation</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="200610080"/>
+					</object>
+					<int key="connectionID">79</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryBackgroundView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="529257802"/>
+					</object>
+					<int key="connectionID">80</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryPointerView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="427250014"/>
+					</object>
+					<int key="connectionID">81</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryIntroLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="471610773"/>
+					</object>
+					<int key="connectionID">82</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryTypeLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="237820139"/>
+					</object>
+					<int key="connectionID">83</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -595,6 +586,15 @@
 						<reference key="destination" ref="122646272"/>
 					</object>
 					<int key="connectionID">40</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">listingCategorySelected:</string>
+						<reference key="source" ref="939813902"/>
+						<reference key="destination" ref="191373211"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">71</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -606,12 +606,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">listingTargetSelected:</string>
+						<string key="label">listingCategorySelected:</string>
 						<reference key="source" ref="315933275"/>
 						<reference key="destination" ref="191373211"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">32</int>
+					<int key="connectionID">72</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -623,12 +623,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">listingTargetSelected:</string>
+						<string key="label">listingCategorySelected:</string>
 						<reference key="source" ref="64661201"/>
 						<reference key="destination" ref="191373211"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">33</int>
+					<int key="connectionID">77</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -640,12 +640,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">listingTargetSelected:</string>
+						<string key="label">listingCategorySelected:</string>
 						<reference key="source" ref="200610080"/>
 						<reference key="destination" ref="191373211"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">34</int>
+					<int key="connectionID">78</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -848,7 +848,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">70</int>
+			<int key="maxID">83</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -875,12 +875,12 @@
 					<string key="className">CreateListingHeaderView</string>
 					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="listingTargetSelected:">UIButton</string>
+						<string key="listingCategorySelected:">UIButton</string>
 						<string key="listingTypeSelected:">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="listingTargetSelected:">
-							<string key="name">listingTargetSelected:</string>
+						<object class="IBActionInfo" key="listingCategorySelected:">
+							<string key="name">listingCategorySelected:</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBActionInfo" key="listingTypeSelected:">
@@ -890,14 +890,14 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="formBackgroundView">UIView</string>
-						<string key="listingTargetBackgroundView">UIView</string>
-						<string key="listingTargetButtonForAccommodation">UIButton</string>
-						<string key="listingTargetButtonForItems">UIButton</string>
-						<string key="listingTargetButtonForRides">UIButton</string>
-						<string key="listingTargetButtonForServices">UIButton</string>
-						<string key="listingTargetIntroLabel">UILabel</string>
-						<string key="listingTargetPointerView">UIView</string>
-						<string key="listingTargetTypeLabel">UILabel</string>
+						<string key="listingCategoryBackgroundView">UIView</string>
+						<string key="listingCategoryButtonForAccommodation">UIButton</string>
+						<string key="listingCategoryButtonForFavors">UIButton</string>
+						<string key="listingCategoryButtonForItems">UIButton</string>
+						<string key="listingCategoryButtonForRides">UIButton</string>
+						<string key="listingCategoryIntroLabel">UILabel</string>
+						<string key="listingCategoryPointerView">UIView</string>
+						<string key="listingCategoryTypeLabel">UILabel</string>
 						<string key="listingTypeButtonForOffers">UIView</string>
 						<string key="listingTypeButtonForRequests">UIView</string>
 						<string key="listingTypeLabelForOffers">UILabel</string>
@@ -910,36 +910,36 @@
 							<string key="name">formBackgroundView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetBackgroundView">
-							<string key="name">listingTargetBackgroundView</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryBackgroundView">
+							<string key="name">listingCategoryBackgroundView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetButtonForAccommodation">
-							<string key="name">listingTargetButtonForAccommodation</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryButtonForAccommodation">
+							<string key="name">listingCategoryButtonForAccommodation</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetButtonForItems">
-							<string key="name">listingTargetButtonForItems</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryButtonForFavors">
+							<string key="name">listingCategoryButtonForFavors</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetButtonForRides">
-							<string key="name">listingTargetButtonForRides</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryButtonForItems">
+							<string key="name">listingCategoryButtonForItems</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetButtonForServices">
-							<string key="name">listingTargetButtonForServices</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryButtonForRides">
+							<string key="name">listingCategoryButtonForRides</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetIntroLabel">
-							<string key="name">listingTargetIntroLabel</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryIntroLabel">
+							<string key="name">listingCategoryIntroLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetPointerView">
-							<string key="name">listingTargetPointerView</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryPointerView">
+							<string key="name">listingCategoryPointerView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingTargetTypeLabel">
-							<string key="name">listingTargetTypeLabel</string>
+						<object class="IBToOneOutletInfo" key="listingCategoryTypeLabel">
+							<string key="name">listingCategoryTypeLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="listingTypeButtonForOffers">
@@ -976,6 +976,10 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
@@ -985,6 +989,6 @@
 			<string key="icon-service.png">{50, 50}</string>
 			<string key="pointing-corner-brown.png">{40, 16}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">933</string>
+		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>
