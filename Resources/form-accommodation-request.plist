@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>type</key>
+		<string>choice</string>
+        <key>alternatives</key>
+        <array>
+            <string>Rent</string>
+            <string>Buy</string>
+            <string>Temporary</string>
+        </array>
+		<key>title</key>
+		<string>Request type</string>
+		<key>mapsTo</key>
+		<string>transactionType</string>
+        <key>mandatory</key>
+        <true/>
+        <key>whatIsThis</key>
+        <string>There are many different ways to share in Kassi. For example, you can offer to lend, sell, or trade items in Kassi. You can select as many offer/request types as you want, but you must select at least one.</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>textfield</string>
+		<key>title</key>
+		<string>Housing you need</string>
+		<key>mapsTo</key>
+		<string>title</string>
+        <key>mandatory</key>
+        <true/>
+	</dict>
+    <dict>
+		<key>type</key>
+		<string>textarea</string>
+		<key>title</key>
+		<string>Detailed description</string>
+		<key>mapsTo</key>
+		<string>text</string>
+	</dict>
+    <dict>
+		<key>type</key>
+		<string>textfield</string>
+		<key>title</key>
+		<string>Tags</string>
+        <key>subtitle</key>
+        <string>(separate with comma)</string>
+		<key>mapsTo</key>
+		<string>tags</string>
+        <key>whatIsThis</key>
+        <string>With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing "furniture" and "seating". If you're offering help in computer problems, proper tags might include "help" and "computers".\n\nYou can add as many tags to a listing as you like. Separate tags with commas.</string>
+	</dict>
+    <dict>
+		<key>type</key>
+		<string>date</string>
+        <key>defaultTimeIntervalInDays</key>
+        <integer>90</integer>
+        <key>includeTime</key>
+        <false/>
+		<key>title</key>
+		<string>Expiration date</string>
+		<key>mapsTo</key>
+		<string>expiresAt</string>
+        <key>mandatory</key>
+        <true/>
+        <key>whatIsThis</key>
+        <string>You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the "edit listing" menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Kassi users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.</string>
+	</dict>
+    <dict>
+		<key>type</key>
+		<string>location</string>
+		<key>title</key>
+		<string>Location</string>
+		<key>mapsTo</key>
+		<string>location</string>
+	</dict>
+    <dict>
+		<key>type</key>
+		<string>photo</string>
+		<key>title</key>
+		<string>Image</string>
+		<key>mapsTo</key>
+		<string>image</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>choice</string>
+        <key>alternatives</key>
+        <array>
+            <string>All Internet users</string>
+            <string>Members only</string>
+        </array>
+		<key>title</key>
+		<string>Visibility</string>
+		<key>mapsTo</key>
+		<string>visibility</string>
+        <key>mandatory</key>
+        <true/>
+	</dict>
+</array>
+</plist>

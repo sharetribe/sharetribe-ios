@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>code</key>
+		<string>4192</string>
+        <key>title</key>
+		<string>Sofa for sale (three person)</string>
+		<key>description</key>
+		<string>Here is selling a three person Sofa, which consists of a shelf and several soft mats. The cover of mats can be detached for washing. The sofa is kind of foldable to become a simple single bed.
+
+The Price is 15 euro. Anyone who is intersted to buy it, please contact David 0453 52 5988. Email: bieyuweiss@gmail.com
+
+It is easy to take! </string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string></string>
+		<key>transactionType</key>
+		<string>selling</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1804/medium/DSCN6243.JPG</string>
+		<key>address</key>
+		<string>Jämeräntaival 10, 02150 Espoo, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1896</real>
+			<key>longitude</key>
+			<real>24.8385</real>
+		</dict>
+		<key>username</key>
+		<string>David Shah</string>
+		<key>createdAt</key>
+		<string>25.02.2012 16:16</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4191</string>
+        <key>title</key>
+		<string>LG 32 inch flat-TV (LD32 Series)</string>
+		<key>description</key>
+		<string>A fairly new LG flat TV for sell bought 9 months ago. Here are some descriptions:
+1.HDTV(a digital inside)
+2.24P real cinema
+3.2*HDMI
+4.Energy Saving
+
+You can link it with computers, laptops or PS3. Resolution is 1080i.
+
+Original Price is 299e. Asking price: 199e, with a TV-cable for free, and a 3 months' warranty.
+
+Email: andy2163@163.com</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>flat-tv,hdmi,ps3</string>
+		<key>transactionType</key>
+		<string>selling</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1803/medium/%E4%B8%8B%E8%BD%BD.jpg</string>
+		<key>address</key>
+		<string>Ida Aalbergin tie 1, 00400 Helsinki, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.231</real>
+			<key>longitude</key>
+			<real>24.9006</real>
+		</dict>
+		<key>username</key>
+		<string>X Z</string>
+		<key>createdAt</key>
+		<string>25.02.2012 15:27</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4189</string>
+        <key>title</key>
+		<string>D-Link Wireless Cardbus Adapter</string>
+		<key>description</key>
+		<string>More information: http://www.dlink.com/products/?pid=23</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string></string>
+		<key>transactionType</key>
+		<string>giving</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1801/medium/IMAG0305.jpg</string>
+		<key>address</key>
+		<string>Jämeräntaival 5 B 242, 02150 Espoo</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.188</real>
+			<key>longitude</key>
+			<real>24.8375</real>
+		</dict>
+		<key>username</key>
+		<string>Tuukka Lahti</string>
+		<key>createdAt</key>
+		<string>25.02.2012 14:18</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4179</string>
+        <key>title</key>
+		<string>Astianpesukone Zanussi</string>
+		<key>description</key>
+		<string>Erittäin hyvä 4 vuotta vanha, vähän käytössä ollut astianpesukone, normaali koko, myydään muuton vuoksi tarpeettomana. Hintapyyntö 150 €.</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string></string>
+		<key>transactionType</key>
+		<string>selling</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1798/medium/P1040664.JPG</string>
+		<key>address</key>
+		<string>Matinkallio, 02230 Espoo, Suomi</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1628</real>
+			<key>longitude</key>
+			<real>24.7482</real>
+		</dict>
+		<key>username</key>
+		<string>Kirsti Pitkänen</string>
+		<key>createdAt</key>
+		<string>23.02.2012 19:53</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4178</string>
+        <key>title</key>
+		<string>Puma fitness shoes, size 40</string>
+		<key>description</key>
+		<string>In great condition.
+
+Price: 7e.
+
+krista.kauhaniemi(a)aalto.fi</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>fitness,puma,fitness shoes</string>
+		<key>transactionType</key>
+		<string>selling</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1797/medium/puma.jpg</string>
+		<key>address</key>
+		<string>Otaniemi, 02150 Espoo, Suomi</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1841</real>
+			<key>longitude</key>
+			<real>24.8301</real>
+		</dict>
+		<key>username</key>
+		<string>Krista Kauhaniemi</string>
+		<key>createdAt</key>
+		<string>23.02.2012 18:52</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4175</string>
+        <key>title</key>
+		<string>iPhone 4 Black 16GB (80% new)</string>
+		<key>description</key>
+		<string>An iPhone 4 black 16 GB for sell, with a black bumper, apple earphones with remote and mic, USB cable and USB power adapter. Working in good condition and 80% new. Brought in December 2010.
+
+Version in 5.01. If you need, I could jailbreak for you without charge and tons of games and apps.
+
+Asking for 380 euro.
+
+hongliang.zheng(a)aalto.fi
+
+Here is the detail pictures of this iPhone: http://www.flickr.com/photos/76281065@N02/
+
+More information about technical specifications: http://www.apple.com/iphone/iphone-4/specs.html</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>apple,mobile phone,phone,iphone,cellphone</string>
+		<key>transactionType</key>
+		<string>selling</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1796/medium/images.jpg</string>
+		<key>address</key>
+		<string>Servin Maijan tie 6, 02150 Espoo, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1901</real>
+			<key>longitude</key>
+			<real>24.8359</real>
+		</dict>
+		<key>username</key>
+		<string>Hongliang Zheng</string>
+		<key>createdAt</key>
+		<string>23.02.2012 18:25</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4160</string>
+        <key>title</key>
+		<string>Subrenting half an apartment in Leppävaara</string>
+		<key>description</key>
+		<string>I'm subrenting half of an apartment in Leppävaara. The apartment is in the third floor and it's 50 m2 with two rooms and open kitchen. The rent is 742,42 EUR/month (includes rent, water, electricity and internet) so half of that is 25 m2 at 370 EUR/month.
+
+The following limitations apply for applicants:
+- no smoking, no pets
+- two months deposit required (740 EUR, returned when the subrenting ends if the apartment has been kept well)
+- the applicant shall submit to checking of creditability
+
+The apartment is available from 1.3.2012.
+
+Contact: Lauri Uotinen (Firstname.Lastname@aalto.fi)</string>
+		<key>type</key>
+		<string>offer</string>
+		<key>target</key>
+		<string>accommodation</string>
+		<key>tags</key>
+		<string>vuokra-asunto,annetaan,leppävaara,vuokralle,espoo,alivuokraus</string>
+		<key>transactionType</key>
+		<string>renting out</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1788/medium/huvilinnanmaki2.png</string>
+		<key>address</key>
+		<string>Huvilinnanmäki 2, 02600 Espoo, Suomi</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.217</real>
+			<key>longitude</key>
+			<real>24.8059</real>
+		</dict>
+		<key>username</key>
+		<string>Lauri Uotinen</string>
+		<key>createdAt</key>
+		<string>21.02.2012 13:00</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4137</string>
+        <key>title</key>
+		<string>Drive bay (pocket for a hard disc 2.5″) needed</string>
+		<key>description</key>
+		<string>My laptop got broken so I need to transfer data from my old to new laptop. That's why I need kind of "pocket" in which I could put my hard disc, connect it into a new computer and transfer all the precious data! Mostly I would like to borrow it just for a couple of hours.</string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>borrow,data,laptop,drive bay,hard disc,pocket,2.5″</string>
+		<key>transactionType</key>
+		<string>borrowing</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1771/medium/cbrdr_reader.jpg</string>
+		<key>address</key>
+		<string>Otaniemi, 02150 Espoo, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1841</real>
+			<key>longitude</key>
+			<real>24.8301</real>
+		</dict>
+		<key>username</key>
+		<string>Tomasz Nowacki</string>
+		<key>createdAt</key>
+		<string>19.02.2012 18:47</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4182</string>
+        <key>title</key>
+		<string>Rice cooker</string>
+		<key>description</key>
+		<string>Make an offer! I live in Otaniemi.</string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string></string>
+		<key>transactionType</key>
+		<string>buying</string>
+		<key>address</key>
+		<string>02150 Espoo</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1827</real>
+			<key>longitude</key>
+			<real>24.828</real>
+		</dict>
+		<key>username</key>
+		<string>Asta Länsimies</string>
+		<key>createdAt</key>
+		<string>24.02.2012 20:11</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4170</string>
+        <key>title</key>
+		<string>Microwave Oven</string>
+		<key>description</key>
+		<string>I need a Microwave Oven in proper working condition.If you have one please contact me at vishnukg@hotmail.com</string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string></string>
+		<key>transactionType</key>
+		<string>buying</string>
+		<key>address</key>
+		<string>02150 Espoo, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.187</real>
+			<key>longitude</key>
+			<real>24.8296</real>
+		</dict>
+		<key>username</key>
+		<string>Vishnu Prasad Kaushik Ganesan</string>
+		<key>createdAt</key>
+		<string>23.02.2012 10:15</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4027</string>
+        <key>title</key>
+		<string>medium/good level badminton player?</string>
+		<key>description</key>
+		<string>medium/good level badminton player? : p preferably in otaniemi UniSport </string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>service</string>
+		<key>tags</key>
+		<string>sport,badminton,unisport</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1686/medium/Badminton.gif</string>
+		<key>address</key>
+		<string>Tapiola, Espoo</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1764</real>
+			<key>longitude</key>
+			<real>24.8085</real>
+		</dict>
+		<key>username</key>
+		<string>Martin Talvari</string>
+		<key>createdAt</key>
+		<string>08.02.2012 23:27</string>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4012</string>
+        <key>title</key>
+		<string>Urgent - Backpack needed! (>30l)</string>
+		<key>description</key>
+		<string>I need a (big) backpack for a trip to Lapland. I am going on Wednesday so please hurry up!
+
++358 449562814</string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>cheap,backpack,trip,pack,back,rucksack,trips,weekend </string>
+		<key>transactionType</key>
+		<string>buying</string>
+		<key>imageURL</key>
+		<string>http://aalto.kassi.eu/system/images/1680/medium/Backpack.jpg</string>
+		<key>address</key>
+		<string>Otaniemi, 02150 Espoo, Finlandia</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1841</real>
+			<key>longitude</key>
+			<real>24.8301</real>
+		</dict>
+		<key>username</key>
+		<string>Tomasz Nowacki</string>
+		<key>createdAt</key>
+		<string>07.02.2012 00:28</string>
+		<key>comments</key>
+		<array>
+			<dict>
+				<key>text</key>
+				<string>Hi, I have one Osprey Hornet 33 for sale (40eur) if you,re interested.
+
+Mikko
+040 7412093</string>
+				<key>username</key>
+				<string>mkoo</string>
+				<key>date</key>
+				<string>07.02.2012 16:31</string>
+			</dict>
+			<dict>
+				<key>text</key>
+				<string>I have a totally new and nice Jansport backpack for 30€, call me on 0417033584 if you r interested.</string>
+				<key>username</key>
+				<string>samn khajavi</string>
+				<key>date</key>
+				<string>07.02.2012 16:52</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>code</key>
+		<string>4174</string>
+        <key>title</key>
+		<string>Kirja: Tekniikan kemia, Edita.</string>
+		<key>description</key>
+		<string>Kirjoittajat: Antila, Karppinen, Leskelä, Mölsä, Pohjakallio. Kaiken kuntoiset huomioidaan, painoksella ei myöskään niin väliä. Mitä halvempi, sen parempi! Tarjoa vaikka ilman kansia :)
+
+Auttakee nyt mies pinteestä, jotta saan tuonkin kurssin pois roikkumasta! </string>
+		<key>type</key>
+		<string>request</string>
+		<key>target</key>
+		<string>item</string>
+		<key>tags</key>
+		<string>kirjat,kemia,oppikirjat</string>
+		<key>transactionType</key>
+		<string>buying</string>
+		<key>address</key>
+		<string>Aalto-yliopisto - Otaniemen kampus, Kemistintie 2, 02150 Espoo, Finland</string>
+		<key>coordinates</key>
+		<dict>
+			<key>latitude</key>
+			<real>60.1835</real>
+			<key>longitude</key>
+			<real>24.8257</real>
+		</dict>
+		<key>username</key>
+		<string>Mikko Eronen</string>
+		<key>createdAt</key>
+		<string>23.02.2012 14:46</string>
+	</dict>
+</array>
+</plist>

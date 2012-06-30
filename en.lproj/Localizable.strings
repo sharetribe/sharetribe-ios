@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Kassi
+
+  Created by Janne Käki on 2/6/12.
+  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+*/
+
+"Tabs.Offers" = "Offers";
+"Tabs.Requests" = "Requests";
+"Tabs.NewListing" = "New Listing";
+"Tabs.Messages" = "Messages";
+"Tabs.Profile" = "Profile";

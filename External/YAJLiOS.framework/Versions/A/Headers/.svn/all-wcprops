@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers
+END
+YAJLGen.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/YAJLGen.h
+END
+yajl_parse.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/yajl_parse.h
+END
+YAJLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/YAJLParser.h
+END
+YAJLDocument.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/YAJLDocument.h
+END
+YAJL.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/YAJL.h
+END
+NSObject+YAJL.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/NSObject+YAJL.h
+END
+yajl_version.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/yajl_version.h
+END
+NSBundle+YAJL.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/NSBundle+YAJL.h
+END
+yajl_common.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/yajl_common.h
+END
+yajl_gen.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/mobileproxy/!svn/ver/14/iphone/trunk/IltaSanomat/External/YAJLiOS.framework/Versions/A/Headers/yajl_gen.h
+END
