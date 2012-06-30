@@ -158,13 +158,13 @@
     listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
     listing.numberOfTimesViewed = [[dict objectOrNilForKey:@"times_viewed"] intValue];
     listing.visibility = [dict objectOrNilForKey:@"visibility"];
-    
+        
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = kTimestampFormatInAPI;
-    listing.createdAt = [formatter dateFromString:[dict objectOrNilForKey:@"created_at"]];
-    listing.updatedAt = [formatter dateFromString:[dict objectOrNilForKey:@"updated_at"]];
-    listing.validUntil = [formatter dateFromString:[dict objectOrNilForKey:@"valid_until"]];
-    
+    listing.createdAt = [formatter dateFromString:[[dict objectOrNilForKey:@"created_at"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
+    listing.updatedAt = [formatter dateFromString:[[dict objectOrNilForKey:@"updated_at"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
+    listing.validUntil = [formatter dateFromString:[[dict objectOrNilForKey:@"valid_until"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
+        
     listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
     
     return listing;

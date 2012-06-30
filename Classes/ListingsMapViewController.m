@@ -141,6 +141,15 @@
     return nil;
 }
 
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (MKAnnotationView *view in views) {
+        if ([view.annotation isKindOfClass:MKUserLocation.class]) {
+            view.canShowCallout = NO;
+        }
+    }
+}
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     if ([view.annotation isKindOfClass:Listing.class]) {

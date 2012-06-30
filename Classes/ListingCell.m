@@ -63,9 +63,10 @@
         imageView.contentMode = UIViewContentModeCenter;
     }
     
-    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, usernameLabel.y) lineBreakMode:UILineBreakModeWordWrap].height;
+    int oneRowHeight = [@"Something" sizeWithFont:titleLabel.font].height;
+    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 3*oneRowHeight) lineBreakMode:UILineBreakModeWordWrap].height;
     
-    subtitleLabel.y = titleLabel.y + titleLabel.height+2;
+    subtitleLabel.y = titleLabel.y + titleLabel.height + 3;
     subtitleLabel.height = [subtitleLabel.text sizeWithFont:subtitleLabel.font constrainedToSize:CGSizeMake(subtitleLabel.width, (usernameLabel.y-subtitleLabel.y-2)) lineBreakMode:UILineBreakModeWordWrap].height;
 }
 
