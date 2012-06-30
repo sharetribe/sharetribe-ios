@@ -17,6 +17,12 @@
 
 #define kSeparatorTag      7
 
+@interface MessagesViewCustomTextField : UITextField
+@end
+
+@interface MessagesView ()
+@end
+
 @implementation MessagesView
 
 @synthesize backgroundView;
@@ -66,7 +72,7 @@
         self.dateLabels = [NSMutableArray array];
         self.textLabels = [NSMutableArray array];
                 
-        self.composeFieldContainer = [[UITextField alloc] init];
+        self.composeFieldContainer = [[MessagesViewCustomTextField alloc] init];
         composeFieldContainer.frame = CGRectMake(50, 0, self.width-50-10, 31);
         composeFieldContainer.borderStyle = UITextBorderStyleRoundedRect;
         composeFieldContainer.font = [UIFont systemFontOfSize:13];
@@ -168,7 +174,7 @@
         }
         
         Message *message = [messages objectAtIndex:i];
-        avatarView.image = message.sender.avatar;
+        avatarView.image = nil;  // TODO obviously we need their avatar image here
         
         UILabel *usernameLabel;
         if (i < usernameLabels.count) {
@@ -182,7 +188,7 @@
             [self addSubview:usernameLabel];
             [usernameLabels addObject:usernameLabel];
         }
-        usernameLabel.text = message.sender.name;
+        usernameLabel.text = message.authorId;  // TODO obviously we need their real name
         usernameLabel.y = yOffset-2;
         usernameLabel.hidden = NO;
 
@@ -199,7 +205,7 @@
             [self addSubview:dateLabel];
             [dateLabels addObject:dateLabel];
         }
-        dateLabel.text = message.date.agestamp;
+        dateLabel.text = message.createdAt.agestamp;
         dateLabel.y = yOffset-2;
         dateLabel.hidden = NO;
         
@@ -219,7 +225,7 @@
             [self addSubview:textLabel];
             [textLabels addObject:textLabel];
         }
-        textLabel.text = message.text;
+        textLabel.text = message.content;
         textLabel.y = yOffset;
         textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
         textLabel.hidden = NO;
@@ -366,6 +372,15 @@
     composeFieldContainer.text = nil;
     
     [delegate messagesViewDidEndEditing:self];
+}
+
+@end
+
+@implementation MessagesViewCustomTextField
+
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+    return CGRectInset(bounds, 8, 6);
 }
 
 @end

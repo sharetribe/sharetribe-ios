@@ -8,6 +8,7 @@
 
 #import "CreateListingViewController.h"
 
+#import "Location.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
@@ -107,7 +108,7 @@
         
         self.listing = [[Listing alloc] init];
         listing.type = ListingTypeOffer;
-        listing.location = [[CLLocation alloc] initWithLatitude:60.156714 longitude:24.883003];
+        listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Siellähän se"];
         [table setContentOffset:CGPointZero animated:NO];
         
         [header setListingType:listing.type];
@@ -754,7 +755,7 @@
 - (IBAction)postButtonPressed:(UIButton *)sender
 {   
     listing.author = [User currentUser];
-    listing.date = [NSDate date];
+    listing.createdAt = [NSDate date];
     
     [[SharetribeAPIClient sharedClient] postNewListing:listing];
         

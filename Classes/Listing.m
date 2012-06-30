@@ -8,6 +8,7 @@
 
 #import "Listing.h"
 
+#import "Location.h"
 #import "Message.h"
 #import "User.h"
 #import "NSDictionary+Sharetribe.h"
@@ -21,19 +22,23 @@
 @synthesize category;
 @synthesize type;
 @synthesize shareType;
-
 @synthesize tags;
-@synthesize thumbnailImage;
+
+@synthesize thumbnailURL;
+@synthesize imageURLs;
 @synthesize image;
-@synthesize address;
+
 @synthesize location;
+
 @synthesize author;
-@synthesize date;
-@synthesize expiresAt;
-@synthesize departureAt;
+@synthesize createdAt;
+@synthesize updatedAt;
+@synthesize validUntil;
+
 @synthesize numberOfTimesViewed;
 @synthesize numberOfComments;
 @synthesize visibility;
+
 @synthesize comments;
 
 @dynamic coordinate;
@@ -60,6 +65,10 @@
     NSString *shareTypeForJSON = [shareType lowercaseString];
     shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     [JSON setObject:shareTypeForJSON forKey:@"share_type"];
+    
+    if (visibility != nil) {
+        [JSON setObject:visibility forKey:@"visibility"];
+    }
     
     return JSON;
 }
@@ -126,26 +135,35 @@
 {
     Listing *listing = [[Listing alloc] init];
     
-    listing.category = [Listing categoryFromString:[dict objectOrNilForKey:@"category"]];
-    listing.type = [Listing typeFromString:[dict objectOrNilForKey:@"listing_type"]];
-    listing.shareType = [[dict objectOrNilForKey:@"share_type"] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-    
     listing.listingId = [[dict objectOrNilForKey:@"id"] intValue];
     listing.title = [dict objectOrNilForKey:@"title"];
     listing.description = [dict objectOrNilForKey:@"description"];
-    listing.tags = [dict objectOrNilForKey:@"tags"];
-    listing.address = [dict objectOrNilForKey:@"address"];
     
-    NSDictionary *coordinates = [dict objectOrNilForKey:@"coordinates"];
-    if (coordinates != nil) {
-        listing.location = [[CLLocation alloc] initWithLatitude:[[coordinates objectOrNilForKey:@"latitude"] doubleValue] longitude:[[coordinates objectOrNilForKey:@"longitude"] doubleValue]];
+    listing.category = [Listing categoryFromString:[dict objectOrNilForKey:@"category"]];
+    listing.type = [Listing typeFromString:[dict objectOrNilForKey:@"listing_type"]];
+    listing.shareType = [[dict objectOrNilForKey:@"share_type"] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    listing.tags = [dict objectOrNilForKey:@"tags"];
+    
+    listing.thumbnailURL = [dict objectOrNilForKey:@"thumbnail_url"];
+    listing.imageURLs = [dict objectOrNilForKey:@"image_urls"];
+    
+    NSDictionary *locationDict = [dict objectOrNilForKey:@"origin_location"];
+    if (locationDict != nil) {
+        CLLocationDegrees latitude = [[locationDict objectOrNilForKey:@"latitude"] doubleValue];
+        CLLocationDegrees longitude = [[locationDict objectOrNilForKey:@"longitude"] doubleValue];
+        NSString *address = [locationDict objectOrNilForKey:@"address"];
+        listing.location = [[Location alloc] initWithLatitude:latitude longitude:longitude address:address];
     }
-        
+    
     listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
+    listing.numberOfTimesViewed = [[dict objectOrNilForKey:@"times_viewed"] intValue];
+    listing.visibility = [dict objectOrNilForKey:@"visibility"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"dd.MM.yyyy HH:mm";
-    listing.date = [formatter dateFromString:[dict objectOrNilForKey:@"createdAt"]];
+    formatter.dateFormat = kTimestampFormatInAPI;
+    listing.createdAt = [formatter dateFromString:[dict objectOrNilForKey:@"created_at"]];
+    listing.updatedAt = [formatter dateFromString:[dict objectOrNilForKey:@"updated_at"]];
+    listing.validUntil = [formatter dateFromString:[dict objectOrNilForKey:@"valid_until"]];
     
     listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
     
@@ -166,7 +184,7 @@
 
 NSComparisonResult compareListingsByDate(id object1, id object2, void *context)
 {
-    return [[object2 date] compare:[object1 date]];
+    return [[object2 createdAt] compare:[object1 createdAt]];
 }
 
 @end

@@ -51,7 +51,7 @@
     }
     subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
     usernameLabel.text = listing.author.name;
-    timeLabel.text = [listing.date agestamp];
+    timeLabel.text = [listing.createdAt agestamp];
     
     if (listing.image != nil) {
         imageView.image = listing.image;

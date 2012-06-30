@@ -26,6 +26,7 @@ typedef enum {
     ListingTypeBoth
 } ListingType;
 
+@class Location;
 @class User;
 
 @interface Listing : NSObject <MKAnnotation>
@@ -37,21 +38,23 @@ typedef enum {
 @property (assign) ListingCategory category;
 @property (assign) ListingType type;
 @property (strong) NSString *shareType;
-
 @property (strong) NSArray *tags;
-@property (strong) UIImage *thumbnailImage;
+
+@property (strong) NSString *thumbnailURL;
+@property (strong) NSArray *imageURLs;
 @property (strong) UIImage *image;
-@property (strong) NSString *address;
-@property (strong) CLLocation *location;
+
+@property (strong) Location *location;
 
 @property (strong) User *author;
-@property (strong) NSDate *date;
-@property (strong) NSString *expiresAt;
-@property (strong) NSString *departureAt;
+@property (strong) NSDate *createdAt;
+@property (strong) NSDate *updatedAt;
+@property (strong) NSDate *validUntil;
 
 @property (assign) NSInteger numberOfTimesViewed;
 @property (assign) NSInteger numberOfComments;
 @property (strong) NSString *visibility;
+
 @property (strong) NSArray *comments;
 
 - (CLLocationCoordinate2D)coordinate;

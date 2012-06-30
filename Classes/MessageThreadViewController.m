@@ -147,9 +147,9 @@
 - (void)messagesView:(MessagesView *)theMessagesView didSaveMessageText:(NSString *)messageText
 {
     Message *message = [[Message alloc] init];
-    message.sender = [User currentUser];
-    message.text = messageText;
-    message.date = [NSDate date];
+    message.authorId = [[User currentUser] userId];
+    message.content = messageText;
+    message.createdAt = [NSDate date];
     
     [messageThread.messages addObject:message];
     messagesView.messages = messageThread.messages;

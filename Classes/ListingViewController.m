@@ -238,10 +238,9 @@
 {
     Message *comment = [[Message alloc] init];
     
-    comment.sender = [User currentUser];
-    
-    comment.text = messageText;
-    comment.date = [NSDate date];
+    comment.authorId = [[User currentUser] userId];
+    comment.content = messageText;
+    comment.createdAt = [NSDate date];
     
     NSMutableArray *comments = [NSMutableArray arrayWithArray:listing.comments];
     [comments addObject:comment];

@@ -116,6 +116,7 @@
 		48C9F6C515042395001F785A /* MessagesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C9F6C415042393001F785A /* MessagesListViewController.m */; };
 		48D004E9159E91A30063E372 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D004E8159E91A30063E372 /* ProfileViewController.m */; };
 		48D004F1159ED2580063E372 /* NSDictionary+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */; };
+		48D004F4159EE1D40063E372 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D004F3159EE1D30063E372 /* Location.m */; };
 		48FF001D14FB046400AFB1AC /* MessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FF001C14FB046400AFB1AC /* MessagesView.m */; };
 		48FF002414FB106800AFB1AC /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002214FB106800AFB1AC /* default-avatar.png */; };
 		48FF002514FB106800AFB1AC /* default-avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002314FB106800AFB1AC /* default-avatar@2x.png */; };
@@ -279,6 +280,8 @@
 		48D004E8159E91A30063E372 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		48D004EF159ED2570063E372 /* NSDictionary+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Sharetribe.h"; sourceTree = "<group>"; };
 		48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Sharetribe.m"; sourceTree = "<group>"; };
+		48D004F2159EE1D20063E372 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		48D004F3159EE1D30063E372 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		48FF001B14FB046400AFB1AC /* MessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesView.h; sourceTree = "<group>"; };
 		48FF001C14FB046400AFB1AC /* MessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesView.m; sourceTree = "<group>"; };
 		48FF002214FB106800AFB1AC /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 				486773AB14F1AC9300D7EFD8 /* FormItem.m */,
 				48894F7714E086AE009CD965 /* Listing.h */,
 				48894F7814E086AE009CD965 /* Listing.m */,
+				48D004F2159EE1D20063E372 /* Location.h */,
+				48D004F3159EE1D30063E372 /* Location.m */,
 				481DEAB814F9A11000B2CA5D /* Message.h */,
 				481DEAB914F9A11100B2CA5D /* Message.m */,
 				48C9F6BD15041693001F785A /* MessageThread.h */,
@@ -762,6 +767,7 @@
 				48482638159C105D00B15207 /* Community.m in Sources */,
 				48D004E9159E91A30063E372 /* ProfileViewController.m in Sources */,
 				48D004F1159ED2580063E372 /* NSDictionary+Sharetribe.m in Sources */,
+				48D004F4159EE1D40063E372 /* Location.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

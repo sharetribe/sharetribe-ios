@@ -12,9 +12,9 @@
 
 @interface Message : NSObject
 
-@property (strong) NSString *text;
-@property (strong) User *sender;
-@property (strong) NSDate *date;
+@property (strong) NSString *content;
+@property (strong) NSDate *createdAt;
+@property (strong) NSString *authorId;
 
 + (NSArray *)messagesFromArrayOfDicts:(NSArray *)dicts;
 
