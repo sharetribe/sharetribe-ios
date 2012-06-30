@@ -59,8 +59,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
             NSString *token = [responseObject objectForKey:@"api_token"];
             [self setDefaultHeader:@"Sharetribe-API-Token" value:token];            
             
-            User *user = [User userFromDict:[responseObject objectForKey:@"person"]];
-            [User setCurrentUser:user];
+            NSDictionary *currentUserDict = [responseObject objectForKey:@"person"];
+            [User setCurrentUserWithDict:currentUserDict];
+            User *user = [User currentUser];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:token forKey:kAPITokenKeyForUserDefaults];

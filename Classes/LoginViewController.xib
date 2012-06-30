@@ -92,7 +92,7 @@
 					<object class="IBUITextField" id="302667388">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{60, 97}, {208, 38}}</string>
+						<string key="NSFrame">{{64, 97}, {200, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="560291174"/>
@@ -132,7 +132,7 @@
 					<object class="IBUITextField" id="560291174">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{60, 133}, {208, 40}}</string>
+						<string key="NSFrame">{{64, 133}, {200, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="427368582"/>
@@ -204,6 +204,7 @@
 						<string key="NSFrame">{{142, 190}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

@@ -30,16 +30,18 @@
     return [NSString stringWithFormat:@"%@ %@", givenName, familyName];
 }
 
-static User *currentUser;
-
 + (User *)currentUser
 {
-    return currentUser;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *currentUserDict = [defaults objectForKey:@"current user dict"];
+    return [User userFromDict:currentUserDict];
 }
 
-+ (void)setCurrentUser:(User *)user
++ (void)setCurrentUserWithDict:(NSDictionary *)dict
 {
-    currentUser = user;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:dict forKey:@"current user dict"];
+    [defaults synchronize];
 }
 
 + (User *)userFromDict:(NSDictionary *)dict

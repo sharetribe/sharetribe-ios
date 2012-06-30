@@ -60,11 +60,15 @@
     [self.view addSubview:listViewer.view];
     [self.view addSubview:mapViewer.view];
     
-    listViewer.view.y -= 20;
-    mapViewer.view.y -= 20;
+    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    listViewer.view.y -= statusBarHeight;
+    mapViewer.view.y -= statusBarHeight;
     
     mapViewer.view.hidden = YES;
     frontViewer = listViewer;
+    
+    listViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    mapViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     
     listViewer.listingSelectionDelegate = self;
     mapViewer.listingSelectionDelegate = self;

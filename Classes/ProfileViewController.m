@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 
 #import "SharetribeAPIClient.h"
+#import "User.h"
 
 @interface ProfileViewController () <UIAlertViewDelegate>
 
@@ -21,11 +22,15 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -37,6 +42,11 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log Out?" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     [alert show];
+}
+
+- (void)userDidLogIn:(NSNotification *)notification
+{
+    self.title = [[User currentUser] givenName];
 }
 
 #pragma mark - UIAlertViewDelegate

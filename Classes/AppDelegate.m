@@ -11,6 +11,7 @@
 #import "SharetribeAPIClient.h"
 #import "Listing.h"
 #import "LoginViewController.h"
+#import "User.h"
 
 @implementation AppDelegate
 
@@ -52,7 +53,9 @@
     offersNavigationController.title = NSLocalizedString(@"Tabs.Offers", @"");
     requestsNavigationController.title = NSLocalizedString(@"Tabs.Requests", @"");
     messagesNavigationController.title = NSLocalizedString(@"Tabs.Messages", @"");
-    profileNavigationController.title = NSLocalizedString(@"Tabs.Profile", @"");
+    
+    User *currentUser = [User currentUser];
+    profileViewController.title = (currentUser != nil) ? currentUser.givenName : NSLocalizedString(@"Tabs.Profile", @"");
     
     offersNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-gift"];
     requestsNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-bullhorn"];
@@ -67,7 +70,7 @@
     createListingNavigationController.navigationBar.tintColor = tintColor;
     
     messagesNavigationController.tabBarItem.badgeValue = @"2";
-    
+        
     NSMutableArray *tabViewControllers = [NSMutableArray arrayWithCapacity:5];
     [tabViewControllers addObject:offersNavigationController];
     [tabViewControllers addObject:requestsNavigationController];
@@ -91,7 +94,7 @@
     if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
         [self showLogin];
     } else {
-        [[SharetribeAPIClient sharedClient] refreshCurrentUser];
+        // [[SharetribeAPIClient sharedClient] refreshCurrentUser];
     }
     
     return YES;
@@ -121,6 +124,7 @@
 {
     LoginViewController *loginViewer = [[LoginViewController alloc] init];
     [self.tabBarController presentModalViewController:loginViewer animated:NO];
+    [tabBarController setSelectedIndex:0];
 }
 
 - (void)newListingPosted:(NSNotification *)notification

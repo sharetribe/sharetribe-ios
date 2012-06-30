@@ -67,6 +67,9 @@
 {
     [[SharetribeAPIClient sharedClient] logInWithUsername:usernameField.text password:passwordField.text];
     
+    [usernameField resignFirstResponder];
+    [passwordField resignFirstResponder];
+    
     [self setSpinnerVisible:YES];
 }
 

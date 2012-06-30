@@ -23,7 +23,7 @@
 @property (readonly) NSString *name;
 
 + (User *)currentUser;
-+ (void)setCurrentUser:(User *)user;
++ (void)setCurrentUserWithDict:(NSDictionary *)dict;
 
 + (User *)userFromDict:(NSDictionary *)dict;
 + (NSArray *)usersFromArrayOfDicts:(NSArray *)dicts;
