@@ -10,6 +10,7 @@
 
 #import "User.h"
 #import "NSDate+Sharetribe.h"
+#import "UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation ListingCell
@@ -53,11 +54,12 @@
     usernameLabel.text = listing.author.name;
     timeLabel.text = [listing.createdAt agestamp];
     
-    if (listing.image != nil) {
-        imageView.image = listing.image;
+    UIImage *categoryImage = [Listing iconForCategory:listing.category];
+    if (listing.thumbnailURL != nil) {
+        [imageView setImageWithURL:[NSURL URLWithString:listing.thumbnailURL] placeholderImage:categoryImage];
         imageView.contentMode = UIViewContentModeScaleToFill;
     } else {
-        imageView.image = [Listing iconForCategory:listing.category];
+        imageView.image = categoryImage;
         imageView.contentMode = UIViewContentModeCenter;
     }
     
