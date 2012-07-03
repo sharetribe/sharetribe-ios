@@ -24,6 +24,7 @@
 
 @synthesize avatar;
 @synthesize communities;
+@synthesize currentCommunity;
 
 - (NSString *)name
 {
@@ -57,6 +58,9 @@
     NSArray *communityDicts = [dict objectForKey:@"communities"];
     if (communityDicts.count > 0) {
         user.communities = [Community communitiesFromArrayOfDicts:communityDicts];
+        if (user.communities.count == 1) {
+            user.currentCommunity = [user.communities lastObject];
+        }
     }
     
     return user;

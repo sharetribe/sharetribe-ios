@@ -26,8 +26,6 @@
 #define kDateFormat               @"dd.MM.yyyy"
 #define kDateAndTimeFormat        @"dd.MM.yyyy  HH:mm"
 
-#define kNotificationForPostingNewListing @"postedNewListing"
-#define kNotificationForPostingNewMessage @"postedNewMessage"
 #define kNotificationForFlippingView      @"flippedView"
 #define kNotificationForRegionChange      @"changedRegion"
 

@@ -10,10 +10,17 @@
 
 #import "CWLSynthesizeSingleton.h"
 
+// Notifications for success:
+
 #define kNotificationForUserDidLogIn               @"user did log in"
 #define kNotificationForUserDidLogOut              @"user did log out"
+
 #define kNotificationForDidReceiveListings         @"did receive listings"
 #define kNotificationForDidReceiveListingDetails   @"did receive listing details"
+
+#define kNotificationForDidPostListing             @"did post listing"
+
+// Notifications for failure:
 
 #define kNotificationForLoginConnectionDidFail     @"login connection did fail"
 #define kNotificationForLoginAuthDidFail           @"login auth did fail"

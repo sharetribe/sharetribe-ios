@@ -156,7 +156,7 @@
 		48228DFE14F18EF6001DC893 /* pointing-corner-brown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointing-corner-brown@2x.png"; sourceTree = "<group>"; };
 		48482626159BF09F00B15207 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		48482627159BF09F00B15207 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		48482628159BF09F00B15207 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		48482628159BF09F00B15207 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = ../Resources/LoginViewController.xib; sourceTree = "<group>"; };
 		4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharetribe_logo_tagline@2x.png"; sourceTree = "<group>"; };
 		48482633159BFF2C00B15207 /* Sharetribe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sharetribe-Info.plist"; sourceTree = SOURCE_ROOT; };
 		48482634159BFF2C00B15207 /* Sharetribe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sharetribe-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -364,8 +364,8 @@
 			children = (
 				489179C5159BAE16004D6FF3 /* External */,
 				487AA3AC14B7B608007C4CCF /* Classes */,
-				487AA3C814B7B79E007C4CCF /* Images */,
 				487AA38514B7B51A007C4CCF /* Supporting Files */,
+				487AA3C814B7B79E007C4CCF /* Images */,
 			);
 			name = Sharetribe;
 			path = Kassi;
@@ -795,7 +795,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Janne Kaki (7M3KMMLPSQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -811,6 +811,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "62D9EF11-E9AC-44CC-9076-B3AFF022A87B";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -858,7 +859,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sharetribe-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25B96678-9769-4B68-A951-8014516CF8AE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "62D9EF11-E9AC-44CC-9076-B3AFF022A87B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

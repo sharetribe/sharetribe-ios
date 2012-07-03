@@ -45,6 +45,7 @@ typedef enum {
 @property (strong) UIImage *image;
 
 @property (strong) Location *location;
+@property (strong) Location *destination;
 
 @property (strong) User *author;
 @property (strong) NSDate *createdAt;

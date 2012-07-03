@@ -21,7 +21,7 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
         self.messageThreads = [NSMutableArray array];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessagePosted:) name:kNotificationForPostingNewMessage object:nil];
+        // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessagePosted:) name:kNotificationForPostingNewMessage object:nil];
     }
     return self;
 }
@@ -29,7 +29,7 @@
 - (void)dealloc
 {
     self.messageThreads = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationForPostingNewMessage object:nil];
+    // [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationForPostingNewMessage object:nil];
 }
 
 - (void)didReceiveMemoryWarning

@@ -55,9 +55,10 @@
     timeLabel.text = [listing.createdAt agestamp];
     
     UIImage *categoryImage = [Listing iconForCategory:listing.category];
-    if (listing.thumbnailURL != nil) {
-        [imageView setImageWithURL:[NSURL URLWithString:listing.thumbnailURL] placeholderImage:categoryImage];
-        imageView.contentMode = UIViewContentModeScaleToFill;
+    NSString *imageURL = [listing.imageURLs lastObject];
+    if (imageURL != nil) {
+        [imageView setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:categoryImage];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
     } else {
         imageView.image = categoryImage;
         imageView.contentMode = UIViewContentModeCenter;

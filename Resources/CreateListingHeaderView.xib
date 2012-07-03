@@ -295,7 +295,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="631964683"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">icon-service.png</string>
+									<string key="NSResourceName">icon-favor.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="605154625"/>
 								<reference key="IBUIFont" ref="289495396"/>
@@ -984,9 +984,9 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="icon-accommodation.png">{50, 50}</string>
+			<string key="icon-favor.png">{50, 50}</string>
 			<string key="icon-item.png">{50, 50}</string>
 			<string key="icon-ride.png">{50, 50}</string>
-			<string key="icon-service.png">{50, 50}</string>
 			<string key="pointing-corner-brown.png">{40, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

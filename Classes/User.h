@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Community;
+
 @interface User : NSObject
 
 @property (strong) NSString *userId;
@@ -19,6 +21,7 @@
 
 @property (strong) UIImage *avatar;
 @property (strong) NSArray *communities;
+@property (strong) Community *currentCommunity;
 
 @property (readonly) NSString *name;
 

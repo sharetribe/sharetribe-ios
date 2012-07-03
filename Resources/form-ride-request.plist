@@ -1,73 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <array>
-        <dict>
-            <key>type</key>
-            <string>date</string>
-            <key>defaultAlternative</key>
-            <string>Repeated (add details below)</string>
-            <key>defaultTimeIntervalInDays</key>
-            <integer>1</integer>
-            <key>includeTime</key>
-            <true/>
-            <key>title</key>
-            <string>Departure time</string>
-            <key>mapsTo</key>
-            <string>departureAt</string>
-            <key>mandatory</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>type</key>
-            <string>location</string>
-            <key>title</key>
-            <string>Origin</string>
-            <key>mapsTo</key>
-            <string>origin</string>
-        </dict>
-        <dict>
-            <key>type</key>
-            <string>location</string>
-            <key>title</key>
-            <string>Destination</string>
-            <key>mapsTo</key>
-            <string>destination</string>
-        </dict>
-        <dict>
-            <key>type</key>
-            <string>textarea</string>
-            <key>title</key>
-            <string>Detailed description</string>
-            <key>mapsTo</key>
-            <string>description</string>
-        </dict>
-        <dict>
-            <key>type</key>
-            <string>textfield</string>
-            <key>title</key>
-            <string>Tags</string>
-            <key>subtitle</key>
-            <string>(separate with comma)</string>
-            <key>mapsTo</key>
-            <string>tags</string>
-            <key>whatIsThis</key>
-            <string>With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing "furniture" and "seating". If you're offering help in computer problems, proper tags might include "help" and "computers".\n\nYou can add as many tags to a listing as you like. Separate tags with commas.</string>
-        </dict>
-        <dict>
-            <key>type</key>
-            <string>choice</string>
-            <key>alternatives</key>
-            <array>
-                <string>All Internet users</string>
-                <string>Members only</string>
-            </array>
-            <key>title</key>
-            <string>Visibility</string>
-            <key>mapsTo</key>
-            <string>visibility</string>
-            <key>mandatory</key>
-            <true/>
-        </dict>
-    </array>
+<array>
+	<dict>
+		<key>type</key>
+		<string>date</string>
+		<key>defaultAlternative</key>
+		<string>Repeated (add details below)</string>
+		<key>defaultTimeIntervalInDays</key>
+		<integer>1</integer>
+		<key>includeTime</key>
+		<true/>
+		<key>title</key>
+		<string>Departure time</string>
+		<key>mapsTo</key>
+		<string>validUntil</string>
+		<key>mandatory</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>location</string>
+		<key>title</key>
+		<string>Origin</string>
+		<key>mapsTo</key>
+		<string>location</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>location</string>
+		<key>title</key>
+		<string>Destination</string>
+		<key>mapsTo</key>
+		<string>destination</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>textarea</string>
+		<key>title</key>
+		<string>Detailed description</string>
+		<key>mapsTo</key>
+		<string>description</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>textfield</string>
+		<key>title</key>
+		<string>Tags</string>
+		<key>subtitle</key>
+		<string>(separate with comma)</string>
+		<key>mapsTo</key>
+		<string>tags</string>
+		<key>whatIsThis</key>
+		<string>With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.</string>
+		<key>autocapitalization</key>
+		<string>NO</string>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>choice</string>
+		<key>alternatives</key>
+		<array>
+			<string>All Internet users</string>
+			<string>Members only</string>
+		</array>
+		<key>title</key>
+		<string>Visibility</string>
+		<key>mapsTo</key>
+		<string>visibility</string>
+		<key>mandatory</key>
+		<true/>
+	</dict>
+</array>
 </plist>

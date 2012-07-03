@@ -31,6 +31,8 @@
 		<string>tags</string>
 		<key>whatIsThis</key>
 		<string>With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.</string>
+		<key>autocapitalization</key>
+		<string>NO</string>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -42,7 +44,7 @@
 		<key>title</key>
 		<string>Expiration date</string>
 		<key>mapsTo</key>
-		<string>expiresAt</string>
+		<string>validUntil</string>
 		<key>mandatory</key>
 		<true/>
 		<key>whatIsThis</key>

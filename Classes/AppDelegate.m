@@ -85,12 +85,15 @@
     [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble-white"] forState:UIControlStateHighlighted];
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(newListingPosted:) name:kNotificationForPostingNewListing object:nil];
+    [notificationCenter addObserver:self selector:@selector(newListingPosted:) name:kNotificationForDidPostListing object:nil];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [notificationCenter addObserver:self selector:@selector(showLogin) name:kNotificationForUserDidLogOut object:nil];
     
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    
+    // Register for push notifications
+    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
     
     if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
         [self showLogin];
@@ -123,6 +126,32 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
+{
+    NSString *deviceToken = [[deviceTokenData description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+	NSLog(@"Registered for push notifications with token: %@", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+	NSLog(@"Failed to register for push notifications: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString *message = nil;
+    id alert = [userInfo objectForKey:@"alert"];
+    if ([alert isKindOfClass:NSString.class]) {
+        message = alert;
+    } else if ([alert isKindOfClass:NSDictionary.class]) {
+        message = [alert objectForKey:@"body"];
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New notification!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+}
+
 - (void)showLogin
 {
     LoginViewController *loginViewer = [[LoginViewController alloc] init];
@@ -132,20 +161,7 @@
 
 - (void)newListingPosted:(NSNotification *)notification
 {
-    Listing *listing = (Listing *) notification.object;
-    
-    ListingsTopViewController *targetController;
-    if (listing.type == ListingTypeOffer) {
-        targetController = offersViewController;
-    } else {
-        targetController = requestsViewController;
-    }
-    
-    if (targetController.listings != nil) {
-        targetController.listings = [targetController.listings arrayByAddingObject:listing];
-    } else {
-        targetController.listings = [NSArray arrayWithObject:listing];
-    }
+    [[SharetribeAPIClient sharedClient] getListings];  // just to refresh & get the listing back from server
 }
 
 - (void)userDidLogIn:(NSNotification *)notification

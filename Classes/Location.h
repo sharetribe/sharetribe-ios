@@ -17,4 +17,9 @@
 
 - (id)initWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude address:(NSString *)address;
 
+- (id)copy;
+
++ (Location *)currentLocation;
++ (void)setCurrentLocation:(Location *)newCurrentLocation;
+
 @end

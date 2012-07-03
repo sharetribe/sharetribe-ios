@@ -29,6 +29,7 @@
 @synthesize image;
 
 @synthesize location;
+@synthesize destination;
 
 @synthesize author;
 @synthesize createdAt;
@@ -58,13 +59,18 @@
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
     
     [JSON setObject:title forKey:@"title"];
-    [JSON setObject:description forKey:@"description"];
     [JSON setObject:[Listing stringFromCategory:category] forKey:@"category"];
     [JSON setObject:[Listing stringFromType:type] forKey:@"listing_type"];
     
-    NSString *shareTypeForJSON = [shareType lowercaseString];
-    shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    [JSON setObject:shareTypeForJSON forKey:@"share_type"];
+    if (description != nil) {
+        [JSON setObject:description forKey:@"description"];
+    }
+    
+    if (shareType != nil) {
+        NSString *shareTypeForJSON = [shareType lowercaseString];
+        shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        [JSON setObject:shareTypeForJSON forKey:@"share_type"];
+    }
     
     if (visibility != nil) {
         [JSON setObject:visibility forKey:@"visibility"];
@@ -166,6 +172,8 @@
     listing.validUntil = [formatter dateFromString:[[dict objectOrNilForKey:@"valid_until"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
         
     listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
+    
+    NSLog(@"parsed listing: %@", dict);
     
     return listing;
 }

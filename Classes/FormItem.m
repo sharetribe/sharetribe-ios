@@ -50,6 +50,7 @@
         item.title = [dataDict valueForKey:@"title"];
         item.subtitle = [dataDict valueForKey:@"subtitle"];
         item.mapsTo = [dataDict valueForKey:@"mapsTo"];
+        NSLog(@"%@ maps to %@", item.title, item.mapsTo);
         item.whatIsThis = [dataDict valueForKey:@"whatIsThis"];
         item.mandatory = [[dataDict valueForKey:@"mandatory"] boolValue];
         item.alternatives = [dataDict valueForKey:@"alternatives"];

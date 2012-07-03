@@ -9,6 +9,7 @@
 #import "SharetribeAPIClient.h"
 
 #import "AFNetworking.h"
+#import "Community.h"
 #import "Listing.h"
 #import "User.h"
 #import <YAJLiOS/YAJL.h>
@@ -54,7 +55,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }
         
     [self postPath:@"tokens" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+        NSLog(@"logged in: %@", responseObject);
         if ([responseObject isKindOfClass:NSDictionary.class]) {
             NSString *token = [responseObject objectForKey:@"api_token"];
             [self setDefaultHeader:@"Sharetribe-API-Token" value:token];            
@@ -76,7 +77,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForLoginConnectionDidFail object:nil];
         }
-        NSLog(@"%@", error);
+        NSLog(@"failed to log in: %@", error);
     }];
 }
 
@@ -94,34 +95,39 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (void)getListings
 {
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSMutableDictionary *params = [self basicParams];
     
     [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+        NSLog(@"got listings for params: %@\nwith result: %@", params, responseObject);
         NSArray *listings = [Listing listingsFromArrayOfDicts:responseObject];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListings object:listings];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSLog(@"failed to get listings for params: %@\nerror: %@", params, error);
     }];
 }
 
 - (void)getListingWithId:(NSInteger)listingId
 {
-    [self getPath:[NSString stringWithFormat:@"listings/%d.json", listingId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    NSMutableDictionary *params = [self basicParams];
+    
+    [self getPath:[NSString stringWithFormat:@"listings/%d.json", listingId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"got listing for id %d with result: %@", listingId, responseObject);
         Listing *listing = [Listing listingFromDict:responseObject];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListingDetails object:listing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSLog(@"failed to get listing with id %d: %@", listingId, error);
     }];
 }
 
 - (void)postNewListing:(Listing *)listing
 {
-    [self postPath:@"listings" parameters:[listing asJSON] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    NSMutableDictionary *params = [self basicParams];
+    [params addEntriesFromDictionary:[listing asJSON]];
+    
+    [self postPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"posted new listing with result: %@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSLog(@"failed to post new listing: %@", error);
         // NSLog(@"%@", operation.request.allHTTPHeaderFields);
         // NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSASCIIStringEncoding]);
     }];
@@ -130,9 +136,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 - (void)getUserWithId:(NSString *)userId
 {
     [self getPath:[NSString stringWithFormat:@"users/%@.json", userId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+        NSLog(@"got user with id %@: %@", userId, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSLog(@"failed to get user with id %@: %@", userId, error);
     }];
 }
 
@@ -142,6 +148,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     if (currentUserId != nil) {
         [self getUserWithId:currentUserId];
     }
+}
+
+- (NSMutableDictionary *)basicParams
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    User *user = [User currentUser];
+    if (user.currentCommunity != nil) {
+        [params setObject:[NSNumber numberWithInt:user.currentCommunity.communityId] forKey:@"community_id"];
+    }
+    
+    return params;
 }
 
 @end

@@ -154,7 +154,7 @@
     [messageThread.messages addObject:message];
     messagesView.messages = messageThread.messages;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForPostingNewMessage object:messageThread];
+    // [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForPostingNewMessage object:messageThread];
 }
 
 @end

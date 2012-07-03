@@ -37,7 +37,9 @@
     listings = [NSMutableArray arrayWithArray:newListings];
     [listings sortUsingFunction:compareListingsByDate context:NULL];
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    if (listings.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning

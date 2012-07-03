@@ -74,8 +74,15 @@
         [self.view addSubview:datePicker];
         
         rowSpacing = 18;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostListing:) name:kNotificationForDidPostListing object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +115,16 @@
         
         self.listing = [[Listing alloc] init];
         listing.type = ListingTypeOffer;
-        listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Siellähän se"];
+        
+        Location *currentLocation = [Location currentLocation];
+        if (currentLocation != nil) {
+            listing.location = [currentLocation copy];
+            listing.destination = [currentLocation copy];
+        } else {
+            listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Siellähän se"];
+            listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Sinnehän mä"];
+        }
+        
         [table setContentOffset:CGPointZero animated:NO];
         
         [header setListingType:listing.type];
@@ -142,6 +158,15 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)didPostListing:(NSNotification *)notification
+{    
+    self.listing = nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)reloadFormItems
@@ -296,7 +321,10 @@
             [mapButton addTarget:self action:@selector(mapPressed:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:mapButton];
             
-            [mapView addAnnotation:listing];
+            Location *location = [listing valueForKey:formItem.mapsTo];
+            if (location != nil) {
+                [mapView addAnnotation:location];
+            }
         }
     }
     
@@ -466,12 +494,18 @@
     } else if (formItem.type == FormItemTypeLocation) {
         
         MKMapView *mapView = (MKMapView *) [cell viewWithTag:kCellMapViewTag];
-        if (mapView.centerCoordinate.latitude != listing.coordinate.latitude ||
-            mapView.centerCoordinate.longitude != listing.coordinate.longitude) {
+        
+        [mapView removeAnnotations:mapView.annotations];
+        
+        Location *location = [listing valueForKey:formItem.mapsTo];
+        if (location != nil) {
+            [mapView addAnnotation:location];
+        }
+        
+        if (mapView.centerCoordinate.latitude != location.coordinate.latitude ||
+            mapView.centerCoordinate.longitude != location.coordinate.longitude) {
             
-            [mapView removeAnnotation:listing];
-            [mapView addAnnotation:listing];
-            [mapView setRegion:MKCoordinateRegionMakeWithDistance(listing.coordinate, 2000, 4000) animated:NO];
+            [mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, 2000, 4000) animated:NO];
         }
     }
     
@@ -674,7 +708,7 @@
 
 - (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    Location *location = [[Location alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude address:@""];
     [listing setValue:location forKey:formItemBeingEdited.mapsTo];
     [table reloadData];
 }
@@ -757,11 +791,7 @@
     listing.author = [User currentUser];
     listing.createdAt = [NSDate date];
     
-    [[SharetribeAPIClient sharedClient] postNewListing:listing];
-        
-    // self.listing = nil;
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[SharetribeAPIClient sharedClient] postNewListing:listing];    
 }
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender

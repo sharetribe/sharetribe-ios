@@ -28,4 +28,28 @@
     return location.coordinate;
 }
 
+- (id)copy
+{
+    return [[Location alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude address:address.copy];
+}
+
++ (Location *)currentLocation
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    CLLocationDegrees latitude = [defaults doubleForKey:@"current latitude"];
+    CLLocationDegrees longitude = [defaults doubleForKey:@"current longitude"];
+    NSString *address = [defaults objectForKey:@"current address"];
+    
+    return [[Location alloc] initWithLatitude:latitude longitude:longitude address:address];
+}
+
++ (void)setCurrentLocation:(Location *)newCurrentLocation
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setDouble:newCurrentLocation.coordinate.latitude forKey:@"current latitude"];
+    [defaults setDouble:newCurrentLocation.coordinate.longitude forKey:@"current longitude"];
+    [defaults setObject:newCurrentLocation.address forKey:@"current address"];
+    [defaults synchronize];
+}
+
 @end

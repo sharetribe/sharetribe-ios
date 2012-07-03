@@ -11,6 +11,7 @@
 #import "Listing.h"
 #import "ListingsTopViewController.h"
 #import "ListingAnnotationView.h"
+#import "Location.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation ListingsMapViewController
@@ -182,6 +183,12 @@
         cell.alpha = 0;
         [UIView commitAnimations];
     }
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    Location *currentLocation = [[Location alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude address:@""];
+    [Location setCurrentLocation:currentLocation];
 }
 
 @end
