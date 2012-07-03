@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4810FA1D15A3BEBF005E1D98 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4810FA1C15A3BEBE005E1D98 /* LoginViewController.xib */; };
 		481DEABA14F9A11100B2CA5D /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAB914F9A11100B2CA5D /* Message.m */; };
 		481DEAC114F9B9D500B2CA5D /* ListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAC014F9B9D400B2CA5D /* ListingViewController.m */; };
 		481DEAC414F9CB2900B2CA5D /* NSDate+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 481DEAC314F9CB2800B2CA5D /* NSDate+Sharetribe.m */; };
@@ -31,7 +32,6 @@
 		48228DFF14F18EF6001DC893 /* pointing-corner-brown.png in Resources */ = {isa = PBXBuildFile; fileRef = 48228DFD14F18EF5001DC893 /* pointing-corner-brown.png */; };
 		48228E0014F18EF6001DC893 /* pointing-corner-brown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48228DFE14F18EF6001DC893 /* pointing-corner-brown@2x.png */; };
 		48482629159BF09F00B15207 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482627159BF09F00B15207 /* LoginViewController.m */; };
-		4848262A159BF09F00B15207 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48482628159BF09F00B15207 /* LoginViewController.xib */; };
 		4848262E159BF6F600B15207 /* sharetribe_logo_tagline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */; };
 		48482638159C105D00B15207 /* Community.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482637159C105C00B15207 /* Community.m */; };
 		486773AC14F1AC9300D7EFD8 /* FormItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 486773AB14F1AC9300D7EFD8 /* FormItem.m */; };
@@ -128,6 +128,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4810FA1C15A3BEBE005E1D98 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Resources/LoginViewController.xib; sourceTree = SOURCE_ROOT; };
 		481DEAB814F9A11000B2CA5D /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		481DEAB914F9A11100B2CA5D /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		481DEABF14F9B9D300B2CA5D /* ListingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingViewController.h; sourceTree = "<group>"; };
@@ -156,7 +157,6 @@
 		48228DFE14F18EF6001DC893 /* pointing-corner-brown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointing-corner-brown@2x.png"; sourceTree = "<group>"; };
 		48482626159BF09F00B15207 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		48482627159BF09F00B15207 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		48482628159BF09F00B15207 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = ../Resources/LoginViewController.xib; sourceTree = "<group>"; };
 		4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharetribe_logo_tagline@2x.png"; sourceTree = "<group>"; };
 		48482633159BFF2C00B15207 /* Sharetribe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sharetribe-Info.plist"; sourceTree = SOURCE_ROOT; };
 		48482634159BFF2C00B15207 /* Sharetribe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sharetribe-Prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -499,7 +499,7 @@
 				486773C314F1EEB900D7EFD8 /* ListingCell.xib */,
 				48FF002614FB155200AFB1AC /* ListingAnnotationView.h */,
 				48FF002714FB155200AFB1AC /* ListingAnnotationView.m */,
-				48482628159BF09F00B15207 /* LoginViewController.xib */,
+				4810FA1C15A3BEBE005E1D98 /* LoginViewController.xib */,
 				4871D03B150C2BAD00280549 /* MessagesListCell.h */,
 				4871D03C150C2BAE00280549 /* MessagesListCell.m */,
 				4871D038150C2BA100280549 /* MessagesListCell.xib */,
@@ -715,8 +715,8 @@
 				48C9F6B815040410001F785A /* icon-eye.png in Resources */,
 				48C9F6B915040410001F785A /* icon-eye@2x.png in Resources */,
 				4871D039150C2BA100280549 /* MessagesListCell.xib in Resources */,
-				4848262A159BF09F00B15207 /* LoginViewController.xib in Resources */,
 				4848262E159BF6F600B15207 /* sharetribe_logo_tagline@2x.png in Resources */,
+				4810FA1D15A3BEBF005E1D98 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
