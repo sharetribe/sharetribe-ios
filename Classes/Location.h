@@ -19,6 +19,8 @@
 
 - (id)copy;
 
+- (NSDictionary *)asJSON;
+
 + (Location *)currentLocation;
 + (void)setCurrentLocation:(Location *)newCurrentLocation;
 

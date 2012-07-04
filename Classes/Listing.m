@@ -58,9 +58,12 @@
 {
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
     
-    [JSON setObject:title forKey:@"title"];
     [JSON setObject:[Listing stringFromCategory:category] forKey:@"category"];
     [JSON setObject:[Listing stringFromType:type] forKey:@"listing_type"];
+
+    if (title != nil) {
+        [JSON setObject:title forKey:@"title"];
+    }
     
     if (description != nil) {
         [JSON setObject:description forKey:@"description"];
@@ -70,6 +73,14 @@
         NSString *shareTypeForJSON = [shareType lowercaseString];
         shareTypeForJSON = [shareTypeForJSON stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         [JSON setObject:shareTypeForJSON forKey:@"share_type"];
+    }
+    
+    if (location != nil) {
+        // [JSON setObject:[location asJSON] forKey:@"origin_location"];
+    }
+    
+    if (category == ListingCategoryRide && destination != nil) {
+        // [JSON setObject:[location asJSON] forKey:@"destination_location"];
     }
     
     if (visibility != nil) {

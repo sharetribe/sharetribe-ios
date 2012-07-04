@@ -33,6 +33,19 @@
     return [[Location alloc] initWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude address:address.copy];
 }
 
+- (NSDictionary *)asJSON
+{
+    NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
+    
+    [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
+    [JSON setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];    
+    if (address != nil) {
+        [JSON setObject:address forKey:@"address"];
+    }
+    
+    return JSON;
+}
+
 + (Location *)currentLocation
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

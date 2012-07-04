@@ -125,9 +125,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [params addEntriesFromDictionary:[listing asJSON]];
     
     [self postPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"posted new listing with result: %@", responseObject);
+        NSLog(@"posted new listing: %@\nwith result: %@", params, responseObject);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostListing object:listing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"failed to post new listing: %@", error);
+        NSLog(@"failed to post new listing: %@\nerror: %@\nresponse: %@", params, error, operation.responseString);
         // NSLog(@"%@", operation.request.allHTTPHeaderFields);
         // NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSASCIIStringEncoding]);
     }];
