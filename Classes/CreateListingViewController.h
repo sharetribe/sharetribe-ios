@@ -28,6 +28,9 @@
 
 @property (strong, nonatomic) UIButton *submitButton;
 @property (strong, nonatomic) UIBarButtonItem *cancelButton;
+@property (strong, nonatomic) UIView *uploadTitleView;
+@property (strong, nonatomic) UILabel *uploadProgressLabel;
+@property (strong, nonatomic) UIProgressView *uploadProgressView;
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
 

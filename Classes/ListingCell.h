@@ -10,7 +10,7 @@
 
 #import "Listing.h"
 
-#define kListingCellHeight 90
+#define kListingCellHeight 91
 
 @interface ListingCell : UITableViewCell {
 

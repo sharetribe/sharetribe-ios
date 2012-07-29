@@ -13,7 +13,10 @@
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface CreateListingViewController ()
+@interface CreateListingViewController () {
+    BOOL convertingImage;
+    BOOL submissionWaitingForImage;
+}
 - (void)dismissDatePicker;
 @end
 
@@ -31,6 +34,9 @@
 
 @synthesize submitButton;
 @synthesize cancelButton;
+@synthesize uploadTitleView;
+@synthesize uploadProgressLabel;
+@synthesize uploadProgressView;
 
 @synthesize datePicker;
 
@@ -75,6 +81,7 @@
         
         rowSpacing = 18;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDidProgress:) name:kNotificationForUploadDidProgress object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostListing:) name:kNotificationForDidPostListing object:nil];
     }
     return self;
@@ -129,6 +136,9 @@
         
         [header setListingType:listing.type];
         [header setListingCategory:kNoListingCategory];
+        
+        convertingImage = NO;
+        submissionWaitingForImage = NO;
     }
         
     self.title = NSLocalizedString(@"Tabs.NewListing", @"");
@@ -158,6 +168,11 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)uploadDidProgress:(NSNotification *)notification
+{
+    uploadProgressView.progress = [notification.object floatValue];
 }
 
 - (void)didPostListing:(NSNotification *)notification
@@ -684,12 +699,30 @@
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, NULL);
     }
     
+    [self performSelectorInBackground:@selector(convertImageToData) withObject:nil];
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)convertImageToData
+{
+    convertingImage = YES;
+    listing.imageData = UIImageJPEGRepresentation(listing.image, 0.9);
+    convertingImage = NO;
+    [self performSelectorOnMainThread:@selector(imageConversionFinished) withObject:nil waitUntilDone:NO];
+}
+
+- (void)imageConversionFinished
+{
+    if (submissionWaitingForImage) {
+        submissionWaitingForImage = NO;
+        [self postButtonPressed:nil];
+    }
 }
 
 #pragma mark - ListingTypeSelectionDelegate
@@ -789,7 +822,29 @@
 }
 
 - (IBAction)postButtonPressed:(UIButton *)sender
-{   
+{
+    if (uploadTitleView == nil) {
+        self.uploadTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+        self.uploadProgressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 20)];
+        uploadProgressLabel.font = [UIFont boldSystemFontOfSize:13];
+        uploadProgressLabel.textColor = [UIColor whiteColor];
+        uploadProgressLabel.shadowColor = [UIColor darkTextColor];
+        uploadProgressLabel.shadowOffset = CGSizeMake(0, 1);
+        uploadProgressLabel.backgroundColor = [UIColor clearColor];
+        uploadProgressLabel.textAlignment = UITextAlignmentCenter;
+        self.uploadProgressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, 160, 9)];
+        [uploadTitleView addSubview:uploadProgressLabel];
+        [uploadTitleView addSubview:uploadProgressView];
+    }
+    uploadProgressLabel.text = @"Posting...";
+    uploadProgressView.progress = 0;
+    self.navigationItem.titleView = uploadTitleView;
+    
+    if (convertingImage) {
+        submissionWaitingForImage = YES;
+        return;
+    }
+    
     listing.author = [User currentUser];
     listing.createdAt = [NSDate date];
     

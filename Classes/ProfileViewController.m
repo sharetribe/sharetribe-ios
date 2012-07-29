@@ -128,12 +128,7 @@
 {
     if (scrollView == self.scrollView) {
         CGFloat mapViewBaselineY = -(self.mapView.height-150)/2;
-        CGFloat y;
-        if (scrollView.contentOffset.y < 0) {
-            y = mapViewBaselineY - scrollView.contentOffset.y/2;
-        } else {
-            y = mapViewBaselineY - scrollView.contentOffset.y;
-        }
+        CGFloat y = mapViewBaselineY - scrollView.contentOffset.y/2;
         self.mapView.frame = CGRectMake(0, y, self.mapView.width, self.mapView.height);
     }
 }

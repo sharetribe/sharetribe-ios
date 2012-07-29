@@ -16,12 +16,12 @@
 
 - (void)setImageWithUser:(User *)user
 {
-    [self setImageWithURL:user.pictureURL placeholderImage:[UIImage imageNamed:@"default-avatar-small"]];
+    [self setImageWithURL:user.pictureURL placeholderImage:[UIImage imageNamed:@"default-avatar"]];
 }
 
 - (void)setThumbnailImageWithUser:(User *)user
 {
-    [self setImageWithURL:user.thumbnailURL placeholderImage:[UIImage imageNamed:@"default-avatar-small"]];
+    [self setImageWithURL:user.thumbnailURL placeholderImage:[UIImage imageNamed:@"default-avatar"]];
 }
 
 @end

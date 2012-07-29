@@ -27,7 +27,9 @@
 
 @synthesize thumbnailURL;
 @synthesize imageURLs;
+
 @synthesize image;
+@synthesize imageData;
 
 @synthesize location;
 @synthesize destination;

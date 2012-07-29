@@ -240,18 +240,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 {
     NSMutableDictionary *params = [self baseParams];
     [params addEntriesFromDictionary:[listing asJSON]];
-    
-    NSData *imageData = nil;
-    if (listing.image != nil) {
-        imageData = UIImageJPEGRepresentation(listing.image, 0.9);
-    }
-    
+        
     NSURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:@"listings" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        if (imageData != nil) {
+        if (listing.imageData != nil) {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             dateFormatter.dateFormat = @"yyyy-MM-dd-HH.mm.ss.'jpg'";
             NSString *filename = [dateFormatter stringFromDate:[NSDate date]];
-            [formData appendPartWithFileData:imageData name:@"image" fileName:filename mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:listing.imageData name:@"image" fileName:filename mimeType:@"image/jpeg"];
         }
     }];
     

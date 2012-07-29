@@ -44,6 +44,7 @@ typedef enum {
 @property (strong) NSArray *imageURLs;
 
 @property (strong) UIImage *image;
+@property (strong) NSData *imageData;
 
 @property (strong) Location *location;
 @property (strong) Location *destination;

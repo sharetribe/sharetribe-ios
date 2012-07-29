@@ -161,6 +161,8 @@
             avatarView = [avatarViews objectAtIndex:i];
         } else {
             avatarView = [[UIImageView alloc] init];
+            avatarView.contentMode = UIViewContentModeScaleAspectFill;
+            avatarView.clipsToBounds = YES;
             avatarView.layer.borderColor = kKassiLightBrownColor.CGColor;
             avatarView.layer.borderWidth = 1;
             avatarView.frame = CGRectMake(10, 0, 30, 30);

@@ -32,7 +32,7 @@
 - (void)dealloc
 {
     self.conversations = nil;
-    // [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationForPostingNewMessage object:nil];
+    // [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +47,9 @@
     [super viewDidLoad];
 
     self.title = @"Messages";
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.tableView.backgroundColor = kKassiLightBrownColor;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotConversations:) name:kNotificationForDidReceiveConversations object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotUser:) name:kNotificationForDidReceiveUser object:nil];

@@ -88,7 +88,7 @@
     leftEdgeLine.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:leftEdgeLine];
     
-    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goBack)];
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipedToGoBack)];
     swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.scrollView addGestureRecognizer:swipeRecognizer];
         
@@ -211,8 +211,11 @@
     self.scrollView.contentSize = CGSizeMake(320, contentHeight);
 }
 
-- (IBAction)goBack
+- (IBAction)swipedToGoBack
 {
+    if (commentsView.composeField.isFirstResponder) {
+        return;
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
