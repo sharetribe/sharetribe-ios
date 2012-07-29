@@ -1,6 +1,6 @@
 //
 //  ListingsListViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/6/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -53,7 +53,7 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = kKassiLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorColor = [UIColor clearColor];
     
     self.updateIntroLabel = [[UILabel alloc] init];
@@ -87,7 +87,7 @@
     UIView *headerBackground = [[UIView alloc] init];
     headerBackground.frame = CGRectMake(0, -460, 320, 460);
     headerBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    headerBackground.backgroundColor = kKassiDarkOrangeColor;
+    headerBackground.backgroundColor = kSharetribeDarkOrangeColor;
     
     self.header = [[UIView alloc] init];
     header.frame = CGRectMake(0, 0, 320, 0);

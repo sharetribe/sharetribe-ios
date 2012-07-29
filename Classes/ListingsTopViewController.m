@@ -1,6 +1,6 @@
 //
 //  ListingsTopViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/6/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -102,7 +102,7 @@
     
     self.search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0, 180, 44);
-    search.tintColor = kKassiDarkGreenColor;
+    search.tintColor = kSharetribeDarkGreenColor;
     search.delegate = self;
     // [[search.subviews objectAtIndex:0] removeFromSuperview];
     search.userInteractionEnabled = NO;

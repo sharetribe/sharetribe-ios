@@ -1,6 +1,6 @@
 //
 //  MessagesView.h
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/21/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.

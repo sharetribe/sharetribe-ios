@@ -1,6 +1,6 @@
 //
 //  Listing.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/6/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -79,11 +79,11 @@
     }
     
     if (location != nil) {
-        // [JSON setObject:[location asJSON] forKey:@"origin_location"];
+        [JSON setObject:[location asJSON] forKey:@"origin_location"];
     }
     
     if (category == ListingCategoryRide && destination != nil) {
-        // [JSON setObject:[location asJSON] forKey:@"destination_location"];
+        [JSON setObject:[destination asJSON] forKey:@"destination_location"];
     }
     
     if (visibility != nil) {

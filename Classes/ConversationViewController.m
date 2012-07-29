@@ -1,6 +1,6 @@
 //
 //  ConversationViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 3/4/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -58,8 +58,8 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.tintColor = kKassiDarkBrownColor;
-    self.view.backgroundColor = kKassiLightBrownColor;
+    self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
+    self.view.backgroundColor = kSharetribeLightBrownColor;
         
     int contentHeight = messagesView.y+messagesView.height+10;
     scrollView.contentSize = CGSizeMake(320, contentHeight);
@@ -72,7 +72,7 @@
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
         
-        self.view.backgroundColor = kKassiBrownColor;
+        self.view.backgroundColor = kSharetribeBrownColor;
         
         messagesView.x = 0;
         messagesView.width = 320;
@@ -137,7 +137,7 @@
 {
     [UIView beginAnimations:nil context:NULL];
     scrollView.height = 416-216;
-    // self.view.backgroundColor = kKassiBrownColor;
+    // self.view.backgroundColor = kSharetribeBrownColor;
     [UIView commitAnimations];
     
     int contentHeight = messagesView.y+messagesView.height+((inModalComposerMode) ? 0 : 10);
@@ -155,7 +155,7 @@
 {    
     [UIView beginAnimations:nil context:NULL];
     scrollView.height = 460-2*44-5;
-    // self.view.backgroundColor = kKassiLightBrownColor;
+    // self.view.backgroundColor = kSharetribeLightBrownColor;
     [UIView commitAnimations];
     
     int contentHeight = messagesView.y+messagesView.height+10;

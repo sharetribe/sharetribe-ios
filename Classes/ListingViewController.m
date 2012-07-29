@@ -1,6 +1,6 @@
 //
 //  ListingViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/26/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -55,7 +55,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kKassiLightBrownColor;
+    self.view.backgroundColor = kSharetribeLightBrownColor;
     
     // self.hidesBottomBarWhenPushed = YES;
     

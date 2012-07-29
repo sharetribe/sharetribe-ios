@@ -1,6 +1,6 @@
 //
 //  ConversationListCell.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/20/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -35,7 +35,7 @@
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"ConversationListCell" owner:self options:nil];
     if (nibContents.count > 0) {
         ConversationListCell *cell = [nibContents objectAtIndex:0];
-        cell.backgroundColor = kKassiLightBrownColor;
+        cell.backgroundColor = kSharetribeLightBrownColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.imageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
         cell.imageView.layer.borderWidth = 1;
@@ -68,9 +68,9 @@
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.backgroundColor = kKassiLightOrangeColor;
+        self.backgroundColor = kSharetribeLightOrangeColor;
     } else {
-        self.backgroundColor = kKassiLightBrownColor;
+        self.backgroundColor = kSharetribeLightBrownColor;
     }
 }
 

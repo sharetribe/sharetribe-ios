@@ -1,6 +1,6 @@
 //
 //  CreateListingViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/6/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -48,13 +48,13 @@
     self = [super init];
     if (self) {
                 
-        self.view.backgroundColor = kKassiBrownColor;
+        self.view.backgroundColor = kSharetribeBrownColor;
                 
         self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) style:UITableViewStylePlain];
         table.dataSource = self;
         table.delegate = self;
         table.backgroundColor = [UIColor clearColor];
-        table.separatorColor = kKassiBrownColor;
+        table.separatorColor = kSharetribeBrownColor;
         
         self.header = [CreateListingHeaderView instance];
         header.delegate = self;
@@ -69,7 +69,7 @@
         
         self.footer = [[UIView alloc] init];
         footer.frame = CGRectMake(0, 0, 320, 110);
-        footer.backgroundColor = kKassiBrownColor;
+        footer.backgroundColor = kSharetribeBrownColor;
         [footer addSubview:submitButton];
         
         [self.view addSubview:table];
@@ -137,6 +137,8 @@
         [header setListingType:listing.type];
         [header setListingCategory:kNoListingCategory];
         
+        self.navigationItem.titleView = nil;
+        
         convertingImage = NO;
         submissionWaitingForImage = NO;
     }
@@ -144,7 +146,7 @@
     self.title = NSLocalizedString(@"Tabs.NewListing", @"");
     self.navigationItem.leftBarButtonItem = cancelButton;
     
-    self.navigationController.navigationBar.tintColor = kKassiDarkBrownColor;
+    self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
     
     [table reloadData];
 }
@@ -243,7 +245,7 @@
 
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:formItem.typeAsString];
-        cell.contentView.backgroundColor = kKassiBrownColor;
+        cell.contentView.backgroundColor = kSharetribeBrownColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         UILabel *titleLabel = [[UILabel alloc] init];
@@ -265,7 +267,7 @@
         NSString *helpButtonTitle = @"What's this?";
         [helpButton setTitle:helpButtonTitle forState:UIControlStateNormal];
         [helpButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [helpButton setTitleShadowColor:kKassiLightBrownColor forState:UIControlStateNormal];
+        [helpButton setTitleShadowColor:kSharetribeLightBrownColor forState:UIControlStateNormal];
         helpButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         helpButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
         helpButton.width = [helpButtonTitle sizeWithFont:helpButton.titleLabel.font].width;
@@ -281,7 +283,7 @@
             UITextField *textField = [[CustomTextField alloc] init];
             textField.font = [UIFont systemFontOfSize:15];
             textField.tag = kCellTextFieldTag;
-            textField.backgroundColor = kKassiLightBrownColor;
+            textField.backgroundColor = kSharetribeLightBrownColor;
             textField.keyboardAppearance = UIKeyboardAppearanceAlert;
             textField.returnKeyType = UIReturnKeyDone;
             textField.autocapitalizationType = formItem.autocapitalizationType;
@@ -294,7 +296,7 @@
             UITextView *textView = [[UITextView alloc] init];
             textView.font = [UIFont systemFontOfSize:15];
             textView.tag = kCellTextViewTag;
-            textView.backgroundColor = kKassiLightBrownColor;
+            textView.backgroundColor = kSharetribeLightBrownColor;
             textView.keyboardAppearance = UIKeyboardAppearanceAlert;
             textView.autocapitalizationType = formItem.autocapitalizationType;
             textView.delegate = self;
@@ -307,8 +309,8 @@
             [cell addSubview:photoView];
             
             UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [photoButton setTitleColor:kKassiDarkBrownColor forState:UIControlStateNormal];
-            [photoButton setTitleColor:kKassiBrownColor forState:UIControlStateHighlighted];
+            [photoButton setTitleColor:kSharetribeDarkBrownColor forState:UIControlStateNormal];
+            [photoButton setTitleColor:kSharetribeBrownColor forState:UIControlStateHighlighted];
             [photoButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
             photoButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
             photoButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
@@ -324,7 +326,7 @@
             mapView.userInteractionEnabled = NO;
             mapView.showsUserLocation = NO;
             mapView.layer.borderWidth = 1;
-            mapView.layer.borderColor = kKassiLightBrownColor.CGColor;
+            mapView.layer.borderColor = kSharetribeLightBrownColor.CGColor;
             mapView.layer.cornerRadius = 8;
             mapView.alpha = 1;
             mapView.tag = kCellMapViewTag;
@@ -440,7 +442,7 @@
                 choiceLabel.text = alternative;
                 choiceLabel.textColor = [UIColor blackColor];
                 if (formItem.type == FormItemTypeDate && ![alternative isEqualToString:formItem.defaultAlternative]) {
-                    choiceLabel.textColor = kKassiDarkBrownColor;
+                    choiceLabel.textColor = kSharetribeDarkBrownColor;
                 }
                 
                 UIImageView *choiceCheckmark = (UIImageView *) [choiceView viewWithTag:kChoiceCellCheckmarkTag];
@@ -455,10 +457,10 @@
                 
                 [UIView beginAnimations:nil context:NULL];
                 if ([chosenAlternative isEqual:choiceLabel.text] || choiceCheckmark.image == nil) {
-                    choiceView.backgroundColor = kKassiLightBrownColor;
+                    choiceView.backgroundColor = kSharetribeLightBrownColor;
                     choiceCheckmark.alpha = 1;
                 } else {
-                    choiceView.backgroundColor = kKassiLightishBrownColor;
+                    choiceView.backgroundColor = kSharetribeLightishBrownColor;
                     choiceCheckmark.alpha = 0;
                 }
                 
@@ -491,13 +493,13 @@
             [photoButton setTitle:nil forState:UIControlStateNormal];
             
             photoView.layer.cornerRadius = 0;
-            photoView.layer.borderColor = kKassiDarkBrownColor.CGColor;
+            photoView.layer.borderColor = kSharetribeDarkBrownColor.CGColor;
             photoView.layer.borderWidth = 1;
             
         } else {
             
             photoView.image = nil;
-            photoView.backgroundColor = kKassiLightBrownColor;
+            photoView.backgroundColor = kSharetribeLightBrownColor;
             photoView.frame = CGRectMake(10, 30, 300, rowHeight-30-rowSpacing);
             [photoButton setTitle:@"Add an image..." forState:UIControlStateNormal];
             

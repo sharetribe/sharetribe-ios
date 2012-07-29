@@ -1,6 +1,6 @@
 //
 //  CreateListingHeaderView.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 2/7/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -54,11 +54,11 @@
     [super awakeFromNib];
     
     self.backgroundColor = [UIColor clearColor];
-    formBackgroundView.backgroundColor = kKassiBrownColor;
-    listingCategoryBackgroundView.backgroundColor = kKassiLightBrownColor;
+    formBackgroundView.backgroundColor = kSharetribeBrownColor;
+    listingCategoryBackgroundView.backgroundColor = kSharetribeLightBrownColor;
     
     UIView *topBackgroundView = [[UIView alloc] init];
-    topBackgroundView.backgroundColor = kKassiLightBrownColor;
+    topBackgroundView.backgroundColor = kSharetribeLightBrownColor;
     topBackgroundView.frame = CGRectMake(0, -460, 320, 460+self.height);
     topBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self addSubview:topBackgroundView];
@@ -70,10 +70,10 @@
     listingCategoryButtonForAccommodation.tag = ListingCategoryAccommodation;
     
     listingTypeTabForRequests.layer.cornerRadius = 7;
-    listingTypeTabForRequests.layer.borderColor = kKassiBrownColor.CGColor;
+    listingTypeTabForRequests.layer.borderColor = kSharetribeBrownColor.CGColor;
     
     listingTypeTabForOffers.layer.cornerRadius = 7;
-    listingTypeTabForOffers.layer.borderColor = kKassiBrownColor.CGColor;
+    listingTypeTabForOffers.layer.borderColor = kSharetribeBrownColor.CGColor;
     
     self.listingCategoryButtons = [NSArray arrayWithObjects:listingCategoryButtonForItems, listingCategoryButtonForFavors, listingCategoryButtonForRides, listingCategoryButtonForAccommodation, nil];
     
@@ -143,7 +143,7 @@
     for (ButtonWithBackgroundView *button in listingCategoryButtons) {
         if (button.tag == category) {
             
-            button.backgroundView.backgroundColor = kKassiLightBrownColor;
+            button.backgroundView.backgroundColor = kSharetribeLightBrownColor;
             button.backgroundView.layer.borderColor = [UIColor orangeColor].CGColor;
             button.backgroundView.layer.borderWidth = 1;
             
@@ -155,7 +155,7 @@
             
         } else {
             
-            button.backgroundView.backgroundColor = kKassiLightishBrownColor;
+            button.backgroundView.backgroundColor = kSharetribeLightishBrownColor;
             button.backgroundView.layer.borderColor = [UIColor grayColor].CGColor;
             button.backgroundView.layer.borderWidth = 0;
         }
@@ -163,25 +163,25 @@
     
     if (type == ListingTypeRequest) {
         listingCategoryIntroLabel.text = @"I need ";
-        listingTypeTabForRequests.backgroundColor = kKassiBrownColor;
+        listingTypeTabForRequests.backgroundColor = kSharetribeBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 0;
-        listingTypeTabForOffers.backgroundColor = kKassiLightishBrownColor;
+        listingTypeTabForOffers.backgroundColor = kSharetribeLightishBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 1;
     } else {
         listingCategoryIntroLabel.text = @"I want to offer ";
-        listingTypeTabForRequests.backgroundColor = kKassiLightishBrownColor;
+        listingTypeTabForRequests.backgroundColor = kSharetribeLightishBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 1;
-        listingTypeTabForOffers.backgroundColor = kKassiBrownColor;
+        listingTypeTabForOffers.backgroundColor = kSharetribeBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 0;
     }
     
     if (category == kNoListingCategory) {
         listingCategoryIntroLabel.text = @"Item, favor, ride, or accommodation?";
-        listingCategoryIntroLabel.textColor = kKassiDarkBrownColor;
-        listingCategoryBackgroundView.backgroundColor = kKassiLightishBrownColor;
+        listingCategoryIntroLabel.textColor = kSharetribeDarkBrownColor;
+        listingCategoryBackgroundView.backgroundColor = kSharetribeLightishBrownColor;
     } else {
         listingCategoryIntroLabel.textColor = [UIColor blackColor];
-        listingCategoryBackgroundView.backgroundColor = kKassiLightBrownColor;
+        listingCategoryBackgroundView.backgroundColor = kSharetribeLightBrownColor;
     }
     
     listingCategoryIntroLabel.width = [listingCategoryIntroLabel.text sizeWithFont:listingCategoryIntroLabel.font].width;

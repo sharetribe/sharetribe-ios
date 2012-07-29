@@ -1,6 +1,6 @@
 //
 //  MessagesListViewController.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 3/5/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -48,7 +48,7 @@
 
     self.title = @"Messages";
     
-    self.tableView.backgroundColor = kKassiLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotConversations:) name:kNotificationForDidReceiveConversations object:nil];

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  Kassi
+//  Sharetribe
 //
 //  Created by Janne Käki on 1/7/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -80,7 +80,7 @@ void uncaughtExceptionHandler(NSException *exception)
     messagesNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-envelope"];
     profileNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-kaapo"];
     
-    UIColor *tintColor = kKassiDarkGreenColor;
+    UIColor *tintColor = kSharetribeDarkGreenColor;
     offersNavigationController.navigationBar.tintColor = tintColor;
     requestsNavigationController.navigationBar.tintColor = tintColor;
     messagesNavigationController.navigationBar.tintColor = tintColor;

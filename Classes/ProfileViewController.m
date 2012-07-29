@@ -75,6 +75,7 @@
     
     if (user.phoneNumber != nil) {
         [phoneButton setTitle:user.phoneNumber forState:UIControlStateNormal];
+        phoneButton.width = [user.phoneNumber sizeWithFont:phoneButton.titleLabel.font].width;
         phoneButton.hidden = NO;
         phoneIconView.hidden = NO;
     } else {
