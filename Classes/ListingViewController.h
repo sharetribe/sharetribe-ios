@@ -15,12 +15,29 @@
 
 @property (strong) Listing *listing;
 
-@property (strong) UIScrollView *scrollView;
-@property (strong) UIImageView *imageView;
-@property (strong) UILabel *titleLabel;
-@property (strong) UILabel *textLabel;
+@property (strong) IBOutlet UIScrollView *scrollView;
+@property (strong) IBOutlet UIImageView *imageView;
+@property (strong) IBOutlet UIView *backgroundView;
+@property (strong) IBOutlet UIView *topShadowBar;
+
+@property (strong) IBOutlet UILabel *titleLabel;
+@property (strong) IBOutlet UILabel *textLabel;
+@property (strong) IBOutlet UILabel *tagTitleLabel;
+@property (strong) IBOutlet UILabel *tagListLabel;
+
+@property (strong) IBOutlet UIView *authorView;
+@property (strong) IBOutlet UIImageView *authorImageView;
+@property (strong) IBOutlet UILabel *authorIntroLabel;
+@property (strong) IBOutlet UILabel *authorNameLabel;
+@property (strong) IBOutlet UILabel *feedbackIntroLabel;
+@property (strong) IBOutlet UILabel *feedbackPercentLabel;
+@property (strong) IBOutlet UILabel *feedbackOutroLabel;
+
+@property (strong) IBOutlet UIButton *respondButton;
+@property (strong) IBOutlet UIButton *messageButton;
+
 @property (strong) MessagesView *commentsView;
-@property (strong) UIButton *followButton;
-@property (strong) UIButton *messageButton;
+
+- (IBAction)showAuthorProfile;
 
 @end

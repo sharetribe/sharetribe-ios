@@ -19,11 +19,15 @@
 @property (strong) NSString *phoneNumber;
 @property (strong) NSString *description;
 
-@property (strong) UIImage *avatar;
+@property (strong) NSURL *pictureURL;
+@property (strong) NSURL *thumbnailURL;
+
 @property (strong) NSArray *communities;
-@property (strong) Community *currentCommunity;
 
 @property (readonly) NSString *name;
+@property (readonly) NSString *shortName;
+
+@property (readonly) BOOL isCurrentUser;
 
 + (User *)currentUser;
 + (void)setCurrentUserWithDict:(NSDictionary *)dict;

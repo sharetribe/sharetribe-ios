@@ -165,7 +165,7 @@
     self.listing = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted successully" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 
@@ -269,7 +269,7 @@
             textField.backgroundColor = kKassiLightBrownColor;
             textField.keyboardAppearance = UIKeyboardAppearanceAlert;
             textField.returnKeyType = UIReturnKeyDone;
-            textField.autocapitalizationType = (formItem.autocapitalization) ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone;
+            textField.autocapitalizationType = formItem.autocapitalizationType;
             textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             textField.delegate = self;
             [cell addSubview:textField];
@@ -281,7 +281,7 @@
             textView.tag = kCellTextViewTag;
             textView.backgroundColor = kKassiLightBrownColor;
             textView.keyboardAppearance = UIKeyboardAppearanceAlert;
-            textView.autocapitalizationType = (formItem.autocapitalization) ? UITextAutocapitalizationTypeSentences : UITextAutocapitalizationTypeNone;
+            textView.autocapitalizationType = formItem.autocapitalizationType;
             textView.delegate = self;
             [cell addSubview:textView];
             
@@ -361,6 +361,7 @@
             
             if (chosenAlternative == nil) {
                 chosenAlternative = [formItem.alternatives objectAtIndex:0];
+                [listing setValue:chosenAlternative forKey:formItem.mapsTo];
             }
             
         } else if (formItem.type == FormItemTypeDate) {
@@ -371,6 +372,7 @@
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 formatter.dateFormat =  (formItem.includeTime) ? kDateAndTimeFormat : kDateFormat;
                 datestamp = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:formItem.defaultTimeIntervalInDays*24*60*60]];
+                [listing setValue:datestamp forKey:formItem.mapsTo];
             } else {
                 chosenAlternative = datestamp;
             }
@@ -664,7 +666,7 @@
             } else {
                 imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             }
-            imagePicker.allowsEditing = NO;
+            imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
             [self presentViewController:imagePicker animated:YES completion:nil];
         }

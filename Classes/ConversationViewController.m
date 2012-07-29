@@ -1,23 +1,30 @@
 //
-//  MessageThreadViewController.m
+//  ConversationViewController.m
 //  Kassi
 //
 //  Created by Janne Käki on 3/4/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MessageThreadViewController.h"
+#import "ConversationViewController.h"
 
+#import "Conversation.h"
 #import "Message.h"
+#import "ProfileViewController.h"
+#import "SharetribeAPIClient.h"
+#import "User.h"
 
-@implementation MessageThreadViewController
+@implementation ConversationViewController
 
 @synthesize scrollView;
 @synthesize messagesView;
 
-@synthesize messageThread;
+@synthesize conversation;
+@synthesize listing;
+@synthesize recipient;
 
 @synthesize inModalComposerMode;
+@synthesize isDirectReplyToListing;
 
 - (void)didReceiveMemoryWarning
 {
@@ -43,6 +50,8 @@
     messagesView.sendButtonTitle = @"Send";
     messagesView.composeFieldPlaceholder = @"Write a reply";
     [scrollView addSubview:messagesView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotMessagesForConversation:) name:kNotificationForDidReceiveMessagesForConversation object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,21 +83,23 @@
         
     } else {
         
-        self.title = messageThread.subject;
-        
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
-        
+        self.title = conversation.title;
+                
         messagesView.x = 10;
         messagesView.width = 300;
     }
     
-    messagesView.messages = messageThread.messages;
+    messagesView.messages = conversation.messages;
     messagesView.y = 10;
+    
+    [[SharetribeAPIClient sharedClient] getMessagesForConversation:conversation];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -111,6 +122,13 @@
 - (IBAction)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)gotMessagesForConversation:(NSNotification *)notification
+{
+    self.conversation = notification.object;
+    messagesView.messages = conversation.messages;
+    // TODO 1) prevent losing field focus if already typing a reply, 2) take care of content height
 }
 
 #pragma mark - MessagesViewDelegate
@@ -146,15 +164,25 @@
 
 - (void)messagesView:(MessagesView *)theMessagesView didSaveMessageText:(NSString *)messageText
 {
-    Message *message = [[Message alloc] init];
-    message.authorId = [[User currentUser] userId];
-    message.content = messageText;
-    message.createdAt = [NSDate date];
+    User *currentUser = [User currentUser];
+    Message *message = [Message messageWithAuthor:currentUser content:messageText createdAt:[NSDate date]];
     
-    [messageThread.messages addObject:message];
-    messagesView.messages = messageThread.messages;
-    
-    // [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForPostingNewMessage object:messageThread];
+    if (conversation == nil) {
+        ConversationStatus status = (isDirectReplyToListing) ? ConversationStatusPending : ConversationStatusFree;
+        [[SharetribeAPIClient sharedClient] startNewConversationWith:recipient aboutListing:listing withInitialMessage:messageText title:nil conversationStatus:status];
+        messagesView.messages = [NSArray arrayWithObject:message];
+    } else {
+        [[SharetribeAPIClient sharedClient] postNewMessage:messageText toConversation:conversation];
+        conversation.messages = [conversation.messages arrayByAddingObject:message];
+        messagesView.messages = conversation.messages;
+    }
+}
+
+- (void)messagesView:(MessagesView *)messagesView didSelectUser:(User *)user
+{
+    ProfileViewController *profileViewer = [[ProfileViewController alloc] init];
+    profileViewer.user = user;
+    [self.navigationController pushViewController:profileViewer animated:YES];
 }
 
 @end

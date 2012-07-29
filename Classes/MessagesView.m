@@ -9,9 +9,10 @@
 #import "MessagesView.h"
 
 #import "Message.h"
-#import "MessageThread.h"
+#import "Conversation.h"
 #import "User.h"
 #import "NSDate+Sharetribe.h"
+#import "UIImageView+Sharetribe.h"
 #import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -29,7 +30,7 @@
 @synthesize pointerView;
 
 @synthesize avatarViews;
-@synthesize usernameLabels;
+@synthesize usernameButtons;
 @synthesize dateLabels;
 @synthesize textLabels;
 
@@ -41,7 +42,7 @@
 @synthesize subjectLabel;
 
 @dynamic messages;
-@dynamic messageThread;
+@dynamic conversation;
 @dynamic sendButtonTitle;
 @dynamic composeFieldPlaceholder;
 @synthesize showComposerButtons;
@@ -68,7 +69,7 @@
         [self addSubview:backgroundView];
         
         self.avatarViews = [NSMutableArray array];
-        self.usernameLabels = [NSMutableArray array];
+        self.usernameButtons = [NSMutableArray array];
         self.dateLabels = [NSMutableArray array];
         self.textLabels = [NSMutableArray array];
                 
@@ -84,6 +85,7 @@
         composeField.backgroundColor = [UIColor clearColor];
         composeField.font = [UIFont systemFontOfSize:13];
         composeField.keyboardAppearance = UIKeyboardAppearanceAlert;
+        composeField.showsVerticalScrollIndicator = NO;
         // composeField.contentInset = UIEdgeInsetsMake(-2, 10, -2, 10);
         composeField.delegate = self;
         [self addSubview:composeField];
@@ -153,7 +155,7 @@
     int yOffset = 10;
     
     for (int i = 0; i <= messages.count; i++) {  // Note: one extra for the "add comment" field
-        
+                
         UIImageView *avatarView;
         if (i < avatarViews.count) {
             avatarView = [avatarViews objectAtIndex:i];
@@ -169,28 +171,35 @@
         avatarView.hidden = !showUserAvatars;
         
         if (i == messages.count) {
-            avatarView.image = [UIImage imageNamed:@"default-avatar-small"];  // Note: should be the user's own pic
+            User *currentUser = [User currentUser];
+            [avatarView setImageWithUser:currentUser];
             break;
         }
         
         Message *message = [messages objectAtIndex:i];
-        avatarView.image = nil;  // TODO obviously we need their avatar image here
         
-        UILabel *usernameLabel;
-        if (i < usernameLabels.count) {
-            usernameLabel = [usernameLabels objectAtIndex:i];
-        } else {
-            usernameLabel = [[UILabel alloc] init];
-            usernameLabel.font = [UIFont boldSystemFontOfSize:13];
-            usernameLabel.textColor = kKassiDarkBrownColor;
-            usernameLabel.backgroundColor = [UIColor clearColor];
-            usernameLabel.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-10, 16);
-            [self addSubview:usernameLabel];
-            [usernameLabels addObject:usernameLabel];
+        if (showUserAvatars) {
+            [avatarView setImageWithUser:message.author];
         }
-        usernameLabel.text = message.authorId;  // TODO obviously we need their real name
-        usernameLabel.y = yOffset-2;
-        usernameLabel.hidden = NO;
+                
+        UIButton *usernameButton;
+        if (i < usernameButtons.count) {
+            usernameButton = [usernameButtons objectAtIndex:i];
+        } else {
+            usernameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            usernameButton.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-10, 16);
+            usernameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+            [usernameButton setTitleColor:kKassiDarkBrownColor forState:UIControlStateNormal];
+            [usernameButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+            [usernameButton addTarget:self action:@selector(usernameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            usernameButton.tag = i;
+            [self addSubview:usernameButton];
+            [usernameButtons addObject:usernameButton];
+        }
+        [usernameButton setTitle:message.author.name forState:UIControlStateNormal];
+        usernameButton.width = [message.author.name sizeWithFont:usernameButton.titleLabel.font].width;
+        usernameButton.y = yOffset-2;
+        usernameButton.hidden = NO;
 
         UILabel *dateLabel;
         if (i < dateLabels.count) {
@@ -208,8 +217,8 @@
         dateLabel.text = message.createdAt.agestamp;
         dateLabel.y = yOffset-2;
         dateLabel.hidden = NO;
-        
-        yOffset += 29;
+                
+        yOffset += 20;
         
         UILabel *textLabel;
         if (i < textLabels.count) {
@@ -244,15 +253,15 @@
         yOffset += 21;
     }
     
-    if (messageThread != nil) {
+    if (conversation != nil) {
         
         recipientLabel.y = yOffset;
         yOffset += recipientLabel.height;
         subjectLabel.y = yOffset;
         yOffset += subjectLabel.height+10;
         
-        recipientLabel.text = [NSString stringWithFormat:@"To: %@", messageThread.recipient.name];
-        subjectLabel.text = messageThread.subject;
+        recipientLabel.text = [NSString stringWithFormat:@"To: %@", nil];  // FIXME
+        subjectLabel.text = conversation.title;
         
         recipientLabel.hidden = NO;
         subjectLabel.hidden = NO;
@@ -280,8 +289,8 @@
     for (int i = messages.count+1; i < avatarViews.count; i++) {
         [[avatarViews objectAtIndex:i] setHidden:YES];
     }
-    for (int i = messages.count; i < usernameLabels.count; i++) {
-        [[usernameLabels objectAtIndex:i] setHidden:YES];
+    for (int i = messages.count; i < usernameButtons.count; i++) {
+        [[usernameButtons objectAtIndex:i] setHidden:YES];
     }
     for (int i = messages.count; i < dateLabels.count; i++) {
         [[dateLabels objectAtIndex:i] setHidden:YES];
@@ -291,16 +300,16 @@
     }
 }
 
-- (MessageThread *)messageThread
+- (Conversation *)conversation
 {
-    return messageThread;
+    return conversation;
 }
 
-- (void)setMessageThread:(MessageThread *)newMessageThread
+- (void)setConversation:(Conversation *)newConversation
 {
-    messageThread = newMessageThread;
+    conversation = newConversation;
     
-    self.messages = messageThread.messages;
+    self.messages = conversation.messages;
 }
 
 - (NSString *)sendButtonTitle
@@ -336,10 +345,18 @@
     [composeField resignFirstResponder];
 }
 
+- (IBAction)usernameButtonPressed:(UIButton *)sender
+{
+    Message *message = [messages objectAtIndex:sender.tag];
+    [delegate messagesView:self didSelectUser:message.author];
+}
+
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
-{   
+{
+    textView.showsVerticalScrollIndicator = YES;
+    
     int heightForButtons = (showComposerButtons) ? 40 : 0;
     composeField.height = 416-216-10-heightForButtons-10;
     composeFieldContainer.height = composeField.height;
@@ -361,6 +378,8 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+    textView.showsVerticalScrollIndicator = NO;
+    
     composeField.height = 31;
     composeFieldContainer.height = composeField.height;
     

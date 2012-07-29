@@ -10,11 +10,11 @@
 
 #import "ListingsTopViewController.h"
 #import "CreateListingViewController.h"
-#import "MessagesListViewController.h"
+#import "ConversationListViewController.h"
 #import "ProfileViewController.h"
 #import "ButtonTabBarController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) ListingsTopViewController *offersViewController;
 @property (strong, nonatomic) ListingsTopViewController *requestsViewController;
-@property (strong, nonatomic) MessagesListViewController *messagesViewController;
+@property (strong, nonatomic) ConversationListViewController *messagesViewController;
 @property (strong, nonatomic) ProfileViewController *profileViewController;
 
 @property (strong, nonatomic) CreateListingViewController *createListingViewController;

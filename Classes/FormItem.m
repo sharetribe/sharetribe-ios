@@ -22,7 +22,7 @@
 @synthesize defaultAlternative;
 @synthesize defaultTimeIntervalInDays;
 @synthesize includeTime;
-@synthesize autocapitalization;
+@synthesize autocapitalizationType;
 
 + (NSArray *)formItemsFromDataArray:(NSArray *)dataArray
 {
@@ -58,10 +58,17 @@
         item.defaultTimeIntervalInDays = [[dataDict valueForKey:@"defaultTimeIntervalInDays"] intValue];
         item.includeTime = [[dataDict valueForKey:@"includeTime"] boolValue];
         
-        if ([dataDict valueForKey:@"autocapitalization"] != nil) {
-            item.autocapitalization = [[dataDict valueForKey:@"autocapitalization"] boolValue];
+        NSString *autocapitalizationValue = [dataDict valueForKey:@"autocapitalization"];
+        if ([autocapitalizationValue isEqual:@"none"]) {
+            item.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        } else if ([autocapitalizationValue isEqual:@"sentences"]) {
+            item.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        } else if ([autocapitalizationValue isEqual:@"words"]) {
+            item.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        } else if ([autocapitalizationValue isEqual:@"all"]) {
+            item.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
         } else {
-            item.autocapitalization = YES;
+            item.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         }
             
         [formItems addObject:item];

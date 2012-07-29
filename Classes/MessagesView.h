@@ -8,27 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+@class Conversation;
 @class MessagesView;
-@class MessageThread;
+@class User;
 
 @protocol MessagesViewDelegate <NSObject>
 - (void)messagesViewDidBeginEditing:(MessagesView *)messagesView;
 - (void)messagesViewDidChange:(MessagesView *)messagesView;
 - (void)messagesViewDidEndEditing:(MessagesView *)messagesView;
 - (void)messagesView:(MessagesView *)messagesView didSaveMessageText:(NSString *)messageText;
+- (void)messagesView:(MessagesView *)messagesView didSelectUser:(User *)user;
 @end
 
 @interface MessagesView : UIView <UITextViewDelegate> {
 
     NSArray *messages;
-    MessageThread *messageThread;
+    Conversation *conversation;
 }
 
 @property (strong) UIView *backgroundView;
 @property (strong) UIView *pointerView;
 
 @property (strong) NSMutableArray *avatarViews;
-@property (strong) NSMutableArray *usernameLabels;
+@property (strong) NSMutableArray *usernameButtons;
 @property (strong) NSMutableArray *dateLabels;
 @property (strong) NSMutableArray *textLabels;
 
@@ -39,7 +41,7 @@
 @property (strong) UILabel *recipientLabel;
 @property (strong) UILabel *subjectLabel;
 
-@property (strong) MessageThread *messageThread;
+@property (strong) Conversation *conversation;
 @property (strong) NSArray *messages;
 @property (strong) NSString *sendButtonTitle;
 @property (strong) NSString *composeFieldPlaceholder;

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MessagesListViewController : UITableViewController
+@interface ConversationListViewController : UITableViewController
 
-@property (strong) NSMutableArray *messageThreads;
+@property (strong) NSMutableArray *conversations;
 
 @end

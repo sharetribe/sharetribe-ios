@@ -8,10 +8,12 @@
 
 #import "AppDelegate.h"
 
-#import "SharetribeAPIClient.h"
+#import "CommunitySelectionViewController.h"
 #import "Listing.h"
 #import "LoginViewController.h"
+#import "SharetribeAPIClient.h"
 #import "User.h"
+#import "UINavigationController+Sharetribe.h"
 
 @implementation AppDelegate
 
@@ -26,8 +28,18 @@
 @synthesize createListingViewController;
 @synthesize createListingNavigationController;
 
+void uncaughtExceptionHandler(NSException *exception);
+
+void uncaughtExceptionHandler(NSException *exception)
+{
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor viewFlipsideBackgroundColor];
     
@@ -35,7 +47,7 @@
     
     self.offersViewController = [[ListingsTopViewController alloc] initWithListingType:ListingTypeOffer];
     self.requestsViewController = [[ListingsTopViewController alloc] initWithListingType:ListingTypeRequest];
-    self.messagesViewController = [[MessagesListViewController alloc] init];
+    self.messagesViewController = [[ConversationListViewController alloc] init];
     self.profileViewController = [[ProfileViewController alloc] init];
     
     [offersViewController view];
@@ -47,6 +59,11 @@
     UINavigationController *messagesNavigationController = [[UINavigationController alloc] initWithRootViewController:messagesViewController];
     UINavigationController *profileNavigationController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
     
+    offersNavigationController.delegate = self;
+    requestsNavigationController.delegate = self;
+    messagesNavigationController.delegate = self;
+    profileNavigationController.delegate = self;
+    
     self.createListingViewController = [[CreateListingViewController alloc] init];
     self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:createListingViewController];
     
@@ -55,7 +72,8 @@
     messagesNavigationController.title = NSLocalizedString(@"Tabs.Messages", @"");
     
     User *currentUser = [User currentUser];
-    profileViewController.title = (currentUser != nil) ? currentUser.givenName : NSLocalizedString(@"Tabs.Profile", @"");
+    profileViewController.title = currentUser.givenName;
+    profileViewController.user = currentUser;
     
     offersNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-gift"];
     requestsNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-bullhorn"];
@@ -68,9 +86,7 @@
     messagesNavigationController.navigationBar.tintColor = tintColor;
     profileNavigationController.navigationBar.tintColor = tintColor;
     createListingNavigationController.navigationBar.tintColor = tintColor;
-    
-    messagesNavigationController.tabBarItem.badgeValue = @"2";
-        
+            
     NSMutableArray *tabViewControllers = [NSMutableArray arrayWithCapacity:5];
     [tabViewControllers addObject:offersNavigationController];
     [tabViewControllers addObject:requestsNavigationController];
@@ -85,9 +101,9 @@
     [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble-white"] forState:UIControlStateHighlighted];
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(newListingPosted:) name:kNotificationForDidPostListing object:nil];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [notificationCenter addObserver:self selector:@selector(showLogin) name:kNotificationForUserDidLogOut object:nil];
+    [notificationCenter addObserver:self selector:@selector(userDidSelectCommunity:) name:kNotificationForDidSelectCommunity object:nil];
     
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
@@ -98,8 +114,11 @@
     if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
         [self showLogin];
     } else {
-        [[SharetribeAPIClient sharedClient] getListings];
-        // [[SharetribeAPIClient sharedClient] refreshCurrentUser];
+        if ([[SharetribeAPIClient sharedClient] currentCommunityId] == NSNotFound) {
+            [self showCommunitySelection];
+        } else {
+            [[SharetribeAPIClient sharedClient] getListings];
+        }
     }
     
     return YES;
@@ -131,6 +150,10 @@
     NSString *deviceToken = [[deviceTokenData description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
 	NSLog(@"Registered for push notifications with token: %@", deviceToken);
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:deviceToken forKey:kDefaultsKeyForDeviceToken];
+    [defaults synchronize];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -159,14 +182,34 @@
     [tabBarController setSelectedIndex:0];
 }
 
-- (void)newListingPosted:(NSNotification *)notification
+- (void)showCommunitySelection
 {
-    [[SharetribeAPIClient sharedClient] getListings];  // just to refresh & get the listing back from server
+    CommunitySelectionViewController *communitySelectionViewer = [[CommunitySelectionViewController alloc] init];
+    [self.tabBarController presentModalViewController:communitySelectionViewer animated:YES];
 }
 
 - (void)userDidLogIn:(NSNotification *)notification
 {
+    User *currentUser = [User currentUser];
+    if (currentUser.communities.count < 1) {
+        [[SharetribeAPIClient sharedClient] getListings];
+    } else {
+        [self performSelector:@selector(showCommunitySelection) withObject:nil afterDelay:0.5];
+    }
+}
+
+- (void)userDidSelectCommunity:(NSNotification *)notification
+{
     [[SharetribeAPIClient sharedClient] getListings];
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (navigationController.viewControllers.count > 1) {
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:navigationController action:@selector(pop)];
+    }
 }
 
 @end

@@ -40,8 +40,9 @@ typedef enum {
 @property (strong) NSString *shareType;
 @property (strong) NSArray *tags;
 
-@property (strong) NSString *thumbnailURL;
+@property (strong) NSURL *thumbnailURL;
 @property (strong) NSArray *imageURLs;
+
 @property (strong) UIImage *image;
 
 @property (strong) Location *location;

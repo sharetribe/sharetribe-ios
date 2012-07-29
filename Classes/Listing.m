@@ -11,6 +11,7 @@
 #import "Location.h"
 #import "Message.h"
 #import "User.h"
+#import "NSDate+Sharetribe.h"
 #import "NSDictionary+Sharetribe.h"
 
 @implementation Listing
@@ -90,6 +91,14 @@
     return JSON;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:Listing.class]) {
+        return NO;
+    }
+    return (listingId == [object listingId]);
+}
+
 + (NSString *)stringFromType:(ListingType)type
 {
     switch (type) {
@@ -161,8 +170,17 @@
     listing.shareType = [[dict objectOrNilForKey:@"share_type"] stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     listing.tags = [dict objectOrNilForKey:@"tags"];
     
-    listing.thumbnailURL = [dict objectOrNilForKey:@"thumbnail_url"];
-    listing.imageURLs = [dict objectOrNilForKey:@"image_urls"];
+    NSString *thumbnailURLString = [dict objectOrNilForKey:@"thumbnail_url"];
+    listing.thumbnailURL = (thumbnailURLString != nil) ? [NSURL URLWithString:thumbnailURLString] : nil;
+    
+    NSArray *imageURLStrings = [dict objectOrNilForKey:@"image_urls"];
+    if (imageURLStrings.count > 0) {
+        NSMutableArray *imageURLs = [NSMutableArray array];
+        for (NSString *imageURLString in imageURLStrings) {
+            [imageURLs addObject:[NSURL URLWithString:imageURLString]];
+        }
+        listing.imageURLs = imageURLs;
+    }
     
     NSDictionary *locationDict = [dict objectOrNilForKey:@"origin_location"];
     if (locationDict != nil) {
@@ -175,12 +193,10 @@
     listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
     listing.numberOfTimesViewed = [[dict objectOrNilForKey:@"times_viewed"] intValue];
     listing.visibility = [dict objectOrNilForKey:@"visibility"];
-        
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = kTimestampFormatInAPI;
-    listing.createdAt = [formatter dateFromString:[[dict objectOrNilForKey:@"created_at"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
-    listing.updatedAt = [formatter dateFromString:[[dict objectOrNilForKey:@"updated_at"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
-    listing.validUntil = [formatter dateFromString:[[dict objectOrNilForKey:@"valid_until"] stringByReplacingOccurrencesOfString:@":" withString:@""]];
+    
+    listing.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
+    listing.updatedAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"updated_at"]];
+    listing.validUntil = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"valid_until"]];
         
     listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
     

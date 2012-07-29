@@ -8,14 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-#import "User.h"
+@class Conversation;
+@class User;
 
 @interface Message : NSObject
 
+@property (strong) User *author;
 @property (strong) NSString *content;
 @property (strong) NSDate *createdAt;
-@property (strong) NSString *authorId;
 
+- (NSDictionary *)asJSON;
+
++ (Message *)messageWithAuthor:(User *)author content:(NSString *)content createdAt:(NSDate *)createdAt;
++ (Message *)messageFromDict:(NSDictionary *)dict;
 + (NSArray *)messagesFromArrayOfDicts:(NSArray *)dicts;
++ (NSArray *)messagesFromArrayOfDicts:(NSArray *)dicts withConversation:(Conversation *)conversation;
 
 @end

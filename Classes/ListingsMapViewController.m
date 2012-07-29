@@ -68,7 +68,7 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellPressed)];
     [cell addGestureRecognizer:tapRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(regionChangedByMapView:) name:kNotificationForRegionChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(regionChangedByMapView:) name:kNotificationForDidChangeRegion object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -124,7 +124,7 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForRegionChange object:mapView];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidChangeRegion object:mapView];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation

@@ -6,21 +6,24 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MessagesListViewController.h"
+#import "ConversationListViewController.h"
 
+#import "Conversation.h"
+#import "ConversationListCell.h"
+#import "ConversationViewController.h"
 #import "Message.h"
-#import "MessagesListCell.h"
-#import "MessageThreadViewController.h"
+#import "SharetribeAPIClient.h"
+#import "User.h"
 
-@implementation MessagesListViewController
+@implementation ConversationListViewController
 
-@synthesize messageThreads;
+@synthesize conversations;
 
 - (id)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.messageThreads = [NSMutableArray array];
+        self.conversations = [NSMutableArray array];
         // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessagePosted:) name:kNotificationForPostingNewMessage object:nil];
     }
     return self;
@@ -28,7 +31,7 @@
 
 - (void)dealloc
 {
-    self.messageThreads = nil;
+    self.conversations = nil;
     // [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationForPostingNewMessage object:nil];
 }
 
@@ -44,17 +47,25 @@
     [super viewDidLoad];
 
     self.title = @"Messages";
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotConversations:) name:kNotificationForDidReceiveConversations object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotUser:) name:kNotificationForDidReceiveUser object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postedMessage:) name:kNotificationForDidPostMessage object:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[SharetribeAPIClient sharedClient] getConversations];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,18 +89,30 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)newMessagePosted:(NSNotification *)notification
+- (void)gotConversations:(NSNotification *)notification
 {
-    MessageThread *messageThread = notification.object;
-    NSInteger messageThreadIndex = [messageThreads indexOfObject:messageThread];
-    if (messageThreadIndex == NSNotFound) {
-        [messageThreads addObject:messageThread];
+    self.conversations = notification.object;    
+    [self.tableView reloadData];
+}
+
+- (void)gotUser:(NSNotification *)notification
+{
+    [self.tableView reloadData];
+}
+
+- (void)postedMessage:(NSNotification *)notification
+{
+    Conversation *conversation = notification.object;
+    NSInteger conversationIndex = [conversations indexOfObject:conversation];
+    if (conversationIndex == NSNotFound) {
+        [conversations addObject:conversation];
     } else {
-        // If the thread is present (as another instance) but doesn't have the new message yet, let's add it: 
-        Message *newMessage = messageThread.messages.lastObject;
-        MessageThread *existingThread = [messageThreads objectAtIndex:messageThreadIndex];
-        if (![newMessage isEqual:existingThread.messages.lastObject]) {
-            [existingThread.messages addObject:newMessage];
+        // If the thread is present (as another instance) but doesn't have the new message yet, let's add it:
+        // TODO think this through again!
+        Message *newMessage = conversation.messages.lastObject;
+        Conversation *existingConversation = [conversations objectAtIndex:conversationIndex];
+        if (![newMessage isEqual:existingConversation.messages.lastObject]) {
+            existingConversation.messages = [existingConversation.messages arrayByAddingObject:newMessage];
         }
     }
     [self.tableView reloadData];
@@ -104,19 +127,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return messageThreads.count;
+    return conversations.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"MessagesListCell";
     
-    MessagesListCell *cell = (MessagesListCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ConversationListCell *cell = (ConversationListCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [MessagesListCell instance];
+        cell = [ConversationListCell instance];
     }
     
-    cell.messageThread = [messageThreads objectAtIndex:indexPath.row];
+    cell.conversation = [conversations objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -129,7 +152,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [messageThreads removeObjectAtIndex:indexPath.row];
+        [conversations removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -138,13 +161,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kMessagesListCellHeight;
+    return kConversationListCellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MessageThreadViewController *threadViewer = [[MessageThreadViewController alloc] init];
-    threadViewer.messageThread = [messageThreads objectAtIndex:indexPath.row];
+    ConversationViewController *threadViewer = [[ConversationViewController alloc] init];
+    threadViewer.conversation = [conversations objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:threadViewer animated:YES];
 }
 

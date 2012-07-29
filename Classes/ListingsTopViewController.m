@@ -121,7 +121,7 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-map"] style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForFlippingView object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForDidFlipView object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,7 +144,7 @@
 - (IBAction)viewChangeButtonPressed:(UIBarButtonItem *)sender
 {
     [self setViewChoice:self.flippedViewChoice animated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFlippingView object:self.viewChoice];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidFlipView object:self.viewChoice];
     [[NSUserDefaults standardUserDefaults] setObject:self.viewChoice forKey:kDefaultsKeyForViewChoice];
 }
 

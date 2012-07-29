@@ -20,6 +20,8 @@
 @synthesize subtitleLabel;
 @synthesize usernameLabel;
 @synthesize timeLabel;
+@synthesize commentIconView;
+@synthesize commentCountLabel;
 
 + (ListingCell *)instance
 {
@@ -51,17 +53,28 @@
         titleLabel.text = listing.title;
     }
     subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
-    usernameLabel.text = listing.author.name;
+    usernameLabel.text = listing.author.shortName;
     timeLabel.text = [listing.createdAt agestamp];
     
+    usernameLabel.width = [usernameLabel.text sizeWithFont:usernameLabel.font].width;
+    timeLabel.x = usernameLabel.x + usernameLabel.width + 10;
+    
     UIImage *categoryImage = [Listing iconForCategory:listing.category];
-    NSString *imageURL = [listing.imageURLs lastObject];
+    NSURL *imageURL = [listing.imageURLs lastObject];
     if (imageURL != nil) {
-        [imageView setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:categoryImage];
+        [imageView setImageWithURL:imageURL placeholderImage:categoryImage];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
     } else {
         imageView.image = categoryImage;
         imageView.contentMode = UIViewContentModeCenter;
+    }
+    
+    if (listing.comments.count > 0) {
+        commentCountLabel.text = [NSString stringWithFormat:@"%d", listing.comments.count];
+        commentIconView.hidden = NO;
+    } else {
+        commentCountLabel.text = nil;
+        commentIconView.hidden = YES;
     }
     
     int oneRowHeight = [@"Something" sizeWithFont:titleLabel.font].height;

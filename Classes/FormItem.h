@@ -31,7 +31,7 @@ typedef enum {
 @property (strong, nonatomic) NSString *defaultAlternative;
 @property (assign, nonatomic) NSInteger defaultTimeIntervalInDays;
 @property (assign, nonatomic) BOOL includeTime;
-@property (assign, nonatomic) BOOL autocapitalization;
+@property (assign, nonatomic) UITextAutocapitalizationType autocapitalizationType;
 
 + (NSArray *)formItemsFromDataArray:(NSArray *)dataArray;
 

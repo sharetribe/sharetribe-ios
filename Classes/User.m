@@ -9,6 +9,7 @@
 #import "User.h"
 
 #import "Community.h"
+#import "NSDictionary+Sharetribe.h"
 
 @interface User ()
 @end
@@ -22,24 +23,59 @@
 @synthesize phoneNumber;
 @synthesize description;
 
-@synthesize avatar;
+@synthesize pictureURL;
+@synthesize thumbnailURL;
+
 @synthesize communities;
-@synthesize currentCommunity;
+
+@dynamic name;
+@dynamic shortName;
+
+@dynamic isCurrentUser;
+
+static User *currentUser = nil;
 
 - (NSString *)name
 {
     return [NSString stringWithFormat:@"%@ %@", givenName, familyName];
 }
 
+- (NSString *)shortName
+{
+    if (familyName.length >= 1) {
+        return [NSString stringWithFormat:@"%@ %@.", givenName, [familyName substringToIndex:1]];
+    } else {
+        return givenName;
+    }
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:User.class]) {
+        return NO;
+    }
+    return [userId isEqual:[object userId]];
+}
+
+- (BOOL)isCurrentUser
+{
+    return [self isEqual:[User currentUser]];
+}
+
 + (User *)currentUser
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *currentUserDict = [defaults objectForKey:@"current user dict"];
-    return [User userFromDict:currentUserDict];
+    if (currentUser == nil) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *currentUserDict = [defaults objectForKey:@"current user dict"];
+        currentUser = [User userFromDict:currentUserDict];
+    }
+    return currentUser;
 }
 
 + (void)setCurrentUserWithDict:(NSDictionary *)dict
 {
+    currentUser = nil;
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:dict forKey:@"current user dict"];
     [defaults synchronize];
@@ -49,18 +85,22 @@
 {
     User *user = [[User alloc] init];
     
-    user.userId = [dict objectForKey:@"id"];
-    user.givenName = [dict objectForKey:@"given_name"];
-    user.familyName = [dict objectForKey:@"family_name"];
-    user.phoneNumber = [dict objectForKey:@"phone_number"];
-    user.description = [dict objectForKey:@"description"];
+    user.userId = [dict objectOrNilForKey:@"id"];
+    user.givenName = [dict objectOrNilForKey:@"given_name"];
+    user.familyName = [dict objectOrNilForKey:@"family_name"];
+    user.phoneNumber = [dict objectOrNilForKey:@"phone_number"];
+    user.description = [dict objectOrNilForKey:@"description"];
     
-    NSArray *communityDicts = [dict objectForKey:@"communities"];
+    if ([dict objectOrNilForKey:@"picture_url"] != nil) {
+        user.pictureURL = [NSURL URLWithString:[dict objectOrNilForKey:@"picture_url"]];
+    }
+    if ([dict objectOrNilForKey:@"thumbnail_url"] != nil) {
+        user.thumbnailURL = [NSURL URLWithString:[dict objectOrNilForKey:@"thumbnail_url"]];
+    }
+    
+    NSArray *communityDicts = [dict objectOrNilForKey:@"communities"];
     if (communityDicts.count > 0) {
         user.communities = [Community communitiesFromArrayOfDicts:communityDicts];
-        if (user.communities.count == 1) {
-            user.currentCommunity = [user.communities lastObject];
-        }
     }
     
     return user;

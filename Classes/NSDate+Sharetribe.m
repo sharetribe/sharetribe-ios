@@ -34,4 +34,13 @@
     }
 }
 
++ (NSDate *)dateFromTimestamp:(NSString *)timestamp
+{
+    timestamp = [timestamp stringByReplacingOccurrencesOfString:@":" withString:@""];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = kTimestampFormatInAPI;
+    return [formatter dateFromString:timestamp];
+}
+
 @end
