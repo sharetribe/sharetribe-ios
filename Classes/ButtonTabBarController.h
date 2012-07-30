@@ -15,9 +15,10 @@
 @property (strong, nonatomic) UIButton *middleButton;
 @property (strong, nonatomic) UILabel *middleButtonLabel;
 
-- (id)initWithMiddleViewController:(UIViewController *)middleViewController otherViewControllers:(NSArray *)otherViewControllers;
+@property (strong, nonatomic) NSString *middleButtonTitle;
+@property (strong, nonatomic) UIImage *middleButtonNormalImage;
+@property (strong, nonatomic) UIImage *middleButtonHighlightedImage;
 
-- (void)setMiddleButtonTitle:(NSString *)title;
-- (void)setMiddleButtonImage:(UIImage *)image forState:(UIControlState)state;
+- (id)initWithMiddleViewController:(UIViewController *)middleViewController otherViewControllers:(NSArray *)otherViewControllers;
 
 @end

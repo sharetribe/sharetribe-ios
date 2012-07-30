@@ -24,4 +24,6 @@
 @property (strong) IBOutlet UIImageView *locationIconView;
 @property (strong) IBOutlet UIImageView *phoneIconView;
 
+- (IBAction)phoneButtonPressed;
+
 @end

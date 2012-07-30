@@ -12,7 +12,10 @@
 #import "User.h"
 #import "UIImageView+Sharetribe.h"
 
-@interface ProfileViewController () <UIAlertViewDelegate> {
+#define kAlertTagForConfirmingLogOut     1
+#define kAlertTagForConfirmingPhoneCall  2
+
+@interface ProfileViewController () <UIAlertViewDelegate, UIActionSheetDelegate> {
     User *user;
 }
 
@@ -84,7 +87,11 @@
     }
     
     if (user.isCurrentUser) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log Out" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed)];
+        if (self.navigationController.viewControllers.count == 1) {
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.log_out", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed)];
+        } else {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
     } else {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
     }
@@ -94,12 +101,25 @@
 
 - (IBAction)logoutButtonPressed
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log Out?" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.confirm_log_out", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.yes", @""), nil];
+    alert.tag = kAlertTagForConfirmingLogOut;
     [alert show];
 }
 
 - (IBAction)actionButtonPressed
 {
+}
+
+- (IBAction)phoneButtonPressed
+{
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.phoneNumber]]]) {
+        return;
+    }
+    
+    NSString *alertFormat = NSLocalizedString(@"alert.confirm_phone_call.format", @"");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:alertFormat, user.phoneNumber] message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.call", @""), nil];
+    alert.tag = kAlertTagForConfirmingPhoneCall;
+    [alert show];
 }
 
 - (void)userDidLogIn:(NSNotification *)notification
@@ -119,7 +139,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != alertView.cancelButtonIndex) {
-        [[SharetribeAPIClient sharedClient] logOut];
+        if (alertView.tag == kAlertTagForConfirmingLogOut) {
+            [[SharetribeAPIClient sharedClient] logOut];
+        } else if (alertView.tag == kAlertTagForConfirmingPhoneCall) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.phoneNumber]]];
+        }
     }
 }
 

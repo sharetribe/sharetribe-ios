@@ -25,6 +25,8 @@
 "button.cancel" = "Cancel";
 "button.yes" = "Yes";
 "button.no" = "No";
+"button.call" = "Call";
+"button.log_out" = "Log Out";
 "button.send.comment" = "Send comment";
 "button.send.message" = "Send";
 "button.listing.respond" = "Respond";
@@ -32,8 +34,11 @@
 "button.take_new_photo" = "Take a New Photo...";
 "button.choose_photo_from_library" = "Choose from Library...";
 
+"alert.confirm_cancel_composing_listing" = "Are you sure you want to cancel?";
+"alert.confirm_log_out" = "Log out?";
+"alert.confirm_phone_call.format" = "Call %@?";
+
 "composer.message.title" = "New Message";
-"composer.listing.confirmation_for_cancel" = "Are you sure you want to cancel?";
 "composer.listing.posting" =  "Posting...";
 
 "placeholder.comment" = "Write a new comment";

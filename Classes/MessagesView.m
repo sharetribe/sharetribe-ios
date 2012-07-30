@@ -33,6 +33,7 @@
 @synthesize usernameButtons;
 @synthesize dateLabels;
 @synthesize textLabels;
+@synthesize separators;
 
 @synthesize composeField;
 @synthesize composeFieldContainer;
@@ -72,6 +73,7 @@
         self.usernameButtons = [NSMutableArray array];
         self.dateLabels = [NSMutableArray array];
         self.textLabels = [NSMutableArray array];
+        self.separators = [NSMutableArray array];
                 
         self.composeFieldContainer = [[MessagesViewCustomTextField alloc] init];
         composeFieldContainer.frame = CGRectMake(50, 0, self.width-50-10, 31);
@@ -241,18 +243,18 @@
         textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
         textLabel.hidden = NO;
         
-        UIView *separator = [avatarView viewWithTag:kSeparatorTag];
-        if (separator == nil) {
+        UIView *separator;
+        if (i < separators.count) {
+            separator = [separators objectAtIndex:i];
+        } else {
             separator = [[UIView alloc] init];
-            separator.backgroundColor = [UIColor whiteColor];
-            separator.frame = CGRectMake(-10, 0, self.width, 1);
-            separator.tag = kSeparatorTag;
-            [avatarView addSubview:separator];
+            separator.backgroundColor = kSharetribeLightBrownColor;
+            separator.frame = CGRectMake(0, 0, self.width, 1);
+            [self addSubview:separator];
         }
         
-        yOffset = MAX(avatarView.y+avatarView.height, textLabel.y+textLabel.height);
-        separator.y = yOffset-avatarView.y+10;
-        yOffset += 21;
+        separator.y = textLabel.y+textLabel.height+8;
+        yOffset = separator.y+12;
     }
     
     if (conversation != nil) {
@@ -299,6 +301,9 @@
     }
     for (int i = messages.count; i < textLabels.count; i++) {
         [[textLabels objectAtIndex:i] setHidden:YES];
+    }
+    for (int i = messages.count; i < separators.count; i++) {
+        [[separators objectAtIndex:i] setHidden:YES];
     }
 }
 

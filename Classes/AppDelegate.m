@@ -95,10 +95,9 @@ void uncaughtExceptionHandler(NSException *exception)
     
     self.tabBarController = [[ButtonTabBarController alloc] initWithMiddleViewController:createListingNavigationController otherViewControllers:tabViewControllers];
 
-    [tabBarController setMiddleButtonTitle:NSLocalizedString(@"tabs.new_listing", @"")];
-    
-    [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble"] forState:UIControlStateNormal];
-    [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble-white"] forState:UIControlStateHighlighted];
+    tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
+    tabBarController.middleButtonNormalImage = [UIImage imageNamed:@"icon-bubble"];
+    tabBarController.middleButtonHighlightedImage = [UIImage imageNamed:@"icon-bubble-white"];
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];

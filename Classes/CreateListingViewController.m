@@ -286,7 +286,6 @@
             textField.backgroundColor = kSharetribeLightBrownColor;
             textField.keyboardAppearance = UIKeyboardAppearanceAlert;
             textField.returnKeyType = UIReturnKeyDone;
-            textField.autocapitalizationType = formItem.autocapitalizationType;
             textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             textField.delegate = self;
             [cell addSubview:textField];
@@ -298,7 +297,6 @@
             textView.tag = kCellTextViewTag;
             textView.backgroundColor = kSharetribeLightBrownColor;
             textView.keyboardAppearance = UIKeyboardAppearanceAlert;
-            textView.autocapitalizationType = formItem.autocapitalizationType;
             textView.delegate = self;
             [cell addSubview:textView];
             
@@ -363,12 +361,14 @@
         UITextField *textField = (UITextField *) [cell viewWithTag:kCellTextFieldTag];
         textField.frame = CGRectMake(10, 30, 300, 36);
         textField.text = [listing valueForKey:formItem.mapsTo];
+        textField.autocapitalizationType = formItem.autocapitalizationType;
         
     } else if (formItem.type == FormItemTypeTextArea) {
         
         UITextView *textView = (UITextView *) [cell viewWithTag:kCellTextViewTag];
         textView.frame = CGRectMake(10, 30, 300, rowHeight-32-rowSpacing);
         textView.text = [listing valueForKey:formItem.mapsTo];
+        textView.autocapitalizationType = formItem.autocapitalizationType;
         
     } else if (formItem.type == FormItemTypeChoice || formItem.type == FormItemTypeDate) {
         
@@ -861,7 +861,7 @@
 {
     if (listing.title != nil || listing.description != nil || listing.image != nil) {
         
-        UIAlertView *alertViewForCanceling = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"button.cancel", @"") message:NSLocalizedString(@"composer.listing.confirmation_for_cancel", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.no", @"") otherButtonTitles:NSLocalizedString(@"button.yes", @""), nil];
+        UIAlertView *alertViewForCanceling = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"button.cancel", @"") message:NSLocalizedString(@"alert.confirm_cancel_composing_listing", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.no", @"") otherButtonTitles:NSLocalizedString(@"button.yes", @""), nil];
         alertViewForCanceling.tag = kAlertViewTagForCanceling;
         [alertViewForCanceling show];
         

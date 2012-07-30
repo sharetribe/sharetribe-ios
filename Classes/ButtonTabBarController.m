@@ -15,6 +15,10 @@
 @synthesize middleButton;
 @synthesize middleButtonLabel;
 
+@synthesize middleButtonTitle;
+@synthesize middleButtonNormalImage;
+@synthesize middleButtonHighlightedImage;
+
 - (id)initWithMiddleViewController:(UIViewController *)theMiddleViewController otherViewControllers:(NSArray *)theOtherViewControllers
 {
     self = (([super init]));
@@ -51,7 +55,6 @@
     [middleButton addTarget:self action:@selector(middleButtonActivated:) forControlEvents:UIControlEventTouchDown | UIControlEventTouchDragEnter];
     [middleButton addTarget:self action:@selector(middleButtonDeactivated:) forControlEvents:UIControlEventTouchCancel | UIControlEventTouchDragExit | UIControlEventTouchUpInside];
     [middleButton addTarget:self action:@selector(middleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:middleButton];
     
     self.middleButtonLabel = [[UILabel alloc] init];
     middleButtonLabel.font = [UIFont boldSystemFontOfSize:10];
@@ -72,22 +75,17 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    middleButtonLabel.text = middleButtonTitle;
+    [middleButton setImage:middleButtonNormalImage forState:UIControlStateNormal];
+    [middleButton setImage:middleButtonHighlightedImage forState:UIControlStateHighlighted];
+    [self.view addSubview:middleButton];
     [self.view bringSubviewToFront:middleButton];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)setMiddleButtonTitle:(NSString *)title
-{
-    middleButtonLabel.text = title;
-}
-
-- (void)setMiddleButtonImage:(UIImage *)image forState:(UIControlState)state
-{
-    [middleButton setImage:image forState:state];
 }
 
 - (IBAction)middleButtonActivated:(UIButton *)sender

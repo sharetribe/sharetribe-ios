@@ -33,6 +33,7 @@
 @property (strong) NSMutableArray *usernameButtons;
 @property (strong) NSMutableArray *dateLabels;
 @property (strong) NSMutableArray *textLabels;
+@property (strong) NSMutableArray *separators;
 
 @property (strong) UITextView *composeField;
 @property (strong) UITextField *composeFieldContainer;
