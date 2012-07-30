@@ -122,7 +122,7 @@
     } else {
         
         imageView.image = nil;
-        titleLabel.y = messageButton.y+messageButton.height+20;
+        titleLabel.y = messageButton.y+messageButton.height+21;
         
         [[topShadowBar.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
         [[backgroundView.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
@@ -315,6 +315,15 @@
         CGFloat imageViewBaselineY = -(imageView.height-220)/2;
         CGFloat y = imageViewBaselineY - scrollView.contentOffset.y/2;
         imageView.frame = CGRectMake(0, y, imageView.width, imageView.height);
+        
+        int buttonY;
+        if (scrollView.contentOffset.y > titleLabel.y-68) {
+            buttonY = titleLabel.y-68-scrollView.contentOffset.y+10;
+        } else {
+            buttonY = 10;
+        }
+        respondButton.y = buttonY;
+        messageButton.y = buttonY;
     }
 }
 
