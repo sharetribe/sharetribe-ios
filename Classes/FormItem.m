@@ -13,10 +13,10 @@
 @synthesize type;
 @synthesize typeAsString;
 
-@synthesize title;
-@synthesize subtitle;
+@synthesize formItemId;
+@synthesize subtitleKey;
 @synthesize mapsTo;
-@synthesize whatIsThis;
+@synthesize providesExplanation;
 @synthesize mandatory;
 @synthesize alternatives;
 @synthesize defaultAlternative;
@@ -47,16 +47,17 @@
             item.type = FormItemTypePhoto;
         }
         
-        item.title = [dataDict valueForKey:@"title"];
-        item.subtitle = [dataDict valueForKey:@"subtitle"];
-        item.mapsTo = [dataDict valueForKey:@"mapsTo"];
-        NSLog(@"%@ maps to %@", item.title, item.mapsTo);
-        item.whatIsThis = [dataDict valueForKey:@"whatIsThis"];
+        item.formItemId = [dataDict valueForKey:@"id"];
+        item.subtitleKey = [dataDict valueForKey:@"subtitle"];
+        item.mapsTo = [dataDict valueForKey:@"maps_to"];
         item.mandatory = [[dataDict valueForKey:@"mandatory"] boolValue];
         item.alternatives = [dataDict valueForKey:@"alternatives"];
-        item.defaultAlternative = [dataDict valueForKey:@"defaultAlternative"];
-        item.defaultTimeIntervalInDays = [[dataDict valueForKey:@"defaultTimeIntervalInDays"] intValue];
-        item.includeTime = [[dataDict valueForKey:@"includeTime"] boolValue];
+        item.defaultAlternative = [dataDict valueForKey:@"default_alternative"];
+        item.defaultTimeIntervalInDays = [[dataDict valueForKey:@"default_time_interval_in_days"] intValue];
+        item.includeTime = [[dataDict valueForKey:@"include_time"] boolValue];
+        item.providesExplanation = [[dataDict objectForKey:@"provides_explanation"] boolValue];
+        
+        // NSLog(@"%@ maps to %@", item.title, item.mapsTo);
         
         NSString *autocapitalizationValue = [dataDict valueForKey:@"autocapitalization"];
         if ([autocapitalizationValue isEqual:@"none"]) {
@@ -77,4 +78,28 @@
     return formItems;
 }
 
+- (NSString *)localizedTitle
+{
+    NSString *key = [NSString stringWithFormat:@"listing.%@", formItemId];
+    return NSLocalizedString(key, @"");
+}
+
+- (NSString *)localizedTitleForAlternative:(NSString *)alternative
+{
+    NSString *key = [NSString stringWithFormat:@"listing.%@.%@", formItemId, alternative];
+    return NSLocalizedString(key, @"");
+}
+
+- (NSString *)localizedSubtitle
+{
+    NSString *key = [NSString stringWithFormat:@"listing.subtitle.%@", subtitleKey];
+    return NSLocalizedString(key, @"");
+}
+
+- (NSString *)localizedExplanation
+{
+    NSString *key = [NSString stringWithFormat:@"listing.explanation.%@", formItemId];
+    return NSLocalizedString(key, @"");
+}
+    
 @end

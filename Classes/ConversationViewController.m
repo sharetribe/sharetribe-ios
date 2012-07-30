@@ -47,8 +47,8 @@
     messagesView.y = 0;
     messagesView.width = 320;
     messagesView.delegate = self;
-    messagesView.sendButtonTitle = @"Send";
-    messagesView.composeFieldPlaceholder = @"Write a reply";
+    messagesView.sendButtonTitle = NSLocalizedString(@"button.send.message", @"");
+    messagesView.composeFieldPlaceholder = NSLocalizedString(@"placeholder.message", @"");;
     [scrollView addSubview:messagesView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotMessagesForConversation:) name:kNotificationForDidReceiveMessagesForConversation object:nil];
@@ -66,11 +66,11 @@
     
     if (inModalComposerMode) {
         
-        self.title = @"New Message";
+        self.title = NSLocalizedString(@"composer.message.title", @"");;
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
         
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
         
         self.view.backgroundColor = kSharetribeBrownColor;
         

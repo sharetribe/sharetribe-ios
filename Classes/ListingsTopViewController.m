@@ -102,7 +102,7 @@
     
     self.search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0, 180, 44);
-    search.tintColor = kSharetribeDarkGreenColor;
+    search.tintColor = kSharetribeDarkBrownColor;
     search.delegate = self;
     // [[search.subviews objectAtIndex:0] removeFromSuperview];
     search.userInteractionEnabled = NO;

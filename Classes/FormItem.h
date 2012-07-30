@@ -22,10 +22,10 @@ typedef enum {
 @property (assign, nonatomic) FormItemType type;
 @property (strong, nonatomic) NSString *typeAsString;
 
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *subtitle;
+@property (strong, nonatomic) NSString *formItemId;
+@property (strong, nonatomic) NSString *subtitleKey;
 @property (strong, nonatomic) NSString *mapsTo;
-@property (strong, nonatomic) NSString *whatIsThis;
+@property (assign, nonatomic) BOOL providesExplanation;
 @property (assign, nonatomic) BOOL mandatory;
 @property (strong, nonatomic) NSArray *alternatives;
 @property (strong, nonatomic) NSString *defaultAlternative;
@@ -34,5 +34,10 @@ typedef enum {
 @property (assign, nonatomic) UITextAutocapitalizationType autocapitalizationType;
 
 + (NSArray *)formItemsFromDataArray:(NSArray *)dataArray;
+
+- (NSString *)localizedTitle;
+- (NSString *)localizedTitleForAlternative:(NSString *)alternative;
+- (NSString *)localizedSubtitle;
+- (NSString *)localizedExplanation;
 
 @end

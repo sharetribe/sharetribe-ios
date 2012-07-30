@@ -143,7 +143,7 @@
         submissionWaitingForImage = NO;
     }
         
-    self.title = NSLocalizedString(@"Tabs.NewListing", @"");
+    self.title = NSLocalizedString(@"tabs.new_listing", @"");
     self.navigationItem.leftBarButtonItem = cancelButton;
     
     self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
@@ -182,7 +182,7 @@
     self.listing = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted successully" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted successully" message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
     [alert show];
 }
 
@@ -264,7 +264,7 @@
         [cell addSubview:subtitleLabel];
         
         UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        NSString *helpButtonTitle = @"What's this?";
+        NSString *helpButtonTitle = NSLocalizedString(@"listing.explanation", @"");
         [helpButton setTitle:helpButtonTitle forState:UIControlStateNormal];
         [helpButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         [helpButton setTitleShadowColor:kSharetribeLightBrownColor forState:UIControlStateNormal];
@@ -346,17 +346,17 @@
     }
     
     UILabel *titleLabel = (UILabel *) [cell viewWithTag:kCellTitleLabelTag];
-    titleLabel.text = formItem.title;
+    titleLabel.text = formItem.localizedTitle;
     if (formItem.mandatory) {
         titleLabel.text = [NSString stringWithFormat:@"%@*", titleLabel.text];
     }
     
     UILabel *subtitleLabel = (UILabel *) [cell viewWithTag:kCellSubtitleLabelTag];
-    subtitleLabel.text = formItem.subtitle;
+    subtitleLabel.text = (formItem.subtitleKey != nil) ? formItem.localizedSubtitle : nil;
     subtitleLabel.x = titleLabel.x + [titleLabel.text sizeWithFont:titleLabel.font].width + 5;
     
     UIButton *helpButton = (UIButton *) [cell viewWithTag:kCellHelpButtonTag];
-    helpButton.hidden = (formItem.whatIsThis == nil);
+    helpButton.hidden = !(formItem.providesExplanation);
 
     if (formItem.type == FormItemTypeTextField) {
         
@@ -439,7 +439,11 @@
                 
                 UILabel *choiceLabel = (UILabel *) [choiceView viewWithTag:kChoiceCellLabelTag];
                 id alternative = [formItem.alternatives objectAtIndex:i];
-                choiceLabel.text = alternative;
+                if (formItem.type == FormItemTypeDate && ![alternative isEqual:formItem.defaultAlternative]) {
+                    choiceLabel.text = alternative;  // we don't localize timestamps the crude way, no
+                } else {
+                    choiceLabel.text = [formItem localizedTitleForAlternative:alternative];
+                }
                 choiceLabel.textColor = [UIColor blackColor];
                 if (formItem.type == FormItemTypeDate && ![alternative isEqualToString:formItem.defaultAlternative]) {
                     choiceLabel.textColor = kSharetribeDarkBrownColor;
@@ -456,7 +460,7 @@
                 }
                 
                 [UIView beginAnimations:nil context:NULL];
-                if ([chosenAlternative isEqual:choiceLabel.text] || choiceCheckmark.image == nil) {
+                if ([chosenAlternative isEqual:alternative] || choiceCheckmark.image == nil) {
                     choiceView.backgroundColor = kSharetribeLightBrownColor;
                     choiceCheckmark.alpha = 1;
                 } else {
@@ -501,7 +505,7 @@
             photoView.image = nil;
             photoView.backgroundColor = kSharetribeLightBrownColor;
             photoView.frame = CGRectMake(10, 30, 300, rowHeight-30-rowSpacing);
-            [photoButton setTitle:@"Add an image..." forState:UIControlStateNormal];
+            [photoButton setTitle:NSLocalizedString(@"listing.image.add", @"") forState:UIControlStateNormal];
             
             photoView.layer.cornerRadius = 8;            
             photoView.layer.borderColor = [UIColor clearColor].CGColor;
@@ -609,7 +613,7 @@
     [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
     self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"OK" style:UIBarButtonItemStyleBordered target:textInputView action:@selector(resignFirstResponder)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.ok", @"") style:UIBarButtonItemStyleBordered target:textInputView action:@selector(resignFirstResponder)];
 }
 
 - (void)textInputViewDidEndEditing:(UIView *)textInputView
@@ -760,16 +764,16 @@
 {
     NSIndexPath *path = [table indexPathForRowAtPoint:[table convertPoint:CGPointZero fromView:sender]];    
     FormItem *formItem = [formItems objectAtIndex:path.row];
-    NSString *itemHelp = formItem.whatIsThis;
+    NSString *itemHelp = formItem.localizedExplanation;
     itemHelp = [itemHelp stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:formItem.title message:itemHelp delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:formItem.localizedTitle message:itemHelp delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
 }
 
 - (IBAction)photoButtonPressed:(UIButton *)sender
 {
-    UIActionSheet *actionSheetForAddingPhoto = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take a New Photo...", @"Choose from Library...", nil];
+    UIActionSheet *actionSheetForAddingPhoto = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"button.take_new_photo", @""), NSLocalizedString(@"button.choose_photo_from_library", @""), nil];
     actionSheetForAddingPhoto.tag = kActionSheetTagForAddingPhoto;
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -808,7 +812,7 @@
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         
         self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"OK" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissDatePicker)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.ok", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(dismissDatePicker)];
         
         self.formItemBeingEdited = formItem;
         
@@ -838,7 +842,7 @@
         [uploadTitleView addSubview:uploadProgressLabel];
         [uploadTitleView addSubview:uploadProgressView];
     }
-    uploadProgressLabel.text = @"Posting...";
+    uploadProgressLabel.text = NSLocalizedString(@"composer.listing.posting", @"");
     uploadProgressView.progress = 0;
     self.navigationItem.titleView = uploadTitleView;
     
@@ -857,7 +861,7 @@
 {
     if (listing.title != nil || listing.description != nil || listing.image != nil) {
         
-        UIAlertView *alertViewForCanceling = [[UIAlertView alloc] initWithTitle:@"Cancel" message:@"Are you sure you want to cancel?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        UIAlertView *alertViewForCanceling = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"button.cancel", @"") message:NSLocalizedString(@"composer.listing.confirmation_for_cancel", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.no", @"") otherButtonTitles:NSLocalizedString(@"button.yes", @""), nil];
         alertViewForCanceling.tag = kAlertViewTagForCanceling;
         [alertViewForCanceling show];
         

@@ -57,7 +57,7 @@
     middleButtonLabel.font = [UIFont boldSystemFontOfSize:10];
     middleButtonLabel.textColor = [UIColor lightGrayColor];
     middleButtonLabel.backgroundColor = [UIColor clearColor];
-    middleButtonLabel.frame = CGRectMake(10, 42, 46, 24);
+    middleButtonLabel.frame = CGRectMake(10, 42, 50, 24);
     middleButtonLabel.textAlignment = UITextAlignmentCenter;
     middleButtonLabel.numberOfLines = 2;
     middleButtonLabel.lineBreakMode = UILineBreakModeWordWrap;

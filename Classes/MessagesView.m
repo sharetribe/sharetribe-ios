@@ -103,7 +103,7 @@
         cancelMessageButton.frame = CGRectMake(50+sendMessageButton.width+10, self.height-40, self.width-50-20-sendMessageButton.width, 30);
         cancelMessageButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         cancelMessageButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
-        [cancelMessageButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [cancelMessageButton setTitle:NSLocalizedString(@"button.cancel", @"") forState:UIControlStateNormal];
         [cancelMessageButton setBackgroundImage:[[UIImage imageNamed:@"dark-brown.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
         [cancelMessageButton addTarget:self action:@selector(cancelMessagePressed) forControlEvents:UIControlEventTouchUpInside];
         cancelMessageButton.hidden = YES;
@@ -262,7 +262,7 @@
         subjectLabel.y = yOffset;
         yOffset += subjectLabel.height+10;
         
-        recipientLabel.text = [NSString stringWithFormat:@"To: %@", nil];  // FIXME
+        recipientLabel.text = [NSString stringWithFormat:@"To: %@", conversation.recipient.name];  // LOCALIZE
         subjectLabel.text = conversation.title;
         
         recipientLabel.hidden = NO;

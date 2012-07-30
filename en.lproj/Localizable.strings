@@ -6,8 +6,91 @@
   Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 */
 
-"Tabs.Offers" = "Offers";
-"Tabs.Requests" = "Requests";
-"Tabs.NewListing" = "New Listing";
-"Tabs.Messages" = "Messages";
-"Tabs.Profile" = "Profile";
+"tabs.offers" = "Offers";
+"tabs.requests" = "Requests";
+"tabs.new_listing" = "New Listing";
+"tabs.messages" = "Messages";
+"tabs.profile" = "Profile";
+
+"agestamp.format.minutes_ago" = "%d minutes ago";
+"agestamp.format.hours_ago" = "%d hours ago";
+"agestamp.format.days_ago" = "%d days ago";
+"agestamp.one_minute_ago" = "1 minute ago";
+"agestamp.one_hour_ago" = "1 hour ago";
+"agestamp.one_day_ago" = "1 day ago";
+"agestamp.just_now" = "Just now";
+
+"button.ok" = "OK";
+"button.send" = "Send";
+"button.cancel" = "Cancel";
+"button.yes" = "Yes";
+"button.no" = "No";
+"button.send.comment" = "Send comment";
+"button.send.message" = "Send";
+"button.listing.respond" = "Respond";
+"button.listing.message" = "Message";
+"button.take_new_photo" = "Take a New Photo...";
+"button.choose_photo_from_library" = "Choose from Library...";
+
+"composer.message.title" = "New Message";
+"composer.listing.confirmation_for_cancel" = "Are you sure you want to cancel?";
+"composer.listing.posting" =  "Posting...";
+
+"placeholder.comment" = "Write a new comment";
+"placeholder.message" = "Write a reply";
+"placeholder.username" = "Username";
+"placeholder.password" = "Password";
+
+"listing.offer_type" = "Offer type";
+"listing.offer_type.give_away" = "Give away";
+"listing.offer_type.lend" = "Lend";
+"listing.offer_type.rent_out" = "Rent out";
+"listing.offer_type.sell" = "Sell";
+"listing.offer_type.temporary" = "Temporary";
+"listing.offer_type.trade" = "Trade";
+
+"listing.request_type" = "Request type";
+"listing.request_type.borrow" = "Borrow";
+"listing.request_type.buy" = "Buy";
+"listing.request_type.rent" = "Rent";
+"listing.request_type.temporary" = "Temporary";
+"listing.request_type.trade" = "Trade";
+"listing.request_type.take_for_free" = "Take for free";
+
+"listing.offered_item" = "Item you offer";
+"listing.offered_favor" = "Favor you offer";
+"listing.offered_housing" = "Housing you offer";
+
+"listing.requested_item" = "Item you need";
+"listing.requested_favor" = "Favor you need";
+"listing.requested_housing" = "Housing you need";
+
+"listing.description" = "Detailed description";
+
+"listing.tags" = "Tags";
+
+"listing.expiration_date" = "Expiration date";
+"listing.expiration_date.for_the_time_being" = "For the time being";
+
+"listing.departure_time" = "Departure time";
+"listing.departure_time.repeated" = "Repeated (add details below)";
+
+"listing.location" = "Location";
+"listing.origin" = "Origin";
+"listing.destination" = "Destination";
+
+"listing.image" = "Image";
+"listing.image.add" = "Add an image...";
+
+"listing.visibility" = "Visibility";
+"listing.visibility.everybody" = "All Internet users";
+"listing.visibility.this_community" = "Members only";
+
+"listing.subtitle.separate_with_comma" = "(separate with comma)";
+
+"listing.explanation" = "What's this?";
+
+"listing.explanation.offer_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
+"listing.explanation.request_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
+"listing.explanation.tags" = "With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.";
+"listing.explanation.expiration_date" = "You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.";

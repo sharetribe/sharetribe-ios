@@ -67,9 +67,9 @@ void uncaughtExceptionHandler(NSException *exception)
     self.createListingViewController = [[CreateListingViewController alloc] init];
     self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:createListingViewController];
     
-    offersNavigationController.title = NSLocalizedString(@"Tabs.Offers", @"");
-    requestsNavigationController.title = NSLocalizedString(@"Tabs.Requests", @"");
-    messagesNavigationController.title = NSLocalizedString(@"Tabs.Messages", @"");
+    offersNavigationController.title = NSLocalizedString(@"tabs.offers", @"");
+    requestsNavigationController.title = NSLocalizedString(@"tabs.requests", @"");
+    messagesNavigationController.title = NSLocalizedString(@"tabs.messages", @"");
     
     User *currentUser = [User currentUser];
     profileViewController.title = currentUser.givenName;
@@ -80,7 +80,7 @@ void uncaughtExceptionHandler(NSException *exception)
     messagesNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-envelope"];
     profileNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-kaapo"];
     
-    UIColor *tintColor = kSharetribeDarkGreenColor;
+    UIColor *tintColor = kSharetribeDarkBrownColor;
     offersNavigationController.navigationBar.tintColor = tintColor;
     requestsNavigationController.navigationBar.tintColor = tintColor;
     messagesNavigationController.navigationBar.tintColor = tintColor;
@@ -95,7 +95,7 @@ void uncaughtExceptionHandler(NSException *exception)
     
     self.tabBarController = [[ButtonTabBarController alloc] initWithMiddleViewController:createListingNavigationController otherViewControllers:tabViewControllers];
 
-    [tabBarController setMiddleButtonTitle:NSLocalizedString(@"Tabs.NewListing", @"")];
+    [tabBarController setMiddleButtonTitle:NSLocalizedString(@"tabs.new_listing", @"")];
     
     [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble"] forState:UIControlStateNormal];
     [tabBarController setMiddleButtonImage:[UIImage imageNamed:@"icon-bubble-white"] forState:UIControlStateHighlighted];

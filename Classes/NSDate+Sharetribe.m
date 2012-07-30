@@ -15,22 +15,27 @@
     NSTimeInterval interval = -[self timeIntervalSinceNow];
     if (interval < kOneHour) {
         int minutes = (int)(interval/kOneMinute);
-        if (minutes == 1) {
-            return @"1 minute ago";
+        if (minutes == 0) {
+            return NSLocalizedString(@"agestamp.just_now", @"");
+        } else if (minutes == 1) {
+            return NSLocalizedString(@"agestamp.one_minute_ago", @"");
         }
-        return [NSString stringWithFormat:@"%d minutes ago", minutes];
+        NSString *minutesFormat = NSLocalizedString(@"agestamp.format.minutes_ago", @"");
+        return [NSString stringWithFormat:minutesFormat, minutes];
     } else if (interval < kOneDay) {
         int hours = (int)(interval/kOneHour);
         if (hours == 1) {
-            return @"1 hour ago";
+            return NSLocalizedString(@"agestamp.one_hour_ago", @"");
         }
-        return [NSString stringWithFormat:@"%d hours ago", hours];
+        NSString *hoursFormat = NSLocalizedString(@"agestamp.format.hours_ago", @"");
+        return [NSString stringWithFormat:hoursFormat, hours];
     } else {
         int days = (int)(interval/kOneDay);
         if (days == 1) {
-            return @"1 day ago";
+            return NSLocalizedString(@"agestamp.one_day_ago", @"");
         }
-        return [NSString stringWithFormat:@"%d days ago", days];
+        NSString *daysFormat = NSLocalizedString(@"agestamp.format.days_ago", @"");
+        return [NSString stringWithFormat:daysFormat, days];
     }
 }
 

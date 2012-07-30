@@ -5,9 +5,9 @@
 	<dict>
 		<key>type</key>
 		<string>textfield</string>
-		<key>title</key>
-		<string>Favor you offer</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>offered_favor</string>
+		<key>maps_to</key>
 		<string>title</string>
 		<key>mandatory</key>
 		<true/>
@@ -15,57 +15,57 @@
 	<dict>
 		<key>type</key>
 		<string>textarea</string>
-		<key>title</key>
-		<string>Detailed description</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>description</string>
+		<key>maps_to</key>
 		<string>description</string>
 	</dict>
 	<dict>
 		<key>type</key>
 		<string>textfield</string>
-		<key>title</key>
-		<string>Tags</string>
-		<key>subtitle</key>
-		<string>(separate with comma)</string>
-		<key>mapsTo</key>
+		<key>id</key>
 		<string>tags</string>
-		<key>whatIsThis</key>
-		<string>With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.</string>
+		<key>subtitle</key>
+		<string>separate_with_comma</string>
+		<key>maps_to</key>
+		<string>tags</string>
+		<key>provides_explanation</key>
+		<true/>
 		<key>autocapitalization</key>
 		<string>none</string>
 	</dict>
 	<dict>
 		<key>type</key>
 		<string>date</string>
-		<key>defaultAlternative</key>
-		<string>For the time being</string>
-		<key>defaultTimeIntervalInDays</key>
+		<key>default_alternative</key>
+		<string>for_the_time_being</string>
+		<key>default_time_interval_in_days</key>
 		<integer>90</integer>
-		<key>includeTime</key>
+		<key>include_time</key>
 		<false/>
-		<key>title</key>
-		<string>Expiration date</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>expiration_date</string>
+		<key>maps_to</key>
 		<string>validUntil</string>
 		<key>mandatory</key>
 		<true/>
-		<key>whatIsThis</key>
-		<string>You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.</string>
+		<key>provides_explanation</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>type</key>
 		<string>location</string>
-		<key>title</key>
-		<string>Location</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>location</string>
+		<key>maps_to</key>
 		<string>location</string>
 	</dict>
 	<dict>
 		<key>type</key>
 		<string>photo</string>
-		<key>title</key>
-		<string>Image</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>image</string>
+		<key>maps_to</key>
 		<string>image</string>
 	</dict>
 	<dict>
@@ -73,12 +73,12 @@
 		<string>choice</string>
 		<key>alternatives</key>
 		<array>
-			<string>All Internet users</string>
-			<string>Members only</string>
+			<string>everybody</string>
+			<string>this_community</string>
 		</array>
-		<key>title</key>
-		<string>Visibility</string>
-		<key>mapsTo</key>
+		<key>id</key>
+		<string>visibility</string>
+		<key>maps_to</key>
 		<string>visibility</string>
 		<key>mandatory</key>
 		<true/>

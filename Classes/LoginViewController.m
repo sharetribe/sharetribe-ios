@@ -36,6 +36,9 @@
     usernameField.delegate = self;
     passwordField.delegate = self;
     
+    usernameField.placeholder = NSLocalizedString(@"placeholder.username", @"");
+    passwordField.placeholder = NSLocalizedString(@"placeholder.password", @"");
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginConnectionDidFail:) name:kNotificationForLoginConnectionDidFail object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginAuthDidFail:) name:kNotificationForLoginAuthDidFail object:nil];
@@ -82,7 +85,7 @@
 {
     [self setSpinnerVisible:NO];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problem Connecting to Sharetribe" message:@"Please try again in a minute, or check your network connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problem Connecting to Sharetribe" message:@"Please try again in a minute, or check your network connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];  // LOCALIZE
     [alert show];
 }
 
@@ -90,7 +93,7 @@
 {
     [self setSpinnerVisible:NO];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wrong Username or Password" message:@"Please try again, or check our web page for assistance." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wrong Username or Password" message:@"Please try again, or check our web page for assistance." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];  // LOCALIZE
     [alert show];
 }
 

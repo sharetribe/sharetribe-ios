@@ -62,12 +62,12 @@
     self.navigationItem.hidesBackButton = YES;
         
     self.commentsView = [[MessagesView alloc] init];
-    commentsView.sendButtonTitle = @"Send comment";
-    commentsView.composeFieldPlaceholder = @"Write a new comment";
+    commentsView.sendButtonTitle = NSLocalizedString(@"button.send.comment", @"");
+    commentsView.composeFieldPlaceholder = NSLocalizedString(@"placeholder.comment", @"");
     commentsView.delegate = self;
     [self.scrollView addSubview:commentsView];
     
-    [respondButton setTitle:@"Respond" forState:UIControlStateNormal];
+    [respondButton setTitle:NSLocalizedString(@"button.listing.respond", @"") forState:UIControlStateNormal];
     [respondButton setImage:[UIImage imageNamed:@"icon-contact"] forState:UIControlStateNormal];
     [respondButton setBackgroundImage:[[UIImage imageNamed:@"dark-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
     respondButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
@@ -75,7 +75,7 @@
     respondButton.clipsToBounds = YES;
     [respondButton addTarget:self action:@selector(respondButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    [messageButton setTitle:@"Message" forState:UIControlStateNormal];
+    [messageButton setTitle:NSLocalizedString(@"button.listing.message", @"") forState:UIControlStateNormal];
     [messageButton setImage:[UIImage imageNamed:@"icon-envelope"] forState:UIControlStateNormal];
     [messageButton setBackgroundImage:[[UIImage imageNamed:@"dark-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
     messageButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
@@ -145,7 +145,7 @@
     }
     
     if (listing.tags.count > 0) {
-        tagTitleLabel.text = @"Tags: ";
+        tagTitleLabel.text = @"Tags: ";  // LOCALIZE
         tagListLabel.text = [@"          " stringByAppendingString:[listing.tags componentsJoinedByString:@", "]];
         tagTitleLabel.y = yOffset;
         tagListLabel.y = yOffset;
