@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ListingCollectionView.h"
+#import "ListingCollectionViewDelegate.h"
 #import "ListingsListViewController.h"
 #import "ListingsMapViewController.h"
 #import "Listing.h"
@@ -15,21 +17,18 @@
 #define kViewChoiceList @"list"
 #define kViewChoiceMap  @"map"
 
-@protocol ListingSelectionDelegate <NSObject>
-- (void)viewController:(UIViewController *)viewer didSelectListing:(Listing *)listing;
-@end
-
-@interface ListingsTopViewController : UIViewController <UISearchBarDelegate, ListingSelectionDelegate>
+@interface ListingsTopViewController : UIViewController <ListingCollectionView, ListingCollectionViewDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) ListingsListViewController *listViewer;
 @property (strong, nonatomic) ListingsMapViewController *mapViewer;
 @property (strong, nonatomic) UISearchBar *search;
 @property (strong, nonatomic) UIButton *dismissSearchButton;
 
-@property (copy, nonatomic) NSArray *listings;
 @property (assign) ListingType listingType;
 
 - (id)initWithListingType:(ListingType)type;
+
+- (void)refreshListings;
 
 - (void)setViewChoice:(NSString *)viewChoice animated:(BOOL)animated;
 - (NSString *)viewChoice;

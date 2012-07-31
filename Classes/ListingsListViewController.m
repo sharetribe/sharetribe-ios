@@ -13,33 +13,49 @@
 #import "ListingViewController.h"
 #import "ListingsTopViewController.h"
 
-@implementation ListingsListViewController
+@interface ListingsListViewController () {
+    NSMutableArray *listings;
+}
 
-@dynamic listings;
+@end
+
+@implementation ListingsListViewController
 
 @synthesize header;
 @synthesize updateIntroLabel;
 @synthesize updateTimeLabel;
 @synthesize updateSpinner;
 
-@synthesize listingSelectionDelegate;
+@synthesize listingCollectionViewDelegate;
 
-- (NSArray *)listings
+- (void)addListings:(NSArray *)newListings
 {
     if (listings == nil) {
         listings = [NSMutableArray array];
     }
-    return listings;
-}
-
-- (void)setListings:(NSArray *)newListings
-{
-    listings = [NSMutableArray arrayWithArray:newListings];
+    
+    for (Listing *newListing in newListings) {
+        NSInteger oldIndex = [listings indexOfObject:newListing];
+        if (oldIndex != NSNotFound) {
+            [listings removeObjectAtIndex:oldIndex];
+        }
+        [listings addObject:newListing];
+    }
+    
     [listings sortUsingFunction:compareListingsByDate context:NULL];
     [self.tableView reloadData];
+    
     if (listings.count > 0) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
+    
+    [self updateFinished];
+}
+
+- (void)clearAllListings
+{
+    [listings removeAllObjects];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,7 +119,7 @@
 {
     [super viewDidUnload];
     
-    self.listingSelectionDelegate = nil;
+    self.listingCollectionViewDelegate = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -192,7 +208,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Listing *listing = [listings objectAtIndex:indexPath.row];
-    [listingSelectionDelegate viewController:self didSelectListing:listing];
+    [listingCollectionViewDelegate viewController:self didSelectListing:listing];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -220,8 +236,8 @@
         self.tableView.tableHeaderView.height = 60;
         self.tableView.tableHeaderView = self.tableView.tableHeaderView;
         [UIView commitAnimations];
-            
-        [self performSelector:@selector(updateFinished) withObject:nil afterDelay:2.5];
+        
+        [listingCollectionViewDelegate viewController:self wantsToRefreshPage:1];
     }
 }
 

@@ -9,33 +9,39 @@
 #import "ListingsMapViewController.h"
 
 #import "Listing.h"
+#import "ListingCell.h"
 #import "ListingsTopViewController.h"
 #import "ListingAnnotationView.h"
 #import "Location.h"
 #import <QuartzCore/QuartzCore.h>
+
+@interface ListingsMapViewController () {
+    BOOL shouldRefocusRegion;
+    MKCoordinateRegion targetRegion;
+}
+
+@end
 
 @implementation ListingsMapViewController
 
 @synthesize map;
 @synthesize cell;
 
-@dynamic listings;
+@synthesize listingCollectionViewDelegate;
 
-@synthesize listingSelectionDelegate;
-
-- (NSArray *)listings
+- (void)addListings:(NSArray *)newListings
 {
-    if (listings == nil) {
-        listings = [NSMutableArray array];
+    for (Listing *newListing in newListings) {
+        if ([map.annotations containsObject:newListing]) {
+            [map removeAnnotation:newListing];  // this should actually remove the older duplicate
+        }
+        [map addAnnotation:newListing];
     }
-    return listings;
 }
 
-- (void)setListings:(NSArray *)newListings
+- (void)clearAllListings
 {
-    [map removeAnnotations:listings];
-    listings = [NSMutableArray arrayWithArray:newListings];
-    [map addAnnotations:listings];
+    [map removeAnnotations:map.annotations];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +114,7 @@
 
 - (IBAction)cellPressed
 {
-    [listingSelectionDelegate viewController:self didSelectListing:cell.listing];
+    [listingCollectionViewDelegate viewController:self didSelectListing:cell.listing];
 }
 
 - (void)regionChangedByMapView:(NSNotification *)notification

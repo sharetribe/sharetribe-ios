@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Message;
 @class User;
 
 typedef enum {
@@ -29,6 +30,7 @@ typedef enum {
 @property (readonly) User *recipient;
 
 @property (strong) NSArray *messages;
+@property (readonly) Message *lastMessage;
 
 + (Conversation *)conversationFromDict:(NSDictionary *)dict;
 + (NSArray *)conversationsFromArrayOfDicts:(NSArray *)dicts;

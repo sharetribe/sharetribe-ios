@@ -9,6 +9,7 @@
 #import "ConversationListCell.h"
 
 #import "Conversation.h"
+#import "Message.h"
 #import "Participation.h"
 #import "User.h"
 #import "NSDate+Sharetribe.h"
@@ -25,10 +26,10 @@
 @dynamic conversation;
 
 @synthesize avatarView;
-@synthesize titleLabel;
-@synthesize subtitleLabel;
 @synthesize usernameLabel;
 @synthesize timeLabel;
+@synthesize titleLabel;
+@synthesize messageLabel;
 
 + (ConversationListCell *)instance
 {
@@ -59,8 +60,10 @@
     [avatarView setImageWithUser:recipient];
     
     titleLabel.text = conversation.title;
-    subtitleLabel.text = [conversation.messages.lastObject text];
-    timeLabel.text = [conversation.updatedAt agestamp];    
+    messageLabel.text = [conversation.lastMessage content];
+    timeLabel.text = [conversation.updatedAt agestamp];
+    
+    messageLabel.height = [messageLabel.text sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(messageLabel.width, 32) lineBreakMode:UILineBreakModeWordWrap].height;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

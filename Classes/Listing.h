@@ -10,21 +10,25 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-#define kNoListingCategory -1
-#define kNoListingType     -1
-
 typedef enum {
-    ListingCategoryItem = 0,
-    ListingCategoryFavor,
-    ListingCategoryRide,
-    ListingCategoryAccommodation
+    ListingCategoryItem            = 1 << 0,
+    ListingCategoryFavor           = 1 << 1,
+    ListingCategoryRide            = 1 << 2,
+    ListingCategoryAccommodation   = 1 << 3,
+    ListingCategoryAny             = 0
 } ListingCategory;
 
 typedef enum {
-    ListingTypeOffer = 0,
-    ListingTypeRequest,
-    ListingTypeBoth
+    ListingTypeOffer               = 1 << 0,
+    ListingTypeRequest             = 1 << 1,
+    ListingTypeAny                 = 0
 } ListingType;
+
+typedef enum {
+    ListingStatusOpen              = 1 << 0,
+    ListingStatusClosed            = 1 << 1,
+    ListingStatusAny               = 0
+} ListingStatus;
 
 @class Location;
 @class User;
@@ -53,6 +57,7 @@ typedef enum {
 @property (strong) NSDate *createdAt;
 @property (strong) NSDate *updatedAt;
 @property (strong) NSDate *validUntil;
+@property (assign) ListingStatus status;
 
 @property (assign) NSInteger numberOfTimesViewed;
 @property (assign) NSInteger numberOfComments;

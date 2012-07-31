@@ -12,4 +12,6 @@
 
 @property (strong) NSMutableArray *conversations;
 
+- (void)refreshConversations;
+
 @end

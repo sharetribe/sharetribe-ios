@@ -9,6 +9,7 @@
 #import "AFHTTPClient.h"
 
 #import "Conversation.h"
+#import "Listing.h"
 #import "CWLSynthesizeSingleton.h"
 
 // Notifications for success:
@@ -35,8 +36,13 @@
 #define kNotificationForLoginConnectionDidFail             @"login connection did fail"
 #define kNotificationForLoginAuthDidFail                   @"login auth did fail"
 
-@class Conversation;
-@class Listing;
+// Response info dict keys:
+
+#define kInfoKeyForListingType                             @"listing type"
+#define kInfoKeyForPage                                    @"page"
+#define kInfoKeyForNumberOfPages                           @"number of pages"
+#define kInfoKeyForItemsPerPage                            @"items per page"
+
 @class User;
 
 @interface SharetribeAPIClient : AFHTTPClient
@@ -51,7 +57,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 - (void)logOut;
 - (void)registerCurrentDeviceWithToken:(NSString *)token;
 
-- (void)getListings;
+- (void)getListingsOfType:(ListingType)type forPage:(NSInteger)page;
 - (void)getListingWithId:(NSInteger)listingId;
 - (void)postNewListing:(Listing *)listing;
 - (void)postNewComment:(NSString *)comment onListing:(Listing *)listing;

@@ -26,7 +26,6 @@
 @synthesize search;
 @synthesize dismissSearchButton;
 
-@dynamic listings;
 @synthesize listingType;
 
 - (id)initWithListingType:(ListingType)type
@@ -51,27 +50,29 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (NSArray *)listings
+- (void)addListings:(NSArray *)listings
 {
-    return listViewer.listings;
+    [listViewer addListings:listings];
+    [mapViewer addListings:listings];
 }
 
-- (void)setListings:(NSArray *)newListings
+- (void)clearAllListings
 {
-    listViewer.listings = newListings;
-    mapViewer.listings = newListings;
+    [listViewer clearAllListings];
+    [mapViewer clearAllListings];
+}
+
+- (void)refreshListings
+{
+    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:1];
 }
 
 - (void)didReceiveListings:(NSNotification *)notification
 {
-    NSArray *receivedListings = notification.object;
-    NSMutableArray *suitableListings = [NSMutableArray array];
-    for (Listing *listing in receivedListings) {
-        if (listing.type == self.listingType) {
-            [suitableListings addObject:listing];
-        }
+    ListingType resultType = [[notification.userInfo objectForKey:kInfoKeyForListingType] intValue];
+    if (resultType == self.listingType) {
+        [self addListings:notification.object];
     }
-    self.listings = suitableListings;
     // TODO what about paginaton, incremental fetching of new listings?
 }
 
@@ -97,8 +98,8 @@
     listViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     mapViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     
-    listViewer.listingSelectionDelegate = self;
-    mapViewer.listingSelectionDelegate = self;
+    listViewer.listingCollectionViewDelegate = self;
+    mapViewer.listingCollectionViewDelegate = self;
     
     self.search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0, 180, 44);
@@ -210,6 +211,11 @@
     ListingViewController *listingViewer = [[ListingViewController alloc] init];
     listingViewer.listing = listing;
     [self.navigationController pushViewController:listingViewer animated:YES];
+}
+
+- (void)viewController:(UIViewController *)viewer wantsToRefreshPage:(NSInteger)page
+{
+    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:page];
 }
 
 #pragma mark - UISearchBarDelegate

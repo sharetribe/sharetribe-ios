@@ -135,7 +135,7 @@
         [table setContentOffset:CGPointZero animated:NO];
         
         [header setListingType:listing.type];
-        [header setListingCategory:kNoListingCategory];
+        [header setListingCategory:ListingCategoryAny];
         
         self.navigationItem.titleView = nil;
         

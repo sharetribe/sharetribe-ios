@@ -101,7 +101,7 @@ void uncaughtExceptionHandler(NSException *exception)
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
-    [notificationCenter addObserver:self selector:@selector(showLogin) name:kNotificationForUserDidLogOut object:nil];
+    [notificationCenter addObserver:self selector:@selector(userDidLogOut:) name:kNotificationForUserDidLogOut object:nil];
     [notificationCenter addObserver:self selector:@selector(userDidSelectCommunity:) name:kNotificationForDidSelectCommunity object:nil];
     
     self.window.rootViewController = self.tabBarController;
@@ -116,7 +116,7 @@ void uncaughtExceptionHandler(NSException *exception)
         if ([[SharetribeAPIClient sharedClient] currentCommunityId] == NSNotFound) {
             [self showCommunitySelection];
         } else {
-            [[SharetribeAPIClient sharedClient] getListings];
+            [self loadInitialContent];
         }
     }
     
@@ -178,6 +178,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     LoginViewController *loginViewer = [[LoginViewController alloc] init];
     [self.tabBarController presentModalViewController:loginViewer animated:NO];
+    
     [tabBarController setSelectedIndex:0];
 }
 
@@ -187,11 +188,20 @@ void uncaughtExceptionHandler(NSException *exception)
     [self.tabBarController presentModalViewController:communitySelectionViewer animated:YES];
 }
 
+- (void)loadInitialContent
+{
+    [offersViewController refreshListings];
+    [requestsViewController refreshListings];
+    [messagesViewController refreshConversations];
+    
+    [tabBarController setSelectedIndex:0];
+}
+
 - (void)userDidLogIn:(NSNotification *)notification
 {
     User *currentUser = [User currentUser];
     if (currentUser.communities.count < 1) {
-        [[SharetribeAPIClient sharedClient] getListings];
+        [self loadInitialContent];
     } else {
         [self performSelector:@selector(showCommunitySelection) withObject:nil afterDelay:0.5];
     }
@@ -199,7 +209,14 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)userDidSelectCommunity:(NSNotification *)notification
 {
-    [[SharetribeAPIClient sharedClient] getListings];
+    [self loadInitialContent];
+}
+
+- (void)userDidLogOut:(NSNotification *)notification
+{
+    [offersViewController clearAllListings];
+    [requestsViewController clearAllListings];
+    [self showLogin];
 }
 
 #pragma mark - UINavigationControllerDelegate

@@ -26,6 +26,7 @@
 @dynamic participationsByOthers;
 
 @synthesize messages;
+@dynamic lastMessage;
 
 - (id)init
 {
@@ -63,23 +64,36 @@
     return participation.person;
 }
 
+- (Message *)lastMessage
+{
+    return [messages lastObject];
+}
+
 + (Conversation *)conversationFromDict:(NSDictionary *)dict
 {
     Conversation *conversation = [[Conversation alloc] init];
     
-    conversation.conversationId = [[dict objectForKey:@"id"] intValue];
-    conversation.title = [dict objectForKey:@"title"];
-    conversation.status = [self conversationStatusFromString:[dict objectForKey:@"status"]];
-    conversation.listingId = [[dict objectForKey:@"listing_id"] intValue];
+    conversation.conversationId = [[dict objectOrNilForKey:@"id"] intValue];
+    conversation.title = [dict objectOrNilForKey:@"title"];
+    conversation.status = [self conversationStatusFromString:[dict objectOrNilForKey:@"status"]];
+    conversation.listingId = [[dict objectOrNilForKey:@"listing_id"] intValue];
     
-    conversation.createdAt = [NSDate dateFromTimestamp:[dict objectForKey:@"created_at"]];
-    conversation.updatedAt = [NSDate dateFromTimestamp:[dict objectForKey:@"updated_at"]];
+    conversation.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
+    conversation.updatedAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"updated_at"]];
     
-    NSArray *participationDicts = [dict objectForKey:@"participations"];
+    NSArray *participationDicts = [dict objectOrNilForKey:@"participations"];
     conversation.participations = [Participation participationsFromArrayOfDicts:participationDicts];
     
-    NSArray *messageDicts = [dict objectForKey:@"messages"];
-    conversation.messages = [Message messagesFromArrayOfDicts:messageDicts withConversation:conversation];
+    NSArray *messageDicts = [dict objectOrNilForKey:@"messages"];
+    if (messageDicts == nil) {
+        NSDictionary *lastMessageDict = [dict objectOrNilForKey:@"last_message"];
+        if (lastMessageDict != nil) {
+            messageDicts = [NSArray arrayWithObject:lastMessageDict];
+        }
+    }
+    if (messageDicts != nil) {
+        conversation.messages = [Message messagesFromArrayOfDicts:messageDicts withConversation:conversation];
+    }
     
     return conversation;
 }

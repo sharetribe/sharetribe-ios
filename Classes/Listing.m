@@ -38,6 +38,7 @@
 @synthesize createdAt;
 @synthesize updatedAt;
 @synthesize validUntil;
+@synthesize status;
 
 @synthesize numberOfTimesViewed;
 @synthesize numberOfComments;
@@ -120,7 +121,7 @@
     } else if ([string isEqualToString:@"request"]) {
         return ListingTypeRequest;
     }
-    return kNoListingType;
+    return ListingTypeAny;
 }
 
 + (NSString *)stringFromCategory:(ListingCategory)category
@@ -150,7 +151,7 @@
     } else if ([string isEqualToString:@"accommodation"]) {
         return ListingCategoryAccommodation;
     }
-    return kNoListingCategory;
+    return ListingCategoryAny;
 }
 
 + (UIImage *)iconForCategory:(ListingCategory)target

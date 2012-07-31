@@ -8,20 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ListingSelectionDelegate;
+#import "ListingCollectionView.h"
+#import "ListingCollectionViewDelegate.h"
 
-@interface ListingsListViewController : UITableViewController {
-
-    NSMutableArray *listings;
-}
-
-@property (copy) NSArray *listings;
+@interface ListingsListViewController : UITableViewController <ListingCollectionView>
 
 @property (strong) UIView *header;
 @property (strong) UILabel *updateIntroLabel;
 @property (strong) UILabel *updateTimeLabel;
 @property (strong) UIActivityIndicatorView *updateSpinner;
 
-@property (unsafe_unretained) id<ListingSelectionDelegate> listingSelectionDelegate;
+@property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
 @end

@@ -118,7 +118,7 @@
 
 - (void)refreshVisuals
 {
-    if (category == kNoListingCategory) {
+    if (category == ListingCategoryAny) {
         listingCategoryPointerView.hidden = YES;
         listingCategoryTypeLabel.hidden = YES;
         self.height = 416;
@@ -136,7 +136,7 @@
         listingCategoryTypeLabel.text = @"a ride";
     } else if (category == ListingCategoryAccommodation) {
         listingCategoryTypeLabel.text = @"accommodation";
-    } else if (category == kNoListingCategory) {
+    } else if (category == ListingCategoryAny) {
         listingCategoryTypeLabel.text = nil;
     }
     
@@ -175,7 +175,7 @@
         listingTypeTabForOffers.layer.borderWidth = 0;
     }
     
-    if (category == kNoListingCategory) {
+    if (category == ListingCategoryAny) {
         listingCategoryIntroLabel.text = @"Item, favor, ride, or accommodation?";
         listingCategoryIntroLabel.textColor = kSharetribeDarkBrownColor;
         listingCategoryBackgroundView.backgroundColor = kSharetribeLightishBrownColor;

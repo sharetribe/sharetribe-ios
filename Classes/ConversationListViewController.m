@@ -66,8 +66,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [[SharetribeAPIClient sharedClient] getConversations];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -89,6 +87,11 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)refreshConversations
+{
+    [[SharetribeAPIClient sharedClient] getConversations];
 }
 
 - (void)gotConversations:(NSNotification *)notification

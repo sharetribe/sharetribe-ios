@@ -9,23 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-#import "ListingCell.h"
+#import "ListingCollectionView.h"
+#import "ListingCollectionViewDelegate.h"
 
-@protocol ListingSelectionDelegate;
+@class ListingCell;
 
-@interface ListingsMapViewController : UIViewController <MKMapViewDelegate> {
-
-    NSMutableArray *listings;
-    
-    BOOL shouldRefocusRegion;
-    MKCoordinateRegion targetRegion;
-}
+@interface ListingsMapViewController : UIViewController <ListingCollectionView, MKMapViewDelegate>
 
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) ListingCell *cell;
 
-@property (copy) NSArray *listings;
-
-@property (unsafe_unretained) id<ListingSelectionDelegate> listingSelectionDelegate;
+@property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
 @end

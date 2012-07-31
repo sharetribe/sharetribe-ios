@@ -106,8 +106,8 @@
         titleLabel.y = backgroundView.y+12;
         
         CAGradientLayer *topShade = [[CAGradientLayer alloc] init];
-        topShade.frame = CGRectMake(0, 20, 320, 80);
-        topShade.colors = [NSArray arrayWithObjects:(id)([UIColor colorWithWhite:0 alpha:0.7].CGColor), (id)[UIColor colorWithWhite:0 alpha:0].CGColor, nil];
+        topShade.frame = CGRectMake(0, 20, 320, 70);
+        topShade.colors = [NSArray arrayWithObjects:(id)([UIColor colorWithWhite:0 alpha:0.5].CGColor), (id)[UIColor colorWithWhite:0 alpha:0].CGColor, nil];
         topShade.startPoint = CGPointMake(0.5, 0.4);
         topShade.endPoint = CGPointMake(0.5, 1.0);
         [topShadowBar.layer insertSublayer:topShade atIndex:0];

@@ -323,6 +323,8 @@
 		48E1C44A15C5174C0058F4EB /* UINavigationController+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Sharetribe.h"; sourceTree = "<group>"; };
 		48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Sharetribe.m"; sourceTree = "<group>"; };
 		48E1C44D15C55D740058F4EB /* ListingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListingViewController.xib; path = Resources/ListingViewController.xib; sourceTree = SOURCE_ROOT; };
+		48E1C45815C74F9E0058F4EB /* ListingCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListingCollectionViewDelegate.h; sourceTree = "<group>"; };
+		48E1C45915C7560C0058F4EB /* ListingCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListingCollectionView.h; sourceTree = "<group>"; };
 		48FF001B14FB046400AFB1AC /* MessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesView.h; sourceTree = "<group>"; };
 		48FF001C14FB046400AFB1AC /* MessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesView.m; sourceTree = "<group>"; };
 		48FF002214FB106800AFB1AC /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
@@ -538,6 +540,8 @@
 				48D004E8159E91A30063E372 /* ProfileViewController.m */,
 				48E1C44A15C5174C0058F4EB /* UINavigationController+Sharetribe.h */,
 				48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */,
+				48E1C45915C7560C0058F4EB /* ListingCollectionView.h */,
+				48E1C45815C74F9E0058F4EB /* ListingCollectionViewDelegate.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

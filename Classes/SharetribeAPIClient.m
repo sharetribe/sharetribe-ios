@@ -116,7 +116,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
             
             NSString *deviceToken = [defaults objectForKey:kDefaultsKeyForDeviceToken];
             if (deviceToken != nil) {
-                // [self registerCurrentDeviceWithToken:deviceToken];
+                [self registerCurrentDeviceWithToken:deviceToken];
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForUserDidLogIn object:user];
@@ -163,21 +163,32 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }];
 }
 
-- (void)getListings
+- (void)getListingsOfType:(ListingType)type forPage:(NSInteger)page
 {
     NSMutableDictionary *params = [self baseParams];
+    if (type != ListingTypeAny) {
+        [params setObject:[Listing stringFromType:type] forKey:@"listing_type"];
+    }
+    [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
     
     [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
-//        NSInteger page = [[responseObject objectOrNilForKey:@"page"] intValue];
-//        NSInteger perPage = [[responseObject objectOrNilForKey:@"per_page"] intValue];
-//        NSInteger totalPages = [[responseObject objectOrNilForKey:@"total_pages"] intValue];
+        NSInteger page = [[responseObject objectOrNilForKey:@"page"] intValue];
+        NSInteger totalPages = [[responseObject objectOrNilForKey:@"total_pages"] intValue];
+        NSInteger perPage = [[responseObject objectOrNilForKey:@"per_page"] intValue];
         
         NSArray *listingsDicts = [responseObject objectOrNilForKey:@"listings"];
         NSArray *listings = [Listing listingsFromArrayOfDicts:listingsDicts];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListings object:listings];
+        
+        NSMutableDictionary *info = [NSMutableDictionary dictionary];
+        [info setObject:[NSNumber numberWithInt:page] forKey:kInfoKeyForPage];
+        [info setObject:[NSNumber numberWithInt:totalPages] forKey:kInfoKeyForNumberOfPages];
+        [info setObject:[NSNumber numberWithInt:perPage] forKey:kInfoKeyForItemsPerPage];
+        [info setObject:[NSNumber numberWithInt:type] forKey:kInfoKeyForListingType];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListings object:listings userInfo:info];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
