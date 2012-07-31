@@ -10,13 +10,11 @@
 
 #import "ListingCollectionView.h"
 #import "ListingCollectionViewDelegate.h"
+#import "PullDownToRefreshHeaderView.h"
 
 @interface ListingsListViewController : UITableViewController <ListingCollectionView>
 
-@property (strong) UIView *header;
-@property (strong) UILabel *updateIntroLabel;
-@property (strong) UILabel *updateTimeLabel;
-@property (strong) UIActivityIndicatorView *updateSpinner;
+@property (strong) PullDownToRefreshHeaderView *header;
 
 @property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 

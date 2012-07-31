@@ -12,12 +12,19 @@
 #import "ConversationListCell.h"
 #import "ConversationViewController.h"
 #import "Message.h"
+#import "PullDownToRefreshHeaderView.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+
+@interface ConversationListViewController ()
+@property (strong) PullDownToRefreshHeaderView *header;
+@end
 
 @implementation ConversationListViewController
 
 @synthesize conversations;
+
+@synthesize header;
 
 - (id)init
 {
@@ -47,6 +54,9 @@
     [super viewDidLoad];
 
     self.title = @"Messages";
+    
+    self.header = [[PullDownToRefreshHeaderView alloc] init];
+    self.tableView.tableHeaderView = header;
     
     self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -98,6 +108,7 @@
 {
     self.conversations = notification.object;    
     [self.tableView reloadData];
+    [header updateFinishedWithTableView:self.tableView];
 }
 
 - (void)gotUser:(NSNotification *)notification
@@ -174,6 +185,18 @@
     ConversationViewController *threadViewer = [[ConversationViewController alloc] init];
     threadViewer.conversation = [conversations objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:threadViewer animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [header tableViewDidScroll:self.tableView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if ([header triggersRefreshAsTableViewEndsDragging:self.tableView]) {
+        [self refreshConversations];
+    }
 }
 
 @end

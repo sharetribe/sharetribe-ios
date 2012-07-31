@@ -38,6 +38,11 @@
     return nil;
 }
 
++ (NSString *)reuseIdentifier
+{
+    return @"ListingCell";
+}
+
 - (Listing *)listing
 {
     return listing;

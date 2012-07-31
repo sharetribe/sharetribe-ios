@@ -26,6 +26,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *commentCountLabel;
 
 + (ListingCell *)instance;
++ (NSString *)reuseIdentifier;
 
 - (Listing *)listing;
 - (void)setListing:(Listing *)listing;

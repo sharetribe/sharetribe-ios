@@ -22,9 +22,6 @@
 @implementation ListingsListViewController
 
 @synthesize header;
-@synthesize updateIntroLabel;
-@synthesize updateTimeLabel;
-@synthesize updateSpinner;
 
 @synthesize listingCollectionViewDelegate;
 
@@ -72,46 +69,7 @@
     self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorColor = [UIColor clearColor];
     
-    self.updateIntroLabel = [[UILabel alloc] init];
-    updateIntroLabel.frame = CGRectMake(20, -54, 280, 30);
-    updateIntroLabel.font = [UIFont boldSystemFontOfSize:13];
-    updateIntroLabel.text = @"Pull down to update...";
-    updateIntroLabel.textColor = [UIColor whiteColor];
-    updateIntroLabel.backgroundColor = [UIColor clearColor];
-    updateIntroLabel.textAlignment = UITextAlignmentCenter;
-    updateIntroLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    updateIntroLabel.alpha = 0.8;
-    
-    self.updateTimeLabel = [[UILabel alloc] init];
-    updateTimeLabel.frame = CGRectMake(20, -36, 280, 30);
-    updateTimeLabel.font = [UIFont systemFontOfSize:12];
-    updateTimeLabel.textColor = [UIColor whiteColor];
-    updateTimeLabel.backgroundColor = [UIColor clearColor];
-    updateTimeLabel.textAlignment = UITextAlignmentCenter;
-    updateTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    updateTimeLabel.alpha = 0.8;
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"dd.MM.yyyy  HH:mm";
-    updateTimeLabel.text = [NSString stringWithFormat:@"Last updated:  %@", [formatter stringFromDate:[NSDate date]]];
-    
-    self.updateSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    updateSpinner.frame = CGRectMake(26, -40, 20, 20);
-    updateSpinner.hidesWhenStopped = NO;
-    updateSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    
-    UIView *headerBackground = [[UIView alloc] init];
-    headerBackground.frame = CGRectMake(0, -460, 320, 460);
-    headerBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    headerBackground.backgroundColor = kSharetribeDarkOrangeColor;
-    
-    self.header = [[UIView alloc] init];
-    header.frame = CGRectMake(0, 0, 320, 0);
-    header.backgroundColor = [UIColor clearColor];
-    [header addSubview:headerBackground];
-    [header addSubview:updateIntroLabel];
-    [header addSubview:updateTimeLabel];
-    [header addSubview:updateSpinner];
+    self.header = [[PullDownToRefreshHeaderView alloc] init];
     self.tableView.tableHeaderView = header;
 }
 
@@ -151,27 +109,10 @@
 
 - (void)updateFinished
 {
-    updateIntroLabel.text = @"Updated!";
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"dd.MM.yyyy  HH:mm";
-    updateTimeLabel.text = [NSString stringWithFormat:@"Last updated:  %@", [formatter stringFromDate:[NSDate date]]];
-    
-    [updateSpinner stopAnimating];
-    
-    [UIView beginAnimations:nil context:NULL];
-    updateSpinner.alpha = 0;
-    [UIView commitAnimations];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelay:0.5];
-    [UIView setAnimationDuration:0.3];
-    self.tableView.tableHeaderView.height = 0;
-    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
-    [UIView commitAnimations];
+    [header updateFinishedWithTableView:self.tableView];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -185,9 +126,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ListingCell";
-    
-    ListingCell *cell = (ListingCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ListingCell *cell = (ListingCell *) [tableView dequeueReusableCellWithIdentifier:[ListingCell reuseIdentifier]];
     if (cell == nil) {
         cell = [ListingCell instance];
     }
@@ -198,7 +137,7 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -213,30 +152,12 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!updateSpinner.isAnimating) {
-        if (scrollView.contentOffset.y < -60) {
-            updateIntroLabel.text = @"Release to update...";
-            updateSpinner.alpha = 1;
-        } else {
-            updateIntroLabel.text = @"Pull down to update...";
-            updateSpinner.alpha = 0.3;
-        }
-    }
+    [header tableViewDidScroll:self.tableView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (scrollView.contentOffset.y < -60) {            
-            
-        updateIntroLabel.text = @"Updating...";
-        updateSpinner.alpha = 1;
-        [updateSpinner startAnimating];
-            
-        [UIView beginAnimations:nil context:NULL];
-        self.tableView.tableHeaderView.height = 60;
-        self.tableView.tableHeaderView = self.tableView.tableHeaderView;
-        [UIView commitAnimations];
-        
+    if ([header triggersRefreshAsTableViewEndsDragging:self.tableView]) {
         [listingCollectionViewDelegate viewController:self wantsToRefreshPage:1];
     }
 }
