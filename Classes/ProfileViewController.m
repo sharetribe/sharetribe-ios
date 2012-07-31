@@ -11,6 +11,7 @@
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "UIImageView+Sharetribe.h"
+#import "UILabel+SizeToHeight.h"
 
 #define kAlertTagForConfirmingLogOut     1
 #define kAlertTagForConfirmingPhoneCall  2
@@ -33,6 +34,7 @@
 @synthesize phoneButton;
 @synthesize locationIconView;
 @synthesize phoneIconView;
+@synthesize descriptionLabel;
 
 - (void)viewDidLoad
 {
@@ -95,6 +97,9 @@
     } else {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
     }
+    
+    descriptionLabel.text = user.description;
+    [descriptionLabel sizeToHeight];
     
     self.scrollView.contentSize = CGSizeMake(320, 460-2*44);
 }

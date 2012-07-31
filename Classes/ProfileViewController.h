@@ -23,6 +23,7 @@
 @property (strong) IBOutlet UIButton *phoneButton;
 @property (strong) IBOutlet UIImageView *locationIconView;
 @property (strong) IBOutlet UIImageView *phoneIconView;
+@property (strong) IBOutlet UILabel *descriptionLabel;
 
 - (IBAction)phoneButtonPressed;
 

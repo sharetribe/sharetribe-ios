@@ -82,7 +82,7 @@
     messageButton.layer.cornerRadius = 8;
     messageButton.clipsToBounds = YES;
     [messageButton addTarget:self action:@selector(messageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
+        
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
     leftEdgeLine.backgroundColor = [UIColor lightGrayColor];
@@ -180,6 +180,7 @@
     titleViewLabel.shadowOffset = CGSizeMake(0, 1);
     titleViewLabel.text = listing.title;
     [titleViewLabel sizeToFit];
+    titleViewLabel.height = 20;
     self.navigationItem.titleView = titleViewLabel;
 }
 

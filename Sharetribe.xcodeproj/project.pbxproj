@@ -135,6 +135,7 @@
 		48E1C44C15C517500058F4EB /* UINavigationController+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */; };
 		48E1C44E15C55D760058F4EB /* ListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48E1C44D15C55D740058F4EB /* ListingViewController.xib */; };
 		48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */; };
+		48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */; };
 		48FF001D14FB046400AFB1AC /* MessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FF001C14FB046400AFB1AC /* MessagesView.m */; };
 		48FF002414FB106800AFB1AC /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002214FB106800AFB1AC /* default-avatar.png */; };
 		48FF002514FB106800AFB1AC /* default-avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002314FB106800AFB1AC /* default-avatar@2x.png */; };
@@ -328,6 +329,8 @@
 		48E1C45915C7560C0058F4EB /* ListingCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListingCollectionView.h; sourceTree = "<group>"; };
 		48E1C45A15C75BCE0058F4EB /* PullDownToRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullDownToRefreshHeaderView.h; sourceTree = "<group>"; };
 		48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullDownToRefreshHeaderView.m; sourceTree = "<group>"; };
+		48E1C45D15C767110058F4EB /* UILabel+SizeToHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToHeight.h"; sourceTree = "<group>"; };
+		48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToHeight.m"; sourceTree = "<group>"; };
 		48FF001B14FB046400AFB1AC /* MessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesView.h; sourceTree = "<group>"; };
 		48FF001C14FB046400AFB1AC /* MessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesView.m; sourceTree = "<group>"; };
 		48FF002214FB106800AFB1AC /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */,
 				48E1C42C15C43E3E0058F4EB /* UIImageView+Sharetribe.h */,
 				48E1C42D15C43E3F0058F4EB /* UIImageView+Sharetribe.m */,
+				48E1C45D15C767110058F4EB /* UILabel+SizeToHeight.h */,
+				48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */,
 				48894F6F14DF762C009CD965 /* UIView+XYWidthHeight.h */,
 				48894F7014DF762C009CD965 /* UIView+XYWidthHeight.m */,
 			);
@@ -860,6 +865,7 @@
 				48E1C43615C4C7D50058F4EB /* UIDevice+Sharetribe.m in Sources */,
 				48E1C44C15C517500058F4EB /* UINavigationController+Sharetribe.m in Sources */,
 				48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */,
+				48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
