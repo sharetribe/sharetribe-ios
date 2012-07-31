@@ -265,7 +265,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         NSLog(@"request: %@ done with response: %@ json: %@", request, response, JSON);
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostListing object:listing];
+        Listing *listingAsSaved = [Listing listingFromDict:JSON];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostListing object:listingAsSaved];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"request: %@ failed with response: %@ error: %@ json: %@", request, response, error, JSON);

@@ -33,6 +33,7 @@
     if ((self = [super init])) {
         self.listingType = type;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveListings:) name:kNotificationForDidReceiveListings object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newListingPosted:) name:kNotificationForDidPostListing object:nil];
     }
     return self;
 }
@@ -74,6 +75,14 @@
         [self addListings:notification.object];
     }
     // TODO what about paginaton, incremental fetching of new listings?
+}
+
+- (void)newListingPosted:(NSNotification *)notification
+{
+    Listing *newListing = notification.object;
+    if (newListing.type == self.listingType) {
+        [self addListings:[NSArray arrayWithObject:newListing]];
+    }
 }
 
 #pragma mark - View lifecycle
