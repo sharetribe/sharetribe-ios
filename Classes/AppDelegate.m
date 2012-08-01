@@ -15,6 +15,8 @@
 #import "User.h"
 #import "UINavigationController+Sharetribe.h"
 
+#import "TestFlight.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -39,6 +41,9 @@ void uncaughtExceptionHandler(NSException *exception)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    [TestFlight takeOff:@"f6fbba712a02ff4adcc3be4ab5d57d38_MTE2NDEwMjAxMi0wNy0zMSAxOTozMjoyNC4yODIzNDY"];
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor viewFlipsideBackgroundColor];

@@ -136,6 +136,10 @@
 		48E1C44E15C55D760058F4EB /* ListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48E1C44D15C55D740058F4EB /* ListingViewController.xib */; };
 		48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */; };
 		48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */; };
+		48EC380615C8A34100491C40 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EC380215C8A34100491C40 /* libTestFlight.a */; };
+		48EC380715C8A34100491C40 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 48EC380315C8A34100491C40 /* README.txt */; };
+		48EC380815C8A34100491C40 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 48EC380415C8A34100491C40 /* release_notes.txt */; };
+		48EC380B15C8A35400491C40 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EC380A15C8A35400491C40 /* libz.dylib */; };
 		48FF001D14FB046400AFB1AC /* MessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48FF001C14FB046400AFB1AC /* MessagesView.m */; };
 		48FF002414FB106800AFB1AC /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002214FB106800AFB1AC /* default-avatar.png */; };
 		48FF002514FB106800AFB1AC /* default-avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48FF002314FB106800AFB1AC /* default-avatar@2x.png */; };
@@ -331,6 +335,11 @@
 		48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullDownToRefreshHeaderView.m; sourceTree = "<group>"; };
 		48E1C45D15C767110058F4EB /* UILabel+SizeToHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToHeight.h"; sourceTree = "<group>"; };
 		48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToHeight.m"; sourceTree = "<group>"; };
+		48EC380215C8A34100491C40 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		48EC380315C8A34100491C40 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		48EC380415C8A34100491C40 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
+		48EC380515C8A34100491C40 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		48EC380A15C8A35400491C40 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		48FF001B14FB046400AFB1AC /* MessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesView.h; sourceTree = "<group>"; };
 		48FF001C14FB046400AFB1AC /* MessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesView.m; sourceTree = "<group>"; };
 		48FF002214FB106800AFB1AC /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
@@ -356,6 +365,8 @@
 				489179DF159BCAE9004D6FF3 /* SystemConfiguration.framework in Frameworks */,
 				487AA37F14B7B51A007C4CCF /* UIKit.framework in Frameworks */,
 				489179D3159BC9C9004D6FF3 /* YAJLiOS.framework in Frameworks */,
+				48EC380B15C8A35400491C40 /* libz.dylib in Frameworks */,
+				48EC380615C8A34100491C40 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +415,7 @@
 				487AA3C414B7B6EB007C4CCF /* QuartzCore.framework */,
 				489179DE159BCAE9004D6FF3 /* SystemConfiguration.framework */,
 				487AA37E14B7B51A007C4CCF /* UIKit.framework */,
+				48EC380A15C8A35400491C40 /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -649,6 +661,7 @@
 			children = (
 				489179A2159BAE10004D6FF3 /* AFNetworking */,
 				489179CD159BC9C9004D6FF3 /* Reachability */,
+				48EC380115C8A34100491C40 /* TestFlightSDK1.0 */,
 				489179CA159BC9C9004D6FF3 /* CWLSynthesizeSingleton.h */,
 				489179CB159BC9C9004D6FF3 /* GTMNSString+HTML.h */,
 				489179CC159BC9C9004D6FF3 /* GTMNSString+HTML.m */,
@@ -674,6 +687,18 @@
 			);
 			name = Reachability;
 			path = External/Reachability;
+			sourceTree = SOURCE_ROOT;
+		};
+		48EC380115C8A34100491C40 /* TestFlightSDK1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				48EC380215C8A34100491C40 /* libTestFlight.a */,
+				48EC380315C8A34100491C40 /* README.txt */,
+				48EC380415C8A34100491C40 /* release_notes.txt */,
+				48EC380515C8A34100491C40 /* TestFlight.h */,
+			);
+			name = TestFlightSDK1.0;
+			path = External/TestFlightSDK1.0;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -807,6 +832,8 @@
 				48E1C44815C5039A0058F4EB /* icon-phone.png in Resources */,
 				48E1C44915C5039A0058F4EB /* icon-phone@2x.png in Resources */,
 				48E1C44E15C55D760058F4EB /* ListingViewController.xib in Resources */,
+				48EC380715C8A34100491C40 /* README.txt in Resources */,
+				48EC380815C8A34100491C40 /* release_notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +983,10 @@
 				GCC_PREFIX_HEADER = "Sharetribe-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sharetribe-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "62D9EF11-E9AC-44CC-9076-B3AFF022A87B";
 				WRAPPER_EXTENSION = app;
@@ -978,6 +1009,10 @@
 				GCC_PREFIX_HEADER = "Sharetribe-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sharetribe-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7EAB93F2-870D-4422-9570-0A7490D93AB6";
 				WRAPPER_EXTENSION = app;

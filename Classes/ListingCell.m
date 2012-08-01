@@ -22,6 +22,7 @@
 @synthesize timeLabel;
 @synthesize commentIconView;
 @synthesize commentCountLabel;
+@synthesize separator;
 
 + (ListingCell *)instance
 {

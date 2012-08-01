@@ -10,7 +10,7 @@
 
 @class Conversation;
 
-#define kConversationListCellHeight 88
+#define kConversationListCellHeight 90
 
 @interface ConversationListCell : UITableViewCell
 

@@ -80,11 +80,21 @@
     }
     
     if (location != nil) {
-        [JSON setObject:[location asJSON] forKey:@"origin_location"];
+        // [JSON setObject:[location asJSON] forKey:@"origin_location"];
+        [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
+        [JSON setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
+        if (location.address != nil) {
+            [JSON setObject:location.address forKey:@"address"];
+        }
     }
     
     if (category == ListingCategoryRide && destination != nil) {
-        [JSON setObject:[destination asJSON] forKey:@"destination_location"];
+        // [JSON setObject:[destination asJSON] forKey:@"destination_location"];
+        [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.latitude] forKey:@"destination_latitude"];
+        [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.longitude] forKey:@"destination_longitude"];
+        if (destination.address != nil) {
+            [JSON setObject:destination.address forKey:@"destination_address"];
+        }
     }
     
     if (visibility != nil) {

@@ -749,7 +749,7 @@
 
 - (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    Location *location = [[Location alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude address:@""];
+    Location *location = [[Location alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude address:nil];  // TODO allow address entry
     [listing setValue:location forKey:formItemBeingEdited.mapsTo];
     [table reloadData];
 }

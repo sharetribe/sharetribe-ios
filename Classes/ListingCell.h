@@ -10,7 +10,7 @@
 
 #import "Listing.h"
 
-#define kListingCellHeight 91
+#define kListingCellHeight 90
 
 @interface ListingCell : UITableViewCell {
 
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *timeLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *commentIconView;
 @property (nonatomic, strong) IBOutlet UILabel *commentCountLabel;
+@property (nonatomic, strong) IBOutlet UIView *separator;
 
 + (ListingCell *)instance;
 + (NSString *)reuseIdentifier;
