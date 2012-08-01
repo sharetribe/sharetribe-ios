@@ -920,7 +920,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Janne Kaki (7M3KMMLPSQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Janne Kaki (2M5U8S2P24)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -936,7 +936,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "62D9EF11-E9AC-44CC-9076-B3AFF022A87B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0AD52FBD-968E-4447-B3F6-D7E56FF5F72E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -950,8 +950,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Janne Kaki";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sharetribe Oy";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_THUMB_SUPPORT = NO;
@@ -961,7 +960,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "7EAB93F2-870D-4422-9570-0A7490D93AB6";
+				PROVISIONING_PROFILE = "04F00E19-99D5-446E-8FB4-474FA237664C";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -974,7 +973,7 @@
 					armv6,
 					armv7,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Janne Kaki (7M3KMMLPSQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Janne Kaki (2M5U8S2P24)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External\"",
@@ -988,7 +987,7 @@
 					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "62D9EF11-E9AC-44CC-9076-B3AFF022A87B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0AD52FBD-968E-4447-B3F6-D7E56FF5F72E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1000,7 +999,7 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Janne Kaki";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sharetribe Oy";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/External\"",
@@ -1014,7 +1013,7 @@
 					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7EAB93F2-870D-4422-9570-0A7490D93AB6";
+				PROVISIONING_PROFILE = "04F00E19-99D5-446E-8FB4-474FA237664C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

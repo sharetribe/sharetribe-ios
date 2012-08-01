@@ -8,6 +8,9 @@
 
 #import "PullDownToRefreshHeaderView.h"
 
+@interface PullDownToRefreshHeaderView ()
+@end
+
 @implementation PullDownToRefreshHeaderView
 
 @synthesize updateIntroLabel;
@@ -77,18 +80,23 @@
 {
     if (tableView.contentOffset.y < -60) {
         
-        updateIntroLabel.text = @"Updating...";
-        updateSpinner.alpha = 1;
-        [updateSpinner startAnimating];
-        
-        [UIView beginAnimations:nil context:NULL];
-        tableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0);
-        [UIView commitAnimations];
+        [self startIndicatingRefreshWithTableView:tableView];
         
         return YES;
     } else {
         return NO;
     }
+}
+
+- (void)startIndicatingRefreshWithTableView:(UITableView *)tableView
+{
+    updateIntroLabel.text = @"Updating...";
+    updateSpinner.alpha = 1;
+    [updateSpinner startAnimating];
+        
+    [UIView beginAnimations:nil context:NULL];
+    tableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0);
+    [UIView commitAnimations];
 }
 
 - (void)updateFinishedWithTableView:(UITableView *)tableView

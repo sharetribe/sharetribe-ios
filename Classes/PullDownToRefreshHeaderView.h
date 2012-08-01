@@ -18,4 +18,6 @@
 - (BOOL)triggersRefreshAsTableViewEndsDragging:(UITableView *)tableView;
 - (void)updateFinishedWithTableView:(UITableView *)tableView;
 
+- (void)startIndicatingRefreshWithTableView:(UITableView *)tableView;
+
 @end

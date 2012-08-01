@@ -42,7 +42,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    [TestFlight takeOff:@"f6fbba712a02ff4adcc3be4ab5d57d38_MTE2NDEwMjAxMi0wNy0zMSAxOTozMjoyNC4yODIzNDY"];
+    [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -205,6 +205,9 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)userDidLogIn:(NSNotification *)notification
 {
     User *currentUser = [User currentUser];
+    profileViewController.title = currentUser.givenName;
+    profileViewController.user = currentUser;
+    
     if (currentUser.communities.count < 1) {
         [self loadInitialContent];
     } else {

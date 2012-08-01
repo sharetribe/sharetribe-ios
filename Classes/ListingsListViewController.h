@@ -18,4 +18,6 @@
 
 @property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
+- (void)startIndicatingRefresh;
+
 @end

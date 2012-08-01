@@ -65,6 +65,7 @@
 
 - (void)refreshListings
 {
+    [listViewer startIndicatingRefresh];
     [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:1];
 }
 

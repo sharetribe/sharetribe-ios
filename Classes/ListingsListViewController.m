@@ -107,6 +107,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)startIndicatingRefresh
+{
+    [header startIndicatingRefreshWithTableView:self.tableView];
+}
+
 - (void)updateFinished
 {
     [header updateFinishedWithTableView:self.tableView];
