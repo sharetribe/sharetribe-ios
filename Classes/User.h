@@ -23,6 +23,10 @@
 @property (strong) NSURL *thumbnailURL;
 
 @property (strong) NSArray *communities;
+@property (strong) NSArray *badges;
+@property (strong) NSArray *feedbacks;
+@property (strong) NSArray *grades;
+@property (strong) NSArray *listings;
 
 @property (readonly) NSString *name;
 @property (readonly) NSString *shortName;

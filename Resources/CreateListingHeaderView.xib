@@ -2,20 +2,20 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.SystemVersion">12A269</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
+		<string key="IBDocument.AppKitVersion">1187</string>
+		<string key="IBDocument.HIToolboxVersion">624.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1498</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
 			<string>IBUIImageView</string>
-			<string>IBUIView</string>
 			<string>IBUILabel</string>
-			<string>IBProxyObject</string>
+			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -345,7 +345,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="631964683"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">icon-accommodation.png</string>
+									<string key="NSResourceName">icon-space.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="605154625"/>
 								<reference key="IBUIFont" ref="289495396"/>
@@ -541,14 +541,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">listingCategoryButtonForAccommodation</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="200610080"/>
-					</object>
-					<int key="connectionID">79</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">listingCategoryBackgroundView</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="529257802"/>
@@ -578,6 +570,14 @@
 						<reference key="destination" ref="237820139"/>
 					</object>
 					<int key="connectionID">83</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">listingCategoryButtonForSpace</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="200610080"/>
+					</object>
+					<int key="connectionID">84</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -848,7 +848,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">83</int>
+			<int key="maxID">84</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -891,10 +891,10 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="formBackgroundView">UIView</string>
 						<string key="listingCategoryBackgroundView">UIView</string>
-						<string key="listingCategoryButtonForAccommodation">UIButton</string>
 						<string key="listingCategoryButtonForFavors">UIButton</string>
 						<string key="listingCategoryButtonForItems">UIButton</string>
 						<string key="listingCategoryButtonForRides">UIButton</string>
+						<string key="listingCategoryButtonForSpace">UIButton</string>
 						<string key="listingCategoryIntroLabel">UILabel</string>
 						<string key="listingCategoryPointerView">UIView</string>
 						<string key="listingCategoryTypeLabel">UILabel</string>
@@ -914,10 +914,6 @@
 							<string key="name">listingCategoryBackgroundView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="listingCategoryButtonForAccommodation">
-							<string key="name">listingCategoryButtonForAccommodation</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="listingCategoryButtonForFavors">
 							<string key="name">listingCategoryButtonForFavors</string>
 							<string key="candidateClassName">UIButton</string>
@@ -928,6 +924,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="listingCategoryButtonForRides">
 							<string key="name">listingCategoryButtonForRides</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="listingCategoryButtonForSpace">
+							<string key="name">listingCategoryButtonForSpace</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="listingCategoryIntroLabel">
@@ -983,12 +983,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="icon-accommodation.png">{50, 50}</string>
 			<string key="icon-favor.png">{50, 50}</string>
 			<string key="icon-item.png">{50, 50}</string>
 			<string key="icon-ride.png">{50, 50}</string>
+			<string key="icon-space.png">{50, 50}</string>
 			<string key="pointing-corner-brown.png">{40, 16}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>

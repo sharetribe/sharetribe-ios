@@ -53,11 +53,7 @@
 {
     listing = newListing;
     
-    if (listing.shareType != nil) {
-        titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.shareType.capitalizedString, listing.title];
-    } else {
-        titleLabel.text = listing.title;
-    }
+    titleLabel.text = listing.fullTitle;
     subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
     usernameLabel.text = listing.author.shortName;
     timeLabel.text = [listing.createdAt agestamp];

@@ -10,14 +10,14 @@
 #import "Listing.h"
 
 @protocol ListingTypeSelectionDelegate <NSObject>
-- (void)listingTypeSelected:(ListingType)type;
-- (void)listingCategorySelected:(ListingCategory)category;
+- (void)listingTypeSelected:(NSString *)type;
+- (void)listingCategorySelected:(NSString *)category;
 @end
 
 @interface CreateListingHeaderView : UIView {
 
-    ListingType type;
-    ListingCategory category;
+    NSString *type;
+    NSString *category;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *listingTypeLabelForRequests;
@@ -30,7 +30,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForItems;
 @property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForFavors;
 @property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForRides;
-@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForAccommodation;
+@property (strong, nonatomic) IBOutlet UIButton *listingCategoryButtonForSpace;
 
 @property (strong, nonatomic) IBOutlet UIView *listingCategoryPointerView;
 @property (strong, nonatomic) IBOutlet UILabel *listingCategoryIntroLabel;
@@ -45,8 +45,8 @@
 
 + (CreateListingHeaderView *)instance;
 
-- (void)setListingType:(ListingType)newType;
-- (void)setListingCategory:(ListingCategory)newCategory;
+- (void)setListingType:(NSString *)newType;
+- (void)setListingCategory:(NSString *)newCategory;
 
 - (IBAction)listingTypeSelected:(UIButton *)sender;
 - (IBAction)listingCategorySelected:(UIButton *)sender;

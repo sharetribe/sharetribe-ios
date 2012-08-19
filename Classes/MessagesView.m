@@ -48,6 +48,7 @@
 @dynamic composeFieldPlaceholder;
 @synthesize showComposerButtons;
 @synthesize showUserAvatars;
+@synthesize alwaysShowFullSizeComposeField;
 
 @synthesize delegate;
 
@@ -251,10 +252,13 @@
             separator.backgroundColor = kSharetribeLightBrownColor;
             separator.frame = CGRectMake(0, 0, self.width, 1);
             [self addSubview:separator];
+            [separators addObject:separator];
         }
         
         separator.y = textLabel.y+textLabel.height+8;
+        separator.hidden = NO;
         yOffset = separator.y+12;
+        NSLog(@"separator y: %d for text: %@", separator.y, textLabel.text);
     }
     
     if (conversation != nil) {
@@ -282,12 +286,10 @@
     composeField.width = self.width-leftEdgeX-10;
     composeFieldContainer.width = composeField.width;
     
-    composeField.y = yOffset;    
-    composeField.height = 31;
-    
-    composeFieldContainer.y = yOffset;    
-    composeFieldContainer.height = 31;
-    
+    composeField.y = yOffset;
+    composeFieldContainer.y = yOffset;
+    [self setComposeFieldShowingInFullSize:alwaysShowFullSizeComposeField];
+        
     self.height = yOffset + composeField.height + 10;
     
     for (int i = messages.count+1; i < avatarViews.count; i++) {
@@ -358,22 +360,36 @@
     [delegate messagesView:self didSelectUser:message.author];
 }
 
+- (void)setComposeFieldShowingInFullSize:(BOOL)fullSize
+{
+    if (fullSize) {
+        
+        int heightForButtons = (showComposerButtons) ? 40 : 0;
+        composeField.height = [delegate availableHeightForComposerInMessagesView:self]-10-heightForButtons-10;
+        composeFieldContainer.height = composeField.height;
+        
+        self.height = composeField.y + composeField.height + heightForButtons + 10;
+        
+    } else {
+        
+        composeField.height = 31;
+        composeFieldContainer.height = composeField.height;
+        self.height = composeField.y + composeField.height + 10;
+    }
+}
+
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     textView.showsVerticalScrollIndicator = YES;
-    
-    int heightForButtons = (showComposerButtons) ? 40 : 0;
-    composeField.height = 416-216-10-heightForButtons-10;
-    composeFieldContainer.height = composeField.height;
-    
+        
     sendMessageButton.hidden = !showComposerButtons;
     cancelMessageButton.hidden = !showComposerButtons;
     
-    self.height = composeField.y + composeField.height + heightForButtons + 10;
+    [self setComposeFieldShowingInFullSize:YES];
     
-    composeFieldContainer.text = @" ";
+    composeFieldContainer.text = @" ";  // hide the placeholder
     
     [delegate messagesViewDidBeginEditing:self];
 }
@@ -387,13 +403,10 @@
 {
     textView.showsVerticalScrollIndicator = NO;
     
-    composeField.height = 31;
-    composeFieldContainer.height = composeField.height;
+    [self setComposeFieldShowingInFullSize:alwaysShowFullSizeComposeField];
     
     sendMessageButton.hidden = YES;
     cancelMessageButton.hidden = YES;
-    
-    self.height = composeField.y + composeField.height + 10;
     
     composeFieldContainer.text = nil;
     

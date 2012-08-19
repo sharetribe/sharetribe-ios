@@ -18,6 +18,7 @@
 - (void)messagesViewDidEndEditing:(MessagesView *)messagesView;
 - (void)messagesView:(MessagesView *)messagesView didSaveMessageText:(NSString *)messageText;
 - (void)messagesView:(MessagesView *)messagesView didSelectUser:(User *)user;
+- (CGFloat)availableHeightForComposerInMessagesView:(MessagesView *)messagesView;
 @end
 
 @interface MessagesView : UIView <UITextViewDelegate> {
@@ -48,6 +49,7 @@
 @property (strong) NSString *composeFieldPlaceholder;
 @property (assign) BOOL showComposerButtons;
 @property (assign) BOOL showUserAvatars;
+@property (assign) BOOL alwaysShowFullSizeComposeField;
 
 @property (unsafe_unretained) id<MessagesViewDelegate> delegate;
 

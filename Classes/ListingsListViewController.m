@@ -12,6 +12,7 @@
 #import "ListingCell.h"
 #import "ListingViewController.h"
 #import "ListingsTopViewController.h"
+#import "SharetribeAPIClient.h"
 
 @interface ListingsListViewController () {
     NSMutableArray *listings;
@@ -71,11 +72,15 @@
     
     self.header = [[PullDownToRefreshHeaderView alloc] init];
     self.tableView.tableHeaderView = header;
+    
+    [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(listingRefreshed:)];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [self stopObservingAllNotifications];
     
     self.listingCollectionViewDelegate = nil;
 }
@@ -115,6 +120,14 @@
 - (void)updateFinished
 {
     [header updateFinishedWithTableView:self.tableView];
+}
+
+- (void)listingRefreshed:(NSNotification *)notification
+{
+    NSInteger index = [listings indexOfObject:notification.object];
+    if (index != NSNotFound) {
+        [listings replaceObjectAtIndex:index withObject:notification.object];
+    }
 }
 
 #pragma mark - UITableViewDataSource

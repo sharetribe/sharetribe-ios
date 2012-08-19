@@ -50,8 +50,8 @@ void uncaughtExceptionHandler(NSException *exception)
     
     [application setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
     
-    self.offersViewController = [[ListingsTopViewController alloc] initWithListingType:ListingTypeOffer];
-    self.requestsViewController = [[ListingsTopViewController alloc] initWithListingType:ListingTypeRequest];
+    self.offersViewController = [[ListingsTopViewController alloc] initWithListingType:kListingTypeOffer];
+    self.requestsViewController = [[ListingsTopViewController alloc] initWithListingType:kListingTypeRequest];
     self.messagesViewController = [[ConversationListViewController alloc] init];
     self.profileViewController = [[ProfileViewController alloc] init];
     
@@ -75,9 +75,9 @@ void uncaughtExceptionHandler(NSException *exception)
     offersNavigationController.title = NSLocalizedString(@"tabs.offers", @"");
     requestsNavigationController.title = NSLocalizedString(@"tabs.requests", @"");
     messagesNavigationController.title = NSLocalizedString(@"tabs.messages", @"");
+    profileNavigationController.title = NSLocalizedString(@"tabs.profile", @"");
     
     User *currentUser = [User currentUser];
-    profileViewController.title = currentUser.givenName;
     profileViewController.user = currentUser;
     
     offersNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-gift"];
@@ -205,10 +205,9 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)userDidLogIn:(NSNotification *)notification
 {
     User *currentUser = [User currentUser];
-    profileViewController.title = currentUser.givenName;
     profileViewController.user = currentUser;
     
-    if (currentUser.communities.count < 1) {
+    if (currentUser.communities.count < 2) {
         [self loadInitialContent];
     } else {
         [self performSelector:@selector(showCommunitySelection) withObject:nil afterDelay:0.5];

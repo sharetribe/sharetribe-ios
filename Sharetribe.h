@@ -32,3 +32,7 @@
 
 #define kDefaultsKeyForViewChoice           @"view choice"
 #define kDefaultsKeyForDeviceToken          @"device token"
+
+// Miscellaneous
+
+#define kFirstPage 1

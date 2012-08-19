@@ -20,6 +20,7 @@
 @interface LocationPickerViewController : UIViewController <MKAnnotation, MKMapViewDelegate>
 
 @property (strong, nonatomic) MKMapView *map;
+@property (assign, nonatomic) MKMapType mapType;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 
 @property (unsafe_unretained, nonatomic) id<LocationPickerDelegate> delegate;

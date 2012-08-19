@@ -10,25 +10,16 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-typedef enum {
-    ListingCategoryItem            = 1 << 0,
-    ListingCategoryFavor           = 1 << 1,
-    ListingCategoryRide            = 1 << 2,
-    ListingCategoryAccommodation   = 1 << 3,
-    ListingCategoryAny             = 0
-} ListingCategory;
+#define kListingTypeOffer           @"offer"
+#define kListingTypeRequest         @"request"
 
-typedef enum {
-    ListingTypeOffer               = 1 << 0,
-    ListingTypeRequest             = 1 << 1,
-    ListingTypeAny                 = 0
-} ListingType;
+#define kListingCategoryItem        @"item"
+#define kListingCategoryFavor       @"favor"
+#define kListingCategoryRideshare   @"rideshare"
+#define kListingCategorySpace       @"space"
 
-typedef enum {
-    ListingStatusOpen              = 1 << 0,
-    ListingStatusClosed            = 1 << 1,
-    ListingStatusAny               = 0
-} ListingStatus;
+#define kListingStatusOpen          @"open"
+#define kListingStatusClosed        @"closed"
 
 @class Location;
 @class User;
@@ -37,10 +28,11 @@ typedef enum {
 
 @property (assign) NSInteger listingId;
 @property (nonatomic, copy) NSString *title;
+@property (readonly) NSString *fullTitle;
 @property (strong) NSString *description;
 
-@property (assign) ListingCategory category;
-@property (assign) ListingType type;
+@property (strong) NSString *type;
+@property (strong) NSString *category;
 @property (strong) NSString *shareType;
 @property (strong) NSArray *tags;
 
@@ -57,7 +49,7 @@ typedef enum {
 @property (strong) NSDate *createdAt;
 @property (strong) NSDate *updatedAt;
 @property (strong) NSDate *validUntil;
-@property (assign) ListingStatus status;
+@property (strong) NSString *status;
 
 @property (assign) NSInteger numberOfTimesViewed;
 @property (assign) NSInteger numberOfComments;
@@ -69,9 +61,7 @@ typedef enum {
 
 - (NSDictionary *)asJSON;
 
-+ (NSString *)stringFromType:(ListingType)type;
-+ (NSString *)stringFromCategory:(ListingCategory)category;
-+ (UIImage *)iconForCategory:(ListingCategory)category;
++ (UIImage *)iconForCategory:(NSString *)category;
 
 + (Listing *)listingFromDict:(NSDictionary *)dict;
 + (NSArray *)listingsFromArrayOfDicts:(NSArray *)dicts;

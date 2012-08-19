@@ -11,6 +11,11 @@
 #import "Listing.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define kListingCategoryButtonTagForItems  1000
+#define kListingCategoryButtonTagForFavors 2000
+#define kListingCategoryButtonTagForRides  3000
+#define kListingCategoryButtonTagForSpace  4000
+
 @interface CreateListingHeaderView ()
 - (void)refreshVisuals;
 @end
@@ -27,7 +32,7 @@
 @synthesize listingCategoryButtonForItems;
 @synthesize listingCategoryButtonForFavors;
 @synthesize listingCategoryButtonForRides;
-@synthesize listingCategoryButtonForAccommodation;
+@synthesize listingCategoryButtonForSpace;
 
 @synthesize listingCategoryPointerView;
 @synthesize listingCategoryIntroLabel;
@@ -64,10 +69,10 @@
     [self addSubview:topBackgroundView];
     [self sendSubviewToBack:topBackgroundView];
     
-    listingCategoryButtonForItems.tag = ListingCategoryItem;
-    listingCategoryButtonForFavors.tag = ListingCategoryFavor;
-    listingCategoryButtonForRides.tag = ListingCategoryRide;
-    listingCategoryButtonForAccommodation.tag = ListingCategoryAccommodation;
+    listingCategoryButtonForItems.tag = kListingCategoryButtonTagForItems;
+    listingCategoryButtonForFavors.tag = kListingCategoryButtonTagForFavors;
+    listingCategoryButtonForRides.tag = kListingCategoryButtonTagForRides;
+    listingCategoryButtonForSpace.tag = kListingCategoryButtonTagForSpace;
     
     listingTypeTabForRequests.layer.cornerRadius = 7;
     listingTypeTabForRequests.layer.borderColor = kSharetribeBrownColor.CGColor;
@@ -75,7 +80,7 @@
     listingTypeTabForOffers.layer.cornerRadius = 7;
     listingTypeTabForOffers.layer.borderColor = kSharetribeBrownColor.CGColor;
     
-    self.listingCategoryButtons = [NSArray arrayWithObjects:listingCategoryButtonForItems, listingCategoryButtonForFavors, listingCategoryButtonForRides, listingCategoryButtonForAccommodation, nil];
+    self.listingCategoryButtons = [NSArray arrayWithObjects:listingCategoryButtonForItems, listingCategoryButtonForFavors, listingCategoryButtonForRides, listingCategoryButtonForSpace, nil];
     
     for (UIButton *button in listingCategoryButtons) {
         [button setImage:[button imageForState:UIControlStateNormal] forState:UIControlStateHighlighted];
@@ -89,28 +94,44 @@
 - (IBAction)listingTypeSelected:(UIButton *)sender
 {
     if (sender == listingTypeButtonForRequests) {
-        [self setListingType:ListingTypeRequest];
+        [self setListingType:kListingTypeRequest];
     } else {
-        [self setListingType:ListingTypeOffer];
+        [self setListingType:kListingTypeOffer];
     }
         
     [delegate listingTypeSelected:type];
 }
 
-- (IBAction)listingCategorySelected:(UIButton *)sender
-{       
-    [self setListingCategory:sender.tag];
-    
-    [delegate listingCategorySelected:category];
+- (NSString *)categoryForButton:(UIButton *)button
+{
+    switch (button.tag) {
+        case kListingCategoryButtonTagForItems:
+            return kListingCategoryItem;
+        case kListingCategoryButtonTagForFavors:
+            return kListingCategoryFavor;
+        case kListingCategoryButtonTagForRides:
+            return kListingCategoryRideshare;
+        case kListingCategoryButtonTagForSpace:
+            return kListingCategorySpace;
+        default:
+            return nil;
+    }
 }
 
-- (void)setListingType:(ListingType)newType
+- (IBAction)listingCategorySelected:(UIButton *)sender
+{
+    NSString *selectedCategory = [self categoryForButton:sender];
+    [self setListingCategory:selectedCategory];
+    [delegate listingCategorySelected:selectedCategory];
+}
+
+- (void)setListingType:(NSString *)newType
 {
     type = newType;
     [self refreshVisuals];
 }
 
-- (void)setListingCategory:(ListingCategory)newCategory
+- (void)setListingCategory:(NSString *)newCategory
 {
     category = newCategory;
     [self refreshVisuals];
@@ -118,7 +139,7 @@
 
 - (void)refreshVisuals
 {
-    if (category == ListingCategoryAny) {
+    if (category == nil) {
         listingCategoryPointerView.hidden = YES;
         listingCategoryTypeLabel.hidden = YES;
         self.height = 416;
@@ -127,21 +148,10 @@
         listingCategoryTypeLabel.hidden = NO;
         self.height = 250;
     }
-    
-    if (category == ListingCategoryItem) {
-        listingCategoryTypeLabel.text = @"an item";
-    } else if (category == ListingCategoryFavor) {
-        listingCategoryTypeLabel.text = @"a favor";
-    } else if (category == ListingCategoryRide) {
-        listingCategoryTypeLabel.text = @"a ride";
-    } else if (category == ListingCategoryAccommodation) {
-        listingCategoryTypeLabel.text = @"accommodation";
-    } else if (category == ListingCategoryAny) {
-        listingCategoryTypeLabel.text = nil;
-    }
-    
+        
     for (ButtonWithBackgroundView *button in listingCategoryButtons) {
-        if (button.tag == category) {
+        NSString *buttonCategory = [self categoryForButton:button];
+        if ([buttonCategory isEqual:category]) {
             
             button.backgroundView.backgroundColor = kSharetribeLightBrownColor;
             button.backgroundView.layer.borderColor = [UIColor orangeColor].CGColor;
@@ -161,25 +171,33 @@
         }
     }
     
-    if (type == ListingTypeRequest) {
-        listingCategoryIntroLabel.text = @"I need ";
+    if ([type isEqual:kListingTypeRequest]) {
         listingTypeTabForRequests.backgroundColor = kSharetribeBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 0;
         listingTypeTabForOffers.backgroundColor = kSharetribeLightishBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 1;
     } else {
-        listingCategoryIntroLabel.text = @"I want to offer ";
         listingTypeTabForRequests.backgroundColor = kSharetribeLightishBrownColor;
         listingTypeTabForRequests.layer.borderWidth = 1;
         listingTypeTabForOffers.backgroundColor = kSharetribeBrownColor;
         listingTypeTabForOffers.layer.borderWidth = 0;
     }
     
-    if (category == ListingCategoryAny) {
-        listingCategoryIntroLabel.text = @"Item, favor, ride, or accommodation?";
+    if (category == nil) {
+        
+        listingCategoryIntroLabel.text = NSLocalizedString(@"listing.intro.general", @"");
+        listingCategoryTypeLabel.text = nil;
+        
         listingCategoryIntroLabel.textColor = kSharetribeDarkBrownColor;
         listingCategoryBackgroundView.backgroundColor = kSharetribeLightishBrownColor;
+        
     } else {
+        
+        NSString *introLabelKey = [NSString stringWithFormat:@"listing.intro.%@", type];
+        listingCategoryIntroLabel.text = [NSLocalizedString(introLabelKey, @"") stringByAppendingString:@" "];
+        NSString *categoryLabelKey = [NSString stringWithFormat:@"listing.intro.%@_target.%@", type, category];
+        listingCategoryTypeLabel.text = NSLocalizedString(categoryLabelKey, @"");
+        
         listingCategoryIntroLabel.textColor = [UIColor blackColor];
         listingCategoryBackgroundView.backgroundColor = kSharetribeLightBrownColor;
     }

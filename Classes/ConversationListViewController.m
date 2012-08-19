@@ -53,7 +53,7 @@
 {
     [super viewDidLoad];
 
-    self.title = @"Messages";
+    self.title = NSLocalizedString(@"messaging.conversations.title", @"");
     
     self.header = [[PullDownToRefreshHeaderView alloc] init];
     self.tableView.tableHeaderView = header;

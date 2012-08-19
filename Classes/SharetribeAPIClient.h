@@ -18,12 +18,13 @@
 #define kNotificationForUserDidLogOut                      @"user did log out"
 
 #define kNotificationForDidReceiveListings                 @"did receive listings"
-#define kNotificationForDidReceiveListingDetails           @"did receive listing details"
+#define kNotificationForDidRefreshListing                  @"did refresh listing"
 #define kNotificationForDidReceiveConversations            @"did receive conversations"
 #define kNotificationForDidReceiveMessagesForConversation  @"did receive messages for conversation"
 #define kNotificationForDidReceiveUser                     @"did receive user"
 #define kNotificationForDidReceiveBadgesForUser            @"did receive badges for user"
 #define kNotificationForDidReceiveFeedbackForUser          @"did receive feedback for user"
+#define kNotificationForDidReceiveListingsByUser           @"did receive listings by user"
 
 #define kNotificationForDidPostListing                     @"did post listing"
 #define kNotificationForDidPostComment                     @"did post comment"
@@ -36,9 +37,14 @@
 #define kNotificationForLoginConnectionDidFail             @"login connection did fail"
 #define kNotificationForLoginAuthDidFail                   @"login auth did fail"
 
+#define kNotificationForFailedToPostListing                @"failed to post listing"
+#define kNotificationForFailedToPostComment                @"failed to post comment"
+#define kNotificationForFailedToPostMessage                @"failed to post message"
+
 // Response info dict keys:
 
 #define kInfoKeyForListingType                             @"listing type"
+#define kInfoKeyForUser                                    @"user"
 #define kInfoKeyForPage                                    @"page"
 #define kInfoKeyForNumberOfPages                           @"number of pages"
 #define kInfoKeyForItemsPerPage                            @"items per page"
@@ -57,7 +63,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 - (void)logOut;
 - (void)registerCurrentDeviceWithToken:(NSString *)token;
 
-- (void)getListingsOfType:(ListingType)type forPage:(NSInteger)page;
+- (void)getListingsOfType:(NSString *)type forPage:(NSInteger)page;
+- (void)getListingsByUser:(User *)user forPage:(NSInteger)page;
 - (void)getListingWithId:(NSInteger)listingId;
 - (void)postNewListing:(Listing *)listing;
 - (void)postNewComment:(NSString *)comment onListing:(Listing *)listing;

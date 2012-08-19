@@ -17,6 +17,12 @@
 
 @property (strong) UIScrollView *scrollView;
 @property (strong) MessagesView *messagesView;
+@property (strong) UILabel *recipientPrefixLabel;
+@property (strong) UILabel *recipientLabel;
+@property (strong) UILabel *conversationTitlePrefixLabel;
+@property (strong) UILabel *conversationTitleLabel;
+@property (strong) UITextField *conversationTitleField;
+@property (strong) UIButton *showListingButton;
 
 @property (strong) Conversation *conversation;
 @property (strong) Listing *listing;
@@ -24,5 +30,7 @@
 
 @property (assign) BOOL inModalComposerMode;
 @property (assign) BOOL isDirectReplyToListing;
+
+- (IBAction)showListing;
 
 @end

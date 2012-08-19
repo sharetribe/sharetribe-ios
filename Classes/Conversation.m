@@ -18,9 +18,11 @@
 @synthesize conversationId;
 @synthesize title;
 @synthesize status;
-@synthesize listingId;
 @synthesize createdAt;
 @synthesize updatedAt;
+
+@synthesize listingId;
+@synthesize listing;
 
 @synthesize participations;
 @dynamic participationsByOthers;

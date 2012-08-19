@@ -24,9 +24,9 @@
 @property (strong, nonatomic) UISearchBar *search;
 @property (strong, nonatomic) UIButton *dismissSearchButton;
 
-@property (assign) ListingType listingType;
+@property (strong) NSString* listingType;
 
-- (id)initWithListingType:(ListingType)type;
+- (id)initWithListingType:(NSString *)type;
 
 - (void)refreshListings;
 

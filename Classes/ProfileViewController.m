@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 
+#import "ConversationViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "UIImageView+Sharetribe.h"
@@ -39,8 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotUser:) name:kNotificationForDidReceiveUser object:nil];
 }
 
@@ -58,6 +58,9 @@
     [self setUser:self.user];  // a refresh!
     
     [[SharetribeAPIClient sharedClient] getUserWithId:user.userId];  // load detailed info
+    [[SharetribeAPIClient sharedClient] getBadgesForUser:user];
+    [[SharetribeAPIClient sharedClient] getFeedbackForUser:user];
+    [[SharetribeAPIClient sharedClient] getListingsByUser:user forPage:kFirstPage];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -95,11 +98,13 @@
             self.navigationItem.rightBarButtonItem = nil;
         }
     } else {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-envelope-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(messageButtonPressed)];
     }
     
     descriptionLabel.text = user.description;
     [descriptionLabel sizeToHeight];
+    
+    
     
     self.scrollView.contentSize = CGSizeMake(320, 460-2*44);
 }
@@ -111,8 +116,14 @@
     [alert show];
 }
 
-- (IBAction)actionButtonPressed
+- (IBAction)messageButtonPressed
 {
+    ConversationViewController *composer = [[ConversationViewController alloc] init];
+    composer.recipient = user;
+    composer.inModalComposerMode = YES;
+    
+    UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
+    [self presentViewController:composerNavigationController animated:YES completion:nil];
 }
 
 - (IBAction)phoneButtonPressed
@@ -125,11 +136,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:alertFormat, user.phoneNumber] message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.call", @""), nil];
     alert.tag = kAlertTagForConfirmingPhoneCall;
     [alert show];
-}
-
-- (void)userDidLogIn:(NSNotification *)notification
-{
-    self.title = [[User currentUser] givenName];
 }
 
 - (void)gotUser:(NSNotification *)notification
@@ -150,6 +156,13 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.phoneNumber]]];
         }
     }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -10,16 +10,24 @@
 
 #import "Message.h"
 #import "ConversationViewController.h"
+#import "LocationPickerViewController.h"
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+#import "NSString+Sharetribe.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+Sharetribe.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface ListingViewController () {
+    Listing *listing;
+}
+@end
+
 @implementation ListingViewController
 
-@synthesize listing;
+@dynamic listing;
+@synthesize listingId;
 
 @synthesize scrollView = _scrollView;
 @synthesize imageView;
@@ -31,6 +39,8 @@
 @synthesize tagTitleLabel;
 @synthesize tagListLabel;
 
+@synthesize mapView;
+
 @synthesize authorView;
 @synthesize authorImageView;
 @synthesize authorIntroLabel;
@@ -40,9 +50,19 @@
 @synthesize feedbackOutroLabel;
 
 @synthesize respondButton;
-@synthesize messageButton;
 
 @synthesize commentsView;
+
+- (Listing *)listing
+{
+    return listing;
+}
+
+- (void)setListing:(Listing *)newListing
+{
+    listing = newListing;
+    listingId = newListing.listingId;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -60,14 +80,30 @@
     // self.hidesBottomBarWhenPushed = YES;
     
     self.navigationItem.hidesBackButton = YES;
-        
+    
+    self.mapView = [[MKMapView alloc] init];
+    mapView.mapType = MKMapTypeStandard;
+    mapView.scrollEnabled = NO;
+    mapView.zoomEnabled = NO;
+    mapView.showsUserLocation = NO;
+    mapView.layer.borderWidth = 1;
+    mapView.layer.borderColor = [UIColor whiteColor].CGColor;
+    mapView.layer.cornerRadius = 8;
+    mapView.frame = CGRectMake(10, 0, 300, 87);
+    [self.scrollView addSubview:mapView];
+    
+    UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    mapButton.frame = mapView.bounds;
+    mapButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [mapButton addTarget:self action:@selector(showDetailedLocation) forControlEvents:UIControlEventTouchUpInside];
+    [mapView addSubview:mapButton];
+    
     self.commentsView = [[MessagesView alloc] init];
     commentsView.sendButtonTitle = NSLocalizedString(@"button.send.comment", @"");
     commentsView.composeFieldPlaceholder = NSLocalizedString(@"placeholder.comment", @"");
     commentsView.delegate = self;
     [self.scrollView addSubview:commentsView];
     
-    [respondButton setTitle:NSLocalizedString(@"button.listing.respond", @"") forState:UIControlStateNormal];
     [respondButton setImage:[UIImage imageNamed:@"icon-contact"] forState:UIControlStateNormal];
     [respondButton setBackgroundImage:[[UIImage imageNamed:@"dark-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
     respondButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
@@ -75,14 +111,6 @@
     respondButton.clipsToBounds = YES;
     [respondButton addTarget:self action:@selector(respondButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    [messageButton setTitle:NSLocalizedString(@"button.listing.message", @"") forState:UIControlStateNormal];
-    [messageButton setImage:[UIImage imageNamed:@"icon-envelope"] forState:UIControlStateNormal];
-    [messageButton setBackgroundImage:[[UIImage imageNamed:@"dark-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
-    messageButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
-    messageButton.layer.cornerRadius = 8;
-    messageButton.clipsToBounds = YES;
-    [messageButton addTarget:self action:@selector(messageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
     leftEdgeLine.backgroundColor = [UIColor lightGrayColor];
@@ -92,12 +120,28 @@
     swipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.scrollView addGestureRecognizer:swipeRecognizer];
         
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotListingDetails:) name:kNotificationForDidReceiveListingDetails object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRefreshListing:) name:kNotificationForDidRefreshListing object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self reloadData];
+    
+    if (listing == nil) {
+        [[SharetribeAPIClient sharedClient] getListingWithId:listingId];
+    }
+}
+    
+- (void)reloadData
+{
+    NSString *respondTextKey;
+    if ([listing.category isEqual:kListingCategoryFavor] || [listing.category isEqual:kListingCategoryRideshare]) {
+        respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@", listing.category, listing.type];
+    } else {
+        respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@_%@", listing.category, listing.type, listing.shareType];
+    }
+    [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
         
     NSURL *imageURL = [listing.imageURLs objectOrNilAtIndex:0];
     if (imageURL != nil) {
@@ -122,17 +166,13 @@
     } else {
         
         imageView.image = nil;
-        titleLabel.y = messageButton.y+messageButton.height+21;
+        titleLabel.y = respondButton.y+respondButton.height+21;
         
         [[topShadowBar.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
         [[backgroundView.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
     }
     
-    if (listing.shareType != nil) {
-        titleLabel.text = [NSString stringWithFormat:@"%@: %@", listing.shareType.capitalizedString, listing.title];
-    } else {
-        titleLabel.text = listing.title;
-    }
+    titleLabel.text = listing.fullTitle;
     titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
     
     int yOffset = titleLabel.y+titleLabel.height+14;
@@ -145,8 +185,8 @@
     }
     
     if (listing.tags.count > 0) {
-        tagTitleLabel.text = @"Tags: ";  // LOCALIZE
-        tagListLabel.text = [@"          " stringByAppendingString:[listing.tags componentsJoinedByString:@", "]];
+        tagTitleLabel.text = NSLocalizedString(@"listing.tags", @"");
+        tagListLabel.text = [[tagTitleLabel.text equalWhitespaceWithFont:tagListLabel.font] stringByAppendingString:[listing.tags componentsJoinedByString:@", "]];
         tagTitleLabel.y = yOffset;
         tagListLabel.y = yOffset;
         [tagTitleLabel sizeToFit];
@@ -155,6 +195,18 @@
     } else {
         tagTitleLabel.text = nil;
         tagListLabel.text = nil;
+    }
+    
+    if (listing.location != nil) {
+        if (![mapView.annotations containsObject:listing]) {
+            [mapView addAnnotation:listing];
+        }
+        [mapView setRegion:MKCoordinateRegionMakeWithDistance(listing.coordinate, 2000, 4000) animated:NO];
+        mapView.hidden = NO;
+        mapView.y = yOffset+6;
+        yOffset = mapView.y+mapView.height+14;
+    } else {
+        mapView.hidden = YES;
     }
     
     authorView.y = yOffset+6;
@@ -167,6 +219,8 @@
     
     [self setComments:listing.comments];
     
+    respondButton.hidden = listing.author.isCurrentUser;  // one cannot respond to oneself
+        
     UILabel *titleViewLabel = [[UILabel alloc] init];
     titleViewLabel.font = [UIFont boldSystemFontOfSize:14];
     titleViewLabel.minimumFontSize = 13;
@@ -196,12 +250,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)gotListingDetails:(NSNotification *)notification
+- (void)didRefreshListing:(NSNotification *)notification
 {
     Listing *refreshedListing = notification.object;
-    if ([refreshedListing isEqual:listing]) {
+    if (refreshedListing.listingId == self.listingId) {
         self.listing = refreshedListing;
-        [self setComments:listing.comments];
+        [self reloadData];
     }
 }
 
@@ -250,18 +304,27 @@
     [self.navigationController pushViewController:profileViewer animated:YES];
 }
 
+- (IBAction)showDetailedLocation
+{
+    LocationPickerViewController *mapViewer = [[LocationPickerViewController alloc] init];
+    mapViewer.mapType = MKMapTypeHybrid;
+    mapViewer.coordinate = listing.coordinate;
+    [self.navigationController pushViewController:mapViewer animated:YES];
+}
+
 #pragma mark - MessagesViewDelegate
 
 - (void)messagesViewDidBeginEditing:(MessagesView *)theMessagesView
 {
+    int contentHeight = commentsView.y+commentsView.height+10;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.scrollView.height = 416-216+8;
         respondButton.alpha = 0;
-        messageButton.alpha = 0;
         topShadowBar.alpha = 0;
+        backgroundView.height = contentHeight-backgroundView.y;
     }];
     
-    int contentHeight = commentsView.y+commentsView.height+10;
     self.scrollView.contentSize = CGSizeMake(320, contentHeight);
     
     [self.scrollView setContentOffset:CGPointMake(0, commentsView.y+commentsView.composeField.y-10) animated:YES];
@@ -274,20 +337,27 @@
 
 - (void)messagesViewDidEndEditing:(MessagesView *)theMessagesView
 {
+    int contentHeight = commentsView.y+commentsView.height+10;
+    
     [UIView animateWithDuration:0.2 animations:^{
         self.scrollView.height = 460-2*44-5;
         respondButton.alpha = 1;
-        messageButton.alpha = 1;
         topShadowBar.alpha = 1;
+        backgroundView.height = contentHeight-backgroundView.y;
     }];
-        
-    int contentHeight = commentsView.y+commentsView.height+10;
+    
     self.scrollView.contentSize = CGSizeMake(320, contentHeight);
 }
 
 - (void)messagesView:(MessagesView *)theMessagesView didSaveMessageText:(NSString *)messageText
 {
     [[SharetribeAPIClient sharedClient] postNewComment:messageText onListing:listing];
+    
+    Message *comment = [Message messageWithAuthor:[User currentUser] content:messageText createdAt:[NSDate date]];
+    NSMutableArray *comments = [NSMutableArray arrayWithArray:listing.comments];
+    [comments addObject:comment];
+    listing.comments = comments;
+    commentsView.messages = listing.comments;
 }
 
 - (void)messagesView:(MessagesView *)messagesView didSelectUser:(User *)user
@@ -297,15 +367,16 @@
     [self.navigationController pushViewController:profileViewer animated:YES];
 }
 
+- (CGFloat)availableHeightForComposerInMessagesView:(MessagesView *)messagesView
+{
+    return 416-216;
+}
+
 #pragma mark -
 
 - (void)postedNewComment:(NSNotification *)notification
 {
-    Message *comment = [Message messageWithAuthor:[User currentUser] content:notification.object createdAt:[NSDate date]];    
-    NSMutableArray *comments = [NSMutableArray arrayWithArray:listing.comments];
-    [comments addObject:comment];
-    listing.comments = comments;
-    commentsView.messages = listing.comments;
+    [[SharetribeAPIClient sharedClient] getListingWithId:listing.listingId];  // refresh to get the canonical state from server
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -324,7 +395,6 @@
             buttonY = 10;
         }
         respondButton.y = buttonY;
-        messageButton.y = buttonY;
     }
 }
 

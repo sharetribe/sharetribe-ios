@@ -13,6 +13,7 @@
 #import "ListingsTopViewController.h"
 #import "ListingAnnotationView.h"
 #import "Location.h"
+#import "SharetribeAPIClient.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ListingsMapViewController () {
@@ -63,7 +64,7 @@
     [self.view addSubview:map];
     
     self.cell = [ListingCell instance];
-    cell.frame = CGRectMake(0, 0, 320, kListingCellHeight-6);
+    cell.frame = CGRectMake(0, 0, 320, kListingCellHeight-5);
     cell.alpha = 0;
     
     CAGradientLayer *cellShadow = [[CAGradientLayer alloc] init];
@@ -74,7 +75,8 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellPressed)];
     [cell addGestureRecognizer:tapRecognizer];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(regionChangedByMapView:) name:kNotificationForDidChangeRegion object:nil];
+    [self observeNotification:kNotificationForDidChangeRegion withSelector:@selector(regionChangedByMapView:)];
+    [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(refreshedListing:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -123,6 +125,14 @@
     if (map != mapView) {
         targetRegion = mapView.region;
         shouldRefocusRegion = YES;
+    }
+}
+
+- (void)refreshedListing:(NSNotification *)notification
+{
+    if ([map.annotations containsObject:notification.object]) {
+        [map removeAnnotation:notification.object];  // actually removes the older duplicate...
+        [map addAnnotation:notification.object];     // ...and this replaces it with current data! en garde!
     }
 }
 

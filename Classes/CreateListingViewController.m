@@ -37,6 +37,7 @@
 @synthesize uploadTitleView;
 @synthesize uploadProgressLabel;
 @synthesize uploadProgressView;
+@synthesize uploadSpinner;
 
 @synthesize datePicker;
 
@@ -63,9 +64,14 @@
         self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         submitButton.frame = CGRectMake(10, 24, 300, 40);
         submitButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        [submitButton setTitle:@"Post" forState:UIControlStateNormal];
+        [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
         [submitButton setBackgroundImage:[[UIImage imageNamed:@"dark-brown.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
         [submitButton addTarget:self action:@selector(postButtonPressed:) forControlEvents:UIControlEventTouchUpInside],
+        
+        self.uploadSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        uploadSpinner.frame = CGRectMake((submitButton.width-uploadSpinner.width)/2, (submitButton.height-uploadSpinner.height)/2, uploadSpinner.width, uploadSpinner.width);
+        uploadSpinner.hidesWhenStopped = YES;
+        [submitButton addSubview:uploadSpinner];
         
         self.footer = [[UIView alloc] init];
         footer.frame = CGRectMake(0, 0, 320, 110);
@@ -83,6 +89,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDidProgress:) name:kNotificationForUploadDidProgress object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostListing:) name:kNotificationForDidPostListing object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailToPostListing:) name:kNotificationForFailedToPostListing object:nil];
     }
     return self;
 }
@@ -121,7 +128,7 @@
     if (listing == nil) {
         
         self.listing = [[Listing alloc] init];
-        listing.type = ListingTypeOffer;
+        listing.type = kListingTypeOffer;
         
         Location *currentLocation = [Location currentLocation];
         if (currentLocation != nil) {
@@ -135,7 +142,7 @@
         [table setContentOffset:CGPointZero animated:NO];
         
         [header setListingType:listing.type];
-        [header setListingCategory:ListingCategoryAny];
+        [header setListingCategory:nil];
         
         self.navigationItem.titleView = nil;
         
@@ -182,20 +189,30 @@
     self.listing = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Listing was posted successully" message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.listing.posted", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
+    [alert show];
+}
+
+- (void)didFailToPostListing:(NSNotification *)notification
+{
+    submitButton.enabled = YES;
+    [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
+    [uploadSpinner stopAnimating];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.title.error", @"") message:NSLocalizedString(@"alert.listing.failed_to_post", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
     [alert show];
 }
 
 - (void)reloadFormItems
 {
-    NSString *typeName = [Listing stringFromType:listing.type];
-    NSString *categoryName = [Listing stringFromCategory:listing.category];
-    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", categoryName, typeName];
+    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", listing.category, listing.type];
     self.formItems = [FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]];
     
     [table reloadData];
     
     table.tableFooterView = footer;
+    
+    submitButton.hidden = (listing.category == nil);
 }
 
 - (void)cancel
@@ -733,13 +750,13 @@
 
 #pragma mark - ListingTypeSelectionDelegate
 
-- (void)listingTypeSelected:(ListingType)type
+- (void)listingTypeSelected:(NSString *)type
 {
     listing.type = type;
     [self reloadFormItems];
 }
 
-- (void)listingCategorySelected:(ListingCategory)category
+- (void)listingCategorySelected:(NSString *)category
 {
     listing.category = category;
     [self reloadFormItems];
@@ -853,6 +870,10 @@
     
     listing.author = [User currentUser];
     listing.createdAt = [NSDate date];
+    
+    submitButton.enabled = NO;
+    [submitButton setTitle:nil forState:UIControlStateNormal];
+    [uploadSpinner startAnimating];
     
     [[SharetribeAPIClient sharedClient] postNewListing:listing];    
 }

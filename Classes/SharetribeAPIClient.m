@@ -9,8 +9,11 @@
 #import "SharetribeAPIClient.h"
 
 #import "AFNetworking.h"
+#import "Badge.h"
 #import "Community.h"
 #import "Conversation.h"
+#import "Feedback.h"
+#import "Grade.h"
 #import "Listing.h"
 #import "Message.h"
 #import "User.h"
@@ -98,6 +101,12 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         if ([responseObject isKindOfClass:NSDictionary.class]) {
             NSString *token = [responseObject objectForKey:@"api_token"];
+            
+            if (token == nil) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForLoginAuthDidFail object:nil];
+                return;
+            }
+            
             [self setDefaultHeader:@"Sharetribe-API-Token" value:token];            
             
             NSDictionary *currentUserDict = [responseObject objectForKey:@"person"];
@@ -163,11 +172,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }];
 }
 
-- (void)getListingsOfType:(ListingType)type forPage:(NSInteger)page
+- (void)getListingsOfType:(NSString *)type forPage:(NSInteger)page
 {
     NSMutableDictionary *params = [self baseParams];
-    if (type != ListingTypeAny) {
-        [params setObject:[Listing stringFromType:type] forKey:@"listing_type"];
+    if (type != nil) {
+        [params setObject:type forKey:@"listing_type"];
     }
     [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
     
@@ -175,20 +184,43 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
-        NSInteger page = [[responseObject objectOrNilForKey:@"page"] intValue];
-        NSInteger totalPages = [[responseObject objectOrNilForKey:@"total_pages"] intValue];
-        NSInteger perPage = [[responseObject objectOrNilForKey:@"per_page"] intValue];
-        
-        NSArray *listingsDicts = [responseObject objectOrNilForKey:@"listings"];
-        NSArray *listings = [Listing listingsFromArrayOfDicts:listingsDicts];
+        NSArray *listingDicts = [responseObject objectOrNilForKey:@"listings"];
+        NSArray *listings = [Listing listingsFromArrayOfDicts:listingDicts];
         
         NSMutableDictionary *info = [NSMutableDictionary dictionary];
-        [info setObject:[NSNumber numberWithInt:page] forKey:kInfoKeyForPage];
-        [info setObject:[NSNumber numberWithInt:totalPages] forKey:kInfoKeyForNumberOfPages];
-        [info setObject:[NSNumber numberWithInt:perPage] forKey:kInfoKeyForItemsPerPage];
-        [info setObject:[NSNumber numberWithInt:type] forKey:kInfoKeyForListingType];
+        [info setObject:[responseObject objectForKey:@"page"] forKey:kInfoKeyForPage];
+        [info setObject:[responseObject objectOrNilForKey:@"total_pages"] forKey:kInfoKeyForNumberOfPages];
+        [info setObject:[responseObject objectOrNilForKey:@"per_page"] forKey:kInfoKeyForItemsPerPage];
+        [info setObject:type forKey:kInfoKeyForListingType];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListings object:listings userInfo:info];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self handleFailureWithOperation:operation error:error];
+    }];
+}
+
+- (void)getListingsByUser:(User *)user forPage:(NSInteger)page
+{
+    NSMutableDictionary *params = [self baseParams];
+    [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    
+    [self getPath:[NSString stringWithFormat:@"people/%@/listings", user.userId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [self logSuccessWithOperation:operation responseObject:responseObject];
+        
+        NSArray *listingDicts = [responseObject objectOrNilForKey:@"listings"];
+        NSArray *listings = [Listing listingsFromArrayOfDicts:listingDicts];
+        
+        user.listings = listings;
+        
+        NSMutableDictionary *info = [NSMutableDictionary dictionary];
+        [info setObject:[responseObject objectForKey:@"page"] forKey:kInfoKeyForPage];
+        [info setObject:[responseObject objectOrNilForKey:@"total_pages"] forKey:kInfoKeyForNumberOfPages];
+        [info setObject:[responseObject objectOrNilForKey:@"per_page"] forKey:kInfoKeyForItemsPerPage];
+        [info setObject:user forKey:kInfoKeyForUser];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListingsByUser object:listings userInfo:info];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
@@ -204,7 +236,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
         Listing *listing = [Listing listingFromDict:responseObject];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListingDetails object:listing];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidRefreshListing object:listing];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
@@ -318,6 +350,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:message];
         
+        [self getConversations];  // refresh the list
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
     }];
@@ -348,7 +382,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         User *user = [User userFromDict:responseObject];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveUser object:user];
-        
+                
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
     }];
@@ -368,6 +402,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
+        NSArray *badgeDicts = [responseObject objectOrNilForKey:@"badges"];
+        NSArray *badges = [Badge badgesFromArrayOfDicts:badgeDicts];
+        
+        user.badges = badges;
+        
+        NSMutableDictionary *info = [NSMutableDictionary dictionary];
+        [info setObject:user forKey:kInfoKeyForUser];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveBadgesForUser object:badges userInfo:info];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
     }];
@@ -378,6 +422,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [self getPath:[NSString stringWithFormat:@"people/%@/feedbacks", user.userId] parameters:self.baseParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
+
+        NSArray *feedbackDicts = [responseObject objectOrNilForKey:@"feedbacks"];
+        NSArray *feedbacks = [Feedback feedbacksFromArrayOfDicts:feedbackDicts];
+        
+        user.feedbacks = feedbacks;
+        
+        NSArray *gradeArrays = [responseObject objectOrNilForKey:@"grade_amounts"];
+        NSArray *grades = [Grade gradesFromArrayOfArrays:gradeArrays];
+        
+        user.grades = grades;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveFeedbackForUser object:feedbacks userInfo:nil];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];

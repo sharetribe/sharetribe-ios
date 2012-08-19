@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #import "NSArray+Sharetribe.h"
 #import "NSDictionary+Sharetribe.h"
+#import "NSObject+Observing.h"
 #import "UIView+XYWidthHeight.h"
 #import "Sharetribe.h"
 

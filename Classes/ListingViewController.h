@@ -14,6 +14,7 @@
 @interface ListingViewController : UIViewController <MessagesViewDelegate>
 
 @property (strong) Listing *listing;
+@property (assign) NSInteger listingId;
 
 @property (strong) IBOutlet UIScrollView *scrollView;
 @property (strong) IBOutlet UIImageView *imageView;
@@ -25,6 +26,8 @@
 @property (strong) IBOutlet UILabel *tagTitleLabel;
 @property (strong) IBOutlet UILabel *tagListLabel;
 
+@property (strong) MKMapView *mapView;
+
 @property (strong) IBOutlet UIView *authorView;
 @property (strong) IBOutlet UIImageView *authorImageView;
 @property (strong) IBOutlet UILabel *authorIntroLabel;
@@ -34,7 +37,6 @@
 @property (strong) IBOutlet UILabel *feedbackOutroLabel;
 
 @property (strong) IBOutlet UIButton *respondButton;
-@property (strong) IBOutlet UIButton *messageButton;
 
 @property (strong) MessagesView *commentsView;
 

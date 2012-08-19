@@ -27,6 +27,10 @@
 @synthesize thumbnailURL;
 
 @synthesize communities;
+@synthesize badges;
+@synthesize feedbacks;
+@synthesize grades;
+@synthesize listings;
 
 @dynamic name;
 @dynamic shortName;
@@ -76,8 +80,16 @@ static User *currentUser = nil;
 {
     currentUser = nil;
     
+    NSMutableDictionary *dictWithoutNullValues = [NSMutableDictionary dictionary];
+    for (NSString *key in dict.allKeys) {
+        id value = [dict objectOrNilForKey:key];
+        if (value != nil) {
+            [dictWithoutNullValues setObject:value forKey:key];
+        }
+    }
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:dict forKey:@"current user dict"];
+    [defaults setObject:dictWithoutNullValues forKey:@"current user dict"];
     [defaults synchronize];
 }
 

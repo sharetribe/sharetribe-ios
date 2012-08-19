@@ -28,7 +28,7 @@
 
 @synthesize listingType;
 
-- (id)initWithListingType:(ListingType)type
+- (id)initWithListingType:(NSString *)type
 {
     if ((self = [super init])) {
         self.listingType = type;
@@ -66,13 +66,13 @@
 - (void)refreshListings
 {
     [listViewer startIndicatingRefresh];
-    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:1];
+    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:kFirstPage];
 }
 
 - (void)didReceiveListings:(NSNotification *)notification
 {
-    ListingType resultType = [[notification.userInfo objectForKey:kInfoKeyForListingType] intValue];
-    if (resultType == self.listingType) {
+    NSString *resultType = [notification.userInfo objectForKey:kInfoKeyForListingType];
+    if ([resultType isEqual:self.listingType]) {
         [self addListings:notification.object];
     }
     // TODO what about paginaton, incremental fetching of new listings?

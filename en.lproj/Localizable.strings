@@ -10,7 +10,7 @@
 "tabs.requests" = "Requests";
 "tabs.new_listing" = "New Listing";
 "tabs.messages" = "Messages";
-"tabs.profile" = "Profile";
+"tabs.profile" = "Me";
 
 "agestamp.format.minutes_ago" = "%d minutes ago";
 "agestamp.format.hours_ago" = "%d hours ago";
@@ -33,42 +33,63 @@
 "button.listing.message" = "Message";
 "button.take_new_photo" = "Take a New Photo...";
 "button.choose_photo_from_library" = "Choose from Library...";
+"button.profile" = "Profile";
 
+"alert.title.error" = "Error";
 "alert.confirm_cancel_composing_listing" = "Are you sure you want to cancel?";
 "alert.confirm_log_out" = "Log out?";
 "alert.confirm_phone_call.format" = "Call %@?";
+"alert.listing.posted" = "Listing was posted successully";
+"alert.listing.failed_to_post" = "Failed to post the listing. Please check your connection and try again.";
 
 "composer.message.title" = "New Message";
+"composer.message.subject" = "Subject";
+"composer.message.to" = "To";
 "composer.listing.posting" =  "Posting...";
 
 "placeholder.comment" = "Write a new comment";
-"placeholder.message" = "Write a reply";
+"placeholder.message" = "Write the message";
+"placeholder.reply" = "Write a reply";
 "placeholder.username" = "Username";
 "placeholder.password" = "Password";
+"placeholder.conversation_title" = "Write a conversation title";
+
+"listing.intro.general" = "Item, favor, ride, or space?";
+"listing.intro.offer" = "I want to offer";
+"listing.intro.request" = "I need";
+
+"listing.intro.offer_target.item" = "an item";
+"listing.intro.offer_target.favor" = "a service";
+"listing.intro.offer_target.rideshare" = "a ride";
+"listing.intro.offer_target.space" = "a space";
+
+"listing.intro.request_target.item" = "an item";
+"listing.intro.request_target.favor" = "a service";
+"listing.intro.request_target.rideshare" = "a ride";
+"listing.intro.request_target.space" = "a space";
 
 "listing.offer_type" = "Offer type";
 "listing.offer_type.give_away" = "Give away";
 "listing.offer_type.lend" = "Lend";
 "listing.offer_type.rent_out" = "Rent out";
 "listing.offer_type.sell" = "Sell";
-"listing.offer_type.temporary" = "Temporary";
+"listing.offer_type.share_for_free" = "Share for free";
 "listing.offer_type.trade" = "Trade";
 
 "listing.request_type" = "Request type";
 "listing.request_type.borrow" = "Borrow";
 "listing.request_type.buy" = "Buy";
 "listing.request_type.rent" = "Rent";
-"listing.request_type.temporary" = "Temporary";
 "listing.request_type.trade" = "Trade";
 "listing.request_type.take_for_free" = "Take for free";
 
 "listing.offered_item" = "Item you offer";
-"listing.offered_favor" = "Favor you offer";
-"listing.offered_housing" = "Housing you offer";
+"listing.offered_favor" = "Service you offer";
+"listing.offered_space" = "Space you offer";
 
 "listing.requested_item" = "Item you need";
-"listing.requested_favor" = "Favor you need";
-"listing.requested_housing" = "Housing you need";
+"listing.requested_favor" = "Service you need";
+"listing.requested_space" = "Space you need";
 
 "listing.description" = "Detailed description";
 
@@ -83,6 +104,8 @@
 "listing.location" = "Location";
 "listing.origin" = "Origin";
 "listing.destination" = "Destination";
+
+"listing.location.picker.help" = "Hold down on the map to move";
 
 "listing.image" = "Image";
 "listing.image.add" = "Add an image...";
@@ -99,3 +122,35 @@
 "listing.explanation.request_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
 "listing.explanation.tags" = "With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.";
 "listing.explanation.expiration_date" = "You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.";
+
+"listing.label_for_favor_offer"                  = "Request this service";
+"listing.label_for_favor_request"                = "Offer this service";
+"listing.label_for_space_offer_sell"             = "Buy this space";
+"listing.label_for_space_offer_rent_out"         = "Rent this space";
+"listing.label_for_space_offer_share_for_free"   = "Request this space";
+"listing.label_for_space_request_buy"            = "Offer to sell this space";
+"listing.label_for_space_request_rent"           = "Offer to rent out this space";
+"listing.label_for_item_offer_lend"              = "Borrow this item";
+"listing.label_for_item_offer_rent_out"          = "Rent this item";
+"listing.label_for_item_offer_sell"              = "Buy this item";
+"listing.label_for_item_offer_give_away"         = "Request this item";
+"listing.label_for_item_offer_trade"             = "Swap this item";
+"listing.label_for_item_request_borrow"          = "Offer to lend this item";
+"listing.label_for_item_request_rent"            = "Offer to rent out this item";
+"listing.label_for_item_request_buy"             = "Offer to sell this item";
+"listing.label_for_item_request_receive"         = "Give this item to requester";
+"listing.label_for_item_request_trade"           = "Offer to swap this item";
+"listing.label_for_rideshare_offer"              = "Request this ride";
+"listing.label_for_rideshare_request"            = "Offer ride";
+
+"listing.title_for_favor_offer"                  = "Service request";
+"listing.title_for_favor_request"                = "Service offer";
+"listing.title_for_space_offer"                  = "Space request";
+"listing.title_for_space_request"                = "Space available";
+"listing.title_for_item_offer"                   = "Item request";
+"listing.title_for_item_request"                 = "Item offer";
+"listing.title_for_rideshare_offer"              = "Rideshare request";
+"listing.title_for_rideshare_request"            = "Rideshare offer";
+
+"messaging.conversations.title" = "Conversations";
+"messaging.conversation.title" = "Conversation";

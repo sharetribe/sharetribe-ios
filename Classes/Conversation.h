@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Listing;
 @class Message;
 @class User;
 
@@ -21,9 +22,11 @@ typedef enum {
 @property (assign) NSInteger conversationId;
 @property (strong) NSString *title;
 @property (assign) ConversationStatus status;
-@property (assign) NSInteger listingId;
 @property (strong) NSDate *createdAt;
 @property (strong) NSDate *updatedAt;
+
+@property (assign) NSInteger listingId;
+@property (strong) Listing *listing;
 
 @property (strong) NSArray *participations;
 @property (readonly) NSArray *participationsByOthers;
