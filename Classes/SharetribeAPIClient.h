@@ -59,6 +59,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 @property (assign) NSInteger currentCommunityId;
 
 - (BOOL)isLoggedIn;
+- (BOOL)hasInternetConnectivity;
 
 - (void)logInWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logOut;

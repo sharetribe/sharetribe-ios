@@ -84,8 +84,10 @@
         [JSON setObject:description forKey:@"description"];
     }
     
-    [JSON setObject:shareType forKey:@"share_type"];
-    
+    if (shareType != nil) {
+        [JSON setObject:shareType forKey:@"share_type"];
+    }
+        
     if (location != nil) {
         // [JSON setObject:[location asJSON] forKey:@"origin_location"];
         [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];

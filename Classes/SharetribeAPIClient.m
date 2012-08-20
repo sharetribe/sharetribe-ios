@@ -16,6 +16,7 @@
 #import "Grade.h"
 #import "Listing.h"
 #import "Message.h"
+#import "Reachability.h"
 #import "User.h"
 #import "NSDictionary+Sharetribe.h"
 #import "UIDevice+Sharetribe.h"
@@ -84,6 +85,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 {
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:kAPITokenKeyForUserDefaults];  
     return (token != nil);
+}
+
+- (BOOL)hasInternetConnectivity
+{
+    return ([Reachability reachabilityForInternetConnection].currentReachabilityStatus != NotReachable);
 }
 
 - (void)logInWithUsername:(NSString *)username password:(NSString *)password
@@ -301,7 +307,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostListing object:listingAsSaved];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
         NSLog(@"request: %@ failed with response: %@ error: %@ json: %@", request, response, error, JSON);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostListing object:JSON];
     }];
     
     [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {

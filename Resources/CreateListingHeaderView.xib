@@ -320,7 +320,7 @@
 								<reference key="IBUINormalTitleShadowColor" ref="631964683"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">icon-ride.png</string>
+									<string key="NSResourceName">icon-rideshare.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="605154625"/>
 								<reference key="IBUIFont" ref="289495396"/>
@@ -985,7 +985,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="icon-favor.png">{50, 50}</string>
 			<string key="icon-item.png">{50, 50}</string>
-			<string key="icon-ride.png">{50, 50}</string>
+			<string key="icon-rideshare.png">{50, 50}</string>
 			<string key="icon-space.png">{50, 50}</string>
 			<string key="pointing-corner-brown.png">{40, 16}</string>
 		</dictionary>

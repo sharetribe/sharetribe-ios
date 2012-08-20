@@ -41,7 +41,9 @@
 "alert.confirm_log_out" = "Log out?";
 "alert.confirm_phone_call.format" = "Call %@?";
 "alert.listing.posted" = "Listing was posted successully";
-"alert.listing.failed_to_post" = "Failed to post the listing. Please check your connection and try again.";
+"alert.listing.failed_to_post" = "Failed to post the listing.";
+"alert.title.no_internet" = "No Internet Connectivity";
+"alert.message.no_internet" = "Please check your network settings and try again.";
 
 "composer.message.title" = "New Message";
 "composer.message.title_format" = "To: %@";
@@ -160,8 +162,8 @@
 "grade.exceeded_expectations" = "Much better than expected";
 "grade.slightly_better_than_expected" = "Better than expected";
 "grade.as_expected" = "As expected";
-"grade.slightly_less_than_expected" = "Slightly less than expected";
-"grade.less_than_expected" = "Less than expected";
+"grade.slightly_less_than_expected" = "Slightly worse than expected";
+"grade.less_than_expected" = "Worse than expected";
 
 "profile.listings_title_format" = "%d listings";
 "profile.all_feedback_title_format" = "All feedback (%d)";

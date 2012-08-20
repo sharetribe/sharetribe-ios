@@ -11,6 +11,7 @@
 #import "Location.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface CreateListingViewController () {
@@ -69,7 +70,7 @@
         [submitButton addTarget:self action:@selector(postButtonPressed:) forControlEvents:UIControlEventTouchUpInside],
         
         self.uploadSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        uploadSpinner.frame = CGRectMake((submitButton.width-uploadSpinner.width)/2, (submitButton.height-uploadSpinner.height)/2, uploadSpinner.width, uploadSpinner.width);
+        uploadSpinner.frame = CGRectMake((submitButton.width-uploadSpinner.width)/2, 10, uploadSpinner.width, uploadSpinner.height);
         uploadSpinner.hidesWhenStopped = YES;
         [submitButton addSubview:uploadSpinner];
         
@@ -189,7 +190,7 @@
     self.listing = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.listing.posted", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.listing.posted", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
 }
 
@@ -199,7 +200,16 @@
     [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
     [uploadSpinner stopAnimating];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.title.error", @"") message:NSLocalizedString(@"alert.listing.failed_to_post", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];  // LOCALIZE
+    self.navigationItem.titleView = nil;
+    
+    NSMutableString *message = [NSMutableString stringWithString:NSLocalizedString(@"alert.listing.failed_to_post", @"")];
+    if ([notification.object isKindOfClass:NSArray.class]) {
+        for (id object in notification.object) {
+            [message appendFormat:@"\n\n%@", object];
+        }
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.title.error", @"") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
 }
 
@@ -846,6 +856,12 @@
 
 - (IBAction)postButtonPressed:(UIButton *)sender
 {
+    if (![[SharetribeAPIClient sharedClient] hasInternetConnectivity]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.title.no_internet", @"") message:NSLocalizedString(@"alert.message.no_internet", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
     if (uploadTitleView == nil) {
         self.uploadTitleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
         self.uploadProgressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 20)];

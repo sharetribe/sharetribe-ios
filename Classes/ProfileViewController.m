@@ -296,6 +296,8 @@
             } else {
                 label.textColor = [UIColor lightGrayColor];
             }
+        } else {
+            button.alpha = 0.5;
         }
         
         if (indexPath.section == kSectionIndexForListings) {
