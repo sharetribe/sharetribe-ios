@@ -23,8 +23,8 @@
 @implementation ListingsListViewController
 
 @synthesize header;
-
 @synthesize listingCollectionViewDelegate;
+@synthesize disallowsRefreshing;
 
 - (void)addListings:(NSArray *)newListings
 {
@@ -70,9 +70,11 @@
     self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorColor = [UIColor clearColor];
     
-    self.header = [[PullDownToRefreshHeaderView alloc] init];
-    self.tableView.tableHeaderView = header;
-    
+    if (!disallowsRefreshing) {
+        self.header = [[PullDownToRefreshHeaderView alloc] init];
+        self.tableView.tableHeaderView = header;
+    }
+        
     [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(listingRefreshed:)];
 }
 
@@ -165,7 +167,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Listing *listing = [listings objectAtIndex:indexPath.row];
-    [listingCollectionViewDelegate viewController:self didSelectListing:listing];
+    
+    if (listingCollectionViewDelegate != nil) {
+        
+        [listingCollectionViewDelegate viewController:self didSelectListing:listing];
+        
+    } else {
+        
+        ListingViewController *listingViewer = [[ListingViewController alloc] init];
+        listingViewer.listing = listing;
+        [self.navigationController pushViewController:listingViewer animated:YES];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

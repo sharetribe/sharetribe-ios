@@ -27,6 +27,7 @@
 "button.no" = "No";
 "button.call" = "Call";
 "button.log_out" = "Log Out";
+"button.post" = "Post";
 "button.send.comment" = "Send comment";
 "button.send.message" = "Send";
 "button.listing.respond" = "Respond";
@@ -43,6 +44,7 @@
 "alert.listing.failed_to_post" = "Failed to post the listing. Please check your connection and try again.";
 
 "composer.message.title" = "New Message";
+"composer.message.title_format" = "To: %@";
 "composer.message.subject" = "Subject";
 "composer.message.to" = "To";
 "composer.listing.posting" =  "Posting...";
@@ -154,3 +156,14 @@
 
 "messaging.conversations.title" = "Conversations";
 "messaging.conversation.title" = "Conversation";
+
+"grade.exceeded_expectations" = "Much better than expected";
+"grade.slightly_better_than_expected" = "Better than expected";
+"grade.as_expected" = "As expected";
+"grade.slightly_less_than_expected" = "Slightly less than expected";
+"grade.less_than_expected" = "Less than expected";
+
+"profile.listings_title_format" = "%d listings";
+"profile.all_feedback_title_format" = "All feedback (%d)";
+"profile.received_feedback" = "Received Feedback";
+"profile.badges" = "Badges";

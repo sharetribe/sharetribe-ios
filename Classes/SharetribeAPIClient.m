@@ -434,6 +434,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         user.grades = grades;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveFeedbackForUser object:feedbacks userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveGradesForUser object:grades userInfo:nil];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];

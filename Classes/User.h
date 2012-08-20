@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Community;
+@class Location;
 
 @interface User : NSObject
 
@@ -18,6 +18,7 @@
 @property (strong) NSString *familyName;
 @property (strong) NSString *phoneNumber;
 @property (strong) NSString *description;
+@property (strong) Location *location;
 
 @property (strong) NSURL *pictureURL;
 @property (strong) NSURL *thumbnailURL;

@@ -18,6 +18,8 @@
 
 @property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
+@property (assign) BOOL disallowsRefreshing;
+
 - (void)startIndicatingRefresh;
 
 @end

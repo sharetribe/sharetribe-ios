@@ -9,6 +9,7 @@
 #import "User.h"
 
 #import "Community.h"
+#import "Location.h"
 #import "NSDictionary+Sharetribe.h"
 
 @interface User ()
@@ -102,6 +103,10 @@ static User *currentUser = nil;
     user.familyName = [dict objectOrNilForKey:@"family_name"];
     user.phoneNumber = [dict objectOrNilForKey:@"phone_number"];
     user.description = [dict objectOrNilForKey:@"description"];
+
+    if ([dict objectOrNilForKey:@"location"] != nil) {
+        user.location = [Location locationFromDict:[dict objectOrNilForKey:@"location"]];
+    }
     
     if ([dict objectOrNilForKey:@"picture_url"] != nil) {
         user.pictureURL = [NSURL URLWithString:[dict objectOrNilForKey:@"picture_url"]];

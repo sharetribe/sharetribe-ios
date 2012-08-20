@@ -8,7 +8,14 @@
 
 #import "ProfileViewController.h"
 
+#import "Badge.h"
+#import "BadgeCell.h"
 #import "ConversationViewController.h"
+#import "Grade.h"
+#import "GradeCell.h"
+#import "FeedbackListViewController.h"
+#import "ListingsListViewController.h"
+#import "Location.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "UIImageView+Sharetribe.h"
@@ -17,8 +24,16 @@
 #define kAlertTagForConfirmingLogOut     1
 #define kAlertTagForConfirmingPhoneCall  2
 
+#define kSectionIndexForListings  0
+#define kSectionIndexForGrades    1
+#define kSectionIndexForBadges    2
+
 @interface ProfileViewController () <UIAlertViewDelegate, UIActionSheetDelegate> {
     User *user;
+    NSArray *listings;
+    NSArray *grades;
+    NSArray *feedbacks;
+    NSArray *badges;
 }
 
 @end
@@ -27,9 +42,11 @@
 
 @dynamic user;
 
-@synthesize scrollView = _scrollView;
+@synthesize tableView = _tableView;
+@synthesize headerView;
 @synthesize mapView = _mapView;
 @synthesize avatarView;
+@synthesize infoContainer;
 @synthesize nameLabel;
 @synthesize locationLabel;
 @synthesize phoneButton;
@@ -41,7 +58,16 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotUser:) name:kNotificationForDidReceiveUser object:nil];
+    [headerView removeFromSuperview];
+    self.tableView.tableHeaderView = headerView;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    
+    [self observeNotification:kNotificationForDidReceiveUser withSelector:@selector(gotUser:)];
+    [self observeNotification:kNotificationForDidReceiveBadgesForUser withSelector:@selector(gotBadges:)];
+    [self observeNotification:kNotificationForDidReceiveGradesForUser withSelector:@selector(gotGrades:)];
+    [self observeNotification:kNotificationForDidReceiveFeedbackForUser withSelector:@selector(gotFeedback:)];
+    [self observeNotification:kNotificationForDidReceiveListingsByUser withSelector:@selector(gotListingsByUser:)];
 }
 
 - (void)viewDidUnload
@@ -81,9 +107,24 @@
     
     [avatarView setImageWithUser:user];
     
+    if (user.location != nil) {
+        [self.mapView addAnnotation:user.location];
+        [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(user.location.coordinate, 1500, 3000) animated:NO];
+        locationLabel.text = user.location.address;
+        locationLabel.height = [locationLabel.text sizeWithFont:locationLabel.font constrainedToSize:CGSizeMake(locationLabel.width, 200) lineBreakMode:UILineBreakModeWordWrap].height;
+        phoneButton.y = locationLabel.y+locationLabel.height;
+        locationLabel.hidden = NO;
+        locationIconView.hidden = NO;
+    } else {
+        phoneButton.y = locationLabel.y;
+        locationLabel.hidden = YES;
+        locationIconView.hidden = YES;
+    }
+    
     if (user.phoneNumber != nil) {
         [phoneButton setTitle:user.phoneNumber forState:UIControlStateNormal];
         phoneButton.width = [user.phoneNumber sizeWithFont:phoneButton.titleLabel.font].width;
+        phoneIconView.y = phoneButton.y+7;
         phoneButton.hidden = NO;
         phoneIconView.hidden = NO;
     } else {
@@ -104,9 +145,12 @@
     descriptionLabel.text = user.description;
     [descriptionLabel sizeToHeight];
     
+    infoContainer.height = descriptionLabel.y+descriptionLabel.height+20;
+    headerView.height = infoContainer.y+infoContainer.height;
     
+    self.tableView.tableHeaderView = headerView;
     
-    self.scrollView.contentSize = CGSizeMake(320, 460-2*44);
+    [self.tableView reloadData];
 }
 
 - (IBAction)logoutButtonPressed
@@ -138,11 +182,50 @@
     [alert show];
 }
 
+- (IBAction)showListingsByUser
+{
+    ListingsListViewController *listViewer = [[ListingsListViewController alloc] init];
+    listViewer.disallowsRefreshing = YES;
+    [listViewer addListings:listings];
+    [self.navigationController pushViewController:listViewer animated:YES];
+}
+
+- (IBAction)showAllFeedback
+{
+    FeedbackListViewController *feedbackViewer = [[FeedbackListViewController alloc] init];
+    feedbackViewer.feedbacks = feedbacks;
+    [self.navigationController pushViewController:feedbackViewer animated:YES];
+}
+
 - (void)gotUser:(NSNotification *)notification
 {
     if ([user.userId isEqual:[notification.object userId]]) {
         self.user = notification.object;
     }
+}
+
+- (void)gotBadges:(NSNotification *)notification
+{
+    badges = notification.object;
+    [self.tableView reloadData];
+}
+
+- (void)gotGrades:(NSNotification *)notification
+{
+    grades = notification.object;
+    [self.tableView reloadData];
+}
+
+- (void)gotFeedback:(NSNotification *)notification
+{
+    feedbacks = notification.object;
+    [self.tableView reloadData];
+}
+
+- (void)gotListingsByUser:(NSNotification *)notification
+{
+    listings = notification.object;
+    [self.tableView reloadData];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -165,13 +248,157 @@
     
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == kSectionIndexForListings) {
+        return 1;
+    } else if (section == kSectionIndexForGrades) {
+        return grades.count+2;
+    } else if (section == kSectionIndexForBadges) {
+        return badges.count;
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == kSectionIndexForListings || (indexPath.section == kSectionIndexForGrades && indexPath.row == grades.count+1)) {
+        
+        NSArray *items = (indexPath.section == kSectionIndexForListings) ? listings : feedbacks;
+        
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        button.frame = CGRectMake(14, 0, 292, 44);
+        [cell addSubview:button];
+        if (items != nil) {
+            UILabel *label = [[UILabel alloc] init];
+            NSString *listingsTitleFormat = (indexPath.section == kSectionIndexForListings) ? NSLocalizedString(@"profile.listings_title_format", @"") : NSLocalizedString(@"profile.all_feedback_title_format", @"");
+            label.text = [NSString stringWithFormat:listingsTitleFormat, items.count];
+            label.font = [UIFont boldSystemFontOfSize:15];
+            label.backgroundColor = [UIColor clearColor];
+            label.x = 28;
+            label.y = button.y;
+            label.width = button.width;
+            label.height = button.height;
+            [cell addSubview:label];
+            if (items.count > 0) {
+                UIImageView *disclosureArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure-arrow"]];
+                disclosureArrow.x = 280;
+                disclosureArrow.y = button.y+(button.height-disclosureArrow.height)/2;
+                [cell addSubview:disclosureArrow];
+            } else {
+                label.textColor = [UIColor lightGrayColor];
+            }
+        }
+        
+        if (indexPath.section == kSectionIndexForListings) {
+            [button addTarget:self action:@selector(showListingsByUser) forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [button addTarget:self action:@selector(showAllFeedback) forControlEvents:UIControlEventTouchUpInside];
+        }
+            
+        return cell;
+        
+    } else if (indexPath.section == kSectionIndexForGrades) {
+        
+        if (indexPath.row == 0) {
+            return [[UITableViewCell alloc] init];
+        }
+        
+        GradeCell *cell = [tableView dequeueReusableCellWithIdentifier:GradeCell.reuseIdentifier];
+        if (cell == nil) {
+            cell = [GradeCell newInstance];
+        }
+        cell.grade = [grades objectAtIndex:indexPath.row-1];
+        return cell;
+        
+    } else if (indexPath.section == kSectionIndexForBadges) {
+        
+        BadgeCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgeCell.reuseIdentifier];
+        if (cell == nil) {
+            cell = [BadgeCell newInstance];
+        }
+        cell.badge = [badges objectAtIndex:indexPath.row];
+        return cell;
+    }
+    return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == kSectionIndexForListings) {
+        return nil;
+    } else if (section == kSectionIndexForGrades) {
+        return NSLocalizedString(@"profile.received_feedback", @"");
+    } else if (section == kSectionIndexForBadges) {
+        return (badges.count > 0) ? NSLocalizedString(@"profile.badges", @"") : nil;
+    }
+    return nil;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == kSectionIndexForListings) {
+        return 65;
+    } else if (indexPath.section == kSectionIndexForGrades) {
+        if (indexPath.row == 0) {
+            return 10;
+        }
+        if (indexPath.row == grades.count) {
+            return 45;
+        }
+        if (indexPath.row == grades.count+1) {
+            return 65;
+        }
+        return 35;
+    } else if (indexPath.section == kSectionIndexForBadges) {
+        BadgeCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgeCell.reuseIdentifier];
+        if (cell == nil) {
+            cell = [BadgeCell newInstance];
+        }
+        Badge *badge = [badges objectAtIndex:indexPath.row];
+        return [cell heightWithBadge:badge];
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return ([self tableView:tableView titleForHeaderInSection:section] != nil) ? 20 : 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *header = [[UIView alloc] init];
+    header.backgroundColor = kSharetribeDarkBrownColor;
+    UILabel *headerLabel = [[UILabel alloc] init];
+    headerLabel.font = [UIFont boldSystemFontOfSize:12];
+    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.shadowColor = [UIColor darkTextColor];
+    headerLabel.shadowOffset = CGSizeMake(0, 1);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    headerLabel.x = 14;
+    headerLabel.height = 20;
+    headerLabel.width = 292;
+    [header addSubview:headerLabel];
+    return header;
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView == self.scrollView) {
-        CGFloat mapViewBaselineY = -(self.mapView.height-150)/2;
-        CGFloat y = mapViewBaselineY - scrollView.contentOffset.y/2;
+    if (scrollView == self.tableView) {
+        CGFloat mapViewBaselineY = -(self.mapView.height-150)/2+500;
+        CGFloat y = mapViewBaselineY + scrollView.contentOffset.y/2;
         self.mapView.frame = CGRectMake(0, y, self.mapView.width, self.mapView.height);
     }
 }

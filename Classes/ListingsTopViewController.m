@@ -110,7 +110,7 @@
     
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
-    
+        
     self.search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0, 180, 44);
     search.tintColor = kSharetribeDarkBrownColor;

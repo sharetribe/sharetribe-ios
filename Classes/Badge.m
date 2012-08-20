@@ -26,7 +26,9 @@
     badge.name = [dict objectOrNilForKey:@"name"];
     badge.description = [dict objectOrNilForKey:@"description"];
     badge.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
-    badge.pictureURL = ([dict objectOrNilForKey:@"picture_url"] != nil) ? [NSURL URLWithString:[dict objectOrNilForKey:@"picture_url"]] : nil;
+    if ([dict objectOrNilForKey:@"picture_url"] != nil) {
+        badge.pictureURL = [NSURL URLWithString:[[dict objectOrNilForKey:@"picture_url"] stringByReplacingOccurrencesOfString:@"_large.png" withString:@"_medium.png"]];
+    }
     
     return badge;
 }

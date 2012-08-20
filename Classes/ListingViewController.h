@@ -35,6 +35,7 @@
 @property (strong) IBOutlet UILabel *feedbackIntroLabel;
 @property (strong) IBOutlet UILabel *feedbackPercentLabel;
 @property (strong) IBOutlet UILabel *feedbackOutroLabel;
+@property (strong) IBOutlet UILabel *agestampLabel;
 
 @property (strong) IBOutlet UIButton *respondButton;
 

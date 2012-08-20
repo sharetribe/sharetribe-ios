@@ -47,6 +47,10 @@
 		483D99B915E1962200245A74 /* kaapo-grade-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 483D99AF15E1962200245A74 /* kaapo-grade-5.png */; };
 		483D99BA15E1962200245A74 /* kaapo-grade-5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 483D99B015E1962200245A74 /* kaapo-grade-5@2x.png */; };
 		483D99BD15E1A3A700245A74 /* NSString+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 483D99BC15E1A3A600245A74 /* NSString+Sharetribe.m */; };
+		483D99C515E1C53A00245A74 /* GradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 483D99C415E1C53A00245A74 /* GradeCell.m */; };
+		483D99CA15E1C58200245A74 /* GradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 483D99C915E1C58200245A74 /* GradeCell.xib */; };
+		483D99CC15E1CD0C00245A74 /* BadgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 483D99CB15E1CD0C00245A74 /* BadgeCell.xib */; };
+		483D99CF15E1CD2100245A74 /* BadgeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 483D99CE15E1CD2000245A74 /* BadgeCell.m */; };
 		48482629159BF09F00B15207 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482627159BF09F00B15207 /* LoginViewController.m */; };
 		4848262E159BF6F600B15207 /* sharetribe_logo_tagline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */; };
 		48482638159C105D00B15207 /* Community.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482637159C105C00B15207 /* Community.m */; };
@@ -128,6 +132,7 @@
 		489179D2159BC9C9004D6FF3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 489179CF159BC9C9004D6FF3 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		489179D3159BC9C9004D6FF3 /* YAJLiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489179D0159BC9C9004D6FF3 /* YAJLiOS.framework */; };
 		489179DF159BCAE9004D6FF3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489179DE159BCAE9004D6FF3 /* SystemConfiguration.framework */; };
+		48A755DC15E1F63A002638BF /* FeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A755DB15E1F639002638BF /* FeedbackListViewController.m */; };
 		48AF2A2815C431420047238F /* icon-callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2615C431420047238F /* icon-callout.png */; };
 		48AF2A2915C431420047238F /* icon-callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2715C431420047238F /* icon-callout@2x.png */; };
 		48C9F66815037847001F785A /* ButtonTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48C9F66715037847001F785A /* ButtonTabBarController.m */; };
@@ -226,6 +231,12 @@
 		483D99B015E1962200245A74 /* kaapo-grade-5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-grade-5@2x.png"; sourceTree = "<group>"; };
 		483D99BB15E1A3A600245A74 /* NSString+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Sharetribe.h"; sourceTree = "<group>"; };
 		483D99BC15E1A3A600245A74 /* NSString+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Sharetribe.m"; sourceTree = "<group>"; };
+		483D99C315E1C53A00245A74 /* GradeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeCell.h; sourceTree = "<group>"; };
+		483D99C415E1C53A00245A74 /* GradeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeCell.m; sourceTree = "<group>"; };
+		483D99C915E1C58200245A74 /* GradeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GradeCell.xib; path = Resources/GradeCell.xib; sourceTree = SOURCE_ROOT; };
+		483D99CB15E1CD0C00245A74 /* BadgeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BadgeCell.xib; path = Resources/BadgeCell.xib; sourceTree = SOURCE_ROOT; };
+		483D99CD15E1CD2000245A74 /* BadgeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeCell.h; sourceTree = "<group>"; };
+		483D99CE15E1CD2000245A74 /* BadgeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeCell.m; sourceTree = "<group>"; };
 		48482626159BF09F00B15207 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		48482627159BF09F00B15207 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharetribe_logo_tagline@2x.png"; sourceTree = "<group>"; };
@@ -341,6 +352,8 @@
 		489179CF159BC9C9004D6FF3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		489179D0159BC9C9004D6FF3 /* YAJLiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJLiOS.framework; path = External/YAJLiOS.framework; sourceTree = SOURCE_ROOT; };
 		489179DE159BCAE9004D6FF3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		48A755DA15E1F639002638BF /* FeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackListViewController.h; sourceTree = "<group>"; };
+		48A755DB15E1F639002638BF /* FeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackListViewController.m; sourceTree = "<group>"; };
 		48AF2A2615C431420047238F /* icon-callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-callout.png"; sourceTree = "<group>"; };
 		48AF2A2715C431420047238F /* icon-callout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-callout@2x.png"; sourceTree = "<group>"; };
 		48C9F66615037847001F785A /* ButtonTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ButtonTabBarController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -619,6 +632,8 @@
 				48C9F6BB15040AEA001F785A /* ConversationViewController.m */,
 				48894F5E14DF6CA0009CD965 /* CreateListingViewController.h */,
 				48894F5F14DF6CA0009CD965 /* CreateListingViewController.m */,
+				48A755DA15E1F639002638BF /* FeedbackListViewController.h */,
+				48A755DB15E1F639002638BF /* FeedbackListViewController.m */,
 				48894F6114DF6CD2009CD965 /* ListingsListViewController.h */,
 				48894F6214DF6CD2009CD965 /* ListingsListViewController.m */,
 				48894F6414DF6CE8009CD965 /* ListingsMapViewController.h */,
@@ -647,6 +662,9 @@
 		48894F6E14DF7611009CD965 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				483D99CD15E1CD2000245A74 /* BadgeCell.h */,
+				483D99CE15E1CD2000245A74 /* BadgeCell.m */,
+				483D99CB15E1CD0C00245A74 /* BadgeCell.xib */,
 				48E1C43115C4A3E70058F4EB /* CommunitySelectionViewController.xib */,
 				4871D03B150C2BAD00280549 /* ConversationListCell.h */,
 				4871D03C150C2BAE00280549 /* ConversationListCell.m */,
@@ -654,6 +672,9 @@
 				48894F8914E0954A009CD965 /* CreateListingHeaderView.h */,
 				48894F8A14E0954A009CD965 /* CreateListingHeaderView.m */,
 				48894F8714E094B0009CD965 /* CreateListingHeaderView.xib */,
+				483D99C315E1C53A00245A74 /* GradeCell.h */,
+				483D99C415E1C53A00245A74 /* GradeCell.m */,
+				483D99C915E1C58200245A74 /* GradeCell.xib */,
 				486773C014F1EE9D00D7EFD8 /* ListingCell.h */,
 				486773C114F1EE9D00D7EFD8 /* ListingCell.m */,
 				486773C314F1EEB900D7EFD8 /* ListingCell.xib */,
@@ -943,6 +964,8 @@
 				483D99B815E1962200245A74 /* kaapo-grade-4@2x.png in Resources */,
 				483D99B915E1962200245A74 /* kaapo-grade-5.png in Resources */,
 				483D99BA15E1962200245A74 /* kaapo-grade-5@2x.png in Resources */,
+				483D99CA15E1C58200245A74 /* GradeCell.xib in Resources */,
+				483D99CC15E1CD0C00245A74 /* BadgeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1030,9 @@
 				483D99A315E1859000245A74 /* Badge.m in Sources */,
 				483D99A615E18FDE00245A74 /* Grade.m in Sources */,
 				483D99BD15E1A3A700245A74 /* NSString+Sharetribe.m in Sources */,
+				483D99C515E1C53A00245A74 /* GradeCell.m in Sources */,
+				483D99CF15E1CD2100245A74 /* BadgeCell.m in Sources */,
+				48A755DC15E1F63A002638BF /* FeedbackListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

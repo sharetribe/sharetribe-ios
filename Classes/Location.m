@@ -18,7 +18,7 @@
     self = [super init];
     if (self != nil) {
         self.location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-        self.address = address;
+        self.address = theAddress;
     }
     return self;
 }
@@ -63,6 +63,14 @@
     [defaults setDouble:newCurrentLocation.coordinate.longitude forKey:@"current longitude"];
     [defaults setObject:newCurrentLocation.address forKey:@"current address"];
     [defaults synchronize];
+}
+
++ (Location *)locationFromDict:(NSDictionary *)dict
+{
+    CLLocationDegrees latitude = [[dict objectOrNilForKey:@"latitude"] doubleValue];
+    CLLocationDegrees longitude = [[dict objectOrNilForKey:@"longitude"] doubleValue];
+    NSString *address = [dict objectOrNilForKey:@"address"];
+    return [[Location alloc] initWithLatitude:latitude longitude:longitude address:address];
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+#import "NSDate+Sharetribe.h"
 #import "NSString+Sharetribe.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImageView+Sharetribe.h"
@@ -48,6 +49,7 @@
 @synthesize feedbackIntroLabel;
 @synthesize feedbackPercentLabel;
 @synthesize feedbackOutroLabel;
+@synthesize agestampLabel;
 
 @synthesize respondButton;
 
@@ -136,13 +138,17 @@
 - (void)reloadData
 {
     NSString *respondTextKey;
-    if ([listing.category isEqual:kListingCategoryFavor] || [listing.category isEqual:kListingCategoryRideshare]) {
+    if (listing == nil) {
+        respondTextKey = @"";
+    } else if ([listing.category isEqual:kListingCategoryFavor] || [listing.category isEqual:kListingCategoryRideshare]) {
         respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@", listing.category, listing.type];
     } else {
         respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@_%@", listing.category, listing.type, listing.shareType];
     }
     [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
-        
+    
+    respondButton.hidden = listing.author.isCurrentUser;  // one cannot respond to oneself
+    
     NSURL *imageURL = [listing.imageURLs objectOrNilAtIndex:0];
     if (imageURL != nil) {
         
@@ -166,7 +172,11 @@
     } else {
         
         imageView.image = nil;
-        titleLabel.y = respondButton.y+respondButton.height+21;
+        if (respondButton.hidden) {
+            titleLabel.y = 21;
+        } else {
+            titleLabel.y = respondButton.y+respondButton.height+21;
+        }
         
         [[topShadowBar.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
         [[backgroundView.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
@@ -212,17 +222,16 @@
     authorView.y = yOffset+6;
     [authorImageView setImageWithUser:listing.author];
     authorNameLabel.text = listing.author.name;
+    agestampLabel.text = [listing.createdAt agestamp];
     yOffset = authorView.y+authorView.height+14;
     
     commentsView.x = 10;
     commentsView.y = yOffset+6;
     
     [self setComments:listing.comments];
-    
-    respondButton.hidden = listing.author.isCurrentUser;  // one cannot respond to oneself
-        
+            
     UILabel *titleViewLabel = [[UILabel alloc] init];
-    titleViewLabel.font = [UIFont boldSystemFontOfSize:14];
+    titleViewLabel.font = [UIFont boldSystemFontOfSize:17];
     titleViewLabel.minimumFontSize = 13;
     titleViewLabel.numberOfLines = 3;
     titleViewLabel.lineBreakMode = UILineBreakModeWordWrap;

@@ -24,6 +24,7 @@
 #define kNotificationForDidReceiveUser                     @"did receive user"
 #define kNotificationForDidReceiveBadgesForUser            @"did receive badges for user"
 #define kNotificationForDidReceiveFeedbackForUser          @"did receive feedback for user"
+#define kNotificationForDidReceiveGradesForUser            @"did receive grades for user"
 #define kNotificationForDidReceiveListingsByUser           @"did receive listings by user"
 
 #define kNotificationForDidPostListing                     @"did post listing"

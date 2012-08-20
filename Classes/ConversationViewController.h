@@ -17,8 +17,6 @@
 
 @property (strong) UIScrollView *scrollView;
 @property (strong) MessagesView *messagesView;
-@property (strong) UILabel *recipientPrefixLabel;
-@property (strong) UILabel *recipientLabel;
 @property (strong) UILabel *conversationTitlePrefixLabel;
 @property (strong) UILabel *conversationTitleLabel;
 @property (strong) UITextField *conversationTitleField;

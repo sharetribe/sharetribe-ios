@@ -34,14 +34,7 @@
         [grades addObject:grade];
     }
     
-    [grades sortUsingSelector:@selector(compare:)];
-    
     return grades;
-}
-
-- (NSComparisonResult)compare:(id)object
-{
-    return (grade - [object grade]);
 }
 
 @end

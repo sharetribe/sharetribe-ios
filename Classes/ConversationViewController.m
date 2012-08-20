@@ -15,9 +15,12 @@
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+#import "NSObject+Observing.h"
+#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ConversationViewController () <UITextFieldDelegate>
+@property (strong) UIImageView *disclosureIndicatorView;
 @end
 
 @interface UITextFieldWithInsets : UITextField
@@ -27,12 +30,11 @@
 
 @synthesize scrollView;
 @synthesize messagesView;
-@synthesize recipientPrefixLabel;
-@synthesize recipientLabel;
 @synthesize conversationTitlePrefixLabel;
 @synthesize conversationTitleLabel;
 @synthesize conversationTitleField;
 @synthesize showListingButton;
+@synthesize disclosureIndicatorView;
 
 @synthesize conversation;
 @synthesize listing;
@@ -66,53 +68,33 @@
     [scrollView addSubview:messagesView];
     
     self.conversationTitlePrefixLabel = [[UILabel alloc] init];
-    conversationTitlePrefixLabel.font = [UIFont systemFontOfSize:15];
+    conversationTitlePrefixLabel.font = [UIFont systemFontOfSize:17];
     conversationTitlePrefixLabel.textColor = [UIColor blackColor];
     conversationTitlePrefixLabel.backgroundColor = [UIColor clearColor];
-    conversationTitlePrefixLabel.x = 20;
-    conversationTitlePrefixLabel.y = 20;
+    conversationTitlePrefixLabel.x = 10;
+    conversationTitlePrefixLabel.y = 14;
     conversationTitlePrefixLabel.width = 260;
     [scrollView addSubview:conversationTitlePrefixLabel];
-    
-    self.recipientLabel = [[UILabel alloc] init];
-    recipientLabel.font = [UIFont boldSystemFontOfSize:15];
-    recipientLabel.numberOfLines = 0;
-    recipientLabel.lineBreakMode = UILineBreakModeWordWrap;
-    recipientLabel.textColor = [UIColor blackColor];
-    recipientLabel.backgroundColor = [UIColor clearColor];
-    recipientLabel.x = 20;
-    recipientLabel.y = 20;
-    recipientLabel.width = 260;
-    [scrollView addSubview:recipientLabel];
-
-    self.recipientPrefixLabel = [[UILabel alloc] init];
-    recipientPrefixLabel.font = [UIFont systemFontOfSize:15];
-    recipientPrefixLabel.textColor = [UIColor blackColor];
-    recipientPrefixLabel.backgroundColor = [UIColor clearColor];
-    recipientPrefixLabel.x = 20;
-    recipientPrefixLabel.y = 20;
-    recipientPrefixLabel.width = 260;
-    [scrollView addSubview:recipientPrefixLabel];
-    
+        
     self.conversationTitleLabel = [[UILabel alloc] init];
-    conversationTitleLabel.font = [UIFont boldSystemFontOfSize:15];
+    conversationTitleLabel.font = [UIFont boldSystemFontOfSize:17];
     conversationTitleLabel.numberOfLines = 0;
     conversationTitleLabel.lineBreakMode = UILineBreakModeWordWrap;
     conversationTitleLabel.textColor = [UIColor blackColor];
     conversationTitleLabel.backgroundColor = [UIColor clearColor];
-    conversationTitleLabel.x = 20;
-    conversationTitleLabel.y = 20;
+    conversationTitleLabel.x = 10;
+    conversationTitleLabel.y = 14;
     conversationTitleLabel.width = 260;
     [scrollView addSubview:conversationTitleLabel];
     
     self.conversationTitleField = [[UITextFieldWithInsets alloc] init];
     conversationTitleField.borderStyle = UITextBorderStyleRoundedRect;
     conversationTitleField.backgroundColor = [UIColor whiteColor];
-    conversationTitleField.font = [UIFont systemFontOfSize:13];
+    conversationTitleField.font = [UIFont boldSystemFontOfSize:13];
     conversationTitleField.returnKeyType = UIReturnKeyNext;
     conversationTitleField.enablesReturnKeyAutomatically = YES;
     conversationTitleField.x = 10;
-    conversationTitleField.y = 20;
+    conversationTitleField.y = 10;
     conversationTitleField.width = 300;
     conversationTitleField.height = 30;
     conversationTitleField.delegate = self;
@@ -129,10 +111,9 @@
     [showListingButton addTarget:self action:@selector(showListing) forControlEvents:UIControlEventTouchUpInside];
     [scrollView insertSubview:showListingButton belowSubview:conversationTitleLabel];
     
-    UIImageView *disclosureIndicatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure-arrow"]];
-    disclosureIndicatorView.x = 280;
+    self.disclosureIndicatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure-arrow"]];
+    disclosureIndicatorView.x = 276;
     disclosureIndicatorView.y = (showListingButton.height-disclosureIndicatorView.height)/2;
-    disclosureIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [showListingButton addSubview:disclosureIndicatorView];
     
     [self observeNotification:kNotificationForDidReceiveMessagesForConversation withSelector:@selector(gotMessagesForConversation:)];
@@ -148,8 +129,6 @@
     
     conversationTitleLabel.hidden = NO;
     
-    recipientLabel.hidden = YES;
-    recipientPrefixLabel.hidden = YES;
     conversationTitlePrefixLabel.hidden = YES;
     conversationTitleField.hidden = YES;
     showListingButton.hidden = YES;
@@ -159,17 +138,10 @@
         conversationTitleLabel.text = conversation.title;
     } else if (listing != nil) {
         if (inModalComposerMode) {
-            recipientLabel.hidden = NO;
-            recipientPrefixLabel.hidden = NO;
             conversationTitlePrefixLabel.hidden = NO;
-            recipientPrefixLabel.text = [NSLocalizedString(@"composer.message.to", @"") stringByAppendingString:@": "];
-            recipientLabel.text = recipient.name;
             conversationTitlePrefixLabel.text = [NSLocalizedString(@"composer.message.subject", @"") stringByAppendingString:@": "];
             conversationTitleLabel.text = listing.title;
-            [recipientPrefixLabel sizeToFit];
-            [recipientLabel sizeToFit];
             [conversationTitlePrefixLabel sizeToFit];
-            recipientLabel.x = recipientPrefixLabel.x+recipientPrefixLabel.width;
             conversationTitleLabel.x = conversationTitlePrefixLabel.x+conversationTitlePrefixLabel.width;
         } else {
             conversationTitleLabel.text = listing.title;
@@ -180,28 +152,33 @@
     if (listing != nil || conversation.listingId != 0) {
         
         if (inModalComposerMode) {
-            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+10;
+            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+4;
         } else {
             showListingButton.hidden = NO;
             showListingButton.height = conversationTitleLabel.height+20;
-            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+20;
+            disclosureIndicatorView.y = (showListingButton.height-disclosureIndicatorView.height)/2;
+            conversationTitleLabel.x = 20;
+            conversationTitleLabel.y = 20;
+            conversationTitleLabel.width = 256;
+            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+22;
         }
         
     } else {
         
         if (conversation != nil) {
-            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+10;
+            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+14;
         } else {
             conversationTitleLabel.hidden = YES;
             conversationTitleField.hidden = NO;
             messagesView.alwaysShowFullSizeComposeField = YES;
-            messagesView.y = conversationTitleField.y+conversationTitleField.height+10;
+            messagesView.y = conversationTitleField.y+conversationTitleField.height;
         }
     }
         
     if (inModalComposerMode) {
         
-        self.title = NSLocalizedString(@"composer.message.title", @"");;
+        NSString *titleFormat = NSLocalizedString(@"composer.message.title_format", @"");;
+        self.title = [NSString stringWithFormat:titleFormat, recipient.name];
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
@@ -226,22 +203,22 @@
         
         self.title = conversation.recipient.name;
         
-        UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.text = self.title;
-        titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        titleLabel.textColor = [UIColor whiteColor];
-        titleLabel.shadowColor = [UIColor darkGrayColor];
-        titleLabel.shadowOffset = CGSizeMake(0, -1);
-        titleLabel.backgroundColor = [UIColor clearColor];
-        [titleLabel sizeToFit];
-        self.navigationItem.titleView = titleLabel;
-        
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.profile", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(showRecipientProfile)];
         
         messagesView.x = 10;
         messagesView.width = 300;
     }
-        
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = self.title;
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.shadowColor = [UIColor darkGrayColor];
+    titleLabel.shadowOffset = CGSizeMake(0, -1);
+    titleLabel.backgroundColor = [UIColor clearColor];
+    [titleLabel sizeToFit];
+    self.navigationItem.titleView = titleLabel;
+    
     messagesView.messages = conversation.messages;
     
     int contentHeight = messagesView.y+messagesView.height+10;

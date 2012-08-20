@@ -24,4 +24,6 @@
 + (Location *)currentLocation;
 + (void)setCurrentLocation:(Location *)newCurrentLocation;
 
++ (Location *)locationFromDict:(NSDictionary *)dict;
+
 @end
