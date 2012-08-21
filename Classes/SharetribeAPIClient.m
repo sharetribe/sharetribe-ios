@@ -185,6 +185,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [params setObject:type forKey:@"listing_type"];
     }
     [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
+    [params setObject:[NSNumber numberWithInt:5] forKey:@"per_page"];
     
     [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         

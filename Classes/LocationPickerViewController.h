@@ -13,7 +13,7 @@
 @class LocationPickerViewController;
 
 @protocol LocationPickerDelegate <NSObject>
-- (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate;
+- (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate withAddress:(NSString *)address;
 - (void)locationPickedDidCancel:(LocationPickerViewController *)picker;
 @end
 
@@ -22,6 +22,7 @@
 @property (strong, nonatomic) MKMapView *map;
 @property (assign, nonatomic) MKMapType mapType;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
+@property (strong, nonatomic) NSString *address;
 
 @property (unsafe_unretained, nonatomic) id<LocationPickerDelegate> delegate;
 

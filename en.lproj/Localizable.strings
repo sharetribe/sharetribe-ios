@@ -156,8 +156,8 @@
 "listing.title_for_rideshare_offer"              = "Rideshare request";
 "listing.title_for_rideshare_request"            = "Rideshare offer";
 
-"messaging.conversations.title" = "Conversations";
 "messaging.conversation.title" = "Conversation";
+"messaging.no_conversations_yet" = "No conversations yet";
 
 "grade.exceeded_expectations" = "Much better than expected";
 "grade.slightly_better_than_expected" = "Better than expected";

@@ -123,16 +123,17 @@
     [self.scrollView addGestureRecognizer:swipeRecognizer];
         
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRefreshListing:) name:kNotificationForDidRefreshListing object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
     [self reloadData];
     
     if (listing == nil) {
         [[SharetribeAPIClient sharedClient] getListingWithId:listingId];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
     
 - (void)reloadData
@@ -147,7 +148,7 @@
     }
     [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
     
-    respondButton.hidden = listing.author.isCurrentUser;  // one cannot respond to oneself
+    respondButton.hidden = (listing == nil) || (listing.author.isCurrentUser);  // one cannot respond to oneself
     
     NSURL *imageURL = [listing.imageURLs objectOrNilAtIndex:0];
     if (imageURL != nil) {
@@ -195,7 +196,7 @@
     }
     
     if (listing.tags.count > 0) {
-        tagTitleLabel.text = NSLocalizedString(@"listing.tags", @"");
+        tagTitleLabel.text = [NSLocalizedString(@"listing.tags", @"") stringByAppendingString:@":"];
         tagListLabel.text = [[tagTitleLabel.text equalWhitespaceWithFont:tagListLabel.font] stringByAppendingString:[listing.tags componentsJoinedByString:@", "]];
         tagTitleLabel.y = yOffset;
         tagListLabel.y = yOffset;
@@ -229,7 +230,9 @@
     commentsView.y = yOffset+6;
     
     [self setComments:listing.comments];
-            
+    
+    backgroundView.height = commentsView.y+commentsView.height-backgroundView.y;
+    
     UILabel *titleViewLabel = [[UILabel alloc] init];
     titleViewLabel.font = [UIFont boldSystemFontOfSize:17];
     titleViewLabel.minimumFontSize = 13;

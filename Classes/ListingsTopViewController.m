@@ -73,9 +73,15 @@
 {
     NSString *resultType = [notification.userInfo objectForKey:kInfoKeyForListingType];
     if ([resultType isEqual:self.listingType]) {
+        
         [self addListings:notification.object];
+        
+        listViewer.currentPage = [[notification.userInfo objectForKey:kInfoKeyForPage] intValue];
+        listViewer.numberOfPages = [[notification.userInfo objectForKey:kInfoKeyForNumberOfPages] intValue];
+        listViewer.itemsPerPage = [[notification.userInfo objectForKey:kInfoKeyForItemsPerPage] intValue];
+        
+        [listViewer updateFinished];
     }
-    // TODO what about paginaton, incremental fetching of new listings?
 }
 
 - (void)newListingPosted:(NSNotification *)notification
@@ -120,8 +126,8 @@
 
     UIView *titleView = [[UIView alloc] init];
     titleView.frame = CGRectMake(0, 0, 180, 44);
-    [titleView addSubview:search];
-    self.navigationItem.titleView = titleView;
+    // [titleView addSubview:search];
+    // self.navigationItem.titleView = titleView;
     
     self.dismissSearchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     dismissSearchButton.frame = CGRectMake(0, 0, 320, 460);

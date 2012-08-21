@@ -93,7 +93,11 @@
         [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
         [JSON setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
         if (location.address != nil) {
-            [JSON setObject:location.address forKey:@"address"];
+            if ([category isEqual:kListingCategoryRideshare]) {
+                [JSON setObject:location.address forKey: @"origin"];
+            } else {
+                [JSON setObject:location.address forKey: @"address"];
+            }
         }
     }
     
@@ -102,13 +106,15 @@
         [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.latitude] forKey:@"destination_latitude"];
         [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.longitude] forKey:@"destination_longitude"];
         if (destination.address != nil) {
-            [JSON setObject:destination.address forKey:@"destination_address"];
+            [JSON setObject:destination.address forKey:@"destination"];
         }
     }
     
     if (visibility != nil) {
         [JSON setObject:visibility forKey:@"visibility"];
     }
+    
+    NSLog(@"listing as JSON: %@", JSON);
     
     return JSON;
 }
@@ -139,6 +145,10 @@
     listing.shareType = [dict objectOrNilForKey:@"share_type"];
     listing.tags = [dict objectOrNilForKey:@"tags"];
     
+    if ([listing.category isEqual:@"housing"]) {
+        listing.category = kListingCategorySpace;
+    }
+    
     NSString *thumbnailURLString = [dict objectOrNilForKey:@"thumbnail_url"];
     listing.thumbnailURL = (thumbnailURLString != nil) ? [NSURL URLWithString:thumbnailURLString] : nil;
     
@@ -146,17 +156,20 @@
     if (imageURLStrings.count > 0) {
         NSMutableArray *imageURLs = [NSMutableArray array];
         for (NSString *imageURLString in imageURLStrings) {
-            [imageURLs addObject:[NSURL URLWithString:imageURLString]];
+            NSString *escapedImageURLString = [imageURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [imageURLs addObject:[NSURL URLWithString:escapedImageURLString]];
         }
         listing.imageURLs = imageURLs;
     }
     
     NSDictionary *locationDict = [dict objectOrNilForKey:@"origin_location"];
     if (locationDict != nil) {
-        CLLocationDegrees latitude = [[locationDict objectOrNilForKey:@"latitude"] doubleValue];
-        CLLocationDegrees longitude = [[locationDict objectOrNilForKey:@"longitude"] doubleValue];
-        NSString *address = [locationDict objectOrNilForKey:@"address"];
-        listing.location = [[Location alloc] initWithLatitude:latitude longitude:longitude address:address];
+        listing.location = [Location locationFromDict:locationDict];
+    }
+    
+    NSDictionary *destinationDict = [dict objectOrNilForKey:@"destination_location"];
+    if (destinationDict != nil) {
+        listing.destination = [Location locationFromDict:destinationDict];
     }
     
     listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];

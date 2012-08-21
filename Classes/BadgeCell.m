@@ -48,7 +48,7 @@
 - (CGFloat)heightWithBadge:(Badge *)aBadge
 {
     int y = descriptionLabel.y + [aBadge.description sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(descriptionLabel.width, 1000) lineBreakMode:UILineBreakModeCharacterWrap].height;
-    y += dateLabel.height+10;
+    y += dateLabel.height+8;
     return y;
 }
 

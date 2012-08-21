@@ -18,8 +18,12 @@
 
 @property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
+@property (assign) NSInteger currentPage;
+@property (assign) NSInteger numberOfPages;
+@property (assign) NSInteger itemsPerPage;
 @property (assign) BOOL disallowsRefreshing;
 
 - (void)startIndicatingRefresh;
+- (void)updateFinished;
 
 @end

@@ -16,7 +16,12 @@
 
 @interface ListingsListViewController () {
     NSMutableArray *listings;
+    BOOL refreshingTopOfList;
+    BOOL gettingNextPage;
 }
+
+@property (strong) UIView *footer;
+@property (strong) UIActivityIndicatorView *footerSpinner;
 
 @end
 
@@ -24,7 +29,14 @@
 
 @synthesize header;
 @synthesize listingCollectionViewDelegate;
+
+@synthesize currentPage;
+@synthesize numberOfPages;
+@synthesize itemsPerPage;
 @synthesize disallowsRefreshing;
+
+@synthesize footer;
+@synthesize footerSpinner;
 
 - (void)addListings:(NSArray *)newListings
 {
@@ -43,17 +55,17 @@
     [listings sortUsingFunction:compareListingsByDate context:NULL];
     [self.tableView reloadData];
     
-    if (listings.count > 0) {
+    if (listings.count > 0 && refreshingTopOfList) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
-    
-    [self updateFinished];
 }
 
 - (void)clearAllListings
 {
     [listings removeAllObjects];
     [self.tableView reloadData];
+    
+    currentPage = kFirstPage;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,7 +86,14 @@
         self.header = [[PullDownToRefreshHeaderView alloc] init];
         self.tableView.tableHeaderView = header;
     }
-        
+    
+    self.footer = [[UIView alloc] init];
+    footer.frame = CGRectMake(0, 0, 320, 60);
+    self.footerSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    footerSpinner.frame = CGRectMake((320-20)/2, (60-20)/2, 20, 20);
+    footerSpinner.hidesWhenStopped = NO;
+    [footer addSubview:footerSpinner];
+    
     [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(listingRefreshed:)];
 }
 
@@ -122,6 +141,16 @@
 - (void)updateFinished
 {
     [header updateFinishedWithTableView:self.tableView];
+    
+    refreshingTopOfList = NO;
+    gettingNextPage = NO;
+    [footerSpinner stopAnimating];
+    
+    if (currentPage < numberOfPages) {
+        self.tableView.tableFooterView = footer;
+    } else {
+        self.tableView.tableFooterView = nil;
+    }
 }
 
 - (void)listingRefreshed:(NSNotification *)notification
@@ -183,11 +212,20 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [header tableViewDidScroll:self.tableView];
+    
+    if (scrollView.contentOffset.y > scrollView.contentSize.height-scrollView.height-10) {
+        if (!gettingNextPage && (currentPage < numberOfPages)) {
+            gettingNextPage = YES;
+            [footerSpinner startAnimating];
+            [listingCollectionViewDelegate viewController:self wantsToRefreshPage:currentPage+1];
+        }
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if ([header triggersRefreshAsTableViewEndsDragging:self.tableView]) {
+        refreshingTopOfList = YES;
         [listingCollectionViewDelegate viewController:self wantsToRefreshPage:1];
     }
 }

@@ -136,8 +136,8 @@
             listing.location = [currentLocation copy];
             listing.destination = [currentLocation copy];
         } else {
-            listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Siellähän se"];
-            listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:@"Sinnehän mä"];
+            listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
+            listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
         }
         
         [table setContentOffset:CGPointZero animated:NO];
@@ -149,6 +149,10 @@
         
         convertingImage = NO;
         submissionWaitingForImage = NO;
+        
+        submitButton.enabled = YES;
+        [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
+        [uploadSpinner stopAnimating];
     }
         
     self.title = NSLocalizedString(@"tabs.new_listing", @"");
@@ -345,6 +349,18 @@
             
         } else if (formItem.type == FormItemTypeLocation) {
             
+            UITextField *textField = [[CustomTextField alloc] init];
+            textField.frame = CGRectMake(10, 30, 300, 40);
+            textField.font = [UIFont systemFontOfSize:15];
+            textField.tag = kCellTextFieldTag;
+            textField.backgroundColor = kSharetribeLightBrownColor;
+            textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+            textField.returnKeyType = UIReturnKeyDone;
+            textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            textField.layer.cornerRadius = 8;
+            textField.delegate = self;
+            [cell addSubview:textField];
+            
             MKMapView *mapView = [[MKMapView alloc] init];
             mapView.mapType = MKMapTypeStandard;
             mapView.delegate = self;
@@ -355,7 +371,7 @@
             mapView.layer.cornerRadius = 8;
             mapView.alpha = 1;
             mapView.tag = kCellMapViewTag;
-            mapView.frame = CGRectMake(10, 30, 300, rowHeight-30-rowSpacing);
+            mapView.frame = CGRectMake(10, 80, 300, rowHeight-80-rowSpacing);
             [cell addSubview:mapView];
             
             UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -363,10 +379,11 @@
             [mapButton addTarget:self action:@selector(mapPressed:) forControlEvents:UIControlEventTouchUpInside];
             [cell addSubview:mapButton];
             
-            Location *location = [listing valueForKey:formItem.mapsTo];
-            if (location != nil) {
-                [mapView addAnnotation:location];
-            }
+//            Location *location = [listing valueForKey:formItem.mapsTo];
+//            if (location != nil) {
+//                textField.text = location.address;
+//                [mapView addAnnotation:location];
+//            }
         }
     }
     
@@ -386,7 +403,7 @@
     if (formItem.type == FormItemTypeTextField) {
         
         UITextField *textField = (UITextField *) [cell viewWithTag:kCellTextFieldTag];
-        textField.frame = CGRectMake(10, 30, 300, 36);
+        textField.frame = CGRectMake(10, 30, 300, 40);
         textField.text = [listing valueForKey:formItem.mapsTo];
         textField.autocapitalizationType = formItem.autocapitalizationType;
         
@@ -543,19 +560,25 @@
         
     } else if (formItem.type == FormItemTypeLocation) {
         
+        UITextField *textField = (UITextField *) [cell viewWithTag:kCellTextFieldTag];
         MKMapView *mapView = (MKMapView *) [cell viewWithTag:kCellMapViewTag];
         
         [mapView removeAnnotations:mapView.annotations];
         
         Location *location = [listing valueForKey:formItem.mapsTo];
         if (location != nil) {
-            [mapView addAnnotation:location];
-        }
-        
-        if (mapView.centerCoordinate.latitude != location.coordinate.latitude ||
-            mapView.centerCoordinate.longitude != location.coordinate.longitude) {
             
-            [mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, 2000, 4000) animated:NO];
+            NSLog(@"textfield: %@, address: %@", textField, location.address);
+            
+            textField.text = location.address;
+            
+            [mapView addAnnotation:location];
+            
+            if (mapView.centerCoordinate.latitude != location.coordinate.latitude ||
+                mapView.centerCoordinate.longitude != location.coordinate.longitude) {
+                
+                [mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, 2000, 4000) animated:NO];
+            }
         }
     }
     
@@ -571,7 +594,7 @@
     
     if (formItem.type == FormItemTypeTextField) {
         
-        rowHeight = 70;
+        rowHeight = 74;
         
     } else if (formItem.type == FormItemTypeTextArea) {
     
@@ -594,11 +617,11 @@
     
     } else if (formItem.type == FormItemTypeLocation) {
         
-        rowHeight = 175;
+        rowHeight = 50+175;
     
     } else if (formItem.type == FormItemTypeDate) {
         
-        rowHeight = 30 + 45;
+        rowHeight = 30+45;
         if (formItem.defaultAlternative != nil) {
             rowHeight += 45;
         }
@@ -655,7 +678,13 @@
     
     NSIndexPath *path = [table indexPathForRowAtPoint:[table convertPoint:CGPointZero fromView:textInputView]];
     FormItem *formItem = [formItems objectAtIndex:path.row];
-    [listing setValue:[(id) textInputView text] forKey:formItem.mapsTo];
+    if (formItem.type == FormItemTypeLocation) {
+        Location *location = [listing valueForKey:formItem.mapsTo];
+        location.address = [(id) textInputView text];
+        location.addressIsAutomatic = NO;
+    } else {
+        [listing setValue:[(id) textInputView text] forKey:formItem.mapsTo];
+    }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -774,9 +803,19 @@
 
 #pragma mark - LocationPickerDelegate
 
-- (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate
+- (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate withAddress:(NSString *)address
 {
-    Location *location = [[Location alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude address:nil];  // TODO allow address entry
+    Location *location = [[Location alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude address:nil];
+    
+    Location *oldLocation = [listing valueForKey:formItemBeingEdited.mapsTo];
+    if (oldLocation.address.length > 0 && !oldLocation.addressIsAutomatic) {
+        NSLog(@"kept old address: %@", oldLocation.address);
+        location.address = oldLocation.address;
+    } else {
+        location.address = address;
+        location.addressIsAutomatic = YES;
+    }
+    
     [listing setValue:location forKey:formItemBeingEdited.mapsTo];
     [table reloadData];
 }

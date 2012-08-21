@@ -64,7 +64,7 @@
     UIImage *categoryImage = [Listing iconForCategory:listing.category];
     NSURL *imageURL = [listing.imageURLs lastObject];
     if (imageURL != nil) {
-        [imageView setImageWithURL:imageURL placeholderImage:categoryImage];
+        [imageView setImageWithURL:imageURL placeholderImage:nil];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
     } else {
         imageView.image = categoryImage;
@@ -81,6 +81,8 @@
     
     int oneRowHeight = [@"Something" sizeWithFont:titleLabel.font].height;
     titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 3*oneRowHeight) lineBreakMode:UILineBreakModeWordWrap].height;
+    
+    subtitleLabel.hidden = (titleLabel.height > 50);
     
     subtitleLabel.y = titleLabel.y + titleLabel.height + 3;
     subtitleLabel.height = [subtitleLabel.text sizeWithFont:subtitleLabel.font constrainedToSize:CGSizeMake(subtitleLabel.width, (usernameLabel.y-subtitleLabel.y-2)) lineBreakMode:UILineBreakModeWordWrap].height;

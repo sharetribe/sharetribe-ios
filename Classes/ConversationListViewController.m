@@ -53,7 +53,7 @@
 {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"messaging.conversations.title", @"");
+    // self.title = NSLocalizedString(@"messaging.conversations.title", @"");
     
     self.header = [[PullDownToRefreshHeaderView alloc] init];
     self.tableView.tableHeaderView = header;
@@ -143,11 +143,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return conversations.count;
+    return (conversations.count > 0) ? conversations.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (conversations.count == 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.textLabel.text = NSLocalizedString(@"messaging.no_conversations_yet", @"");
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textColor = [UIColor darkGrayColor];
+        cell.textLabel.shadowColor = [UIColor whiteColor];
+        cell.textLabel.shadowOffset = CGSizeMake(0, 1);
+        return cell;
+    }
+    
     static NSString *CellIdentifier = @"MessagesListCell";
     
     ConversationListCell *cell = (ConversationListCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -160,18 +171,18 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [conversations removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [conversations removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    }
+//}
 
 #pragma mark - UITableViewDelegate
 
@@ -182,6 +193,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (conversations.count == 0) {
+        return;
+    }
+    
     ConversationViewController *threadViewer = [[ConversationViewController alloc] init];
     threadViewer.conversation = [conversations objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:threadViewer animated:YES];

@@ -121,7 +121,7 @@
         locationIconView.hidden = YES;
     }
     
-    if (user.phoneNumber != nil) {
+    if (user.phoneNumber.length > 0) {
         [phoneButton setTitle:user.phoneNumber forState:UIControlStateNormal];
         phoneButton.width = [user.phoneNumber sizeWithFont:phoneButton.titleLabel.font].width;
         phoneIconView.y = phoneButton.y+7;
@@ -260,7 +260,7 @@
     if (section == kSectionIndexForListings) {
         return 1;
     } else if (section == kSectionIndexForGrades) {
-        return grades.count+2;
+        return (feedbacks.count > 0) ? grades.count+2 : 2;
     } else if (section == kSectionIndexForBadges) {
         return badges.count;
     }
@@ -269,13 +269,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kSectionIndexForListings || (indexPath.section == kSectionIndexForGrades && indexPath.row == grades.count+1)) {
+    if (indexPath.section == kSectionIndexForListings || (indexPath.section == kSectionIndexForGrades && indexPath.row == [self tableView:tableView numberOfRowsInSection:kSectionIndexForGrades]-1)) {
         
         NSArray *items = (indexPath.section == kSectionIndexForListings) ? listings : feedbacks;
         
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         button.frame = CGRectMake(14, 0, 292, 44);
+        button.enabled = (items.count > 0);
         [cell addSubview:button];
         if (items != nil) {
             UILabel *label = [[UILabel alloc] init];
@@ -352,13 +353,14 @@
     if (indexPath.section == kSectionIndexForListings) {
         return 65;
     } else if (indexPath.section == kSectionIndexForGrades) {
+        int rowCount = [self tableView:tableView numberOfRowsInSection:kSectionIndexForGrades];
         if (indexPath.row == 0) {
-            return 10;
+            return 22;
         }
-        if (indexPath.row == grades.count) {
+        if (indexPath.row == rowCount-2) {
             return 45;
         }
-        if (indexPath.row == grades.count+1) {
+        if (indexPath.row == rowCount-1) {
             return 65;
         }
         return 35;
@@ -368,7 +370,11 @@
             cell = [BadgeCell newInstance];
         }
         Badge *badge = [badges objectAtIndex:indexPath.row];
-        return [cell heightWithBadge:badge];
+        int rowHeight = [cell heightWithBadge:badge];
+        if (indexPath.row == badges.count-1) {
+            rowHeight += 10;
+        }
+        return rowHeight;
     }
     return 0;
 }

@@ -25,6 +25,8 @@
 		<string>origin</string>
 		<key>maps_to</key>
 		<string>location</string>
+        <key>mandatory</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -33,6 +35,8 @@
 		<string>destination</string>
 		<key>maps_to</key>
 		<string>destination</string>
+        <key>mandatory</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>type</key>

@@ -8,13 +8,24 @@
 
 #import "LocationPickerViewController.h"
 
+#import <CoreLocation/CoreLocation.h>
+
+@interface LocationPickerViewController ()
+
+@property (strong) CLGeocoder *geocoder;
+
+@end
+
 @implementation LocationPickerViewController
 
 @synthesize map;
 @synthesize mapType;
 @synthesize coordinate;
+@synthesize address = _address;
 
 @synthesize delegate;
+
+@synthesize geocoder;
 
 - (void)didReceiveMemoryWarning
 {
@@ -59,7 +70,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [delegate locationPicker:self pickedCoordinate:coordinate];
+    [delegate locationPicker:self pickedCoordinate:self.coordinate withAddress:self.address];
 }
 
 - (void)viewDidUnload
@@ -92,10 +103,46 @@
     self.coordinate = [map convertPoint:mapPoint toCoordinateFromView:map];
     
     [map deselectAnnotation:self animated:YES];
+    
+    if (NSClassFromString(@"CLGeocoder") != nil && [NSClassFromString(@"CLGeocoder") instancesRespondToSelector:@selector(reverseGeocodeLocation:completionHandler:)]) {
+        [self.class cancelPreviousPerformRequestsWithTarget:self selector:@selector(startReverseGeocoding) object:nil];
+        [self performSelector:@selector(startReverseGeocoding) withObject:nil afterDelay:0.4];
+    }
+}
+
+- (void)startReverseGeocoding
+{
+    [geocoder cancelGeocode];
+    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    
+    self.geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"placemarks: %@, error: %@", placemarks, error);
+        if (placemarks.count > 0) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            NSMutableString *address = [NSMutableString string];
+            if (placemark.thoroughfare.length > 0) {
+                [address appendString:placemark.thoroughfare];
+                if (placemark.subThoroughfare.length > 0) {
+                    [address appendFormat:@" %@", placemark.subThoroughfare];
+                }
+            }
+            if (placemark.locality.length > 0) {
+                if (address.length > 0) {
+                    [address appendString:@", "];
+                }
+                if (placemark.postalCode.length > 0) {
+                    [address appendFormat:@"%@ ", placemark.postalCode];
+                }
+                [address appendString:placemark.locality];
+            }
+            self.address = address;
+            NSLog(@"did reverse geocode address: %@", address);
+        }
+    }];
 }
 
 #pragma mark - MKMapViewDelegate
-
-
 
 @end

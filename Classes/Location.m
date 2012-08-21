@@ -12,6 +12,7 @@
 
 @synthesize location;
 @synthesize address;
+@synthesize addressIsAutomatic;
 
 - (id)initWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude address:(NSString *)theAddress
 {

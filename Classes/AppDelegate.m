@@ -72,10 +72,10 @@ void uncaughtExceptionHandler(NSException *exception)
     self.createListingViewController = [[CreateListingViewController alloc] init];
     self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:createListingViewController];
     
-    offersNavigationController.title = NSLocalizedString(@"tabs.offers", @"");
-    requestsNavigationController.title = NSLocalizedString(@"tabs.requests", @"");
-    messagesNavigationController.title = NSLocalizedString(@"tabs.messages", @"");
-    profileNavigationController.title = NSLocalizedString(@"tabs.profile", @"");
+    offersViewController.title = NSLocalizedString(@"tabs.offers", @"");
+    requestsViewController.title = NSLocalizedString(@"tabs.requests", @"");
+    messagesViewController.title = NSLocalizedString(@"tabs.messages", @"");
+    profileViewController.title = NSLocalizedString(@"tabs.profile", @"");
     
     User *currentUser = [User currentUser];
     profileViewController.user = currentUser;

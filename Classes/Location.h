@@ -14,6 +14,7 @@
 
 @property (strong) CLLocation *location;
 @property (strong) NSString *address;
+@property (assign) BOOL addressIsAutomatic;
 
 - (id)initWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude address:(NSString *)address;
 
