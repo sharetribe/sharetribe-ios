@@ -132,6 +132,14 @@
 		489179D2159BC9C9004D6FF3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 489179CF159BC9C9004D6FF3 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		489179D3159BC9C9004D6FF3 /* YAJLiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489179D0159BC9C9004D6FF3 /* YAJLiOS.framework */; };
 		489179DF159BCAE9004D6FF3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489179DE159BCAE9004D6FF3 /* SystemConfiguration.framework */; };
+		489362F315E44BA90035DF97 /* FeedbackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 489362F215E44BA90035DF97 /* FeedbackListCell.m */; };
+		489362F615E44BC90035DF97 /* FeedbackListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 489362F515E44BC90035DF97 /* FeedbackListCell.xib */; };
+		489362F815E44C100035DF97 /* FeedbackTotalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 489362F715E44C100035DF97 /* FeedbackTotalCell.xib */; };
+		489362FB15E44C270035DF97 /* FeedbackTotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 489362FA15E44C270035DF97 /* FeedbackTotalCell.m */; };
+		4893630315E4553A0035DF97 /* ClockStampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 489362FE15E4553A0035DF97 /* ClockStampView.m */; };
+		4893630415E4553A0035DF97 /* pointer-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 489362FF15E4553A0035DF97 /* pointer-arrow.png */; };
+		4893630515E4553A0035DF97 /* pointer-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4893630015E4553A0035DF97 /* pointer-arrow@2x.png */; };
+		4893630615E4553A0035DF97 /* TouchEventForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4893630215E4553A0035DF97 /* TouchEventForwardingView.m */; };
 		48A755DC15E1F63A002638BF /* FeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A755DB15E1F639002638BF /* FeedbackListViewController.m */; };
 		48AF2A2815C431420047238F /* icon-callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2615C431420047238F /* icon-callout.png */; };
 		48AF2A2915C431420047238F /* icon-callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2715C431420047238F /* icon-callout@2x.png */; };
@@ -352,6 +360,18 @@
 		489179CF159BC9C9004D6FF3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		489179D0159BC9C9004D6FF3 /* YAJLiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YAJLiOS.framework; path = External/YAJLiOS.framework; sourceTree = SOURCE_ROOT; };
 		489179DE159BCAE9004D6FF3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		489362F115E44BA90035DF97 /* FeedbackListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackListCell.h; sourceTree = "<group>"; };
+		489362F215E44BA90035DF97 /* FeedbackListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackListCell.m; sourceTree = "<group>"; };
+		489362F515E44BC90035DF97 /* FeedbackListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackListCell.xib; path = Resources/FeedbackListCell.xib; sourceTree = SOURCE_ROOT; };
+		489362F715E44C100035DF97 /* FeedbackTotalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackTotalCell.xib; path = Resources/FeedbackTotalCell.xib; sourceTree = SOURCE_ROOT; };
+		489362F915E44C270035DF97 /* FeedbackTotalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTotalCell.h; sourceTree = "<group>"; };
+		489362FA15E44C270035DF97 /* FeedbackTotalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTotalCell.m; sourceTree = "<group>"; };
+		489362FD15E4553A0035DF97 /* ClockStampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClockStampView.h; sourceTree = "<group>"; };
+		489362FE15E4553A0035DF97 /* ClockStampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClockStampView.m; sourceTree = "<group>"; };
+		489362FF15E4553A0035DF97 /* pointer-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointer-arrow.png"; sourceTree = "<group>"; };
+		4893630015E4553A0035DF97 /* pointer-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointer-arrow@2x.png"; sourceTree = "<group>"; };
+		4893630115E4553A0035DF97 /* TouchEventForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEventForwardingView.h; sourceTree = "<group>"; };
+		4893630215E4553A0035DF97 /* TouchEventForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchEventForwardingView.m; sourceTree = "<group>"; };
 		48A755DA15E1F639002638BF /* FeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackListViewController.h; sourceTree = "<group>"; };
 		48A755DB15E1F639002638BF /* FeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackListViewController.m; sourceTree = "<group>"; };
 		48AF2A2615C431420047238F /* icon-callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-callout.png"; sourceTree = "<group>"; };
@@ -662,6 +682,7 @@
 		48894F6E14DF7611009CD965 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				489362FC15E4553A0035DF97 /* ClockStampView */,
 				483D99CD15E1CD2000245A74 /* BadgeCell.h */,
 				483D99CE15E1CD2000245A74 /* BadgeCell.m */,
 				483D99CB15E1CD0C00245A74 /* BadgeCell.xib */,
@@ -672,6 +693,12 @@
 				48894F8914E0954A009CD965 /* CreateListingHeaderView.h */,
 				48894F8A14E0954A009CD965 /* CreateListingHeaderView.m */,
 				48894F8714E094B0009CD965 /* CreateListingHeaderView.xib */,
+				489362F115E44BA90035DF97 /* FeedbackListCell.h */,
+				489362F215E44BA90035DF97 /* FeedbackListCell.m */,
+				489362F515E44BC90035DF97 /* FeedbackListCell.xib */,
+				489362F915E44C270035DF97 /* FeedbackTotalCell.h */,
+				489362FA15E44C270035DF97 /* FeedbackTotalCell.m */,
+				489362F715E44C100035DF97 /* FeedbackTotalCell.xib */,
 				483D99C315E1C53A00245A74 /* GradeCell.h */,
 				483D99C415E1C53A00245A74 /* GradeCell.m */,
 				483D99C915E1C58200245A74 /* GradeCell.xib */,
@@ -797,6 +824,19 @@
 			name = Reachability;
 			path = External/Reachability;
 			sourceTree = SOURCE_ROOT;
+		};
+		489362FC15E4553A0035DF97 /* ClockStampView */ = {
+			isa = PBXGroup;
+			children = (
+				489362FD15E4553A0035DF97 /* ClockStampView.h */,
+				489362FE15E4553A0035DF97 /* ClockStampView.m */,
+				489362FF15E4553A0035DF97 /* pointer-arrow.png */,
+				4893630015E4553A0035DF97 /* pointer-arrow@2x.png */,
+				4893630115E4553A0035DF97 /* TouchEventForwardingView.h */,
+				4893630215E4553A0035DF97 /* TouchEventForwardingView.m */,
+			);
+			path = ClockStampView;
+			sourceTree = "<group>";
 		};
 		48EC380115C8A34100491C40 /* TestFlightSDK1.0 */ = {
 			isa = PBXGroup;
@@ -966,6 +1006,10 @@
 				483D99BA15E1962200245A74 /* kaapo-grade-5@2x.png in Resources */,
 				483D99CA15E1C58200245A74 /* GradeCell.xib in Resources */,
 				483D99CC15E1CD0C00245A74 /* BadgeCell.xib in Resources */,
+				489362F615E44BC90035DF97 /* FeedbackListCell.xib in Resources */,
+				489362F815E44C100035DF97 /* FeedbackTotalCell.xib in Resources */,
+				4893630415E4553A0035DF97 /* pointer-arrow.png in Resources */,
+				4893630515E4553A0035DF97 /* pointer-arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,6 +1077,10 @@
 				483D99C515E1C53A00245A74 /* GradeCell.m in Sources */,
 				483D99CF15E1CD2100245A74 /* BadgeCell.m in Sources */,
 				48A755DC15E1F63A002638BF /* FeedbackListViewController.m in Sources */,
+				489362F315E44BA90035DF97 /* FeedbackListCell.m in Sources */,
+				489362FB15E44C270035DF97 /* FeedbackTotalCell.m in Sources */,
+				4893630315E4553A0035DF97 /* ClockStampView.m in Sources */,
+				4893630615E4553A0035DF97 /* TouchEventForwardingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

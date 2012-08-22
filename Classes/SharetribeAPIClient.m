@@ -42,7 +42,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];
+    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];
     if (self != nil) {
         
         [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -185,7 +185,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [params setObject:type forKey:@"listing_type"];
     }
     [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
-    [params setObject:[NSNumber numberWithInt:5] forKey:@"per_page"];
+    [params setObject:[NSNumber numberWithInt:50] forKey:@"per_page"];
     
     [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         

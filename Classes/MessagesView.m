@@ -258,7 +258,7 @@
         separator.y = textLabel.y+textLabel.height+8;
         separator.hidden = NO;
         yOffset = separator.y+12;
-        NSLog(@"separator y: %d for text: %@", separator.y, textLabel.text);
+        NSLog(@"separator y: %.0f for text: %@", separator.y, textLabel.text);
     }
     
     if (conversation != nil) {

@@ -14,6 +14,7 @@
 #import "Grade.h"
 #import "GradeCell.h"
 #import "FeedbackListViewController.h"
+#import "FeedbackTotalCell.h"
 #import "ListingsListViewController.h"
 #import "Location.h"
 #import "SharetribeAPIClient.h"
@@ -34,6 +35,8 @@
     NSArray *grades;
     NSArray *feedbacks;
     NSArray *badges;
+    int numberOfPositiveRatings;
+    int numberOfAllRatings;
 }
 
 @end
@@ -213,6 +216,14 @@
 - (void)gotGrades:(NSNotification *)notification
 {
     grades = notification.object;
+    numberOfAllRatings = 0;
+    numberOfPositiveRatings = 0;
+    for (Grade *grade in grades) {
+        numberOfAllRatings += grade.amount;
+        if (grade.grade >= 3) {
+            numberOfPositiveRatings += grade.amount;
+        }
+    }
     [self.tableView reloadData];
 }
 
@@ -312,7 +323,22 @@
     } else if (indexPath.section == kSectionIndexForGrades) {
         
         if (indexPath.row == 0) {
-            return [[UITableViewCell alloc] init];
+            
+            if (numberOfAllRatings > 0) {
+                FeedbackTotalCell *cell = [FeedbackTotalCell newInstance];
+
+                float percentage = (numberOfPositiveRatings + 0.0)/numberOfAllRatings;
+                cell.percentageLabel.text = [NSString stringWithFormat:@"%.0f%%", percentage*100];
+                cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"profile.percentage_detail_format", @""), numberOfPositiveRatings, numberOfAllRatings];
+                
+                [cell.whatIsThisButton setTitle:NSLocalizedString(@"listing.explanation", @"") forState:UIControlStateNormal];
+                [cell.percentageLabel sizeToFit];
+                cell.detailLabel.x = cell.percentageLabel.x + cell.percentageLabel.width + 5;
+                
+                return cell;
+            } else {
+                return [[UITableViewCell alloc] init];
+            }
         }
         
         GradeCell *cell = [tableView dequeueReusableCellWithIdentifier:GradeCell.reuseIdentifier];
@@ -355,7 +381,7 @@
     } else if (indexPath.section == kSectionIndexForGrades) {
         int rowCount = [self tableView:tableView numberOfRowsInSection:kSectionIndexForGrades];
         if (indexPath.row == 0) {
-            return 22;
+            return (numberOfAllRatings > 0) ? 100 : 22;
         }
         if (indexPath.row == rowCount-2) {
             return 45;

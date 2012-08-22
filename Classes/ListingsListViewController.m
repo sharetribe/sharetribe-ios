@@ -8,18 +8,20 @@
 
 #import "ListingsListViewController.h"
 
+#import "ClockStampView.h"
 #import "Listing.h"
 #import "ListingCell.h"
 #import "ListingViewController.h"
 #import "ListingsTopViewController.h"
 #import "SharetribeAPIClient.h"
 
-@interface ListingsListViewController () {
+@interface ListingsListViewController () <ClockStampViewDelegate> {
     NSMutableArray *listings;
     BOOL refreshingTopOfList;
     BOOL gettingNextPage;
 }
 
+@property (strong) ClockStampView *clockStampView;
 @property (strong) UIView *footer;
 @property (strong) UIActivityIndicatorView *footerSpinner;
 
@@ -27,6 +29,7 @@
 
 @implementation ListingsListViewController
 
+@synthesize tableView = _tableView;
 @synthesize header;
 @synthesize listingCollectionViewDelegate;
 
@@ -35,6 +38,7 @@
 @synthesize itemsPerPage;
 @synthesize disallowsRefreshing;
 
+@synthesize clockStampView;
 @synthesize footer;
 @synthesize footerSpinner;
 
@@ -79,8 +83,16 @@
 {
     [super viewDidLoad];
     
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+    
     self.tableView.backgroundColor = kSharetribeLightBrownColor;
     self.tableView.separatorColor = [UIColor clearColor];
+    
+    self.clockStampView = [[ClockStampView alloc] initWithDelegate:self];
     
     if (!disallowsRefreshing) {
         self.header = [[PullDownToRefreshHeaderView alloc] init];
@@ -209,6 +221,11 @@
     }
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [clockStampView scrollViewWillBeginDragging:scrollView];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [header tableViewDidScroll:self.tableView];
@@ -220,6 +237,8 @@
             [listingCollectionViewDelegate viewController:self wantsToRefreshPage:currentPage+1];
         }
     }
+    
+    [clockStampView scrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -228,6 +247,24 @@
         refreshingTopOfList = YES;
         [listingCollectionViewDelegate viewController:self wantsToRefreshPage:1];
     }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [clockStampView scrollViewDidEndDecelerating:scrollView];
+}
+
+#pragma mark - ClockStampViewDelegate
+
+- (NSDate *)timeForIndexPath:(NSIndexPath *)indexPath
+{
+    Listing *listing = [listings objectAtIndex:indexPath.row];
+    return listing.createdAt;
+}
+
+- (BOOL)clockStampViewShouldShow
+{
+    return (listings.count > 5);
 }
 
 @end

@@ -126,6 +126,7 @@
 "listing.explanation.request_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
 "listing.explanation.tags" = "With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.";
 "listing.explanation.expiration_date" = "You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.";
+"profile.explanation.feedback" = "You can give feedback to the other users every time you have offered something to them or requested something from them. With the feedback you can express whether the actions of the other party were as expected. Other users can see this information in the target person's profile and can use it to decide whether they want to associate with that person in the future. This means that when you have received positive feedback, it'll guarantee better success with offers and requests in the future. Thus, it's good to always remember to give feedback on events, and also remind the other party to give feedback to you. Currently, you can give feedback in the web version of Sharetribe.\n\nFeedback in Sharetribe consists of a numeric evaluation and a textual description. The numeric evaluation can be between 1 (worse than expected) and 5 (much better than expected). If you give non-neutral feedback you need to tell what went especially well or wrong in the textual description.\n\nOn the profile page you can view following information about the user whose profile your viewing: the average of all the numeric evaluations, the amounts of different feedback ratings and a list of all feedback with textual descriptions. The facial expression of the Kaapo figure in each feedback describes the numeric evaluation associated to that feedback.";
 
 "listing.label_for_favor_offer"                  = "Request this service";
 "listing.label_for_favor_request"                = "Offer this service";
@@ -167,5 +168,8 @@
 
 "profile.listings_title_format" = "%d listings";
 "profile.all_feedback_title_format" = "All feedback (%d)";
+"profile.percentage_detail_format" = "positive (%d of %d)";
 "profile.received_feedback" = "Received Feedback";
 "profile.badges" = "Badges";
+
+"title.feedback" = "Feedback";

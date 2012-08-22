@@ -10,9 +10,9 @@
 
 @interface UIView (XYWidthHeight)
 
-@property (assign) int x;
-@property (assign) int y;
-@property (assign) int width;
-@property (assign) int height;
+@property (assign) CGFloat x;
+@property (assign) CGFloat y;
+@property (assign) CGFloat width;
+@property (assign) CGFloat height;
 
 @end

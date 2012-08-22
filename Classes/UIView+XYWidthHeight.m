@@ -12,44 +12,44 @@
 
 @dynamic x, y, width, height;
 
-- (int)x
+- (CGFloat)x
 {
     return self.frame.origin.x;
 }
 
-- (void)setX:(int)x
+- (void)setX:(CGFloat)x
 {
-    self.frame = CGRectMake(x, self.y, self.width, self.height);
+    self.frame = CGRectMake((NSInteger)x, self.y, self.width, self.height);
 }
 
-- (int)y
+- (CGFloat)y
 {
     return self.frame.origin.y;
 }
 
-- (void)setY:(int)y
+- (void)setY:(CGFloat)y
 {
-    self.frame = CGRectMake(self.x, y, self.width, self.height);
+    self.frame = CGRectMake(self.x, (NSInteger)y, self.width, self.height);
 }
 
-- (int)width
+- (CGFloat)width
 {
     return self.frame.size.width;
 }
 
-- (void)setWidth:(int)width
+- (void)setWidth:(CGFloat)width
 {
-    self.frame = CGRectMake(self.x, self.y, width, self.height);
+    self.frame = CGRectMake(self.x, self.y, (NSInteger)width, self.height);
 }
 
-- (int)height
+- (CGFloat)height
 {
     return self.frame.size.height;
 }
 
-- (void)setHeight:(int)height
+- (void)setHeight:(CGFloat)height
 {
-    self.frame = CGRectMake(self.x, self.y, self.width, height);
+    self.frame = CGRectMake(self.x, self.y, self.width, (NSInteger)height);
 }
 
 @end
