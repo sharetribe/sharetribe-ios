@@ -9,6 +9,8 @@
 #import "FeedbackListViewController.h"
 
 #import "Feedback.h"
+#import "FeedbackListCell.h"
+#import "NSArray+Sharetribe.h"
 
 @interface FeedbackListViewController ()
 
@@ -21,6 +23,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = NSLocalizedString(@"profile.feedback", @"");
 }
 
 - (void)viewDidUnload
@@ -47,15 +51,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FeedbackListCell *cell = [tableView dequeueReusableCellWithIdentifier:FeedbackListCell.reuseIdentifier];
     
-    // Configure the cell...
+    if (cell == nil) {
+        cell = [FeedbackListCell newInstance];
+    }
+    
+    Feedback *feedback = [feedbacks objectOrNilAtIndex:indexPath.row];
+    cell.feedback = feedback;
     
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Feedback *feedback = [feedbacks objectOrNilAtIndex:indexPath.row];
+    return [FeedbackListCell heightWithFeedback:feedback];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

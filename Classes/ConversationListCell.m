@@ -30,6 +30,7 @@
 @synthesize timeLabel;
 @synthesize titleLabel;
 @synthesize messageLabel;
+@synthesize iconView;
 
 + (ConversationListCell *)instance
 {
@@ -61,9 +62,22 @@
     
     titleLabel.text = conversation.title;
     messageLabel.text = [conversation.lastMessage content];
-    timeLabel.text = [conversation.updatedAt agestamp];
+    timeLabel.text = [conversation.lastMessage.createdAt agestamp];
     
+    if (conversation.isUnread) {
+        iconView.image = [UIImage imageNamed:@"icon-unread"];
+    } else if (conversation.isReplied) {
+        iconView.image = [UIImage imageNamed:@"icon-reply"];
+    } else {
+        iconView.image = nil;
+    }
+    
+    messageLabel.x = (iconView.image != nil) ? iconView.x+iconView.width+4 : titleLabel.x;
+    messageLabel.width = 210-(messageLabel.x-titleLabel.x);
     messageLabel.height = [messageLabel.text sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(messageLabel.width, 32) lineBreakMode:UILineBreakModeWordWrap].height;
+    
+    iconView.y = messageLabel.y;
+    iconView.height = messageLabel.height;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

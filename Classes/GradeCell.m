@@ -32,10 +32,11 @@
 {
     grade = newGrade;
     
-    iconView.image = [UIImage imageNamed:[NSString stringWithFormat:@"kaapo-grade-%d", grade.grade]];
-    NSString *titleKey = [NSString stringWithFormat:@"grade.%@", grade.name];
-    titleLabel.text = NSLocalizedString(titleKey, @"");
+    iconView.image = grade.icon;
+    titleLabel.text = grade.title;
     amountLabel.text = [NSString stringWithFormat:@"%d", grade.amount];
+    
+    iconView.alpha = (grade.amount > 0) ? 1 : 0.4;
 }
 
 + (GradeCell *)newInstance

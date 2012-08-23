@@ -30,7 +30,6 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.conversations = [NSMutableArray array];
         // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMessagePosted:) name:kNotificationForPostingNewMessage object:nil];
     }
     return self;
@@ -38,7 +37,6 @@
 
 - (void)dealloc
 {
-    self.conversations = nil;
     // [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -64,6 +62,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotConversations:) name:kNotificationForDidReceiveConversations object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotUser:) name:kNotificationForDidReceiveUser object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postedMessage:) name:kNotificationForDidPostMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidUnload
@@ -75,7 +74,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewWillAppear:animated];    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -109,6 +108,18 @@
     self.conversations = notification.object;    
     [self.tableView reloadData];
     [header updateFinishedWithTableView:self.tableView];
+    
+    NSInteger unreadConversationCount = 0;
+    for (Conversation *conversation in conversations) {
+        if (conversation.isUnread) {
+            unreadConversationCount++;
+        }
+    }
+    if (unreadConversationCount > 0) {
+        self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", unreadConversationCount];
+    } else {
+        self.navigationController.tabBarItem.badgeValue = nil;
+    }
 }
 
 - (void)gotUser:(NSNotification *)notification
@@ -134,6 +145,11 @@
     [self.tableView reloadData];
 }
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    [self refreshConversations];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -143,7 +159,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (conversations.count > 0) ? conversations.count : 1;
+    if (conversations.count > 0) {
+        return conversations.count;
+    } else if (conversations != nil) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -166,7 +188,13 @@
         cell = [ConversationListCell instance];
     }
     
-    cell.conversation = [conversations objectAtIndex:indexPath.row];
+    id conversation = [conversations objectAtIndex:indexPath.row];
+    if ([conversation isKindOfClass:Conversation.class]) {
+        cell.conversation = conversation;
+    } else {
+        NSLog(@"that's no moon: %@", conversation);
+        cell.conversation = nil;
+    }
     
     return cell;
 }

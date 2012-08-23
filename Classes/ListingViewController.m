@@ -80,9 +80,7 @@
     self.view.backgroundColor = kSharetribeLightBrownColor;
     
     // self.hidesBottomBarWhenPushed = YES;
-    
-    self.navigationItem.hidesBackButton = YES;
-    
+        
     self.mapView = [[MKMapView alloc] init];
     mapView.mapType = MKMapTypeStandard;
     mapView.scrollEnabled = NO;
@@ -222,8 +220,15 @@
     
     authorView.y = yOffset+6;
     [authorImageView setImageWithUser:listing.author];
-    authorNameLabel.text = listing.author.name;
-    agestampLabel.text = [listing.createdAt agestamp];
+    if (listing != nil) {
+        authorIntroLabel.text = [NSLocalizedString(@"listing.offered_by", @"") stringByAppendingString:@":"];
+        authorNameLabel.text = listing.author.name;
+        agestampLabel.text = [listing.createdAt agestamp];
+    } else {
+        authorIntroLabel.text = nil;
+        authorNameLabel.text = nil;
+        agestampLabel.text = nil;
+    }
     yOffset = authorView.y+authorView.height+14;
     
     commentsView.x = 10;
@@ -232,6 +237,8 @@
     [self setComments:listing.comments];
     
     backgroundView.height = commentsView.y+commentsView.height-backgroundView.y;
+    
+    self.title = listing.title;
     
     UILabel *titleViewLabel = [[UILabel alloc] init];
     titleViewLabel.font = [UIFont boldSystemFontOfSize:17];

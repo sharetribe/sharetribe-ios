@@ -20,21 +20,46 @@
 "agestamp.one_day_ago" = "1 day ago";
 "agestamp.just_now" = "Just now";
 
-"button.ok" = "OK";
-"button.send" = "Send";
-"button.cancel" = "Cancel";
-"button.yes" = "Yes";
-"button.no" = "No";
+"button.accept" = "Accept";
 "button.call" = "Call";
-"button.log_out" = "Log Out";
-"button.post" = "Post";
-"button.send.comment" = "Send comment";
-"button.send.message" = "Send";
+"button.cancel" = "Cancel";
+"button.choose_photo_from_library" = "Choose from Library...";
 "button.listing.respond" = "Respond";
 "button.listing.message" = "Message";
-"button.take_new_photo" = "Take a New Photo...";
-"button.choose_photo_from_library" = "Choose from Library...";
+"button.log_out" = "Log Out";
+"button.no" = "No";
+"button.ok" = "OK";
+"button.post" = "Post";
 "button.profile" = "Profile";
+"button.reject" = "Reject";
+"button.send" = "Send";
+"button.send.comment" = "Send comment";
+"button.send.message" = "Send";
+"button.take_new_photo" = "Take a New Photo...";
+"button.yes" = "Yes";
+
+"button.accept_request" = "Accept request";
+"button.accept_offer" = "Accept offer";
+"button.reject_request" = "Not this time";
+"button.reject_offer" = "Not this time";
+
+"confirm.accept_request.title_format" = "Accept %@'s request?";
+"confirm.accept_request.message_format" = "";
+"confirm.accept_offer.title_format" = "Accept %@'s offer?";
+"confirm.accept_offer.message_format" = "";
+"confirm.reject_request.title_format" = "Decline %@'s request for now?";
+"confirm.reject_request.message_format" = "";
+"confirm.reject_offer.title_format" = "Decline %@'s offer for now?";
+"confirm.reject_offer.message_format" = "";
+
+"conversation_status_format.you_accepted_request" = "You accepted %@'s request.";
+"conversation_status_format.other_accepted_request" = "%@ accepted your request.";
+"conversation_status_format.you_accepted_offer" = "You accepted %@'s offer.";
+"conversation_status_format.other_accepted_offer" = "%@ accepted your offer.";
+"conversation_status_format.you_rejected_request" = "You declined %@'s request.";
+"conversation_status_format.other_rejected_request" = "%@ declined your request.";
+"conversation_status_format.you_rejected_offer" = "You declined %@'s offer.";
+"conversation_status_format.other_rejected_offer" = "%@ declined your offer.";
 
 "alert.title.error" = "Error";
 "alert.confirm_cancel_composing_listing" = "Are you sure you want to cancel?";
@@ -58,7 +83,13 @@
 "placeholder.password" = "Password";
 "placeholder.conversation_title" = "Write a conversation title";
 
-"listing.intro.general" = "Item, favor, ride, or space?";
+"header.pull_down_to_update" = "Pull down to update...";
+"header.release_to_update" = "Release to update...";
+"header.updating" = "Updating...";
+"header.updated" = "Updated!";
+"header.last_updated" = "Last updated";
+
+"listing.intro.general" = "Item, service, ride, or space?";
 "listing.intro.offer" = "I want to offer";
 "listing.intro.request" = "I need";
 
@@ -86,6 +117,20 @@
 "listing.request_type.rent" = "Rent";
 "listing.request_type.trade" = "Trade";
 "listing.request_type.take_for_free" = "Take for free";
+
+"listing.offering_type.give_away" = "Giving away";
+"listing.offering_type.lend" = "Lending";
+"listing.offering_type.rent_out" = "Renting out";
+"listing.offering_type.sell" = "Selling";
+"listing.offering_type.share_for_free" = "Sharing for free";
+"listing.offering_type.trade" = "Trading";
+
+"listing.requesting_type.borrow" = "Borrowing";
+"listing.requesting_type.buy" = "Buying";
+"listing.requesting_type.rent" = "Renting";
+"listing.requesting_type.trade" = "Trading";
+"listing.requesting_type.take_for_free" = "Taking for free";
+
 
 "listing.offered_item" = "Item you offer";
 "listing.offered_favor" = "Service you offer";
@@ -121,6 +166,8 @@
 "listing.subtitle.separate_with_comma" = "(separate with comma)";
 
 "listing.explanation" = "What's this?";
+
+"listing.offered_by" = "Offered by";
 
 "listing.explanation.offer_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
 "listing.explanation.request_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
@@ -166,10 +213,12 @@
 "grade.slightly_less_than_expected" = "Slightly worse than expected";
 "grade.less_than_expected" = "Worse than expected";
 
-"profile.listings_title_format" = "%d listings";
+"profile.open_listings_title_format" = "%d open listings";
+"profile.no_open_listings" = "No open listings";
+"profile.one_open_listing" = "1 open listing";
 "profile.all_feedback_title_format" = "All feedback (%d)";
 "profile.percentage_detail_format" = "positive (%d of %d)";
 "profile.received_feedback" = "Received Feedback";
 "profile.badges" = "Badges";
 
-"title.feedback" = "Feedback";
+"profile.feedback" = "Feedback";

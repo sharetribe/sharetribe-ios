@@ -31,6 +31,7 @@
 
 @property (readonly) NSString *name;
 @property (readonly) NSString *shortName;
+@property (readonly) NSString *trimmedPhoneNumber;
 
 @property (readonly) BOOL isCurrentUser;
 

@@ -57,7 +57,7 @@
 - (NSString *)fullTitle
 {
     if (shareType != nil) {
-        NSString *labelKey = [NSString stringWithFormat:@"listing.%@_type.%@", type, shareType];
+        NSString *labelKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", type, shareType];
         return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(labelKey, @""), title];
     } else {
         return title;

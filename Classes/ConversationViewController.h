@@ -21,6 +21,9 @@
 @property (strong) UILabel *conversationTitleLabel;
 @property (strong) UITextField *conversationTitleField;
 @property (strong) UIButton *showListingButton;
+@property (strong) UIButton *acceptButton;
+@property (strong) UIButton *rejectButton;
+@property (strong) UIButton *statusView;
 
 @property (strong) Conversation *conversation;
 @property (strong) Listing *listing;
@@ -30,5 +33,7 @@
 @property (assign) BOOL isDirectReplyToListing;
 
 - (IBAction)showListing;
+- (IBAction)acceptButtonPressed;
+- (IBAction)rejectButtonPressed;
 
 @end

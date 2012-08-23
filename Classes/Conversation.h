@@ -8,20 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#define kConversationStatusFree      @"free"
+#define kConversationStatusPending   @"pending"
+#define kConversationStatusAccepted  @"accepted"
+#define kConversationStatusRejected  @"rejected"
+
 @class Listing;
 @class Message;
+@class Participation;
 @class User;
-
-typedef enum {
-    ConversationStatusFree = 0,
-    ConversationStatusPending
-} ConversationStatus;
 
 @interface Conversation : NSObject
 
 @property (assign) NSInteger conversationId;
 @property (strong) NSString *title;
-@property (assign) ConversationStatus status;
+@property (strong) NSString *status;
 @property (strong) NSDate *createdAt;
 @property (strong) NSDate *updatedAt;
 
@@ -29,16 +30,16 @@ typedef enum {
 @property (strong) Listing *listing;
 
 @property (strong) NSArray *participations;
-@property (readonly) NSArray *participationsByOthers;
+@property (readonly) Participation *ownParticipation;
+@property (readonly) Participation *otherParticipation;
 @property (readonly) User *recipient;
 
 @property (strong) NSArray *messages;
 @property (readonly) Message *lastMessage;
+@property (readonly) BOOL isUnread;
+@property (readonly) BOOL isReplied;
 
 + (Conversation *)conversationFromDict:(NSDictionary *)dict;
 + (NSArray *)conversationsFromArrayOfDicts:(NSArray *)dicts;
-
-+ (ConversationStatus)conversationStatusFromString:(NSString *)statusString;
-+ (NSString *)stringFromConversationStatus:(ConversationStatus)status;
 
 @end

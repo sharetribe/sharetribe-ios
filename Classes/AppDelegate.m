@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
+#import "NSArray+Sharetribe.h"
 #import "UINavigationController+Sharetribe.h"
 
 #import "TestFlight.h"
@@ -231,7 +232,10 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (navigationController.viewControllers.count > 1) {
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:navigationController action:@selector(pop)];
+        UIViewController *previousViewController = [navigationController.viewControllers objectOrNilAtIndex:navigationController.viewControllers.count-2];
+        if (previousViewController.title == nil) {
+            viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:navigationController action:@selector(pop)];
+        }
     }
 }
 

@@ -106,9 +106,16 @@
 {
     user = newUser;
     
+    self.title = (user.isCurrentUser) ? NSLocalizedString(@"tabs.profile", @"") : user.givenName;
+    
     nameLabel.text = user.name;
+    nameLabel.height = [nameLabel.text sizeWithFont:nameLabel.font constrainedToSize:CGSizeMake(nameLabel.width, 100) lineBreakMode:UILineBreakModeWordWrap].height;
+    locationLabel.y = nameLabel.y+nameLabel.height+7;
+    locationIconView.y = locationLabel.y+1;
     
     [avatarView setImageWithUser:user];
+    
+    int detailsHeight = locationLabel.y;
     
     if (user.location != nil) {
         [self.mapView addAnnotation:user.location];
@@ -118,6 +125,7 @@
         phoneButton.y = locationLabel.y+locationLabel.height;
         locationLabel.hidden = NO;
         locationIconView.hidden = NO;
+        detailsHeight = locationLabel.y+locationLabel.height+7;
     } else {
         phoneButton.y = locationLabel.y;
         locationLabel.hidden = YES;
@@ -130,6 +138,7 @@
         phoneIconView.y = phoneButton.y+7;
         phoneButton.hidden = NO;
         phoneIconView.hidden = NO;
+        detailsHeight = phoneButton.y+phoneButton.height;
     } else {
         phoneButton.hidden = YES;
         phoneIconView.hidden = YES;
@@ -145,6 +154,7 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-envelope-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(messageButtonPressed)];
     }
     
+    descriptionLabel.y = MAX(108, detailsHeight);
     descriptionLabel.text = user.description;
     [descriptionLabel sizeToHeight];
     
@@ -175,12 +185,12 @@
 
 - (IBAction)phoneButtonPressed
 {
-    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.phoneNumber]]]) {
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.trimmedPhoneNumber]]]) {
         return;
     }
     
     NSString *alertFormat = NSLocalizedString(@"alert.confirm_phone_call.format", @"");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:alertFormat, user.phoneNumber] message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.call", @""), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:alertFormat, user.trimmedPhoneNumber] message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.call", @""), nil];
     alert.tag = kAlertTagForConfirmingPhoneCall;
     [alert show];
 }
@@ -247,7 +257,7 @@
         if (alertView.tag == kAlertTagForConfirmingLogOut) {
             [[SharetribeAPIClient sharedClient] logOut];
         } else if (alertView.tag == kAlertTagForConfirmingPhoneCall) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.phoneNumber]]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", user.trimmedPhoneNumber]]];
         }
     }
 }
@@ -285,14 +295,24 @@
         NSArray *items = (indexPath.section == kSectionIndexForListings) ? listings : feedbacks;
         
         UITableViewCell *cell = [[UITableViewCell alloc] init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         button.frame = CGRectMake(14, 0, 292, 44);
         button.enabled = (items.count > 0);
         [cell addSubview:button];
         if (items != nil) {
             UILabel *label = [[UILabel alloc] init];
-            NSString *listingsTitleFormat = (indexPath.section == kSectionIndexForListings) ? NSLocalizedString(@"profile.listings_title_format", @"") : NSLocalizedString(@"profile.all_feedback_title_format", @"");
-            label.text = [NSString stringWithFormat:listingsTitleFormat, items.count];
+            if (indexPath.section == kSectionIndexForListings) {
+                if (items.count == 0) {
+                    label.text = NSLocalizedString(@"profile.no_open_listings", @"");
+                } else if (items.count == 1) {
+                    label.text = NSLocalizedString(@"profile.one_open_listing", @"");
+                } else {
+                    label.text = [NSString stringWithFormat:NSLocalizedString(@"profile.open_listings_title_format", @""), items.count];
+                }
+            } else {
+                label.text = [NSString stringWithFormat:NSLocalizedString(@"profile.all_feedback_title_format", @""), items.count];
+            }
             label.font = [UIFont boldSystemFontOfSize:15];
             label.backgroundColor = [UIColor clearColor];
             label.x = 28;
@@ -337,7 +357,9 @@
                 
                 return cell;
             } else {
-                return [[UITableViewCell alloc] init];
+                UITableViewCell *cell = [[UITableViewCell alloc] init];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
             }
         }
         
@@ -357,7 +379,10 @@
         cell.badge = [badges objectAtIndex:indexPath.row];
         return cell;
     }
-    return nil;
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

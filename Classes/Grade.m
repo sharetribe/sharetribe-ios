@@ -14,6 +14,26 @@
 @synthesize name;
 @synthesize amount;
 
+@dynamic title;
+@dynamic icon;
+@dynamic bigIcon;
+
+- (NSString *)title
+{
+    NSString *titleKey = [NSString stringWithFormat:@"grade.%@", name];
+    return NSLocalizedString(titleKey, @"");
+}
+
+- (UIImage *)icon
+{
+    return [Grade iconForGrade:grade];
+}
+
+- (UIImage *)bigIcon
+{
+    return [Grade bigIconForGrade:grade];
+}
+
 + (Grade *)gradeFromArray:(NSArray *)array
 {
     Grade *grade = [[Grade alloc] init];
@@ -35,6 +55,16 @@
     }
     
     return grades;
+}
+
++ (UIImage *)iconForGrade:(NSInteger)grade
+{
+    return [UIImage imageNamed:[NSString stringWithFormat:@"kaapo-grade-%d", grade]];
+}
+
++ (UIImage *)bigIconForGrade:(NSInteger)grade
+{
+    return [UIImage imageNamed:[NSString stringWithFormat:@"kaapo-big-grade-%d", grade]];
 }
 
 @end

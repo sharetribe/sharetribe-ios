@@ -25,10 +25,13 @@
 @synthesize listing;
 
 @synthesize participations;
-@dynamic participationsByOthers;
+@dynamic ownParticipation;
+@dynamic otherParticipation;
 
 @synthesize messages;
 @dynamic lastMessage;
+@dynamic isUnread;
+@dynamic isReplied;
 
 - (id)init
 {
@@ -48,27 +51,56 @@
     return (conversationId == [object conversationId]);
 }
 
-- (NSArray *)participationsByOthers
+- (Participation *)ownParticipation
 {
-    NSMutableArray *participationsByOthers = [NSMutableArray array];
+    User *currentUser = [User currentUser];
+    for (Participation *participation in participations) {
+        if ([participation.person isEqual:currentUser]) {
+            return participation;
+        }
+    }
+    return nil;
+}
+
+- (Participation *)otherParticipation
+{
     User *currentUser = [User currentUser];
     for (Participation *participation in participations) {
         if (![participation.person isEqual:currentUser]) {
-            [participationsByOthers addObject:participation];
+            return participation;
         }
     }
-    return participationsByOthers;
+    return nil;
 }
 
 - (User *)recipient
 {
-    Participation *participation = [self.participationsByOthers lastObject];
-    return participation.person;
+    return self.otherParticipation.person;
 }
 
 - (Message *)lastMessage
 {
     return [messages lastObject];
+}
+
+- (BOOL)isUnread
+{
+    return !self.ownParticipation.isRead;
+}
+
+- (BOOL)isReplied
+{
+    return self.lastMessage.author.isCurrentUser;
+}
+
+- (NSComparisonResult)compare:(id)object
+{
+    if (![object isKindOfClass:Conversation.class]) {
+        return NSOrderedAscending;
+    }
+    
+    Message *otherLastMessage = [object lastMessage];
+    return -[self.lastMessage.createdAt compare:otherLastMessage.createdAt];  // newer, i.e. later, message should be sorted first
 }
 
 + (Conversation *)conversationFromDict:(NSDictionary *)dict
@@ -77,7 +109,7 @@
     
     conversation.conversationId = [[dict objectOrNilForKey:@"id"] intValue];
     conversation.title = [dict objectOrNilForKey:@"title"];
-    conversation.status = [self conversationStatusFromString:[dict objectOrNilForKey:@"status"]];
+    conversation.status = [dict objectOrNilForKey:@"status"];
     conversation.listingId = [[dict objectOrNilForKey:@"listing_id"] intValue];
     
     conversation.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
@@ -109,27 +141,9 @@
         [conversations addObject:conversation];
     }
     
+    [conversations sortUsingSelector:@selector(compare:)];
+    
     return conversations;
-}
-
-+ (ConversationStatus)conversationStatusFromString:(NSString *)statusString
-{
-    if ([statusString isEqualToString:@"free"]) {
-        return ConversationStatusFree;
-    } else if ([statusString isEqualToString:@"pending"]) {
-        return ConversationStatusPending;
-    }
-    return -1;
-}
-
-+ (NSString *)stringFromConversationStatus:(ConversationStatus)status
-{
-    if (status == ConversationStatusFree) {
-        return @"free";
-    } else if (status == ConversationStatusPending) {
-        return @"pending";
-    }
-    return nil;
 }
 
 @end

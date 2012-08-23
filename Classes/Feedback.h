@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class User;
+
 @interface Feedback : NSObject
 
 @property (strong) NSString *text;
 @property (strong) NSDate *createdAt;
 @property (assign) CGFloat grade;
-@property (strong) NSString *authorId;
+@property (strong) User *author;
 @property (strong) NSString *receiverId;
 @property (assign) NSInteger conversationId;
 

@@ -258,7 +258,7 @@
 
 - (NSDate *)timeForIndexPath:(NSIndexPath *)indexPath
 {
-    Listing *listing = [listings objectAtIndex:indexPath.row];
+    Listing *listing = [listings objectOrNilAtIndex:indexPath.row];
     return listing.createdAt;
 }
 

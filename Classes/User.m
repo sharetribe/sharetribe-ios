@@ -35,6 +35,7 @@
 
 @dynamic name;
 @dynamic shortName;
+@dynamic trimmedPhoneNumber;
 
 @dynamic isCurrentUser;
 
@@ -52,6 +53,11 @@ static User *currentUser = nil;
     } else {
         return givenName;
     }
+}
+
+- (NSString *)trimmedPhoneNumber
+{
+    return [phoneNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
 - (BOOL)isEqual:(id)object

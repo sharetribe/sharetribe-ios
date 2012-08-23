@@ -42,7 +42,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];
+    // self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
+    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
         [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -337,10 +338,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostComment object:comment];
     }];
 }
 
-- (void)startNewConversationWith:(User *)user aboutListing:(Listing *)listing withInitialMessage:(NSString *)message title:(NSString *)title conversationStatus:(ConversationStatus)status
+- (void)startNewConversationWith:(User *)user aboutListing:(Listing *)listing withInitialMessage:(NSString *)message title:(NSString *)title conversationStatus:(NSString *)status
 {
     NSMutableDictionary *params = [self baseParams];
     [params setObject:user.userId forKey:@"target_person_id"];
@@ -351,7 +353,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     if (title != nil) {
         [params setObject:title forKey:@"title"];
     }
-    [params setObject:[Conversation stringFromConversationStatus:status] forKey:@"status"];
+    [params setObject:status forKey:@"status"];
     
     User *currentUser = [User currentUser];
     [self postPath:[NSString stringWithFormat:@"people/%@/conversations", currentUser.userId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -364,6 +366,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostMessage object:message];
     }];
 }
 
@@ -373,15 +376,37 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [params setObject:message forKey:@"content"];
     
     User *currentUser = [User currentUser];
-    [self postPath:[NSString stringWithFormat:@"people/%@/conversations/%d", currentUser.userId, conversation.conversationId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self postPath:[NSString stringWithFormat:@"people/%@/conversations/%d/messages", currentUser.userId, conversation.conversationId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:message];
         
+        [self getMessagesForConversation:conversation];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
-    }];    
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostMessage object:message];
+    }];
+}
+
+- (void)changeStatusTo:(NSString *)status forConversation:(Conversation *)conversation
+{
+    NSMutableDictionary *params = [self baseParams];
+    [params setObject:status forKey:@"status"];
+    
+    User *currentUser = [User currentUser];
+    [self putPath:[NSString stringWithFormat:@"people/%@/conversations/%d", currentUser.userId, conversation.conversationId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [self logSuccessWithOperation:operation responseObject:responseObject];
+        
+        Conversation *updatedConversation = [Conversation conversationFromDict:responseObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidChangeConversationStatus object:updatedConversation];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self handleFailureWithOperation:operation error:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToChangeConversationStatus object:conversation];
+    }];
 }
 
 - (void)getUserWithId:(NSString *)userId
@@ -470,6 +495,11 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 - (void)handleFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error
 {
     NSLog(@"error: %@\nwith requesting: %@", error, operation.request.URL);
+    NSLog(@"%@", operation.responseString);
+    
+    if (operation.response.statusCode == 401) {
+        [self logOut];
+    }
 }
 
 @end

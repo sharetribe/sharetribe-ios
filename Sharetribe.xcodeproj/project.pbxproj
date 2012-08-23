@@ -79,6 +79,16 @@
 		4867740414F2F97200D7EFD8 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4867740314F2F97200D7EFD8 /* LocationPickerViewController.m */; };
 		4871D039150C2BA100280549 /* ConversationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4871D038150C2BA100280549 /* ConversationListCell.xib */; };
 		4871D03D150C2BAE00280549 /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4871D03C150C2BAE00280549 /* ConversationListCell.m */; };
+		4873FF6715E6D2F10066C58E /* kaapo-big-grade-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */; };
+		4873FF6815E6D2F10066C58E /* kaapo-big-grade-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */; };
+		4873FF6915E6D2F10066C58E /* kaapo-big-grade-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */; };
+		4873FF6A15E6D2F10066C58E /* kaapo-big-grade-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6015E6D2F00066C58E /* kaapo-big-grade-2@2x.png */; };
+		4873FF6B15E6D2F10066C58E /* kaapo-big-grade-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6115E6D2F00066C58E /* kaapo-big-grade-3.png */; };
+		4873FF6C15E6D2F10066C58E /* kaapo-big-grade-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6215E6D2F00066C58E /* kaapo-big-grade-3@2x.png */; };
+		4873FF6D15E6D2F10066C58E /* kaapo-big-grade-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6315E6D2F00066C58E /* kaapo-big-grade-4.png */; };
+		4873FF6E15E6D2F10066C58E /* kaapo-big-grade-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6415E6D2F10066C58E /* kaapo-big-grade-4@2x.png */; };
+		4873FF6F15E6D2F10066C58E /* kaapo-big-grade-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6515E6D2F10066C58E /* kaapo-big-grade-5.png */; };
+		4873FF7015E6D2F10066C58E /* kaapo-big-grade-5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6615E6D2F10066C58E /* kaapo-big-grade-5@2x.png */; };
 		487AA37F14B7B51A007C4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA37E14B7B51A007C4CCF /* UIKit.framework */; };
 		487AA38114B7B51A007C4CCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA38014B7B51A007C4CCF /* Foundation.framework */; };
 		487AA38314B7B51A007C4CCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA38214B7B51A007C4CCF /* CoreGraphics.framework */; };
@@ -140,6 +150,10 @@
 		4893630415E4553A0035DF97 /* pointer-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 489362FF15E4553A0035DF97 /* pointer-arrow.png */; };
 		4893630515E4553A0035DF97 /* pointer-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4893630015E4553A0035DF97 /* pointer-arrow@2x.png */; };
 		4893630615E4553A0035DF97 /* TouchEventForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4893630215E4553A0035DF97 /* TouchEventForwardingView.m */; };
+		48A0E6D915E64B4400299C7A /* icon-reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A0E6D715E64B4400299C7A /* icon-reply.png */; };
+		48A0E6DA15E64B4400299C7A /* icon-reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A0E6D815E64B4400299C7A /* icon-reply@2x.png */; };
+		48A0E6DE15E65A8C00299C7A /* icon-unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A0E6DC15E65A8C00299C7A /* icon-unread.png */; };
+		48A0E6DF15E65A8C00299C7A /* icon-unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48A0E6DD15E65A8C00299C7A /* icon-unread@2x.png */; };
 		48A755DC15E1F63A002638BF /* FeedbackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A755DB15E1F639002638BF /* FeedbackListViewController.m */; };
 		48AF2A2815C431420047238F /* icon-callout.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2615C431420047238F /* icon-callout.png */; };
 		48AF2A2915C431420047238F /* icon-callout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48AF2A2715C431420047238F /* icon-callout@2x.png */; };
@@ -282,6 +296,16 @@
 		4871D038150C2BA100280549 /* ConversationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationListCell.xib; path = Resources/ConversationListCell.xib; sourceTree = SOURCE_ROOT; };
 		4871D03B150C2BAD00280549 /* ConversationListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationListCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4871D03C150C2BAE00280549 /* ConversationListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationListCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1.png"; sourceTree = "<group>"; };
+		4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1@2x.png"; sourceTree = "<group>"; };
+		4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-2.png"; sourceTree = "<group>"; };
+		4873FF6015E6D2F00066C58E /* kaapo-big-grade-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-2@2x.png"; sourceTree = "<group>"; };
+		4873FF6115E6D2F00066C58E /* kaapo-big-grade-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-3.png"; sourceTree = "<group>"; };
+		4873FF6215E6D2F00066C58E /* kaapo-big-grade-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-3@2x.png"; sourceTree = "<group>"; };
+		4873FF6315E6D2F00066C58E /* kaapo-big-grade-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-4.png"; sourceTree = "<group>"; };
+		4873FF6415E6D2F10066C58E /* kaapo-big-grade-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-4@2x.png"; sourceTree = "<group>"; };
+		4873FF6515E6D2F10066C58E /* kaapo-big-grade-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-5.png"; sourceTree = "<group>"; };
+		4873FF6615E6D2F10066C58E /* kaapo-big-grade-5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-5@2x.png"; sourceTree = "<group>"; };
 		487AA37A14B7B51A007C4CCF /* Sharetribe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharetribe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		487AA37E14B7B51A007C4CCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		487AA38014B7B51A007C4CCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -372,6 +396,10 @@
 		4893630015E4553A0035DF97 /* pointer-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pointer-arrow@2x.png"; sourceTree = "<group>"; };
 		4893630115E4553A0035DF97 /* TouchEventForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEventForwardingView.h; sourceTree = "<group>"; };
 		4893630215E4553A0035DF97 /* TouchEventForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchEventForwardingView.m; sourceTree = "<group>"; };
+		48A0E6D715E64B4400299C7A /* icon-reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reply.png"; sourceTree = "<group>"; };
+		48A0E6D815E64B4400299C7A /* icon-reply@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reply@2x.png"; sourceTree = "<group>"; };
+		48A0E6DC15E65A8C00299C7A /* icon-unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unread.png"; sourceTree = "<group>"; };
+		48A0E6DD15E65A8C00299C7A /* icon-unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unread@2x.png"; sourceTree = "<group>"; };
 		48A755DA15E1F639002638BF /* FeedbackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackListViewController.h; sourceTree = "<group>"; };
 		48A755DB15E1F639002638BF /* FeedbackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackListViewController.m; sourceTree = "<group>"; };
 		48AF2A2615C431420047238F /* icon-callout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-callout.png"; sourceTree = "<group>"; };
@@ -539,6 +567,7 @@
 			children = (
 				487AA3AD14B7B608007C4CCF /* AppDelegate.h */,
 				487AA3AE14B7B608007C4CCF /* AppDelegate.m */,
+				48E1C42715C43A2F0058F4EB /* Sharetribe.h */,
 				489179C6159BC87B004D6FF3 /* Network */,
 				48894F7614E08695009CD965 /* Data */,
 				48894F5D14DF6C62009CD965 /* Controllers */,
@@ -611,10 +640,24 @@
 				48E1C44315C5039A0058F4EB /* icon-phone@2x.png */,
 				48E1C44015C503990058F4EB /* icon-phone-small.png */,
 				48E1C44115C503990058F4EB /* icon-phone-small@2x.png */,
+				48A0E6D715E64B4400299C7A /* icon-reply.png */,
+				48A0E6D815E64B4400299C7A /* icon-reply@2x.png */,
 				48228DDC14F030D2001DC893 /* icon-rideshare.png */,
 				48228DDD14F030D2001DC893 /* icon-rideshare@2x.png */,
 				48228DD814F030D2001DC893 /* icon-space.png */,
 				48228DD914F030D2001DC893 /* icon-space@2x.png */,
+				48A0E6DC15E65A8C00299C7A /* icon-unread.png */,
+				48A0E6DD15E65A8C00299C7A /* icon-unread@2x.png */,
+				4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */,
+				4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */,
+				4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */,
+				4873FF6015E6D2F00066C58E /* kaapo-big-grade-2@2x.png */,
+				4873FF6115E6D2F00066C58E /* kaapo-big-grade-3.png */,
+				4873FF6215E6D2F00066C58E /* kaapo-big-grade-3@2x.png */,
+				4873FF6315E6D2F00066C58E /* kaapo-big-grade-4.png */,
+				4873FF6415E6D2F10066C58E /* kaapo-big-grade-4@2x.png */,
+				4873FF6515E6D2F10066C58E /* kaapo-big-grade-5.png */,
+				4873FF6615E6D2F10066C58E /* kaapo-big-grade-5@2x.png */,
 				483D99A715E1962200245A74 /* kaapo-grade-1.png */,
 				483D99A815E1962200245A74 /* kaapo-grade-1@2x.png */,
 				483D99A915E1962200245A74 /* kaapo-grade-2.png */,
@@ -810,7 +853,6 @@
 			children = (
 				489179C7159BC90E004D6FF3 /* SharetribeAPIClient.h */,
 				489179C8159BC90E004D6FF3 /* SharetribeAPIClient.m */,
-				48E1C42715C43A2F0058F4EB /* Sharetribe.h */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -1010,6 +1052,20 @@
 				489362F815E44C100035DF97 /* FeedbackTotalCell.xib in Resources */,
 				4893630415E4553A0035DF97 /* pointer-arrow.png in Resources */,
 				4893630515E4553A0035DF97 /* pointer-arrow@2x.png in Resources */,
+				48A0E6D915E64B4400299C7A /* icon-reply.png in Resources */,
+				48A0E6DA15E64B4400299C7A /* icon-reply@2x.png in Resources */,
+				48A0E6DE15E65A8C00299C7A /* icon-unread.png in Resources */,
+				48A0E6DF15E65A8C00299C7A /* icon-unread@2x.png in Resources */,
+				4873FF6715E6D2F10066C58E /* kaapo-big-grade-1.png in Resources */,
+				4873FF6815E6D2F10066C58E /* kaapo-big-grade-1@2x.png in Resources */,
+				4873FF6915E6D2F10066C58E /* kaapo-big-grade-2.png in Resources */,
+				4873FF6A15E6D2F10066C58E /* kaapo-big-grade-2@2x.png in Resources */,
+				4873FF6B15E6D2F10066C58E /* kaapo-big-grade-3.png in Resources */,
+				4873FF6C15E6D2F10066C58E /* kaapo-big-grade-3@2x.png in Resources */,
+				4873FF6D15E6D2F10066C58E /* kaapo-big-grade-4.png in Resources */,
+				4873FF6E15E6D2F10066C58E /* kaapo-big-grade-4@2x.png in Resources */,
+				4873FF6F15E6D2F10066C58E /* kaapo-big-grade-5.png in Resources */,
+				4873FF7015E6D2F10066C58E /* kaapo-big-grade-5@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

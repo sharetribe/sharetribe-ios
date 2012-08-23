@@ -32,7 +32,7 @@
 
 - (IBAction)whatIsThisButtonPressed
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"title.feedback", @"") message:NSLocalizedString(@"profile.explanation.feedback", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"profile.feedback", @"") message:NSLocalizedString(@"profile.explanation.feedback", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
 }
 

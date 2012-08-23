@@ -126,6 +126,7 @@
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
 										<float key="IBUIMinimumFontSize">10</float>
+										<int key="IBUINumberOfLines">0</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<int key="type">2</int>
 											<double key="pointSize">16</double>
@@ -301,7 +302,6 @@
 								<string key="NSFrame">{{14, 122}, {124, 124}}</string>
 								<reference key="NSSuperview" ref="752918352"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="682736967"/>
 								<bool key="IBUIClipsSubviews">YES</bool>

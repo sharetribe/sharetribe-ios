@@ -19,6 +19,7 @@
 @interface ListingsMapViewController () {
     BOOL shouldRefocusRegion;
     MKCoordinateRegion targetRegion;
+    MKCoordinateRegion defaultRegion;
 }
 
 @end
@@ -32,11 +33,74 @@
 
 - (void)addListings:(NSArray *)newListings
 {
+    BOOL shouldFocusToDefaultRegion = (map.annotations.count < 2);
+    
     for (Listing *newListing in newListings) {
-        if ([map.annotations containsObject:newListing]) {
-            [map removeAnnotation:newListing];  // this should actually remove the older duplicate
+        if (newListing.coordinate.latitude != 0 || newListing.coordinate.longitude != 0) {
+            if ([map.annotations containsObject:newListing]) {
+                [map removeAnnotation:newListing];  // this should in truth remove the older duplicate
+            }
+            [map addAnnotation:newListing];
         }
-        [map addAnnotation:newListing];
+    }
+    
+    CLLocationCoordinate2D min, max;
+    min.longitude = 0;
+    min.latitude = 0;
+    max.latitude = 0;
+    max.longitude = 0;
+    double latitudeSum = 0;
+    double longitudeSum = 0;
+    int numberOfItems = 0;
+    
+    NSMutableArray *mappedListings = [NSMutableArray arrayWithCapacity:map.annotations.count];
+    for (id<MKAnnotation> annotation in map.annotations) {
+        if ([annotation isKindOfClass:Listing.class]) {
+            [mappedListings addObject:annotation];
+        }
+    }
+    
+    if (mappedListings.count > 10) {
+        [mappedListings sortUsingFunction:compareByLatitude context:NULL];
+        [mappedListings removeObjectAtIndex:0];
+        [mappedListings removeLastObject];
+        [mappedListings sortUsingFunction:compareByLongitude context:NULL];
+        [mappedListings removeObjectAtIndex:0];
+        [mappedListings removeLastObject];
+    }
+    
+    for (Listing *listing in mappedListings) {
+        CLLocationCoordinate2D coordinate = listing.coordinate;
+        latitudeSum += coordinate.latitude;
+        longitudeSum += coordinate.longitude;
+        numberOfItems += 1;
+        if (coordinate.latitude < min.latitude || min.latitude == 0) {
+            min.latitude = coordinate.latitude;
+        }
+        if (coordinate.latitude > max.latitude || max.latitude == 0) {
+            max.latitude = coordinate.latitude;
+        }
+        if (coordinate.longitude < min.longitude || min.longitude == 0) {
+            min.longitude = coordinate.longitude;
+        }
+        if (coordinate.longitude > max.longitude || max.longitude == 0) {
+            max.longitude = coordinate.longitude;
+        }
+    }
+    CLLocationCoordinate2D averageCoordinate;
+    averageCoordinate.latitude = latitudeSum/numberOfItems;
+    averageCoordinate.longitude = longitudeSum/numberOfItems;
+    MKCoordinateSpan span;
+    span.latitudeDelta = (max.latitude-min.latitude)*0.8;
+    span.longitudeDelta = (max.longitude-min.longitude)*0.8;
+    defaultRegion = MKCoordinateRegionMake(averageCoordinate, span);
+    if (shouldFocusToDefaultRegion) {
+        if (self.isViewLoaded && self.view.window) {
+            [map setRegion:defaultRegion animated:YES];
+        } else {
+            targetRegion = defaultRegion;
+            shouldRefocusRegion = YES;
+        }
     }
 }
 
@@ -60,7 +124,7 @@
     map.frame = CGRectMake(0, 0, 320, 460-2*44-5);
     map.showsUserLocation = YES;
     map.delegate = self;
-    map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(60.185, 24.828), 1000, 1000);
+    map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(60.170, 24.939), 4000, 4000);
     [self.view addSubview:map];
     
     self.cell = [ListingCell instance];
@@ -93,6 +157,9 @@
     
         [map setRegion:targetRegion animated:NO];
     }
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-location-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(focusOnUserLocation)];
+    self.navigationItem.rightBarButtonItem.enabled = (map.userLocation.coordinate.latitude != 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,6 +184,14 @@
 - (IBAction)cellPressed
 {
     [listingCollectionViewDelegate viewController:self didSelectListing:cell.listing];
+}
+
+- (IBAction)focusOnUserLocation
+{
+    if (map.userLocation.coordinate.latitude != 0) {
+        MKCoordinateRegion userRegion = MKCoordinateRegionMakeWithDistance(map.userLocation.coordinate, 2000, 2000);
+        [map setRegion:userRegion animated:YES];
+    }
 }
 
 - (void)regionChangedByMapView:(NSNotification *)notification
@@ -205,6 +280,18 @@
 {
     Location *currentLocation = [[Location alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude address:@""];
     [Location setCurrentLocation:currentLocation];
+    
+    self.navigationItem.rightBarButtonItem.enabled = (map.userLocation.coordinate.latitude != 0);
+}
+
+NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context)
+{
+    return [annotation1 coordinate].latitude - [annotation2 coordinate].latitude;
+}
+
+NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *context)
+{
+    return [annotation1 coordinate].longitude - [annotation2 coordinate].longitude;
 }
 
 @end

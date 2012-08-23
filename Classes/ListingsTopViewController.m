@@ -196,12 +196,14 @@
         mapViewer.view.hidden = YES;
         [self.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"icon-map"]];
     }
-    
+        
     [frontViewer viewWillAppear:animated];
-    
+        
     if (animated) {
         [UIView commitAnimations];
     }
+    
+    self.navigationItem.rightBarButtonItem = frontViewer.navigationItem.rightBarButtonItem;
 }
 
 - (NSString *)viewChoice

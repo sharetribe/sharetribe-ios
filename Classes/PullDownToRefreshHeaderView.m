@@ -8,6 +8,8 @@
 
 #import "PullDownToRefreshHeaderView.h"
 
+#define kHeight 60
+
 @interface PullDownToRefreshHeaderView ()
 @end
 
@@ -24,7 +26,7 @@
         self.updateIntroLabel = [[UILabel alloc] init];
         updateIntroLabel.frame = CGRectMake(20, -54, 280, 30);
         updateIntroLabel.font = [UIFont boldSystemFontOfSize:13];
-        updateIntroLabel.text = @"Pull down to update...";
+        updateIntroLabel.text = NSLocalizedString(@"header.pull_down_to_update", @"");
         updateIntroLabel.textColor = [UIColor whiteColor];
         updateIntroLabel.backgroundColor = [UIColor clearColor];
         updateIntroLabel.textAlignment = UITextAlignmentCenter;
@@ -39,10 +41,6 @@
         updateTimeLabel.textAlignment = UITextAlignmentCenter;
         updateTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         updateTimeLabel.alpha = 0.8;
-        
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"dd.MM.yyyy  HH:mm";
-        updateTimeLabel.text = [NSString stringWithFormat:@"Last updated:  %@", [formatter stringFromDate:[NSDate date]]];
         
         self.updateSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         updateSpinner.frame = CGRectMake(26, -40, 20, 20);
@@ -66,19 +64,19 @@
 - (void)tableViewDidScroll:(UITableView *)tableView
 {
     if (!updateSpinner.isAnimating) {
-        if (tableView.contentOffset.y < -60) {
-            updateIntroLabel.text = @"Release to update...";
+        if (tableView.contentOffset.y < -kHeight) {
+            updateIntroLabel.text = NSLocalizedString(@"header.release_to_update", @"");
             updateSpinner.alpha = 1;
         } else if (tableView.contentOffset.y < 0) {
-            updateIntroLabel.text = @"Pull down to update...";
+            updateIntroLabel.text = NSLocalizedString(@"header.pull_down_to_update", @"");
             updateSpinner.alpha = 0.3;
         }
     }
 }
-    
+
 - (BOOL)triggersRefreshAsTableViewEndsDragging:(UITableView *)tableView
 {
-    if (tableView.contentOffset.y < -60) {
+    if (tableView.contentOffset.y < -kHeight) {
         
         [self startIndicatingRefreshWithTableView:tableView];
         
@@ -90,22 +88,22 @@
 
 - (void)startIndicatingRefreshWithTableView:(UITableView *)tableView
 {
-    updateIntroLabel.text = @"Updating...";
+    updateIntroLabel.text = NSLocalizedString(@"header.updating", @"");
     updateSpinner.alpha = 1;
     [updateSpinner startAnimating];
         
     [UIView beginAnimations:nil context:NULL];
-    tableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0);
+    tableView.contentInset = UIEdgeInsetsMake(kHeight, 0, 0, 0);
     [UIView commitAnimations];
 }
 
 - (void)updateFinishedWithTableView:(UITableView *)tableView
 {
-    updateIntroLabel.text = @"Updated!";
+    updateIntroLabel.text = NSLocalizedString(@"header.updated", @"");
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"dd.MM.yyyy  HH:mm";
-    updateTimeLabel.text = [NSString stringWithFormat:@"Last updated:  %@", [formatter stringFromDate:[NSDate date]]];
+    updateTimeLabel.text = [NSString stringWithFormat:@"%@:  %@", NSLocalizedString(@"header.last_updated", @""),  [formatter stringFromDate:[NSDate date]]];
     
     [updateSpinner stopAnimating];
     

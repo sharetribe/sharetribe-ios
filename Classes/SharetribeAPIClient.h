@@ -30,6 +30,7 @@
 #define kNotificationForDidPostListing                     @"did post listing"
 #define kNotificationForDidPostComment                     @"did post comment"
 #define kNotificationForDidPostMessage                     @"did post message"
+#define kNotificationForDidChangeConversationStatus        @"did change conversation status"
 
 #define kNotificationForUploadDidProgress                  @"upload did progress"
 
@@ -41,6 +42,7 @@
 #define kNotificationForFailedToPostListing                @"failed to post listing"
 #define kNotificationForFailedToPostComment                @"failed to post comment"
 #define kNotificationForFailedToPostMessage                @"failed to post message"
+#define kNotificationForFailedToChangeConversationStatus   @"failed to change conversation status"
 
 // Response info dict keys:
 
@@ -73,8 +75,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 
 - (void)getConversations;
 - (void)getMessagesForConversation:(Conversation *)conversation;
-- (void)startNewConversationWith:(User *)user aboutListing:(Listing *)listing withInitialMessage:(NSString *)message title:(NSString *)title conversationStatus:(ConversationStatus)status;
+- (void)startNewConversationWith:(User *)user aboutListing:(Listing *)listing withInitialMessage:(NSString *)message title:(NSString *)title conversationStatus:(NSString *)status;
 - (void)postNewMessage:(NSString *)message toConversation:(Conversation *)conversation;
+- (void)changeStatusTo:(NSString *)status forConversation:(Conversation *)conversation;
 
 - (void)getUserWithId:(NSString *)userId;
 - (void)refreshCurrentUser;

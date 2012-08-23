@@ -8,6 +8,7 @@
 
 #import "Feedback.h"
 
+#import "User.h"
 #import "NSDate+Sharetribe.h"
 
 @implementation Feedback
@@ -15,7 +16,7 @@
 @synthesize text;
 @synthesize createdAt;
 @synthesize grade;
-@synthesize authorId;
+@synthesize author;
 @synthesize receiverId;
 @synthesize conversationId;
 
@@ -26,7 +27,7 @@
     feedback.text = [dict objectOrNilForKey:@"text"];
     feedback.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
     feedback.grade = [[dict objectOrNilForKey:@"grade"] floatValue];
-    feedback.authorId = [dict objectOrNilForKey:@"author_id"];
+    feedback.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
     feedback.receiverId = [dict objectOrNilForKey:@"receiver_id"];
     feedback.conversationId = [[dict objectOrNilForKey:@"conversation_id"] intValue];
     
