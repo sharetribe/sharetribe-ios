@@ -370,6 +370,7 @@
     LocationPickerViewController *mapViewer = [[LocationPickerViewController alloc] init];
     mapViewer.mapType = MKMapTypeHybrid;
     mapViewer.coordinate = listing.coordinate;
+    mapViewer.address = listing.location.address;
     [self.navigationController pushViewController:mapViewer animated:YES];
 }
 

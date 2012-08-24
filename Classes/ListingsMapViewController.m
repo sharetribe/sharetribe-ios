@@ -14,6 +14,8 @@
 #import "ListingAnnotationView.h"
 #import "Location.h"
 #import "SharetribeAPIClient.h"
+#import "NSObject+Observing.h"
+#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ListingsMapViewController () {
@@ -21,6 +23,9 @@
     MKCoordinateRegion targetRegion;
     MKCoordinateRegion defaultRegion;
 }
+
+NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context);
+NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *context);
 
 @end
 

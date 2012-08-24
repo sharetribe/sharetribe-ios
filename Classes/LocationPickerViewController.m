@@ -53,6 +53,8 @@
         UILongPressGestureRecognizer *pressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedOnMap:)];
         pressRecognizer.minimumPressDuration = 0.5;
         [map addGestureRecognizer:pressRecognizer];
+    } else {
+        self.title = self.address;
     }
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:self action:@selector(pop)];
