@@ -347,13 +347,13 @@
 - (IBAction)cancelButtonPressed
 {
     messagesView.alpha = 0;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)sendButtonPressed
 {
     [self messagesView:messagesView didSaveMessageText:messagesView.composeField.text];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)goBack

@@ -192,7 +192,7 @@
 - (void)didPostListing:(NSNotification *)notification
 {    
     self.listing = nil;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissModalViewControllerAnimated:YES];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.listing.posted", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
@@ -350,6 +350,7 @@
         } else if (formItem.type == FormItemTypeLocation) {
             
             UITextField *textField = [[CustomTextField alloc] init];
+            textField.placeholder = NSLocalizedString(@"placeholder.address", @"");
             textField.frame = CGRectMake(10, 30, 300, 40);
             textField.font = [UIFont systemFontOfSize:15];
             textField.tag = kCellTextFieldTag;
@@ -745,7 +746,7 @@
             }
             imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
-            [self presentViewController:imagePicker animated:YES completion:nil];
+            [self presentModalViewController:imagePicker animated:YES];
         }
     }
 }

@@ -1,7 +1,232 @@
-/* 
-  Localizable.strings
-  Sharetribe
+/*
+ Localizable.strings
+ Sharetribe
+ 
+ Created by Janne Käki on 2/6/12.
+ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+ */
 
-  Created by Janne Käki on 2/6/12.
-  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-*/
+"tabs.offers" = "Tarjoukset";
+"tabs.requests" = "Pyynnöt";
+"tabs.new_listing" = "Uusi ilmoitus";
+"tabs.messages" = "Viestit";
+"tabs.profile" = "Minä";
+
+"agestamp.format.minutes_ago" = "%d minuuttia sitten";
+"agestamp.format.hours_ago" = "%d tuntia sitten";
+"agestamp.format.days_ago" = "%d päivää sitten";
+"agestamp.one_minute_ago" = "1 minuutti sitten";
+"agestamp.one_hour_ago" = "1 tunti sitten";
+"agestamp.one_day_ago" = "1 päivä sitten";
+"agestamp.just_now" = "Juuri nyt";
+
+"button.accept" = "Hyväksy";
+"button.call" = "Soita";
+"button.cancel" = "Peruuta";
+"button.choose_photo_from_library" = "Valitse omista kuvista...";
+"button.listing.respond" = "Vastaa";
+"button.listing.message" = "Viesti";
+"button.log_out" = "Kirjaudu ulos";
+"button.no" = "Ei";
+"button.ok" = "OK";
+"button.post" = "Lähetä";
+"button.profile" = "Profiili";
+"button.reject" = "Hylkää";
+"button.send" = "Lähetä";
+"button.send.comment" = "Lähetä kommentti";
+"button.send.message" = "Lähetä";
+"button.take_new_photo" = "Ota uusi kuva...";
+"button.yes" = "Kyllä";
+
+"button.accept_request" = "Hyväksy pyyntö";
+"button.accept_offer" = "Hyväksy tarjous";
+"button.reject_request" = "Ei tällä kertaa";
+"button.reject_offer" = "Ei tällä kertaa";
+
+"confirm.accept_request.title_format" = "Hyväksy käyttäjän %@ pyyntö?";
+"confirm.accept_request.message_format" = "";
+"confirm.accept_offer.title_format" = "Hyväksy käyttäjän %@ tarjous?";
+"confirm.accept_offer.message_format" = "";
+"confirm.reject_request.title_format" = "Hylkää käyttäjän %@ pyyntö?";
+"confirm.reject_request.message_format" = "";
+"confirm.reject_offer.title_format" = "Hylkää käyttäjän %@ tarjous?";
+"confirm.reject_offer.message_format" = "";
+
+"conversation_status_format.you_accepted_request" = "Hyväksyit käyttäjän %@ pyynnön.";
+"conversation_status_format.other_accepted_request" = "%@ hyväksyi pyyntösi.";
+"conversation_status_format.you_accepted_offer" = "Hyväksyit käyttäjän %@ tarjouksen.";
+"conversation_status_format.other_accepted_offer" = "%@ hyväksyi tarjouksesi.";
+"conversation_status_format.you_rejected_request" = "Hylkäsit käyttäjän %@ pyynnön.";
+"conversation_status_format.other_rejected_request" = "%@ hylkäsi pyyntösi.";
+"conversation_status_format.you_rejected_offer" = "Hylkäsit käyttäjän %@ tarjouksen.";
+"conversation_status_format.other_rejected_offer" = "%@ hylkäsi tarjouksesi.";
+
+"alert.posted_reply_to_listing.title" = "Viesti lähetetty!";
+"alert.posted_reply_to_listing.message_format" = "%@ ottaa sinuun yhteyttä luettuaan viestin.";
+"alert.failed_to_post_reply_to_listing.title" = "Viestiä ei voitu lähettää";
+"alert.failed_to_post_reply_to_listing.message_format" = "Jostain syystä viestin lähetys ei onnistunut. Yritä ottaa käyttäjään %@ uudestaan yhteyttä hetken päästä.";
+
+"alert.title.error" = "Virhe";
+"alert.confirm_cancel_composing_listing" = "Oletko varma että haluat peruuttaa?";
+"alert.confirm_log_out" = "Kirjaudu ulo?";
+"alert.confirm_phone_call.format" = "Soita käyttäjälle %@?";
+"alert.listing.posted" = "Ilmoitus lisätty onnistuneesti";
+"alert.listing.failed_to_post" = "Ilmoituksen lisääminen epäonnistui.";
+"alert.title.no_internet" = "Ei internet-yhteyttä";
+"alert.message.no_internet" = "Tarkista yhteysasetuksesi ja yritä uudelleen.";
+
+"composer.message.title" = "Uusi viesti";
+"composer.message.title_format" = "Käyttäjälle %@";
+"composer.message.subject" = "Otsikko";
+"composer.message.to" = "";
+"composer.listing.posting" =  "Lähettää...";
+
+"placeholder.comment" = "Kirjoita uusi kommentti";
+"placeholder.message" = "Kirjoita viesti";
+"placeholder.reply" = "Kirjoita vastaus";
+"placeholder.username" = "Käyttäjätunnus";
+"placeholder.password" = "Salasana";
+"placeholder.conversation_title" = "Viestin otsikko";
+"placeholder.address" = "Osoite";
+
+"header.pull_down_to_update" = "Vedä alas päivittääksesi...";
+"header.release_to_update" = "Vapauta päivittäksesi...";
+"header.updating" = "Päivittää...";
+"header.updated" = "Päivitä!";
+"header.last_updated" = "Viimeksi päivitetty";
+
+"listing.intro.general" = "Tavara, palvelu, kyyti vai tila?";
+"listing.intro.offer" = "Voin tarjota muille";
+"listing.intro.request" = "Tarvitsen";
+
+"listing.intro.offer_target.item" = "tavaran";
+"listing.intro.offer_target.favor" = "palvelun";
+"listing.intro.offer_target.rideshare" = "kyydin";
+"listing.intro.offer_target.space" = "tilan";
+
+"listing.intro.request_target.item" = "tavaran";
+"listing.intro.request_target.favor" = "palvelun";
+"listing.intro.request_target.rideshare" = "kyydin";
+"listing.intro.request_target.space" = "tilan";
+
+"listing.offer_type" = "Tarjoustapa";
+"listing.offer_type.give_away" = "Annetaan";
+"listing.offer_type.lend" = "Annetaan lainaan";
+"listing.offer_type.rent_out" = "Annetaan vuokralle";
+"listing.offer_type.sell" = "Myydään";
+"listing.offer_type.share_for_free" = "Tarjotaan käyttöön ilmaiseksi";
+"listing.offer_type.trade" = "Vaihdetaan";
+
+"listing.request_type" = "Pyyntötapa";
+"listing.request_type.borrow" = "Lainataan";
+"listing.request_type.buy" = "Ostetaan";
+"listing.request_type.rent" = "Vuokrataan";
+"listing.request_type.trade" = "Vaihdetaan";
+"listing.request_type.take_for_free" = "Otetaan vastaan";
+
+"listing.offering_type.give_away" = "Annetaan";
+"listing.offering_type.lend" = "Annetaan lainaksi";
+"listing.offering_type.rent_out" = "Annetaan vuokralle";
+"listing.offering_type.sell" = "Myydään";
+"listing.offering_type.share_for_free" = "Tarjotaan käyttöön ilmaiseksi";
+"listing.offering_type.trade" = "Vaihdetaan";
+
+"listing.requesting_type.borrow" = "Lainataan";
+"listing.requesting_type.buy" = "Ostetaan";
+"listing.requesting_type.rent" = "Vuokrataan";
+"listing.requesting_type.trade" = "Vaihdetaan";
+"listing.requesting_type.take_for_free" = "Otetaan vastaan";
+
+"listing.offered_item" = "Tavara jonka tarjoat";
+"listing.offered_favor" = "Palvelus";
+"listing.offered_space" = "Tila jonka tarjoat";
+
+"listing.requested_item" = "Tavara jonka tarvitset";
+"listing.requested_favor" = "Palvelu jonka tarvitset";
+"listing.requested_space" = "Tila jonka tarvitset";
+
+"listing.description" = "Tarkempi kuvaus";
+
+"listing.tags" = "Avainsanat";
+
+"listing.expiration_date" = "Viimeinen voimassaolopäivä";
+"listing.expiration_date.for_the_time_being" = "Toistaiseksi";
+
+"listing.departure_time" = "Lähtöaika";
+"listing.departure_time.repeated" = "Toistuva";
+
+"listing.location" = "Sijainti";
+"listing.origin" = "Lähtöpaikka";
+"listing.destination" = "Määränpää";
+
+"listing.location.picker.help" = "Paina sormi näyttöön liikkuaksesi";
+
+"listing.image" = "Kuva";
+"listing.image.add" = "Lisää kuva...";
+
+"listing.visibility" = "Näkyvyys";
+"listing.visibility.everybody" = "Kaikille internetin käyttäjille";
+"listing.visibility.this_community" = "Vain tämän yhteisön jäsenille";
+
+"listing.subtitle.separate_with_comma" = "(erota pilkulla)";
+
+"listing.explanation" = "Mitä tämä tarkoittaa?";
+
+"listing.offered_by" = "Tarjoaja";
+"listing.requested_by" = "Pyytäjä";
+
+"listing.explanation.tags" = "Avainsanojen avulla voit auttaa muita löytämään ilmoituksesi helpommin. Jos esimerkiksi olet myymässä tuolia, sopivia avainsanoja voisivat olla &quot;huonekalut&quot; ja &quot;istuimet&quot;. Jos tarjoat apua tietokoneongelmissa, ilmoituksesi löytää parhaiten, kun lisäät siihen avainsanat &quot;apu&quot; ja &quot;tietokoneet&quot;.\n\nVoit lisätä ilmoitukselle niin monta avainsanaa kuin haluat. Erota avainsanat pilkulla.";
+
+"listing.explanation.expiration_date" = "Voit asettaa ilmoituksellesi viimeisen voimassaolopäivän. Tämän päivän jälkeen ilmoitus sulkeutuu automaattisesti. Suljetut ilmoitukset eivät näy normaaleissa ilmoituslistauksissa. Voit muuttaa voimassaolopäivää koska tahansa muokkaa ilmoitusta -valikosta, ja myös avata ilmoituksen uudestaan sen sulkeuduttua, jos se on vielä ajankohtainen.\n\nJos olet tarjoamassa jotain muille Sharetriben käyttäjille, voit jättää tarjouksen voimaan toistaiseksi, jolloin se ei sulkeudu automaattisesti. Pyynnöllä sen sijaan tulee aina olla viimeinen voimassaolopäivä. Maksimiaika ilmoituksen voimassaololle on vuosi ilmoituksen luontihetkestä.";
+
+"profile.explanation.feedback" = "Sharetribessa voit antaa palautetta muille käyttäjille aina, kun olet tarjonnut heille jotain tai pyytänyt heiltä jotain. Palautteen avulla voit kertoa, vastasiko toisen käyttäjän toiminta odotuksiasi. Muut käyttäjät näkevät tämän palautteen käyttäjän profiilissa ja voivat sen perusteella päätellä, kannattaako kyseisen käyttäjän kanssa olla tekemisissä jatkossa. Hyvän palautteen avulla pyynnöt ja tarjoukset onnistuvat varmemmin myös jatkossa. Kannattaa siis aina muistaa antaa palautetta tapahtumista, ja muistuttaa myös toista osapuolta antamaan palautetta sinulle. Palautteen antaminen onnistuu tällä hetkellä Sharetriben verkkosivuilla.\n\nPalaute muodostuu Sharetribessa numeerisesta arviosta ja sanallisesta kuvauksesta. Numeerinen arvio voi olla välillä 1 (ei vastannut lainkaan odotuksia) - 5 (ylitti täysin odotukset). Jos annat jonkin muun kuin neutraalin &quot;vastasi odotuksia&quot; -palautteen, sinun tulee perustella sanallisesti, mikä meni erityisen hyvin tai huonosti.\n\nProfiilisivulla näet käyttäjästä seuraavat tiedot: keskiarvon palautteissa annetuista numeerisista palautteista, eri tasoisten palautteiden määrät sekä listan kaikista palautteista sanallisine kuvauksineen. Listassa Kaapo-hahmon ilme kuvaa kyseiseen palautteeseen liittyvää numeerista arviota.";
+
+"profile.explanation.badges" = "Voit ansaita Sharetribessa erilaisia merkkejä tunnustuksena aktiivisesta toiminnastasi palvelussa. Merkkejä myönnetään esimerkiksi ahkerasta pyyntöjen ja tarjousten jättämisestä, toisten ilmoitusten kommentoinnista, kaikesta mahdollisesta resurssinvaihdosta (tavaroiden lainaamisesta ja myymisestä, palvelusten tekemisestä, kimppakyytien järjestämisestä ja niin edelleen) sekä ylipäänsä aktiivisesta palvelun käytöstä. Huomattakoon, että merkkeihin oikeuttavat ainoastaan sellaiset vaihdot, joista saatu palaute on ollut positiivista.\n\nNäet kunkin käyttäjän ansaitsemat merkit tämän profiilissa. Paljon merkkejä kerännyt käyttäjä on todennäköisesti aktiivinen ja myös muiden käyttäjien arvostama. Lainaa siis paljon tavaroita, tee palveluksia, kulje kimppakyydeillä ja kerää koko merkkisarja!";
+
+"link_label_for_favor_offer" = "Pyydä palvelusta";
+"link_label_for_favor_request" = "Tarjoa apuasi";
+"link_label_for_housing_offer_sell" = "Osta";
+"link_label_for_housing_offer_rent_out" = "Vuokraa";
+"link_label_for_housing_offer_share_for_free" = "Pyydä käyttöoikeutta";
+"link_label_for_housing_request_buy" = "Myy pyydetty tila";
+"link_label_for_housing_request_rent" = "Tarjoa vuokralle pyydetty tila";
+"link_label_for_item_offer_lend" = "Pyydä tämä tavara lainaan";
+"link_label_for_item_offer_rent_out" = "Vuokraa tämä tavara";
+"link_label_for_item_offer_sell" = "Osta tämä tavara";
+"link_label_for_item_offer_give_away" = "Pyydä tavara itsellesi";
+"link_label_for_item_offer_trade" = "Vaihda tämä tavara";
+"link_label_for_item_request_borrow" = "Tarjoa tämä tavara lainaan";
+"link_label_for_item_request_rent" = "Tarjoa tämä tavara vuokralle";
+"link_label_for_item_request_buy" = "Tarjoudu myymään tämä tavara";
+"link_label_for_item_request_receive" = "Anna pyydetty tavara pyytäjälle";
+"link_label_for_item_request_trade" = "Tarjoudu vaihtamaan tämä tavara";
+"link_label_for_rideshare_offer" = "Pyydä kyytiä";
+"link_label_for_rideshare_request" = "Tarjoa kyytiä";
+
+"listing.title_for_favor_offer"                  = "Palvelupyyntö";
+"listing.title_for_favor_request"                = "Palvelutarjous";
+"listing.title_for_space_offer"                  = "Tilapyyntö";
+"listing.title_for_space_request"                = "Tila tarjolla";
+"listing.title_for_item_offer"                   = "Tavarapyyntö";
+"listing.title_for_item_request"                 = "Tavaratarjous";
+"listing.title_for_rideshare_offer"              = "Kyytipyyntö";
+"listing.title_for_rideshare_request"            = "Kyytitarjous";
+
+"messaging.conversation.title" = "Keskustelu";
+"messaging.no_conversations_yet" = "Ei keskusteluja";
+
+"grade.exceeded_expectations" = "Ylitti täysin odotukset";
+"grade.slightly_better_than_expected" = "Ylitti jossain määrin odotukset";
+"grade.as_expected" = "Vastasi odotuksia";
+"grade.slightly_less_than_expected" = "Ei täysin vastannut odotuksia";
+"grade.less_than_expected" = "Ei vastannut lainkaan odotuksia";
+
+"profile.open_listings_title_format" = "%d avointa ilmoitusta";
+"profile.no_open_listings" = "Ei avoimia ilmoituksia";
+"profile.one_open_listing" = "1 avoin ilmoitus";
+"profile.all_feedback_title_format" = "Kaikki palautteet (%d)";
+"profile.percentage_detail_format" = "positiivista (%d / %d)";
+"profile.received_feedback" = "Saatu palaute";
+"profile.badges" = "Sharetribe-merkit";
+
+"profile.feedback" = "Palaute";

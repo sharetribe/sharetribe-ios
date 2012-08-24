@@ -245,7 +245,7 @@
     authorView.y = yOffset+6;
     [authorImageView setImageWithUser:listing.author];
     if (listing != nil) {
-        authorIntroLabel.text = [NSLocalizedString(@"listing.offered_by", @"") stringByAppendingString:@":"];
+        authorIntroLabel.text = ([listing.type isEqual:kListingTypeOffer]) ?  [NSLocalizedString(@"listing.offered_by", @"") stringByAppendingString:@":"] : [NSLocalizedString(@"listing.requested_by", @"") stringByAppendingString:@":"];
         authorNameLabel.text = listing.author.name;
         agestampLabel.text = [listing.createdAt agestamp];
     } else {
@@ -354,7 +354,7 @@
     composer.isDirectReplyToListing = isDirectReply;
     
     UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentViewController:composerNavigationController animated:YES completion:nil];
+    [self presentModalViewController:composerNavigationController animated:YES];
 
 }
 

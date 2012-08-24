@@ -77,6 +77,11 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc
+{
+    clockStampView.delegate = nil;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad

@@ -87,6 +87,7 @@
 "placeholder.username" = "Username";
 "placeholder.password" = "Password";
 "placeholder.conversation_title" = "Write a conversation title";
+"placeholder.address" = "Address";
 
 "header.pull_down_to_update" = "Pull down to update...";
 "header.release_to_update" = "Release to update...";
@@ -136,7 +137,6 @@
 "listing.requesting_type.trade" = "Trading";
 "listing.requesting_type.take_for_free" = "Taking for free";
 
-
 "listing.offered_item" = "Item you offer";
 "listing.offered_favor" = "Service you offer";
 "listing.offered_space" = "Space you offer";
@@ -173,12 +173,15 @@
 "listing.explanation" = "What's this?";
 
 "listing.offered_by" = "Offered by";
+"listing.requested_by" = "Requested by";
 
-"listing.explanation.offer_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
-"listing.explanation.request_type" = "There are many different ways to share in Sharetribe. For example, you can offer to lend, sell, or trade items in Sharetribe. You can select as many offer/request types as you want, but you must select at least one.";
 "listing.explanation.tags" = "With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.";
+
 "listing.explanation.expiration_date" = "You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.";
+
 "profile.explanation.feedback" = "You can give feedback to the other users every time you have offered something to them or requested something from them. With the feedback you can express whether the actions of the other party were as expected. Other users can see this information in the target person's profile and can use it to decide whether they want to associate with that person in the future. This means that when you have received positive feedback, it'll guarantee better success with offers and requests in the future. Thus, it's good to always remember to give feedback on events, and also remind the other party to give feedback to you. Currently, you can give feedback in the web version of Sharetribe.\n\nFeedback in Sharetribe consists of a numeric evaluation and a textual description. The numeric evaluation can be between 1 (worse than expected) and 5 (much better than expected). If you give non-neutral feedback you need to tell what went especially well or wrong in the textual description.\n\nOn the profile page you can view following information about the user whose profile your viewing: the average of all the numeric evaluations, the amounts of different feedback ratings and a list of all feedback with textual descriptions. The facial expression of the Kaapo figure in each feedback describes the numeric evaluation associated to that feedback.";
+
+"profile.explanation.badges" = "You can earn several different badges in Sharetribe as a recognition of your actions in the service. You earn badges from actions like adding new offers and requests, commenting on others' content, from all types of resource exchange that takes place (selling and borrowing items, doing favors, organizing car pooling and so on) and just generally being an active user of the service. Note that you only get badges from those exchanges where you have received positive feedback.\n\nYou can view the badges the people have earned in their profile page. A person with lots of badges is most likely active, reliable and liked by other users. So be active in Sharetribe: buy, sell, lend and borrow items, do others favors, share rides and watch your badge arsenal grow!";
 
 "listing.label_for_favor_offer"                  = "Request this service";
 "listing.label_for_favor_request"                = "Offer this service";

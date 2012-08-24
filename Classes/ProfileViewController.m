@@ -180,7 +180,7 @@
     composer.inModalComposerMode = YES;
     
     UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentViewController:composerNavigationController animated:YES completion:nil];
+    [self presentModalViewController:composerNavigationController animated:YES];
 }
 
 - (IBAction)phoneButtonPressed

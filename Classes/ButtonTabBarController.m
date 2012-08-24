@@ -100,7 +100,7 @@
 
 - (IBAction)middleButtonPressed:(UIButton *)sender
 {
-    [self presentViewController:middleViewController animated:YES completion:nil];
+    [self presentModalViewController:middleViewController animated:YES];
 }
 
 @end
