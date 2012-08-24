@@ -66,6 +66,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)openSharetribeWebsite
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.sharetribe.com"]];
+}
+
 - (IBAction)performLogin
 {
     [[SharetribeAPIClient sharedClient] logInWithUsername:usernameField.text password:passwordField.text];

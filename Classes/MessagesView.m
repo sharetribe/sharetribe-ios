@@ -222,7 +222,11 @@
         dateLabel.text = message.createdAt.agestamp;
         dateLabel.y = yOffset-2;
         dateLabel.hidden = NO;
-                
+        
+        int dateWidth = [dateLabel.text sizeWithFont:dateLabel.font].width;
+        int widthAvailableForName = self.width-leftEdgeX-15-dateWidth;
+        usernameButton.width = MIN(usernameButton.width, widthAvailableForName);
+        
         yOffset += 20;
         
         UILabel *textLabel;

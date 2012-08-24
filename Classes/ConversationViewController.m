@@ -74,7 +74,7 @@
     [scrollView addSubview:messagesView];
     
     self.conversationTitlePrefixLabel = [[UILabel alloc] init];
-    conversationTitlePrefixLabel.font = [UIFont systemFontOfSize:17];
+    conversationTitlePrefixLabel.font = [UIFont systemFontOfSize:16];
     conversationTitlePrefixLabel.textColor = [UIColor blackColor];
     conversationTitlePrefixLabel.backgroundColor = [UIColor clearColor];
     conversationTitlePrefixLabel.x = 10;
@@ -83,7 +83,7 @@
     [scrollView addSubview:conversationTitlePrefixLabel];
         
     self.conversationTitleLabel = [[UILabel alloc] init];
-    conversationTitleLabel.font = [UIFont boldSystemFontOfSize:17];
+    conversationTitleLabel.font = [UIFont boldSystemFontOfSize:16];
     conversationTitleLabel.numberOfLines = 0;
     conversationTitleLabel.lineBreakMode = UILineBreakModeWordWrap;
     conversationTitleLabel.textColor = [UIColor blackColor];
@@ -123,28 +123,30 @@
     [showListingButton addSubview:disclosureIndicatorView];
     
     self.acceptButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [acceptButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    acceptButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    acceptButton.backgroundColor = [UIColor colorWithRed:0.2 green:0.9 blue:0.3 alpha:0.8];
+    [acceptButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [acceptButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.7] forState:UIControlStateNormal];
+    [acceptButton setBackgroundImage:[[UIImage imageNamed:@"button-pattern-green"] stretchableImageWithLeftCapWidth:5 topCapHeight:19] forState:UIControlStateNormal];
+    acceptButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    acceptButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
     acceptButton.layer.cornerRadius = 5;
-    acceptButton.layer.borderWidth = 1;
-    acceptButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    acceptButton.clipsToBounds = YES;
     acceptButton.x = 10;
     acceptButton.width = 145;
-    acceptButton.height = 40;
+    acceptButton.height = 37;
     [acceptButton addTarget:self action:@selector(acceptButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:acceptButton];
     
     self.rejectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rejectButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    rejectButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    rejectButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.3 blue:0.4 alpha:0.8];
+    [rejectButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rejectButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.7] forState:UIControlStateNormal];
+    [rejectButton setBackgroundImage:[[UIImage imageNamed:@"button-pattern-red"] stretchableImageWithLeftCapWidth:5 topCapHeight:19] forState:UIControlStateNormal];
+    rejectButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    rejectButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
     rejectButton.layer.cornerRadius = 5;
-    rejectButton.layer.borderWidth = 1;
-    rejectButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    rejectButton.clipsToBounds = YES;
     rejectButton.x = 165;
     rejectButton.width = 145;
-    rejectButton.height = 40;
+    rejectButton.height = 37;
     [rejectButton addTarget:self action:@selector(rejectButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:rejectButton];
     
@@ -154,7 +156,7 @@
     statusView.backgroundColor = [UIColor clearColor];
     statusView.x = 10;
     statusView.width = 300;
-    statusView.height = 40;
+    statusView.height = 37;
     [scrollView addSubview:statusView];
     
     [self observeNotification:kNotificationForDidReceiveMessagesForConversation withSelector:@selector(gotMessagesForConversation:)];
@@ -409,6 +411,7 @@
 {
     if (conversation.conversationId == [notification.object conversationId]) {
         self.conversation = notification.object;
+        conversation.listing = listing;
         [self refreshView];
     }
 }

@@ -16,5 +16,6 @@
 @property (strong) IBOutlet UIActivityIndicatorView *loginSpinner;
 
 - (IBAction)performLogin;
+- (IBAction)openSharetribeWebsite;
 
 @end

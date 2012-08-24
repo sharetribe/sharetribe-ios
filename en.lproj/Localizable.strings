@@ -47,9 +47,9 @@
 "confirm.accept_request.message_format" = "";
 "confirm.accept_offer.title_format" = "Accept %@'s offer?";
 "confirm.accept_offer.message_format" = "";
-"confirm.reject_request.title_format" = "Decline %@'s request for now?";
+"confirm.reject_request.title_format" = "Decline %@'s request?";
 "confirm.reject_request.message_format" = "";
-"confirm.reject_offer.title_format" = "Decline %@'s offer for now?";
+"confirm.reject_offer.title_format" = "Decline %@'s offer?";
 "confirm.reject_offer.message_format" = "";
 
 "conversation_status_format.you_accepted_request" = "You accepted %@'s request.";
@@ -60,6 +60,11 @@
 "conversation_status_format.other_rejected_request" = "%@ declined your request.";
 "conversation_status_format.you_rejected_offer" = "You declined %@'s offer.";
 "conversation_status_format.other_rejected_offer" = "%@ declined your offer.";
+
+"alert.posted_reply_to_listing.title" = "Message sent!";
+"alert.posted_reply_to_listing.message_format" = "%@ should contact you once they've read it.";
+"alert.failed_to_post_reply_to_listing.title" = "Message could not be sent";
+"alert.failed_to_post_reply_to_listing.message_format" = "For some reason, we failed this time. Please try to contact %@ again after a while.";
 
 "alert.title.error" = "Error";
 "alert.confirm_cancel_composing_listing" = "Are you sure you want to cancel?";

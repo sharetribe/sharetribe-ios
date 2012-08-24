@@ -33,7 +33,7 @@
     textLabel.text = [NSString stringWithFormat:@"“%@”", feedback.text];
     
     authorNameLabel.width = [authorNameLabel.text sizeWithFont:authorNameLabel.font].width;
-    timestampLabel.x = authorNameLabel.x+authorNameLabel.width+5;
+    timestampLabel.x = authorNameLabel.x+authorNameLabel.width+8;
     textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 1000) lineBreakMode:UILineBreakModeWordWrap].height;
 }
 
@@ -60,7 +60,7 @@
         prototypeCell = [FeedbackListCell newInstance];
     }
     prototypeCell.feedback = feedback;
-    return MAX((prototypeCell.gradeIconView.y*2+prototypeCell.gradeIconView.height), (prototypeCell.textLabel.y+prototypeCell.textLabel.height+12));
+    return MAX((prototypeCell.gradeIconView.y*2+prototypeCell.gradeIconView.height+4), (prototypeCell.textLabel.y+prototypeCell.textLabel.height+16));
 }
 
 @end

@@ -10090,7 +10090,7 @@ AAEAAQABA</bytes>
 									<object class="IBUILabel" id="414861233">
 										<reference key="NSNextResponder" ref="568534094"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{89, 28}, {182, 30}}</string>
+										<string key="NSFrame">{{89, 28}, {195, 30}}</string>
 										<reference key="NSSuperview" ref="568534094"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="1068522775"/>
@@ -10107,9 +10107,8 @@ AAEAAQABA</bytes>
 										</object>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
-										<float key="IBUIMinimumFontSize">10</float>
+										<float key="IBUIMinimumFontSize">15</float>
 										<int key="IBUINumberOfLines">0</int>
-										<int key="IBUILineBreakMode">0</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<int key="type">2</int>
 											<double key="pointSize">17</double>
@@ -10119,7 +10118,6 @@ AAEAAQABA</bytes>
 											<double key="NSSize">17</double>
 											<int key="NSfFlags">16</int>
 										</object>
-										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 									<object class="IBUILabel" id="567040892">
 										<reference key="NSNextResponder" ref="568534094"/>

@@ -25,6 +25,9 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"profile.feedback", @"");
+    
+    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)viewDidUnload

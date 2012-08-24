@@ -27,6 +27,7 @@
 @property (strong) IBOutlet UILabel *tagListLabel;
 
 @property (strong) MKMapView *mapView;
+@property (strong) UILabel *addressLabel;
 
 @property (strong) IBOutlet UIView *authorView;
 @property (strong) IBOutlet UIImageView *authorImageView;

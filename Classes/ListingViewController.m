@@ -8,6 +8,7 @@
 
 #import "ListingViewController.h"
 
+#import "Location.h"
 #import "Message.h"
 #import "ConversationViewController.h"
 #import "LocationPickerViewController.h"
@@ -41,6 +42,7 @@
 @synthesize tagListLabel;
 
 @synthesize mapView;
+@synthesize addressLabel;
 
 @synthesize authorView;
 @synthesize authorImageView;
@@ -91,12 +93,22 @@
     mapView.layer.cornerRadius = 8;
     mapView.frame = CGRectMake(10, 0, 300, 87);
     [self.scrollView addSubview:mapView];
-    
+        
     UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
     mapButton.frame = mapView.bounds;
     mapButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [mapButton addTarget:self action:@selector(showDetailedLocation) forControlEvents:UIControlEventTouchUpInside];
     [mapView addSubview:mapButton];
+    
+    self.addressLabel = [[UILabel alloc] init];
+    addressLabel.x = 18;
+    addressLabel.width = 320-2*18;
+    addressLabel.font = [UIFont systemFontOfSize:13];
+    addressLabel.textColor = [UIColor darkGrayColor];
+    addressLabel.backgroundColor = [UIColor clearColor];
+    addressLabel.numberOfLines = 0;
+    addressLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [self.scrollView addSubview:addressLabel];
     
     self.commentsView = [[MessagesView alloc] init];
     commentsView.sendButtonTitle = NSLocalizedString(@"button.send.comment", @"");
@@ -105,7 +117,11 @@
     [self.scrollView addSubview:commentsView];
     
     [respondButton setImage:[UIImage imageNamed:@"icon-contact"] forState:UIControlStateNormal];
-    [respondButton setBackgroundImage:[[UIImage imageNamed:@"dark-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+    [respondButton setBackgroundImage:[[UIImage imageNamed:@"button-pattern-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:19] forState:UIControlStateNormal];
+    [respondButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [respondButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.7] forState:UIControlStateNormal];
+    respondButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    respondButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
     respondButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
     respondButton.layer.cornerRadius = 8;
     respondButton.clipsToBounds = YES;
@@ -121,6 +137,7 @@
     [self.scrollView addGestureRecognizer:swipeRecognizer];
         
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRefreshListing:) name:kNotificationForDidRefreshListing object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostMessage:) name:kNotificationForDidPostMessage object:nil];
     
     [self reloadData];
     
@@ -213,7 +230,14 @@
         [mapView setRegion:MKCoordinateRegionMakeWithDistance(listing.coordinate, 2000, 4000) animated:NO];
         mapView.hidden = NO;
         mapView.y = yOffset+6;
-        yOffset = mapView.y+mapView.height+14;
+        yOffset = mapView.y+mapView.height+7;
+        addressLabel.text = listing.location.address;
+        if (listing.location.address != nil) {
+            addressLabel.y = yOffset;
+            addressLabel.height = [addressLabel.text sizeWithFont:addressLabel.font constrainedToSize:CGSizeMake(addressLabel.width, 100) lineBreakMode:UILineBreakModeWordWrap].height;
+            yOffset += addressLabel.height+3;
+        }
+        yOffset += 7;
     } else {
         mapView.hidden = YES;
     }
@@ -275,6 +299,24 @@
     if (refreshedListing.listingId == self.listingId) {
         self.listing = refreshedListing;
         [self reloadData];
+    }
+}
+
+- (void)didPostMessage:(NSNotification *)notification
+{
+    if (self == self.navigationController.topViewController) {
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alert.posted_reply_to_listing.message_format", @""), listing.author.givenName];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.posted_reply_to_listing.title", @"") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)didFailToPostMessage:(NSNotification *)notification
+{
+    if (self == self.navigationController.topViewController) {
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alert.failed_to_post_reply_to_listing.message_format", @""), listing.author.givenName];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.failed_to_post_reply_to_listing.title", @"") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
+        [alert show];
     }
 }
 
