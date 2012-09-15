@@ -22,6 +22,7 @@
     BOOL shouldRefocusRegion;
     MKCoordinateRegion targetRegion;
     MKCoordinateRegion defaultRegion;
+    Listing *selectedListing;
 }
 
 NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context);
@@ -38,6 +39,10 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 
 - (void)addListings:(NSArray *)newListings
 {
+    if (newListings.count == 0) {
+        return;
+    }
+    
     BOOL shouldFocusToDefaultRegion = (map.annotations.count < 2);
     
     for (Listing *newListing in newListings) {
@@ -126,18 +131,18 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     [super viewDidLoad];
     
     self.map = [[MKMapView alloc] init];
-    map.frame = CGRectMake(0, 0, 320, 460-2*44-5);
+    map.frame = CGRectMake(0, 0, self.view.width, self.view.height-2*44-5);
     map.showsUserLocation = YES;
     map.delegate = self;
     map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(60.170, 24.939), 4000, 4000);
     [self.view addSubview:map];
     
     self.cell = [ListingCell instance];
-    cell.frame = CGRectMake(0, 0, 320, kListingCellHeight-5);
+    cell.frame = CGRectMake(0, 0, self.view.width, kListingCellHeight-5);
     cell.alpha = 0;
     
     CAGradientLayer *cellShadow = [[CAGradientLayer alloc] init];
-    cellShadow.frame = CGRectMake(0, cell.height, 320, 5);
+    cellShadow.frame = CGRectMake(0, cell.height, self.view.width, 5);
     cellShadow.colors = [NSArray arrayWithObjects:(id)([UIColor colorWithWhite:0 alpha:0.3].CGColor), (id)[UIColor clearColor].CGColor, nil];
     [cell.layer insertSublayer:cellShadow atIndex:0];
     
@@ -216,6 +221,13 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     }
 }
 
+- (void)showOrHideCell
+{
+    [UIView beginAnimations:nil context:NULL];
+    cell.alpha = (selectedListing != nil) ? 1 : 0;
+    [UIView commitAnimations];
+}
+
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
@@ -255,10 +267,10 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             [self.view addSubview:cell];
         }
         [cell setListing:view.annotation];
-    
-        [UIView beginAnimations:nil context:NULL];
-        cell.alpha = 1;
-        [UIView commitAnimations];
+        
+        selectedListing = (Listing *) view.annotation;
+        
+        [self performSelector:@selector(showOrHideCell) withObject:nil afterDelay:0.1];
         
         CGPoint pinPoint = [mapView convertCoordinate:view.annotation.coordinate toPointToView:mapView];
         if (pinPoint.y < cell.height+60) {
@@ -273,11 +285,11 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
-    if (mapView.selectedAnnotations.count == 0 && [view.annotation isKindOfClass:Listing.class]) {
-    
-        [UIView beginAnimations:nil context:NULL];
-        cell.alpha = 0;
-        [UIView commitAnimations];
+    if ([view.annotation isKindOfClass:Listing.class]) {
+        if (selectedListing == view.annotation) {
+            selectedListing = nil;
+        }
+        [self performSelector:@selector(showOrHideCell) withObject:nil afterDelay:0.1];
     }
 }
 

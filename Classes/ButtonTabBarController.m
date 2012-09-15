@@ -48,7 +48,7 @@
     [super viewDidLoad];
     
     self.middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    middleButton.frame = CGRectMake((320-70)/2, 480-68, 70, 66);
+    middleButton.frame = CGRectMake((320-70)/2, self.view.height-68, 70, 66);
     middleButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 14, 0);
     [middleButton setBackgroundImage:[UIImage imageNamed:@"tab-bar-bezel"] forState:UIControlStateNormal];
     [middleButton setBackgroundImage:[UIImage imageNamed:@"tab-bar-bezel"] forState:UIControlStateHighlighted];

@@ -71,6 +71,7 @@
     [self observeNotification:kNotificationForDidReceiveGradesForUser withSelector:@selector(gotGrades:)];
     [self observeNotification:kNotificationForDidReceiveFeedbackForUser withSelector:@selector(gotFeedback:)];
     [self observeNotification:kNotificationForDidReceiveListingsByUser withSelector:@selector(gotListingsByUser:)];
+    [self observeNotification:kNotificationForDidPostMessage withSelector:@selector(didPostMessage:)];
 }
 
 - (void)viewDidUnload
@@ -249,6 +250,15 @@
     [self.tableView reloadData];
 }
 
+- (void)didPostMessage:(NSNotification *)notification
+{
+    if (self.navigationController.topViewController == self && self.navigationController.tabBarController.selectedViewController == self.navigationController) {
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"alert.message_was_sent.title_format", @""), user.givenName];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -351,8 +361,10 @@
                 cell.percentageLabel.text = [NSString stringWithFormat:@"%.0f%%", percentage*100];
                 cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"profile.percentage_detail_format", @""), numberOfPositiveRatings, numberOfAllRatings];
                 
-                [cell.whatIsThisButton setTitle:NSLocalizedString(@"listing.explanation", @"") forState:UIControlStateNormal];
+                NSString *whatIsThisTitle = NSLocalizedString(@"listing.explanation", @"");
+                [cell.whatIsThisButton setTitle:whatIsThisTitle forState:UIControlStateNormal];
                 [cell.percentageLabel sizeToFit];
+                cell.whatIsThisButton.width = [whatIsThisTitle sizeWithFont:cell.whatIsThisButton.titleLabel.font].width;
                 cell.detailLabel.x = cell.percentageLabel.x + cell.percentageLabel.width + 5;
                 
                 return cell;

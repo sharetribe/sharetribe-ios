@@ -39,10 +39,11 @@
     [super viewDidLoad];
     
     self.map = [[MKMapView alloc] init];
-    map.frame = CGRectMake(0, 0, 320, 416);
+    map.frame = CGRectMake(0, 0, self.view.width, self.view.height);
     map.delegate = self;
     map.mapType = (mapType != 0) ? mapType : MKMapTypeStandard;
     map.showsUserLocation = YES;
+    map.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:map];
     
     [map addAnnotation:self];

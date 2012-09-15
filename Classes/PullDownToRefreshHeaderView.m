@@ -18,6 +18,7 @@
 @synthesize updateIntroLabel;
 @synthesize updateTimeLabel;
 @synthesize updateSpinner;
+@synthesize searchBar;
 
 - (id)init
 {
@@ -30,7 +31,7 @@
         updateIntroLabel.textColor = [UIColor whiteColor];
         updateIntroLabel.backgroundColor = [UIColor clearColor];
         updateIntroLabel.textAlignment = UITextAlignmentCenter;
-        updateIntroLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        // updateIntroLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         updateIntroLabel.alpha = 0.8;
         
         self.updateTimeLabel = [[UILabel alloc] init];
@@ -39,13 +40,13 @@
         updateTimeLabel.textColor = [UIColor whiteColor];
         updateTimeLabel.backgroundColor = [UIColor clearColor];
         updateTimeLabel.textAlignment = UITextAlignmentCenter;
-        updateTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        // updateTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         updateTimeLabel.alpha = 0.8;
         
         self.updateSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         updateSpinner.frame = CGRectMake(26, -40, 20, 20);
         updateSpinner.hidesWhenStopped = NO;
-        updateSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        // updateSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         
         UIView *headerBackground = [[UIView alloc] init];
         headerBackground.frame = CGRectMake(0, -460, 320, 460);
@@ -59,6 +60,14 @@
         [self addSubview:updateSpinner];
     }
     return self;
+}
+
+- (void)setSearchBar:(UISearchBar *)theSearchBar
+{
+    searchBar = theSearchBar;
+    
+    [self addSubview:searchBar];
+    self.height = searchBar.height;
 }
 
 - (void)tableViewDidScroll:(UITableView *)tableView

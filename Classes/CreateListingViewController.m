@@ -12,6 +12,7 @@
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "UIView+XYWidthHeight.h"
+#import "GTMNSString+HTML.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface CreateListingViewController () {
@@ -234,7 +235,7 @@
     self.listing = nil;
     self.formItems = nil;
     table.tableFooterView = nil;
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -764,12 +765,12 @@
     
     [self performSelectorInBackground:@selector(convertImageToData) withObject:nil];
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    [picker dismissModalViewControllerAnimated:YES];
 }
 
 - (void)convertImageToData
@@ -833,6 +834,7 @@
     FormItem *formItem = [formItems objectAtIndex:path.row];
     NSString *itemHelp = formItem.localizedExplanation;
     itemHelp = [itemHelp stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
+    itemHelp = [itemHelp gtm_stringByUnescapingFromHTML];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:formItem.localizedTitle message:itemHelp delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];

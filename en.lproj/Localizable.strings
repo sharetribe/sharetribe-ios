@@ -61,6 +61,7 @@
 "conversation_status_format.you_rejected_offer" = "You declined %@'s offer.";
 "conversation_status_format.other_rejected_offer" = "%@ declined your offer.";
 
+"alert.message_was_sent.title_format" = "Message sent to %@.";
 "alert.posted_reply_to_listing.title" = "Message sent!";
 "alert.posted_reply_to_listing.message_format" = "%@ should contact you once they've read it.";
 "alert.failed_to_post_reply_to_listing.title" = "Message could not be sent";
@@ -88,6 +89,7 @@
 "placeholder.password" = "Password";
 "placeholder.conversation_title" = "Write a conversation title";
 "placeholder.address" = "Address";
+"placeholder.search" = "Search";
 
 "header.pull_down_to_update" = "Pull down to update...";
 "header.release_to_update" = "Release to update...";

@@ -292,9 +292,13 @@
     
     composeField.y = yOffset;
     composeFieldContainer.y = yOffset;
-    [self setComposeFieldShowingInFullSize:alwaysShowFullSizeComposeField];
+    if (!composeField.isFirstResponder) {
+        [self setComposeFieldShowingInFullSize:alwaysShowFullSizeComposeField];
+    }
+    
+    int heightForButtons = (showComposerButtons && (composeField.isFirstResponder || composeField.text.length > 0)) ? 40 : 0;
         
-    self.height = yOffset + composeField.height + 10;
+    self.height = yOffset + composeField.height + heightForButtons + 10;
     
     for (int i = messages.count+1; i < avatarViews.count; i++) {
         [[avatarViews objectAtIndex:i] setHidden:YES];

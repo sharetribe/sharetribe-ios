@@ -63,11 +63,13 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommunityCell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"CommunityCell"];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
     }
     
     cell.textLabel.text = community.name;
     cell.detailTextLabel.text = [community.domain stringByAppendingString:@".sharetribe.com"];
-    
+        
     return cell;
 }
 

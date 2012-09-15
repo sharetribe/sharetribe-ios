@@ -42,6 +42,7 @@
 - (id)initWithDelegate:(id<ClockStampViewDelegate>)delegate;
 
 - (void)showForIndexPath:(NSIndexPath *)indexPath;
+- (void)hide;
 
 // Call these with the corresponding tableview scroll events:
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;

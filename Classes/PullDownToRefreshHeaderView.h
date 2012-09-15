@@ -10,9 +10,10 @@
 
 @interface PullDownToRefreshHeaderView : UIView
 
-@property (strong) UILabel *updateIntroLabel;
-@property (strong) UILabel *updateTimeLabel;
-@property (strong) UIActivityIndicatorView *updateSpinner;
+@property (strong, nonatomic) UILabel *updateIntroLabel;
+@property (strong, nonatomic) UILabel *updateTimeLabel;
+@property (strong, nonatomic) UIActivityIndicatorView *updateSpinner;
+@property (strong, nonatomic) UISearchBar *searchBar;
 
 - (void)tableViewDidScroll:(UITableView *)tableView;
 - (BOOL)triggersRefreshAsTableViewEndsDragging:(UITableView *)tableView;

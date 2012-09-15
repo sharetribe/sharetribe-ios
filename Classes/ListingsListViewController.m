@@ -30,6 +30,7 @@
 @implementation ListingsListViewController
 
 @synthesize tableView = _tableView;
+@synthesize searchBar = _searchBar;
 @synthesize header;
 @synthesize listingCollectionViewDelegate;
 
@@ -48,10 +49,13 @@
         listings = [NSMutableArray array];
     }
     
+    NSInteger addedListingsCount = 0;
     for (Listing *newListing in newListings) {
         NSInteger oldIndex = [listings indexOfObject:newListing];
         if (oldIndex != NSNotFound) {
             [listings removeObjectAtIndex:oldIndex];
+        } else {
+            addedListingsCount += 1;
         }
         [listings addObject:newListing];
     }
@@ -59,7 +63,7 @@
     [listings sortUsingFunction:compareListingsByDate context:NULL];
     [self.tableView reloadData];
     
-    if (listings.count > 0 && refreshingTopOfList) {
+    if (addedListingsCount > 0 && refreshingTopOfList) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
@@ -99,8 +103,15 @@
     
     self.clockStampView = [[ClockStampView alloc] initWithDelegate:self];
     
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.frame = CGRectMake(0, 0, 320, 44);
+    self.searchBar.tintColor = kSharetribeBrownColor;
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = NSLocalizedString(@"placeholder.search", @"");
+    
     if (!disallowsRefreshing) {
         self.header = [[PullDownToRefreshHeaderView alloc] init];
+        header.searchBar = self.searchBar;
         self.tableView.tableHeaderView = header;
     }
     
@@ -138,6 +149,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [clockStampView hide];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -229,6 +241,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [clockStampView scrollViewWillBeginDragging:scrollView];
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -257,6 +270,26 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [clockStampView scrollViewDidEndDecelerating:scrollView];
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [searchBar setShowsCancelButton:(searchText.length > 0) animated:YES];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [listingCollectionViewDelegate viewController:self wantsToSearch:searchBar.text];
+    [searchBar resignFirstResponder];
+    [footerSpinner startAnimating];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = nil;
+    [self searchBarSearchButtonClicked:searchBar];
 }
 
 #pragma mark - ClockStampViewDelegate

@@ -19,8 +19,6 @@
 		<string>shareType</string>
 		<key>mandatory</key>
 		<true/>
-		<key>provides_explanation</key>
-		<true/>
 	</dict>
 	<dict>
 		<key>type</key>
@@ -77,7 +75,7 @@
 		<string>validUntil</string>
 		<key>mandatory</key>
 		<true/>
-        <key>provides_explanation</key>
+		<key>provides_explanation</key>
 		<true/>
 	</dict>
 	<dict>

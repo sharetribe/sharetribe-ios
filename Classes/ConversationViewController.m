@@ -63,8 +63,9 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     self.scrollView = [[UIScrollView alloc] init];
-    scrollView.frame = CGRectMake(0, 0, self.view.width, 460-2*44-5);
+    scrollView.frame = CGRectMake(0, 0, self.view.width, self.view.height-2*44-5);
     scrollView.alwaysBounceVertical = YES;
+    scrollView.scrollsToTop = YES;
     [self.view addSubview:scrollView];
     
     self.messagesView = [[MessagesView alloc] init];
@@ -171,12 +172,13 @@
     
     messagesView.messages = conversation.messages;
     
-    int contentHeight = messagesView.y+messagesView.height+10;
-    scrollView.contentSize = CGSizeMake(320, contentHeight);
+    [self refreshContentHeight];
     
-    [[SharetribeAPIClient sharedClient] getMessagesForConversation:conversation];
-    if (conversation.listingId != 0 && conversation.listing == nil) {
-        [[SharetribeAPIClient sharedClient] getListingWithId:conversation.listingId];
+    if (conversation != nil) {
+        [[SharetribeAPIClient sharedClient] getMessagesForConversation:conversation];
+        if (conversation.listingId != 0 && conversation.listing == nil) {
+            [[SharetribeAPIClient sharedClient] getListingWithId:conversation.listingId];
+        }
     }
 }
 
@@ -325,11 +327,30 @@
     
     conversationTitleField.placeholder = NSLocalizedString(@"placeholder.conversation_title", @"");
     messagesView.composeFieldPlaceholder = (conversation != nil) ? NSLocalizedString(@"placeholder.reply", @"") : NSLocalizedString(@"placeholder.message", @"");
+    
+    [self refreshContentHeight];
+}
+
+- (void)refreshContentHeight
+{
+    int contentHeight = messagesView.y+messagesView.height+10;
+    scrollView.contentSize = CGSizeMake(320, contentHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    conversation.unread = NO;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 - (void)viewDidUnload
@@ -388,10 +409,9 @@
     if (conversation.conversationId == [notification.object conversationId]) {
         self.conversation = notification.object;
         messagesView.messages = conversation.messages;
-        int contentHeight = messagesView.y+messagesView.height+10;
-        scrollView.contentSize = CGSizeMake(320, contentHeight);
+        [self refreshContentHeight];
         
-        [scrollView setContentOffset:CGPointMake(0, MAX(0, contentHeight-scrollView.height)) animated:YES];
+        [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height-scrollView.height)) animated:YES];
         
         // TODO 1) prevent losing field focus if already typing a reply, 2) take care of content height
     }
@@ -405,6 +425,7 @@
         conversation.listing = theListing;
     }
     [self refreshView];
+    [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height-scrollView.height)) animated:YES];
 }
 
 - (void)didChangeConversationStatus:(NSNotification *)notification
@@ -448,12 +469,13 @@
 - (void)messagesViewDidBeginEditing:(MessagesView *)theMessagesView
 {
     [UIView beginAnimations:nil context:NULL];
-    scrollView.height = 416-216;
+    scrollView.height = self.view.height-216+44+5;
     // self.view.backgroundColor = kSharetribeBrownColor;
     [UIView commitAnimations];
     
     int contentHeight = messagesView.y+messagesView.height+((inModalComposerMode) ? 0 : 10);
     scrollView.contentSize = CGSizeMake(320, contentHeight);
+    NSLog(@"height checkpoint 2a: %d", contentHeight);
     
     int scrollY = (conversation.messages.count > 0) ? (messagesView.y+messagesView.composeField.y-10) : 0;
     [scrollView setContentOffset:CGPointMake(0, scrollY) animated:YES];
@@ -468,12 +490,11 @@
 - (void)messagesViewDidEndEditing:(MessagesView *)theMessagesView
 {    
     [UIView beginAnimations:nil context:NULL];
-    scrollView.height = 460-2*44-5;
+    scrollView.height = self.view.height;
     // self.view.backgroundColor = kSharetribeLightBrownColor;
     [UIView commitAnimations];
     
-    int contentHeight = messagesView.y+messagesView.height+10;
-    scrollView.contentSize = CGSizeMake(320, contentHeight);
+    [self refreshContentHeight];
 }
 
 - (void)messagesView:(MessagesView *)theMessagesView didSaveMessageText:(NSString *)messageText
@@ -501,9 +522,9 @@
 - (CGFloat)availableHeightForComposerInMessagesView:(MessagesView *)theMessagesView
 {
     if (conversation.messages.count > 0) {
-        return 416-216;
+        return self.view.height-216+44;
     } else {
-        return 416-216-messagesView.y;
+        return self.view.height-216+44-messagesView.y;
     }
 }
 

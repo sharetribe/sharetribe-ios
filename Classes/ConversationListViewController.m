@@ -133,6 +133,7 @@
     NSInteger conversationIndex = [conversations indexOfObject:conversation];
     if (conversationIndex == NSNotFound) {
         [conversations addObject:conversation];
+        [conversations sortUsingSelector:@selector(compare:)];
     } else {
         // If the thread is present (as another instance) but doesn't have the new message yet, let's add it:
         // TODO think this through again!

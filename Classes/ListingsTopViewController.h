@@ -17,14 +17,14 @@
 #define kViewChoiceList @"list"
 #define kViewChoiceMap  @"map"
 
-@interface ListingsTopViewController : UIViewController <ListingCollectionView, ListingCollectionViewDelegate, UISearchBarDelegate>
+@interface ListingsTopViewController : UIViewController <ListingCollectionView, ListingCollectionViewDelegate>
 
 @property (strong, nonatomic) ListingsListViewController *listViewer;
 @property (strong, nonatomic) ListingsMapViewController *mapViewer;
-@property (strong, nonatomic) UISearchBar *search;
-@property (strong, nonatomic) UIButton *dismissSearchButton;
 
-@property (strong) NSString* listingType;
+@property (strong) NSString *listingType;
+@property (strong) NSString *listingCategory;
+@property (strong) NSString *search;
 
 - (id)initWithListingType:(NSString *)type;
 

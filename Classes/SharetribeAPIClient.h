@@ -67,7 +67,8 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 - (void)logOut;
 - (void)registerCurrentDeviceWithToken:(NSString *)token;
 
-- (void)getListingsOfType:(NSString *)type forPage:(NSInteger)page;
+- (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category forPage:(NSInteger)page;
+- (void)getListingsOfType:(NSString *)type withSearch:(NSString *)search forPage:(NSInteger)page;
 - (void)getListingsByUser:(User *)user forPage:(NSInteger)page;
 - (void)getListingWithId:(NSInteger)listingId;
 - (void)postNewListing:(Listing *)listing;

@@ -36,8 +36,8 @@
 
 @property (strong) NSArray *messages;
 @property (readonly) Message *lastMessage;
-@property (readonly) BOOL isUnread;
-@property (readonly) BOOL isReplied;
+@property (assign, getter = isUnread) BOOL unread;
+@property (readonly, getter = isReplied) BOOL replied;
 
 + (Conversation *)conversationFromDict:(NSDictionary *)dict;
 + (NSArray *)conversationsFromArrayOfDicts:(NSArray *)dicts;

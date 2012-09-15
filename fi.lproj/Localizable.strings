@@ -52,6 +52,7 @@
 "confirm.reject_offer.title_format" = "Hylkää käyttäjän %@ tarjous?";
 "confirm.reject_offer.message_format" = "";
 
+"alert.message_was_sent.title_format" = "Viesti lähetetty käyttäjälle %@.";
 "conversation_status_format.you_accepted_request" = "Hyväksyit käyttäjän %@ pyynnön.";
 "conversation_status_format.other_accepted_request" = "%@ hyväksyi pyyntösi.";
 "conversation_status_format.you_accepted_offer" = "Hyväksyit käyttäjän %@ tarjouksen.";
@@ -68,7 +69,7 @@
 
 "alert.title.error" = "Virhe";
 "alert.confirm_cancel_composing_listing" = "Oletko varma että haluat peruuttaa?";
-"alert.confirm_log_out" = "Kirjaudu ulo?";
+"alert.confirm_log_out" = "Kirjaudu ulos?";
 "alert.confirm_phone_call.format" = "Soita käyttäjälle %@?";
 "alert.listing.posted" = "Ilmoitus lisätty onnistuneesti";
 "alert.listing.failed_to_post" = "Ilmoituksen lisääminen epäonnistui.";
@@ -88,6 +89,7 @@
 "placeholder.password" = "Salasana";
 "placeholder.conversation_title" = "Viestin otsikko";
 "placeholder.address" = "Osoite";
+"placeholder.search" = "Haku";
 
 "header.pull_down_to_update" = "Vedä alas päivittääksesi...";
 "header.release_to_update" = "Vapauta päivittäksesi...";
@@ -170,7 +172,7 @@
 
 "listing.subtitle.separate_with_comma" = "(erota pilkulla)";
 
-"listing.explanation" = "Mitä tämä tarkoittaa?";
+"listing.explanation" = "Mikä tämä on?";
 
 "listing.offered_by" = "Tarjoaja";
 "listing.requested_by" = "Pyytäjä";
@@ -183,25 +185,25 @@
 
 "profile.explanation.badges" = "Voit ansaita Sharetribessa erilaisia merkkejä tunnustuksena aktiivisesta toiminnastasi palvelussa. Merkkejä myönnetään esimerkiksi ahkerasta pyyntöjen ja tarjousten jättämisestä, toisten ilmoitusten kommentoinnista, kaikesta mahdollisesta resurssinvaihdosta (tavaroiden lainaamisesta ja myymisestä, palvelusten tekemisestä, kimppakyytien järjestämisestä ja niin edelleen) sekä ylipäänsä aktiivisesta palvelun käytöstä. Huomattakoon, että merkkeihin oikeuttavat ainoastaan sellaiset vaihdot, joista saatu palaute on ollut positiivista.\n\nNäet kunkin käyttäjän ansaitsemat merkit tämän profiilissa. Paljon merkkejä kerännyt käyttäjä on todennäköisesti aktiivinen ja myös muiden käyttäjien arvostama. Lainaa siis paljon tavaroita, tee palveluksia, kulje kimppakyydeillä ja kerää koko merkkisarja!";
 
-"link_label_for_favor_offer" = "Pyydä palvelusta";
-"link_label_for_favor_request" = "Tarjoa apuasi";
-"link_label_for_housing_offer_sell" = "Osta";
-"link_label_for_housing_offer_rent_out" = "Vuokraa";
-"link_label_for_housing_offer_share_for_free" = "Pyydä käyttöoikeutta";
-"link_label_for_housing_request_buy" = "Myy pyydetty tila";
-"link_label_for_housing_request_rent" = "Tarjoa vuokralle pyydetty tila";
-"link_label_for_item_offer_lend" = "Pyydä tämä tavara lainaan";
-"link_label_for_item_offer_rent_out" = "Vuokraa tämä tavara";
-"link_label_for_item_offer_sell" = "Osta tämä tavara";
-"link_label_for_item_offer_give_away" = "Pyydä tavara itsellesi";
-"link_label_for_item_offer_trade" = "Vaihda tämä tavara";
-"link_label_for_item_request_borrow" = "Tarjoa tämä tavara lainaan";
-"link_label_for_item_request_rent" = "Tarjoa tämä tavara vuokralle";
-"link_label_for_item_request_buy" = "Tarjoudu myymään tämä tavara";
-"link_label_for_item_request_receive" = "Anna pyydetty tavara pyytäjälle";
-"link_label_for_item_request_trade" = "Tarjoudu vaihtamaan tämä tavara";
-"link_label_for_rideshare_offer" = "Pyydä kyytiä";
-"link_label_for_rideshare_request" = "Tarjoa kyytiä";
+"listing.label_for_favor_offer" = "Pyydä palvelusta";
+"listing.label_for_favor_request" = "Tarjoa apuasi";
+"listing.label_for_space_offer_sell" = "Osta";
+"listing.label_for_space_offer_rent_out" = "Vuokraa";
+"listing.label_for_space_offer_share_for_free" = "Pyydä käyttöoikeutta";
+"listing.label_for_space_request_buy" = "Myy pyydetty tila";
+"listing.label_for_space_request_rent" = "Tarjoa vuokralle pyydetty tila";
+"listing.label_for_item_offer_lend" = "Pyydä tämä tavara lainaan";
+"listing.label_for_item_offer_rent_out" = "Vuokraa tämä tavara";
+"listing.label_for_item_offer_sell" = "Osta tämä tavara";
+"listing.label_for_item_offer_give_away" = "Pyydä tavara itsellesi";
+"listing.label_for_item_offer_trade" = "Vaihda tämä tavara";
+"listing.label_for_item_request_borrow" = "Tarjoa tämä tavara lainaan";
+"listing.label_for_item_request_rent" = "Tarjoa tämä tavara vuokralle";
+"listing.label_for_item_request_buy" = "Tarjoudu myymään tämä tavara";
+"listing.label_for_item_request_receive" = "Anna pyydetty tavara pyytäjälle";
+"listing.label_for_item_request_trade" = "Tarjoudu vaihtamaan tämä tavara";
+"listing.label_for_rideshare_offer" = "Pyydä kyytiä";
+"listing.label_for_rideshare_request" = "Tarjoa kyytiä";
 
 "listing.title_for_favor_offer"                  = "Palvelupyyntö";
 "listing.title_for_favor_request"                = "Palvelutarjous";
@@ -225,7 +227,7 @@
 "profile.no_open_listings" = "Ei avoimia ilmoituksia";
 "profile.one_open_listing" = "1 avoin ilmoitus";
 "profile.all_feedback_title_format" = "Kaikki palautteet (%d)";
-"profile.percentage_detail_format" = "positiivista (%d / %d)";
+"profile.percentage_detail_format" = "positiivista (%d/%d)";
 "profile.received_feedback" = "Saatu palaute";
 "profile.badges" = "Sharetribe-merkit";
 

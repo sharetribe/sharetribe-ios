@@ -23,10 +23,10 @@
 
 @synthesize listViewer;
 @synthesize mapViewer;
-@synthesize search;
-@synthesize dismissSearchButton;
 
 @synthesize listingType;
+@synthesize listingCategory;
+@synthesize search;
 
 - (id)initWithListingType:(NSString *)type
 {
@@ -66,7 +66,11 @@
 - (void)refreshListings
 {
     [listViewer startIndicatingRefresh];
-    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:kFirstPage];
+    if (search.length > 0) {
+        [[SharetribeAPIClient sharedClient] getListingsOfType:listingType withSearch:search forPage:kFirstPage];
+    } else {
+        [[SharetribeAPIClient sharedClient] getListingsOfType:listingType inCategory:listingCategory forPage:kFirstPage];
+    }
 }
 
 - (void)didReceiveListings:(NSNotification *)notification
@@ -117,25 +121,6 @@
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
         
-    self.search = [[UISearchBar alloc] init];
-    search.frame = CGRectMake(0, 0, 180, 44);
-    search.tintColor = kSharetribeDarkBrownColor;
-    search.delegate = self;
-    // [[search.subviews objectAtIndex:0] removeFromSuperview];
-    search.userInteractionEnabled = NO;
-
-    UIView *titleView = [[UIView alloc] init];
-    titleView.frame = CGRectMake(0, 0, 180, 44);
-    // [titleView addSubview:search];
-    // self.navigationItem.titleView = titleView;
-    
-    self.dismissSearchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    dismissSearchButton.frame = CGRectMake(0, 0, 320, 460);
-    dismissSearchButton.backgroundColor = [UIColor colorWithWhite:1 alpha:0.6];
-    [dismissSearchButton addTarget:search action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
-    dismissSearchButton.hidden = YES;
-    [self.view addSubview:dismissSearchButton];
-    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-map"] style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForDidFlipView object:nil];
@@ -233,24 +218,19 @@
 
 - (void)viewController:(UIViewController *)viewer wantsToRefreshPage:(NSInteger)page
 {
-    [[SharetribeAPIClient sharedClient] getListingsOfType:listingType forPage:page];
+    if (search.length > 0) {
+        [[SharetribeAPIClient sharedClient] getListingsOfType:listingType withSearch:search forPage:page];
+    } else {
+        [[SharetribeAPIClient sharedClient] getListingsOfType:listingType inCategory:listingCategory forPage:page];
+    }
 }
 
-#pragma mark - UISearchBarDelegate
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (void)viewController:(UIViewController *)viewer wantsToSearch:(NSString *)newSearch
 {
-    dismissSearchButton.hidden = NO;
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    dismissSearchButton.hidden = YES;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
+    [self clearAllListings];
+    
+    self.search = newSearch;
+    [self viewController:viewer wantsToRefreshPage:kFirstPage];
 }
 
 @end

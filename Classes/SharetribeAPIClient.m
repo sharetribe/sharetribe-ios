@@ -20,7 +20,6 @@
 #import "User.h"
 #import "NSDictionary+Sharetribe.h"
 #import "UIDevice+Sharetribe.h"
-#import <YAJLiOS/YAJL.h>
 
 #define kAPITokenKeyForUserDefaults            @"API token"
 #define kCurrentUserIdKeyForUserDefaults       @"current user id"
@@ -179,14 +178,30 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }];
 }
 
-- (void)getListingsOfType:(NSString *)type forPage:(NSInteger)page
+- (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category forPage:(NSInteger)page
+{
+    [self getListingsOfType:type inCategory:category withSearch:nil forPage:page];
+}
+
+- (void)getListingsOfType:(NSString *)type withSearch:(NSString *)search forPage:(NSInteger)page
+{
+    [self getListingsOfType:type inCategory:nil withSearch:search forPage:page];
+}
+
+- (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category withSearch:(NSString *)search forPage:(NSInteger)page
 {
     NSMutableDictionary *params = [self baseParams];
     if (type != nil) {
         [params setObject:type forKey:@"listing_type"];
     }
+    if (category != nil) {
+        [params setObject:category forKey:@"category"];
+    }
+    if (search != nil) {
+        [params setObject:search forKey:@"search"];
+    }
     [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
-    [params setObject:[NSNumber numberWithInt:50] forKey:@"per_page"];
+    [params setObject:[NSNumber numberWithInt:25] forKey:@"per_page"];
     
     [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -360,10 +375,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:message];
-        
-        [self getConversations];  // refresh the list
-        
+        Conversation *newConversation = [Conversation conversationFromDict:responseObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:newConversation];
+                
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostMessage object:message];
@@ -380,10 +394,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         [self logSuccessWithOperation:operation responseObject:responseObject];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:message];
-        
-        [self getMessagesForConversation:conversation];
-        
+        Conversation *updatedConversation = [Conversation conversationFromDict:responseObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidPostMessage object:updatedConversation];
+                
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailureWithOperation:operation error:error];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostMessage object:message];

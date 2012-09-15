@@ -15,5 +15,6 @@
 - (void)viewController:(UIViewController *)viewer didSelectListing:(Listing *)listing;
 
 - (void)viewController:(UIViewController *)viewer wantsToRefreshPage:(NSInteger)page;
+- (void)viewController:(UIViewController *)viewer wantsToSearch:(NSString *)search;
 
 @end

@@ -30,8 +30,8 @@
 
 @synthesize messages;
 @dynamic lastMessage;
-@dynamic isUnread;
-@dynamic isReplied;
+@dynamic unread;
+@dynamic replied;
 
 - (id)init
 {
@@ -86,6 +86,11 @@
 - (BOOL)isUnread
 {
     return !self.ownParticipation.isRead;
+}
+
+- (void)setUnread:(BOOL)isUnread
+{
+    self.ownParticipation.isRead = !isUnread;
 }
 
 - (BOOL)isReplied

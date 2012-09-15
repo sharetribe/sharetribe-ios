@@ -304,7 +304,7 @@
 
 - (void)didPostMessage:(NSNotification *)notification
 {
-    if (self == self.navigationController.topViewController) {
+    if (self == self.navigationController.topViewController && self.navigationController.tabBarController.selectedViewController == self.navigationController) {
         NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alert.posted_reply_to_listing.message_format", @""), listing.author.givenName];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.posted_reply_to_listing.title", @"") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
         [alert show];
@@ -313,7 +313,7 @@
 
 - (void)didFailToPostMessage:(NSNotification *)notification
 {
-    if (self == self.navigationController.topViewController) {
+    if (self == self.navigationController.topViewController && self.navigationController.tabBarController.selectedViewController == self.navigationController) {
         NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alert.failed_to_post_reply_to_listing.message_format", @""), listing.author.givenName];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.failed_to_post_reply_to_listing.title", @"") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
         [alert show];
