@@ -10,6 +10,7 @@
 
 #import "Listing.h"
 #import "ListingViewController.h"
+#import "Location.h"
 #import "SharetribeAPIClient.h"
 
 @interface ListingsTopViewController () {
@@ -214,6 +215,16 @@
     ListingViewController *listingViewer = [[ListingViewController alloc] init];
     listingViewer.listing = listing;
     [self.navigationController pushViewController:listingViewer animated:YES];
+}
+
+- (void)viewController:(UIViewController *)viewer didSelectListings:(NSArray *)listings
+{
+    ListingsListViewController *newListViewer = [[ListingsListViewController alloc] init];
+    newListViewer.listingCollectionViewDelegate = self;
+    newListViewer.title = [[(Listing *) [listings objectAtIndex:0] location] address];
+    newListViewer.disallowsRefreshing = YES;
+    [newListViewer addListings:listings];
+    [self.navigationController pushViewController:newListViewer animated:YES];
 }
 
 - (void)viewController:(UIViewController *)viewer wantsToRefreshPage:(NSInteger)page

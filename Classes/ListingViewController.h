@@ -43,5 +43,6 @@
 @property (strong) MessagesView *commentsView;
 
 - (IBAction)showAuthorProfile;
+- (IBAction)messageButtonPressed;
 
 @end

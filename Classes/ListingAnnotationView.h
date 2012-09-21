@@ -11,6 +11,7 @@
 @interface ListingAnnotationView : MKPinAnnotationView
 
 @property (strong) UIImageView *iconView;
+@property (strong) UILabel *countLabel;
 @property (strong) UIImageView *pinHeadView;
 
 @end

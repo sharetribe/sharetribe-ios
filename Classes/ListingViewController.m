@@ -323,7 +323,7 @@
 - (void)setComments:(NSArray *)comments
 {
     commentsView.messages = comments;
-    int contentHeight = commentsView.y+commentsView.height+10;
+    int contentHeight = commentsView.y + commentsView.height + 10;
     self.scrollView.contentSize = CGSizeMake(320, contentHeight);
 }
 
@@ -349,7 +349,7 @@
 {
     ConversationViewController *composer = [[ConversationViewController alloc] init];
     composer.recipient = listing.author;
-    composer.listing = listing;
+    composer.listing = (isDirectReply) ? listing : nil;
     composer.inModalComposerMode = YES;
     composer.isDirectReplyToListing = isDirectReply;
     
@@ -378,10 +378,10 @@
 
 - (void)messagesViewDidBeginEditing:(MessagesView *)theMessagesView
 {
-    int contentHeight = commentsView.y+commentsView.height+10;
+    int contentHeight = commentsView.y + commentsView.height + 10;
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.scrollView.height = 416-216+8;
+        self.scrollView.height = self.view.height - 216 + 44 + 5;
         respondButton.alpha = 0;
         topShadowBar.alpha = 0;
         backgroundView.height = contentHeight-backgroundView.y;
@@ -389,20 +389,20 @@
     
     self.scrollView.contentSize = CGSizeMake(320, contentHeight);
     
-    [self.scrollView setContentOffset:CGPointMake(0, commentsView.y+commentsView.composeField.y-10) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, commentsView.y + commentsView.composeField.y - 10) animated:YES];
 }
 
 - (void)messagesViewDidChange:(MessagesView *)theMessagesView
 {
-    [self.scrollView setContentOffset:CGPointMake(0, commentsView.y+commentsView.composeField.y-10) animated:YES];
+    [self.scrollView setContentOffset:CGPointMake(0, commentsView.y + commentsView.composeField.y - 10) animated:YES];
 }
 
 - (void)messagesViewDidEndEditing:(MessagesView *)theMessagesView
 {
-    int contentHeight = commentsView.y+commentsView.height+10;
+    int contentHeight = commentsView.y + commentsView.height + 10;
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.scrollView.height = 460-2*44-5;
+        self.scrollView.height = self.view.height - 5;
         respondButton.alpha = 1;
         topShadowBar.alpha = 1;
         backgroundView.height = contentHeight-backgroundView.y;
@@ -431,7 +431,7 @@
 
 - (CGFloat)availableHeightForComposerInMessagesView:(MessagesView *)messagesView
 {
-    return 416-216;
+    return self.view.height - 216 + 44;
 }
 
 #pragma mark -
@@ -446,7 +446,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.scrollView) {
-        CGFloat imageViewBaselineY = -(imageView.height-220)/2;
+        CGFloat imageViewBaselineY = -(imageView.height-200)/2;
         CGFloat y = imageViewBaselineY - scrollView.contentOffset.y/2;
         imageView.frame = CGRectMake(0, y, imageView.width, imageView.height);
         

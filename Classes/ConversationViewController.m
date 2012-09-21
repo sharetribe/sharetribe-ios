@@ -63,7 +63,7 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     self.scrollView = [[UIScrollView alloc] init];
-    scrollView.frame = CGRectMake(0, 0, self.view.width, self.view.height-2*44-5);
+    scrollView.frame = CGRectMake(0, 0, self.view.width, self.view.height - 2*44 - 5);
     scrollView.alwaysBounceVertical = YES;
     scrollView.scrollsToTop = YES;
     [self.view addSubview:scrollView];
@@ -100,6 +100,7 @@
     conversationTitleField.font = [UIFont boldSystemFontOfSize:13];
     conversationTitleField.returnKeyType = UIReturnKeyNext;
     conversationTitleField.enablesReturnKeyAutomatically = YES;
+    conversationTitleField.keyboardAppearance = UIKeyboardAppearanceAlert;
     conversationTitleField.x = 10;
     conversationTitleField.y = 10;
     conversationTitleField.width = 300;
@@ -120,7 +121,7 @@
     
     self.disclosureIndicatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"disclosure-arrow"]];
     disclosureIndicatorView.x = 276;
-    disclosureIndicatorView.y = (showListingButton.height-disclosureIndicatorView.height)/2;
+    disclosureIndicatorView.y = (showListingButton.height - disclosureIndicatorView.height) / 2;
     [showListingButton addSubview:disclosureIndicatorView];
     
     self.acceptButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -216,16 +217,16 @@
     if (listing != nil) {
         
         if (inModalComposerMode) {
-            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+4;
+            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height + 4;
         } else {
             showListingButton.hidden = NO;
-            showListingButton.height = conversationTitleLabel.height+20;
-            disclosureIndicatorView.y = (showListingButton.height-disclosureIndicatorView.height)/2;
+            showListingButton.height = conversationTitleLabel.height + 20;
+            disclosureIndicatorView.y = (showListingButton.height - disclosureIndicatorView.height) / 2;
             conversationTitleLabel.x = 20;
             conversationTitleLabel.y = 20;
             conversationTitleLabel.width = 256;
             
-            int nextY = conversationTitleLabel.y+conversationTitleLabel.height+22;
+            int nextY = conversationTitleLabel.y + conversationTitleLabel.height + 22;
             if ([conversation.status isEqual:kConversationStatusPending]) {
                 if (conversation.listing.author.isCurrentUser) {
                     acceptButton.hidden = NO;
@@ -245,7 +246,7 @@
             } else if ([conversation.status isEqual:kConversationStatusAccepted] || [conversation.status isEqual:kConversationStatusRejected]) {
                 statusView.hidden = NO;
                 statusView.y = nextY;
-                nextY += statusView.height+14;
+                nextY += statusView.height + 14;
                 NSString *statusFormatKey;
                 if ([conversation.status isEqual:kConversationStatusAccepted]) {
                     [statusView setTitleColor:[UIColor colorWithRed:0 green:0.4 blue:0 alpha:1] forState:UIControlStateNormal];
@@ -272,12 +273,12 @@
     } else {
         
         if (conversation != nil) {
-            messagesView.y = conversationTitleLabel.y+conversationTitleLabel.height+14;
+            messagesView.y = conversationTitleLabel.y + conversationTitleLabel.height + 14;
         } else {
             conversationTitleLabel.hidden = YES;
             conversationTitleField.hidden = NO;
             messagesView.alwaysShowFullSizeComposeField = YES;
-            messagesView.y = conversationTitleField.y+conversationTitleField.height;
+            messagesView.y = conversationTitleField.y + conversationTitleField.height;
         }
     }
     
@@ -333,7 +334,7 @@
 
 - (void)refreshContentHeight
 {
-    int contentHeight = messagesView.y+messagesView.height+10;
+    int contentHeight = messagesView.y + messagesView.height + 10;
     scrollView.contentSize = CGSizeMake(320, contentHeight);
 }
 
@@ -411,7 +412,7 @@
         messagesView.messages = conversation.messages;
         [self refreshContentHeight];
         
-        [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height-scrollView.height)) animated:YES];
+        [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height - scrollView.height)) animated:YES];
         
         // TODO 1) prevent losing field focus if already typing a reply, 2) take care of content height
     }
@@ -425,7 +426,7 @@
         conversation.listing = theListing;
     }
     [self refreshView];
-    [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height-scrollView.height)) animated:YES];
+    [scrollView setContentOffset:CGPointMake(0, MAX(0, scrollView.contentSize.height - scrollView.height)) animated:YES];
 }
 
 - (void)didChangeConversationStatus:(NSNotification *)notification
@@ -469,21 +470,24 @@
 - (void)messagesViewDidBeginEditing:(MessagesView *)theMessagesView
 {
     [UIView beginAnimations:nil context:NULL];
-    scrollView.height = self.view.height-216+44+5;
+    scrollView.height = self.view.height - 216 + 5;
+    if (self.navigationController.tabBarController != nil) {
+        scrollView.height += 44;
+    }
     // self.view.backgroundColor = kSharetribeBrownColor;
     [UIView commitAnimations];
     
-    int contentHeight = messagesView.y+messagesView.height+((inModalComposerMode) ? 0 : 10);
+    int contentHeight = messagesView.y + messagesView.height + ((inModalComposerMode) ? 0 : 10);
     scrollView.contentSize = CGSizeMake(320, contentHeight);
     NSLog(@"height checkpoint 2a: %d", contentHeight);
     
-    int scrollY = (conversation.messages.count > 0) ? (messagesView.y+messagesView.composeField.y-10) : 0;
+    int scrollY = (conversation.messages.count > 0) ? (messagesView.y + messagesView.composeField.y - 10) : 0;
     [scrollView setContentOffset:CGPointMake(0, scrollY) animated:YES];
 }
 
 - (void)messagesViewDidChange:(MessagesView *)theMessagesView
 {
-    int scrollY = (conversation.messages.count > 0) ? (messagesView.y+messagesView.composeField.y-10) : 0;
+    int scrollY = (conversation.messages.count > 0) ? (messagesView.y + messagesView.composeField.y - 10) : 0;
     [scrollView setContentOffset:CGPointMake(0, scrollY) animated:YES];
 }
 
@@ -521,11 +525,14 @@
 
 - (CGFloat)availableHeightForComposerInMessagesView:(MessagesView *)theMessagesView
 {
-    if (conversation.messages.count > 0) {
-        return self.view.height-216+44;
-    } else {
-        return self.view.height-216+44-messagesView.y;
+    CGFloat height = self.view.height - 216;
+    if (conversation.messages.count == 0) {
+        height -= messagesView.y;
     }
+    if (self.navigationController.tabBarController != nil) {
+        height += 44;
+    }
+    return height;
 }
 
 #pragma mark - UITextFieldDelegate
