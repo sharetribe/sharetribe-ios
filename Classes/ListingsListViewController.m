@@ -122,6 +122,7 @@
     footerSpinner.hidesWhenStopped = NO;
     [footer addSubview:footerSpinner];
     
+    [self observeNotification:kNotificationForGettingListingsDidProgress withSelector:@selector(gettingListingsDidProgress:)];
     [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(listingRefreshed:)];
 }
 
@@ -180,6 +181,11 @@
     } else {
         self.tableView.tableFooterView = nil;
     }
+}
+
+- (void)gettingListingsDidProgress:(NSNotification *)notification
+{
+    header.updateProgressView.progress = [notification.object doubleValue];
 }
 
 - (void)listingRefreshed:(NSNotification *)notification

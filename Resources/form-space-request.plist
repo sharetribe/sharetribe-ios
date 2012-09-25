@@ -44,6 +44,8 @@
 		<string>separate_with_comma</string>
 		<key>maps_to</key>
 		<string>tags</string>
+		<key>list_separator</key>
+		<string>,</string>
 		<key>provides_explanation</key>
 		<true/>
 		<key>autocapitalization</key>

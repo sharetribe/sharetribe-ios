@@ -90,6 +90,7 @@
 		486773C214F1EE9D00D7EFD8 /* ListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 486773C114F1EE9D00D7EFD8 /* ListingCell.m */; };
 		486773C414F1EEB900D7EFD8 /* ListingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 486773C314F1EEB900D7EFD8 /* ListingCell.xib */; };
 		4867740414F2F97200D7EFD8 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4867740314F2F97200D7EFD8 /* LocationPickerViewController.m */; };
+		4870CA85161137B60095EB52 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4870CA84161137B50095EB52 /* SettingsViewController.m */; };
 		4871D039150C2BA100280549 /* ConversationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4871D038150C2BA100280549 /* ConversationListCell.xib */; };
 		4871D03D150C2BAE00280549 /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4871D03C150C2BAE00280549 /* ConversationListCell.m */; };
 		4873FF6715E6D2F10066C58E /* kaapo-big-grade-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */; };
@@ -322,6 +323,8 @@
 		486773C314F1EEB900D7EFD8 /* ListingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListingCell.xib; path = Resources/ListingCell.xib; sourceTree = SOURCE_ROOT; };
 		4867740214F2F97200D7EFD8 /* LocationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationPickerViewController.h; sourceTree = "<group>"; };
 		4867740314F2F97200D7EFD8 /* LocationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationPickerViewController.m; sourceTree = "<group>"; };
+		4870CA83161137B40095EB52 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		4870CA84161137B50095EB52 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4871D038150C2BA100280549 /* ConversationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationListCell.xib; path = Resources/ConversationListCell.xib; sourceTree = SOURCE_ROOT; };
 		4871D03B150C2BAD00280549 /* ConversationListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationListCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		4871D03C150C2BAE00280549 /* ConversationListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationListCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -763,6 +766,8 @@
 				48D004E7159E91A20063E372 /* ProfileViewController.h */,
 				48D004E8159E91A30063E372 /* ProfileViewController.m */,
 				48E1C43C15C4FF450058F4EB /* ProfileViewController.xib */,
+				4870CA83161137B40095EB52 /* SettingsViewController.h */,
+				4870CA84161137B50095EB52 /* SettingsViewController.m */,
 				48E1C44A15C5174C0058F4EB /* UINavigationController+Sharetribe.h */,
 				48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */,
 				48E1C45915C7560C0058F4EB /* ListingCollectionView.h */,
@@ -970,7 +975,7 @@
 		487AA37114B7B51A007C4CCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 487AA37414B7B51A007C4CCF /* Build configuration list for PBXProject "Sharetribe" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1203,6 +1208,7 @@
 				483EF27C15E836CC008BED22 /* JSONKit.m in Sources */,
 				4820EB52160CB9EB00A4F11F /* ListingCluster.m in Sources */,
 				4820EB56160D009400A4F11F /* UIScrollView+Sharetribe.m in Sources */,
+				4870CA85161137B60095EB52 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

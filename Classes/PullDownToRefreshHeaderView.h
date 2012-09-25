@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UILabel *updateIntroLabel;
 @property (strong, nonatomic) UILabel *updateTimeLabel;
 @property (strong, nonatomic) UIActivityIndicatorView *updateSpinner;
+@property (strong, nonatomic) UIProgressView *updateProgressView;
 @property (strong, nonatomic) UISearchBar *searchBar;
 
 - (void)tableViewDidScroll:(UITableView *)tableView;

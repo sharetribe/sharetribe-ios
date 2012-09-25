@@ -8,10 +8,11 @@
 
 #import "ListingViewController.h"
 
-#import "Location.h"
-#import "Message.h"
 #import "ConversationViewController.h"
+#import "CreateListingViewController.h"
+#import "Location.h"
 #import "LocationPickerViewController.h"
+#import "Message.h"
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
@@ -21,7 +22,12 @@
 #import "UIImageView+Sharetribe.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface ListingViewController () {
+#define kActionSheetTagForOwnerActions 1000
+
+#define kAlertViewTagForConfirmClose   1000
+#define kAlertViewTagForConfirmDelete  2000
+
+@interface ListingViewController () <UIActionSheetDelegate, UIAlertViewDelegate> {
     Listing *listing;
 }
 @end
@@ -164,6 +170,12 @@
     [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
     
     respondButton.hidden = (listing == nil) || (listing.author.isCurrentUser);  // one cannot respond to oneself
+    
+    if (listing.author.isCurrentUser) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
     
     NSURL *imageURL = [listing.imageURLs objectOrNilAtIndex:0];
     if (imageURL != nil) {
@@ -345,6 +357,15 @@
     [self showComposerForDirectReplyToListing:NO];
 }
 
+- (IBAction)actionButtonPressed
+{
+    if (listing.author.isCurrentUser) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") destructiveButtonTitle:NSLocalizedString(@"button.listing.delete", @"") otherButtonTitles:NSLocalizedString(@"button.listing.edit", @""), NSLocalizedString(@"button.listing.close", @""), nil];
+        actionSheet.tag = kActionSheetTagForOwnerActions;
+        [actionSheet showFromTabBar:self.navigationController.tabBarController.tabBar];
+    }
+}
+
 - (void)showComposerForDirectReplyToListing:(BOOL)isDirectReply
 {
     ConversationViewController *composer = [[ConversationViewController alloc] init];
@@ -457,6 +478,52 @@
             buttonY = 10;
         }
         respondButton.y = buttonY;
+    }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == kActionSheetTagForOwnerActions) {
+        
+        NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+        
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"confirm.delete_listing.title", @"") message:NSLocalizedString(@"confirm.delete_listing.message", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.delete", @""), nil];
+            alert.tag = kAlertViewTagForConfirmDelete;
+            [alert show];
+        
+        } else if ([buttonTitle isEqualToString:NSLocalizedString(@"button.listing.close", @"")]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"confirm.close_listing.title", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.cancel", @"") otherButtonTitles:NSLocalizedString(@"button.close", @""), nil];
+            alert.tag = kAlertViewTagForConfirmClose;
+            [alert show];
+        
+        } else if ([buttonTitle isEqualToString:NSLocalizedString(@"button.listing.edit", @"")]) {
+            
+            CreateListingViewController *editor = [[CreateListingViewController alloc] init];
+            editor.listing = listing;
+            listing.image = imageView.image;
+            UINavigationController *editorNavigator = [[UINavigationController alloc] initWithRootViewController:editor];
+            [self presentModalViewController:editorNavigator animated:YES];
+        }
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == kAlertViewTagForConfirmClose) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [[SharetribeAPIClient sharedClient] closeListing:listing];
+        }
+    } else if (alertView.tag == kAlertViewTagForConfirmDelete) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [[SharetribeAPIClient sharedClient] deleteListing:listing];
+        }
     }
 }
 

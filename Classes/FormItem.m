@@ -23,6 +23,7 @@
 @synthesize defaultTimeIntervalInDays;
 @synthesize includeTime;
 @synthesize autocapitalizationType;
+@synthesize listSeparator;
 
 + (NSArray *)formItemsFromDataArray:(NSArray *)dataArray
 {
@@ -56,6 +57,7 @@
         item.defaultTimeIntervalInDays = [[dataDict valueForKey:@"default_time_interval_in_days"] intValue];
         item.includeTime = [[dataDict valueForKey:@"include_time"] boolValue];
         item.providesExplanation = [[dataDict objectForKey:@"provides_explanation"] boolValue];
+        item.listSeparator = [dataDict valueForKey:@"list_separator"];
         
         // NSLog(@"%@ maps to %@", item.title, item.mapsTo);
         

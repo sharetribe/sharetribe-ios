@@ -18,6 +18,7 @@
 @synthesize updateIntroLabel;
 @synthesize updateTimeLabel;
 @synthesize updateSpinner;
+@synthesize updateProgressView;
 @synthesize searchBar;
 
 - (id)init
@@ -48,6 +49,10 @@
         updateSpinner.hidesWhenStopped = NO;
         // updateSpinner.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         
+        self.updateProgressView = [[UIProgressView alloc] init];
+        updateProgressView.frame = CGRectMake(60, -24, 200, 9);
+        updateProgressView.alpha = 0;
+        
         UIView *headerBackground = [[UIView alloc] init];
         headerBackground.frame = CGRectMake(0, -460, 320, 460);
         headerBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -58,6 +63,7 @@
         [self addSubview:updateIntroLabel];
         [self addSubview:updateTimeLabel];
         [self addSubview:updateSpinner];
+        [self addSubview:updateProgressView];
     }
     return self;
 }
@@ -98,11 +104,14 @@
 - (void)startIndicatingRefreshWithTableView:(UITableView *)tableView
 {
     updateIntroLabel.text = NSLocalizedString(@"header.updating", @"");
+    updateProgressView.progress = 0;
     updateSpinner.alpha = 1;
     [updateSpinner startAnimating];
-        
+    
     [UIView beginAnimations:nil context:NULL];
     tableView.contentInset = UIEdgeInsetsMake(kHeight, 0, 0, 0);
+    updateTimeLabel.alpha = 0;
+    updateProgressView.alpha = 0.7;
     [UIView commitAnimations];
 }
 
@@ -118,6 +127,8 @@
     
     [UIView beginAnimations:nil context:NULL];
     updateSpinner.alpha = 0;
+    updateTimeLabel.alpha = 1;
+    updateProgressView.alpha = 0;
     [UIView commitAnimations];
     
     [UIView beginAnimations:nil context:NULL];

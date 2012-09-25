@@ -12,6 +12,8 @@
 "tabs.messages" = "Messages";
 "tabs.profile" = "Me";
 
+"title.edit_listing" = "Edit Listing";
+
 "agestamp.format.minutes_ago" = "%d minutes ago";
 "agestamp.format.hours_ago" = "%d hours ago";
 "agestamp.format.days_ago" = "%d days ago";
@@ -24,6 +26,11 @@
 "button.call" = "Call";
 "button.cancel" = "Cancel";
 "button.choose_photo_from_library" = "Choose from Library...";
+"button.close" = "Close";
+"button.delete" = "Delete";
+"button.listing.close" = "Close listing";
+"button.listing.delete" = "Delete listing";
+"button.listing.edit" = "Edit listing";
 "button.listing.respond" = "Respond";
 "button.listing.message" = "Message";
 "button.log_out" = "Log Out";
@@ -51,6 +58,9 @@
 "confirm.reject_request.message_format" = "";
 "confirm.reject_offer.title_format" = "Decline %@'s offer?";
 "confirm.reject_offer.message_format" = "";
+"confirm.close_listing.title" = "Close this listing?";
+"confirm.delete_listing.title" = "Delete this listing?";
+"confirm.delete_listing.message" = "This action cannot be reversed.";
 
 "conversation_status_format.you_accepted_request" = "You accepted %@'s request.";
 "conversation_status_format.other_accepted_request" = "%@ accepted your request.";

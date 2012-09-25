@@ -170,6 +170,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     
     self.map = [[MKMapView alloc] init];
     map.frame = CGRectMake(0, 0, self.view.width, self.view.height-2*44-5);
+    map.mapType = MKMapTypeHybrid;
     map.showsUserLocation = YES;
     map.delegate = self;
     map.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(60.170, 24.939), 4000, 4000);
@@ -202,7 +203,6 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     }
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-location-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(focusOnUserLocation)];
-    self.navigationItem.rightBarButtonItem.enabled = (map.userLocation.coordinate.latitude != 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -232,8 +232,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 - (IBAction)focusOnUserLocation
 {
     if (map.userLocation.coordinate.latitude != 0) {
-        MKCoordinateRegion userRegion = MKCoordinateRegionMakeWithDistance(map.userLocation.coordinate, 2000, 2000);
-        [map setRegion:userRegion animated:YES];
+        [map setCenterCoordinate:map.userLocation.coordinate animated:YES];
     }
 }
 
@@ -413,8 +412,6 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 {
     Location *currentLocation = [[Location alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude address:@""];
     [Location setCurrentLocation:currentLocation];
-    
-    self.navigationItem.rightBarButtonItem.enabled = (map.userLocation.coordinate.latitude != 0);
 }
 
 NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context)

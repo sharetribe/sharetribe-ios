@@ -25,6 +25,8 @@
 #define kCurrentUserIdKeyForUserDefaults       @"current user id"
 #define kCurrentCommunityIdKeyForUserDefaults  @"current communty id"
 
+#define kOneMegabyte (1024 * 1024.0)
+
 @interface SharetribeAPIClient () {
     NSInteger currentCommunityId;
 }
@@ -203,24 +205,34 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [params setObject:[NSNumber numberWithInt:page] forKey:@"page"];
     [params setObject:[NSNumber numberWithInt:25] forKey:@"per_page"];
     
-    [self getPath:@"listings" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLRequest *request = [self requestWithMethod:@"GET" path:@"listings" parameters:params];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        [self logSuccessWithOperation:operation responseObject:responseObject];
+        NSLog(@"request: %@ done with response: %@ json: %@", request, response, JSON);
         
-        NSArray *listingDicts = [responseObject objectOrNilForKey:@"listings"];
+        NSArray *listingDicts = [JSON objectOrNilForKey:@"listings"];
         NSArray *listings = [Listing listingsFromArrayOfDicts:listingDicts];
         
         NSMutableDictionary *info = [NSMutableDictionary dictionary];
-        [info setObject:[responseObject objectForKey:@"page"] forKey:kInfoKeyForPage];
-        [info setObject:[responseObject objectOrNilForKey:@"total_pages"] forKey:kInfoKeyForNumberOfPages];
-        [info setObject:[responseObject objectOrNilForKey:@"per_page"] forKey:kInfoKeyForItemsPerPage];
+        [info setObject:[JSON objectForKey:@"page"] forKey:kInfoKeyForPage];
+        [info setObject:[JSON objectOrNilForKey:@"total_pages"] forKey:kInfoKeyForNumberOfPages];
+        [info setObject:[JSON objectOrNilForKey:@"per_page"] forKey:kInfoKeyForItemsPerPage];
         [info setObject:type forKey:kInfoKeyForListingType];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidReceiveListings object:listings userInfo:info];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self handleFailureWithOperation:operation error:error];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {        
+        NSLog(@"request: %@ failed with response: %@ error: %@ json: %@", request, response, error, JSON);
     }];
+    
+    [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        double progress = ((double) totalBytesRead) / ((double) totalBytesExpectedToRead);
+        NSLog(@"progress in getting listings: %.02f / %.02f MB", totalBytesExpectedToRead/kOneMegabyte, totalBytesExpectedToRead/kOneMegabyte);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForGettingListingsDidProgress object:[NSNumber numberWithDouble:progress]];
+    }];
+    
+    [self enqueueHTTPRequestOperation:operation];
 }
 
 - (void)getListingsByUser:(User *)user forPage:(NSInteger)page
@@ -336,6 +348,18 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }];
     
     [self enqueueHTTPRequestOperation:operation];
+}
+
+- (void)postUpdatedListing:(Listing *)listing
+{
+}
+
+- (void)closeListing:(Listing *)listing
+{
+}
+
+- (void)deleteListing:(Listing *)listing
+{
 }
 
 - (void)postNewComment:(NSString *)comment onListing:(Listing *)listing

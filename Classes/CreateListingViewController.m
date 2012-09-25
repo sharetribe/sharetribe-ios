@@ -18,6 +18,7 @@
 @interface CreateListingViewController () {
     BOOL convertingImage;
     BOOL submissionWaitingForImage;
+    BOOL preserveFormItemsOnNextAppearance;
 }
 - (void)dismissDatePicker;
 @end
@@ -53,11 +54,12 @@
                 
         self.view.backgroundColor = kSharetribeBrownColor;
                 
-        self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) style:UITableViewStylePlain];
+        self.table = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.height) style:UITableViewStylePlain];
         table.dataSource = self;
         table.delegate = self;
         table.backgroundColor = [UIColor clearColor];
         table.separatorColor = kSharetribeBrownColor;
+        table.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         self.header = [CreateListingHeaderView instance];
         header.delegate = self;
@@ -83,7 +85,7 @@
         [self.view addSubview:table];
         
         self.datePicker = [[UIDatePicker alloc] init];
-        datePicker.frame = CGRectMake(0, 416, 320, 216);
+        datePicker.frame = CGRectMake(0, self.view.height, 320, 216);
         [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self.view addSubview:datePicker];
         
@@ -114,8 +116,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];    
 }
 
 - (void)viewDidUnload
@@ -127,39 +127,56 @@
 {
     [super viewWillAppear:animated];
     
-    if (listing == nil) {
+    if (!preserveFormItemsOnNextAppearance) {
         
-        self.listing = [[Listing alloc] init];
-        listing.type = kListingTypeOffer;
-        
-        Location *currentLocation = [Location currentLocation];
-        if (currentLocation != nil) {
-            listing.location = [currentLocation copy];
-            listing.destination = [currentLocation copy];
+        if (listing == nil) {
+            
+            // So, creating a brand new listing:
+            self.listing = [[Listing alloc] init];
+            listing.type = kListingTypeOffer;
+            
+            Location *currentLocation = [Location currentLocation];
+            if (currentLocation != nil) {
+                listing.location = [currentLocation copy];
+                listing.destination = [currentLocation copy];
+            } else {
+                listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
+                listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
+            }
+            
+            [table setContentOffset:CGPointZero animated:NO];
+            
+            [header setListingType:listing.type];
+            [header setListingCategory:nil];
+            
+            self.navigationItem.titleView = nil;
+            
+            convertingImage = NO;
+            submissionWaitingForImage = NO;
+            
+            submitButton.enabled = YES;
+            [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
+            [uploadSpinner stopAnimating];
+            
+            self.title = NSLocalizedString(@"tabs.new_listing", @"");
+            
         } else {
-            listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
-            listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
+            
+            // So, editing an existing listing:
+            [self reloadFormItems];
+            
+            table.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, table.width, 30)];
+            
+            self.title = NSLocalizedString(@"title.edit_listing", @"");
         }
         
-        [table setContentOffset:CGPointZero animated:NO];
+        self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
+        self.navigationItem.leftBarButtonItem = cancelButton;
         
-        [header setListingType:listing.type];
-        [header setListingCategory:nil];
-        
-        self.navigationItem.titleView = nil;
-        
-        convertingImage = NO;
-        submissionWaitingForImage = NO;
-        
-        submitButton.enabled = YES;
-        [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
-        [uploadSpinner stopAnimating];
+        self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
     }
-        
-    self.title = NSLocalizedString(@"tabs.new_listing", @"");
-    self.navigationItem.leftBarButtonItem = cancelButton;
     
-    self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
+    preserveFormItemsOnNextAppearance = NO;
     
     [table reloadData];
 }
@@ -406,7 +423,11 @@
         
         UITextField *textField = (UITextField *) [cell viewWithTag:kCellTextFieldTag];
         textField.frame = CGRectMake(10, 30, 300, 40);
-        textField.text = [listing valueForKey:formItem.mapsTo];
+        id value = [listing valueForKey:formItem.mapsTo];
+        if ([value isKindOfClass:NSArray.class] && formItem.listSeparator != nil) {
+            value = [value componentsJoinedByString:formItem.listSeparator];
+        }
+        textField.text = value;
         textField.autocapitalizationType = formItem.autocapitalizationType;
         
     } else if (formItem.type == FormItemTypeTextArea) {
@@ -642,7 +663,7 @@
         [activeTextInput resignFirstResponder];
     }
     
-    if (datePicker.y < 416) {
+    if (datePicker.y < self.view.height) {
         [self dismissDatePicker];
     }
 }
@@ -658,7 +679,7 @@
     self.activeTextInput = textInputView;
     
     [UIView beginAnimations:nil context:NULL];
-    table.height = 416-216;
+    table.height = self.view.height-216;
     [UIView commitAnimations];
     
     NSIndexPath *path = [table indexPathForRowAtPoint:[table convertPoint:CGPointZero fromView:textInputView]];
@@ -672,7 +693,7 @@
 {
     if (textInputView == activeTextInput) {
         self.activeTextInput = nil;
-        table.height = 416;
+        table.height = self.view.height;
         
         self.navigationItem.leftBarButtonItem = cancelButton;
         self.navigationItem.rightBarButtonItem = nil;
@@ -685,7 +706,13 @@
         location.address = [(id) textInputView text];
         location.addressIsAutomatic = NO;
     } else {
-        [listing setValue:[(id) textInputView text] forKey:formItem.mapsTo];
+        id value = [(id) textInputView text];
+        if (formItem.listSeparator != nil && [value isKindOfClass:NSString.class]) {
+            value = [value stringByReplacingOccurrencesOfString:@"  " withString:@" "];
+            value = [value stringByReplacingOccurrencesOfString:[formItem.listSeparator stringByAppendingString:@" "] withString:formItem.listSeparator];
+            value = [value componentsSeparatedByString:formItem.listSeparator];
+        }
+        [listing setValue:value forKey:formItem.mapsTo];
     }
 }
 
@@ -748,6 +775,7 @@
             imagePicker.allowsEditing = NO;
             imagePicker.delegate = self;
             [self presentModalViewController:imagePicker animated:YES];
+            preserveFormItemsOnNextAppearance = YES;
         }
     }
 }
@@ -874,8 +902,8 @@
         datePicker.date = [formatter dateFromString:currentChoice];
         
         [UIView beginAnimations:nil context:NULL];
-        datePicker.frame = CGRectMake(0, 416-datePicker.height, datePicker.width, datePicker.height);
-        table.frame = CGRectMake(0, 0, table.width, 416-datePicker.height);
+        datePicker.frame = CGRectMake(0, self.view.height-datePicker.height, datePicker.width, datePicker.height);
+        table.frame = CGRectMake(0, 0, table.width, self.view.height-datePicker.height);
         [UIView commitAnimations];
         
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -887,7 +915,7 @@
         
     } else {
         
-        if (datePicker.y < 416) {
+        if (datePicker.y < self.view.height) {
             [self dismissDatePicker];
         }
     }
@@ -962,6 +990,7 @@
     locationPicker.delegate = self;
     locationPicker.coordinate = location.coordinate;
     [self.navigationController pushViewController:locationPicker animated:YES];
+    preserveFormItemsOnNextAppearance = YES;
 }
 
 - (IBAction)datePickerValueChanged:(UIDatePicker *)picker
@@ -982,8 +1011,8 @@
     self.navigationItem.rightBarButtonItem = nil;
     
     [UIView beginAnimations:nil context:NULL];
-    datePicker.frame = CGRectMake(0, 416, datePicker.width, datePicker.height);
-    table.frame = CGRectMake(0, 0, table.width, 416);
+    datePicker.frame = CGRectMake(0, self.view.height, datePicker.width, datePicker.height);
+    table.frame = CGRectMake(0, 0, table.width, self.view.height);
     [UIView commitAnimations];
 }
 

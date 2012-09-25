@@ -12,6 +12,8 @@
 "tabs.messages" = "Viestit";
 "tabs.profile" = "Minä";
 
+"title.edit_listing" = "Muokkaa ilmoitusta";
+
 "agestamp.format.minutes_ago" = "%d minuuttia sitten";
 "agestamp.format.hours_ago" = "%d tuntia sitten";
 "agestamp.format.days_ago" = "%d päivää sitten";
@@ -24,6 +26,11 @@
 "button.call" = "Soita";
 "button.cancel" = "Peruuta";
 "button.choose_photo_from_library" = "Valitse omista kuvista...";
+"button.close" = "Sulje";
+"button.delete" = "Poista";
+"button.listing.close" = "Sulje listing";
+"button.listing.delete" = "Poista ilmoitus";
+"button.listing.edit" = "Muokkaa ilmoitusta";
 "button.listing.respond" = "Vastaa";
 "button.listing.message" = "Viesti";
 "button.log_out" = "Kirjaudu ulos";
@@ -51,6 +58,9 @@
 "confirm.reject_request.message_format" = "";
 "confirm.reject_offer.title_format" = "Hylkää käyttäjän %@ tarjous?";
 "confirm.reject_offer.message_format" = "";
+"confirm.close_listing.title" = "Suljetaanko ilmoitus?";
+"confirm.delete_listing.title" = "Poistetaanko ilmoitus?";
+"confirm.delete_listing.message" = "Poistettua ilmoitusta ei enää voida palauttaa.";
 
 "alert.message_was_sent.title_format" = "Viesti lähetetty käyttäjälle %@.";
 "conversation_status_format.you_accepted_request" = "Hyväksyit käyttäjän %@ pyynnön.";

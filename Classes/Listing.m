@@ -87,7 +87,11 @@
     if (shareType != nil) {
         [JSON setObject:shareType forKey:@"share_type"];
     }
-        
+    
+    if (tags.count > 0) {
+        [JSON setObject:tags forKey:@"tags"];
+    }
+    
     if (location != nil) {
         // [JSON setObject:[location asJSON] forKey:@"origin_location"];
         [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];

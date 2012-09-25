@@ -32,6 +32,7 @@
 #define kNotificationForDidPostMessage                     @"did post message"
 #define kNotificationForDidChangeConversationStatus        @"did change conversation status"
 
+#define kNotificationForGettingListingsDidProgress         @"getting listings did progress"
 #define kNotificationForUploadDidProgress                  @"upload did progress"
 
 // Notifications for failure:
@@ -72,6 +73,9 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 - (void)getListingsByUser:(User *)user forPage:(NSInteger)page;
 - (void)getListingWithId:(NSInteger)listingId;
 - (void)postNewListing:(Listing *)listing;
+- (void)postUpdatedListing:(Listing *)listing;
+- (void)closeListing:(Listing *)listing;
+- (void)deleteListing:(Listing *)listing;
 - (void)postNewComment:(NSString *)comment onListing:(Listing *)listing;
 
 - (void)getConversations;

@@ -49,7 +49,7 @@
             countLabel.frame = pinHeadView.frame;
             countLabel.font = [UIFont boldSystemFontOfSize:15];
             countLabel.textColor = [UIColor darkGrayColor];
-            countLabel.shadowColor = [UIColor whiteColor];
+            countLabel.shadowColor = [UIColor colorWithWhite:1 alpha:0.4];
             countLabel.shadowOffset = CGSizeMake(0, 1);
             countLabel.backgroundColor = [UIColor clearColor];
             countLabel.textAlignment = UITextAlignmentCenter;

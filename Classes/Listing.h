@@ -26,36 +26,36 @@
 
 @interface Listing : NSObject <MKAnnotation>
 
-@property (assign) NSInteger listingId;
-@property (nonatomic, copy) NSString *title;
+@property (assign, nonatomic) NSInteger listingId;
+@property (copy, nonatomic) NSString *title;
 @property (readonly) NSString *fullTitle;
-@property (strong) NSString *description;
+@property (strong, nonatomic) NSString *description;
 
-@property (strong) NSString *type;
-@property (strong) NSString *category;
-@property (strong) NSString *shareType;
-@property (strong) NSArray *tags;
+@property (strong, nonatomic) NSString *type;
+@property (strong, nonatomic) NSString *category;
+@property (strong, nonatomic) NSString *shareType;
+@property (strong, nonatomic) NSArray *tags;
 
-@property (strong) NSURL *thumbnailURL;
-@property (strong) NSArray *imageURLs;
+@property (strong, nonatomic) NSURL *thumbnailURL;
+@property (strong, nonatomic) NSArray *imageURLs;
 
-@property (strong) UIImage *image;
-@property (strong) NSData *imageData;
+@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSData *imageData;
 
-@property (strong) Location *location;
-@property (strong) Location *destination;
+@property (strong, nonatomic) Location *location;
+@property (strong, nonatomic) Location *destination;
 
-@property (strong) User *author;
-@property (strong) NSDate *createdAt;
-@property (strong) NSDate *updatedAt;
-@property (strong) NSDate *validUntil;
-@property (strong) NSString *status;
+@property (strong, nonatomic) User *author;
+@property (strong, nonatomic) NSDate *createdAt;
+@property (strong, nonatomic) NSDate *updatedAt;
+@property (strong, nonatomic) NSDate *validUntil;
+@property (strong, nonatomic) NSString *status;
 
-@property (assign) NSInteger numberOfTimesViewed;
-@property (assign) NSInteger numberOfComments;
-@property (strong) NSString *visibility;
+@property (assign, nonatomic) NSInteger numberOfTimesViewed;
+@property (assign, nonatomic) NSInteger numberOfComments;
+@property (strong, nonatomic) NSString *visibility;
 
-@property (strong) NSArray *comments;
+@property (strong, nonatomic) NSArray *comments;
 
 - (CLLocationCoordinate2D)coordinate;
 
