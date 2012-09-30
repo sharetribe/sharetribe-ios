@@ -49,7 +49,7 @@
 
 - (NSString *)title
 {
-    return @" ";
+    return @"";
 }
 
 - (void)addListing:(Listing *)listing

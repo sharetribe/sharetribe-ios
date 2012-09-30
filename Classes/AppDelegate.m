@@ -109,6 +109,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [notificationCenter addObserver:self selector:@selector(userDidLogOut:) name:kNotificationForUserDidLogOut object:nil];
     [notificationCenter addObserver:self selector:@selector(userDidSelectCommunity:) name:kNotificationForDidSelectCommunity object:nil];
+    [notificationCenter addObserver:self selector:@selector(userDidPostListing:) name:kNotificationForDidPostListing object:nil];
     
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
@@ -225,6 +226,21 @@ void uncaughtExceptionHandler(NSException *exception)
     [offersViewController clearAllListings];
     [requestsViewController clearAllListings];
     [self showLogin];
+}
+
+- (void)userDidPostListing:(NSNotification *)notification
+{
+    Listing *listing = notification.object;
+    ListingsTopViewController *controller;
+    if ([listing.type isEqual:kListingTypeOffer]) {
+        tabBarController.selectedIndex = 0;
+        controller = offersViewController;
+    } else {
+        tabBarController.selectedIndex = 1;
+        controller = requestsViewController;
+    }
+    [controller.navigationController popToRootViewControllerAnimated:NO];
+    [controller viewController:controller didSelectListing:listing];
 }
 
 #pragma mark - UINavigationControllerDelegate

@@ -134,8 +134,13 @@ static User *currentUser = nil;
     NSMutableArray *users = [NSMutableArray array];
     
     for (NSDictionary *dict in dicts) {
+        
         User *user = [self userFromDict:dict];
         [users addObject:user];
+        
+        if (user.isCurrentUser) {
+            [self setCurrentUserWithDict:dict];  // refresh the persistent data, since now the dict may have more or better information
+        }
     }
     
     return users;

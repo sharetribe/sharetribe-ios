@@ -69,6 +69,15 @@
     return description;
 }
 
+- (void)setCategory:(NSString *)newCategory
+{
+    category = newCategory;
+    
+    if (![category isEqual:kListingCategoryItem] && ![category isEqual:kListingCategorySpace]) {
+        shareType = nil;
+    }
+}
+
 - (NSDictionary *)asJSON
 {
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];

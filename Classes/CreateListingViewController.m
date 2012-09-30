@@ -135,14 +135,19 @@
             self.listing = [[Listing alloc] init];
             listing.type = kListingTypeOffer;
             
-            Location *currentLocation = [Location currentLocation];
-            if (currentLocation != nil) {
-                listing.location = [currentLocation copy];
-                listing.destination = [currentLocation copy];
+            User *currentUser = [User currentUser];
+            Location *location;
+            
+            if (currentUser.location != nil) {
+                location = currentUser.location;
+            } else if ([Location currentLocation] != nil) {
+                location = [Location currentLocation];
             } else {
-                listing.location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
-                listing.destination = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];
+                location = [[Location alloc] initWithLatitude:60.156714 longitude:24.883003 address:nil];  // OBS! maybe the community's default location instead?
             }
+            
+            listing.location = [location copy];
+            listing.destination = [location copy];
             
             [table setContentOffset:CGPointZero animated:NO];
             
@@ -157,6 +162,8 @@
             submitButton.enabled = YES;
             [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
             [uploadSpinner stopAnimating];
+            
+            table.tableHeaderView = header;
             
             self.title = NSLocalizedString(@"tabs.new_listing", @"");
             
@@ -242,6 +249,7 @@
     
     [table reloadData];
     
+    table.tableHeaderView = header;
     table.tableFooterView = footer;
     
     submitButton.hidden = (listing.category == nil);

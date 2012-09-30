@@ -180,6 +180,8 @@
     NSURL *imageURL = [listing.imageURLs objectOrNilAtIndex:0];
     if (imageURL != nil) {
         
+        backgroundView.y = 200;
+        
         [imageView setImageWithURL:imageURL];
         titleLabel.y = backgroundView.y+12;
         
@@ -198,6 +200,8 @@
         [backgroundView.layer insertSublayer:midShade atIndex:0];
 
     } else {
+        
+        backgroundView.y = 0;
         
         imageView.image = nil;
         if (respondButton.hidden) {
