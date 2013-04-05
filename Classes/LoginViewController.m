@@ -36,7 +36,7 @@
     usernameField.delegate = self;
     passwordField.delegate = self;
     
-    usernameField.placeholder = NSLocalizedString(@"placeholder.username", @"");
+    usernameField.placeholder = NSLocalizedString(@"placeholder.username_or_email", @"");
     passwordField.placeholder = NSLocalizedString(@"placeholder.password", @"");
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];

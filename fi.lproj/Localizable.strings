@@ -95,7 +95,7 @@
 "placeholder.comment" = "Kirjoita uusi kommentti";
 "placeholder.message" = "Kirjoita viesti";
 "placeholder.reply" = "Kirjoita vastaus";
-"placeholder.username" = "Käyttäjätunnus";
+"placeholder.username_or_email" = "Tunnus tai sähköposti";
 "placeholder.password" = "Salasana";
 "placeholder.conversation_title" = "Viestin otsikko";
 "placeholder.address" = "Osoite";
@@ -161,8 +161,8 @@
 
 "listing.tags" = "Avainsanat";
 
-"listing.expiration_date" = "Viimeinen voimassaolopäivä";
-"listing.expiration_date.for_the_time_being" = "Toistaiseksi";
+"listing.valid_until" = "Viimeinen voimassaolopäivä";
+"listing.valid_until.for_the_time_being" = "Toistaiseksi";
 
 "listing.departure_time" = "Lähtöaika";
 "listing.departure_time.repeated" = "Toistuva";
@@ -177,8 +177,12 @@
 "listing.image.add" = "Lisää kuva...";
 
 "listing.visibility" = "Näkyvyys";
-"listing.visibility.everybody" = "Kaikille internetin käyttäjille";
+"listing.visibility.all_communities" = "Kaikille yhteisöilleni";
 "listing.visibility.this_community" = "Vain tämän yhteisön jäsenille";
+
+"listing.privacy" = "Yksityisyys";
+"listing.privacy.public" = "Julkinen (myös kirjautumattomille)";
+"listing.privacy.private" = "Yksityinen (vain kirjautuneille)";
 
 "listing.subtitle.separate_with_comma" = "(erota pilkulla)";
 
@@ -189,7 +193,7 @@
 
 "listing.explanation.tags" = "Avainsanojen avulla voit auttaa muita löytämään ilmoituksesi helpommin. Jos esimerkiksi olet myymässä tuolia, sopivia avainsanoja voisivat olla &quot;huonekalut&quot; ja &quot;istuimet&quot;. Jos tarjoat apua tietokoneongelmissa, ilmoituksesi löytää parhaiten, kun lisäät siihen avainsanat &quot;apu&quot; ja &quot;tietokoneet&quot;.\n\nVoit lisätä ilmoitukselle niin monta avainsanaa kuin haluat. Erota avainsanat pilkulla.";
 
-"listing.explanation.expiration_date" = "Voit asettaa ilmoituksellesi viimeisen voimassaolopäivän. Tämän päivän jälkeen ilmoitus sulkeutuu automaattisesti. Suljetut ilmoitukset eivät näy normaaleissa ilmoituslistauksissa. Voit muuttaa voimassaolopäivää koska tahansa muokkaa ilmoitusta -valikosta, ja myös avata ilmoituksen uudestaan sen sulkeuduttua, jos se on vielä ajankohtainen.\n\nJos olet tarjoamassa jotain muille Sharetriben käyttäjille, voit jättää tarjouksen voimaan toistaiseksi, jolloin se ei sulkeudu automaattisesti. Pyynnöllä sen sijaan tulee aina olla viimeinen voimassaolopäivä. Maksimiaika ilmoituksen voimassaololle on vuosi ilmoituksen luontihetkestä.";
+"listing.explanation.valid_until" = "Voit asettaa ilmoituksellesi viimeisen voimassaolopäivän. Tämän päivän jälkeen ilmoitus sulkeutuu automaattisesti. Suljetut ilmoitukset eivät näy normaaleissa ilmoituslistauksissa. Voit muuttaa voimassaolopäivää koska tahansa muokkaa ilmoitusta -valikosta, ja myös avata ilmoituksen uudestaan sen sulkeuduttua, jos se on vielä ajankohtainen.\n\nJos olet tarjoamassa jotain muille Sharetriben käyttäjille, voit jättää tarjouksen voimaan toistaiseksi, jolloin se ei sulkeudu automaattisesti. Pyynnöllä sen sijaan tulee aina olla viimeinen voimassaolopäivä. Maksimiaika ilmoituksen voimassaololle on vuosi ilmoituksen luontihetkestä.";
 
 "profile.explanation.feedback" = "Sharetribessa voit antaa palautetta muille käyttäjille aina, kun olet tarjonnut heille jotain tai pyytänyt heiltä jotain. Palautteen avulla voit kertoa, vastasiko toisen käyttäjän toiminta odotuksiasi. Muut käyttäjät näkevät tämän palautteen käyttäjän profiilissa ja voivat sen perusteella päätellä, kannattaako kyseisen käyttäjän kanssa olla tekemisissä jatkossa. Hyvän palautteen avulla pyynnöt ja tarjoukset onnistuvat varmemmin myös jatkossa. Kannattaa siis aina muistaa antaa palautetta tapahtumista, ja muistuttaa myös toista osapuolta antamaan palautetta sinulle. Palautteen antaminen onnistuu tällä hetkellä Sharetriben verkkosivuilla.\n\nPalaute muodostuu Sharetribessa numeerisesta arviosta ja sanallisesta kuvauksesta. Numeerinen arvio voi olla välillä 1 (ei vastannut lainkaan odotuksia) - 5 (ylitti täysin odotukset). Jos annat jonkin muun kuin neutraalin &quot;vastasi odotuksia&quot; -palautteen, sinun tulee perustella sanallisesti, mikä meni erityisen hyvin tai huonosti.\n\nProfiilisivulla näet käyttäjästä seuraavat tiedot: keskiarvon palautteissa annetuista numeerisista palautteista, eri tasoisten palautteiden määrät sekä listan kaikista palautteista sanallisine kuvauksineen. Listassa Kaapo-hahmon ilme kuvaa kyseiseen palautteeseen liittyvää numeerista arviota.";
 

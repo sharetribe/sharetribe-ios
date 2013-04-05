@@ -48,32 +48,31 @@
 	</dict>
 	<dict>
 		<key>type</key>
-		<string>textfield</string>
-		<key>id</key>
-		<string>tags</string>
-		<key>subtitle</key>
-		<string>separate_with_comma</string>
-		<key>maps_to</key>
-		<string>tags</string>
-		<key>list_separator</key>
-		<string>,</string>
-		<key>provides_explanation</key>
-		<true/>
-		<key>autocapitalization</key>
-		<string>none</string>
-	</dict>
-	<dict>
-		<key>type</key>
 		<string>choice</string>
 		<key>alternatives</key>
 		<array>
-			<string>everybody</string>
+			<string>all_communities</string>
 			<string>this_community</string>
 		</array>
 		<key>id</key>
 		<string>visibility</string>
 		<key>maps_to</key>
 		<string>visibility</string>
+		<key>mandatory</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>type</key>
+		<string>choice</string>
+		<key>alternatives</key>
+		<array>
+			<string>public</string>
+			<string>private</string>
+		</array>
+		<key>id</key>
+		<string>privacy</string>
+		<key>maps_to</key>
+		<string>privacy</string>
 		<key>mandatory</key>
 		<true/>
 	</dict>

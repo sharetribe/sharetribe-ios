@@ -8,6 +8,13 @@
 
 #import "ButtonTabBarController.h"
 
+#import "AppDelegate.h"
+
+@interface ButtonTabBarController () {
+    BOOL isInitialAppearance;
+}
+@end
+
 @implementation ButtonTabBarController
 
 @synthesize middleViewController;
@@ -32,6 +39,7 @@
         
         self.viewControllers = viewControllers;
         self.middleViewController = theMiddleViewController;
+        isInitialAppearance = YES;
     }
     return self;
 }
@@ -48,8 +56,11 @@
     [super viewDidLoad];
     
     self.middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    middleButton.frame = CGRectMake((320-70)/2, self.view.height-68, 70, 66);
+    middleButton.frame = CGRectMake((self.view.bounds.size.width - 70) / 2,
+                                    self.view.bounds.size.height - 68,
+                                    70, 66);
     middleButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 14, 0);
+    middleButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [middleButton setBackgroundImage:[UIImage imageNamed:@"tab-bar-bezel"] forState:UIControlStateNormal];
     [middleButton setBackgroundImage:[UIImage imageNamed:@"tab-bar-bezel"] forState:UIControlStateHighlighted];
     [middleButton addTarget:self action:@selector(middleButtonActivated:) forControlEvents:UIControlEventTouchDown | UIControlEventTouchDragEnter];
@@ -81,6 +92,11 @@
     [middleButton setImage:middleButtonHighlightedImage forState:UIControlStateHighlighted];
     [self.view addSubview:middleButton];
     [self.view bringSubviewToFront:middleButton];
+    
+    if (isInitialAppearance) {
+        [(AppDelegate *) [UIApplication sharedApplication].delegate doInitialCheck];
+        isInitialAppearance = NO;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

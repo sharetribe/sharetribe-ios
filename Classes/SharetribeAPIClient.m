@@ -43,13 +43,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    // self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
-    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
+    self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
+    // self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
         [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [self setParameterEncoding:AFJSONParameterEncoding];
-        [self setDefaultHeader:@"Accept" value:@"application/vnd.sharetribe+json; version=alpha"];
+        [self setDefaultHeader:@"Accept" value:@"application/vnd.sharetribe+json; version=2"];
         [self setDefaultHeader:@"Accept-Encoding" value:@"gzip"];
         
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -99,7 +99,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     NSLog(@"logging in: %@/%@", username, password);
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     if (username != nil && password != nil) {
-        [params setValue:username forKey:@"username"];
+        [params setValue:username forKey:@"login"];
         [params setValue:password forKey:@"password"];
     }
         
@@ -229,7 +229,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         double progress = ((double) totalBytesRead) / ((double) totalBytesExpectedToRead);
         NSLog(@"progress in getting listings: %.02f / %.02f MB", totalBytesExpectedToRead/kOneMegabyte, totalBytesExpectedToRead/kOneMegabyte);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForGettingListingsDidProgress object:[NSNumber numberWithDouble:progress]];
+        NSMutableDictionary *progressInfo = [NSMutableDictionary dictionary];
+        progressInfo[kInfoKeyForListingType] = type;
+        progressInfo[kInfoKeyForProgress]    = @(progress);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForGettingListingsDidProgress object:progressInfo];
     }];
     
     [self enqueueHTTPRequestOperation:operation];
@@ -346,7 +349,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     
     [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         double progress = ((double) totalBytesWritten) / ((double) totalBytesExpectedToWrite);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForUploadDidProgress object:[NSNumber numberWithDouble:progress]];
+        NSMutableDictionary *progressInfo = [NSMutableDictionary dictionary];
+        progressInfo[kInfoKeyForProgress] = @(progress);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForUploadDidProgress object:progressInfo];
     }];
     
     [self enqueueHTTPRequestOperation:operation];

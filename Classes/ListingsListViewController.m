@@ -19,6 +19,7 @@
     NSMutableArray *listings;
     BOOL refreshingTopOfList;
     BOOL gettingNextPage;
+    BOOL hasPerformedSearch;
 }
 
 @property (strong) ClockStampView *clockStampView;
@@ -108,6 +109,7 @@
     self.searchBar.tintColor = kSharetribeBrownColor;
     self.searchBar.delegate = self;
     self.searchBar.placeholder = NSLocalizedString(@"placeholder.search", @"");
+    self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     
     if (!disallowsRefreshing) {
         self.header = [[PullDownToRefreshHeaderView alloc] init];
@@ -185,7 +187,14 @@
 
 - (void)gettingListingsDidProgress:(NSNotification *)notification
 {
-    header.updateProgressView.progress = [notification.object doubleValue];
+    NSString *interestingListingType = [listingCollectionViewDelegate listingType];
+    NSString *progressedListingType = notification.object[kInfoKeyForListingType];
+    if ([progressedListingType isEqual:interestingListingType]) {
+        id progress = notification.object[kInfoKeyForProgress];
+        if ([progress respondsToSelector:@selector(doubleValue)]) {
+            header.updateProgressView.progress = [progress doubleValue];
+        }
+    }
 }
 
 - (void)listingRefreshed:(NSNotification *)notification
@@ -282,12 +291,12 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [searchBar setShowsCancelButton:(searchText.length > 0) animated:YES];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [listingCollectionViewDelegate viewController:self wantsToSearch:searchBar.text];
+    hasPerformedSearch = YES;
     [searchBar resignFirstResponder];
     [footerSpinner startAnimating];
 }
@@ -295,7 +304,22 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     searchBar.text = nil;
-    [self searchBarSearchButtonClicked:searchBar];
+    if (hasPerformedSearch) {
+        [self searchBarSearchButtonClicked:searchBar];
+    } else {
+        [searchBar resignFirstResponder];
+    }
+    hasPerformedSearch = NO;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
 }
 
 #pragma mark - ClockStampViewDelegate

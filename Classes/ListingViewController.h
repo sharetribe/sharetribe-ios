@@ -39,6 +39,7 @@
 @property (strong) IBOutlet UILabel *agestampLabel;
 
 @property (strong) IBOutlet UIButton *respondButton;
+@property (strong) IBOutlet UIButton *messageButton;
 
 @property (strong) MessagesView *commentsView;
 

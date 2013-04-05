@@ -18,7 +18,6 @@
 #import "SharetribeAPIClient.h"
 #import "NSObject+Observing.h"
 #import "UIScrollView+Sharetribe.h"
-#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ListingsMapViewController () {
@@ -65,7 +64,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             
             NSString *roughCoordinate = [NSString stringWithFormat:@"%.3f %.2f", newListing.coordinate.latitude, newListing.coordinate.longitude];
             id listingAtRoughCoordinate = [listingsByRoughCoordinate objectForKey:roughCoordinate];
-            NSLog(@"%@: %@", roughCoordinate, listingAtRoughCoordinate);
+            // NSLog(@"%@: %@", roughCoordinate, listingAtRoughCoordinate);
             if (listingAtRoughCoordinate == nil || [listingAtRoughCoordinate isEqual:newListing]) {
                 
                 [annotationsToAdd addObject:newListing];
@@ -78,6 +77,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
                 [cluster addListing:newListing];
                 [listingsByRoughCoordinate setObject:cluster forKey:roughCoordinate];
                 [annotationsToAdd addObject:cluster];
+                [annotationsToAdd removeObject:listingAtRoughCoordinate];
                 
             } else if ([listingAtRoughCoordinate isKindOfClass:ListingCluster.class]) {
                 
@@ -104,6 +104,8 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     for (id<MKAnnotation> annotation in map.annotations) {
         if ([annotation isKindOfClass:Listing.class]) {
             [mappedListings addObject:annotation];
+        } else if ([annotation isKindOfClass:ListingCluster.class]) {
+            [mappedListings addObjectsFromArray:[(ListingCluster *) annotation listings]];
         }
     }
     
@@ -142,7 +144,10 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     span.longitudeDelta = (max.longitude-min.longitude)*0.8;
     defaultRegion = MKCoordinateRegionMake(averageCoordinate, span);
     if (shouldFocusToDefaultRegion) {
-        if (self.isViewLoaded && self.view.window) {
+        if (self.isViewLoaded
+                && self.view.window
+                && defaultRegion.span.latitudeDelta > 0
+                && defaultRegion.span.longitudeDelta > 0) {
             [map setRegion:defaultRegion animated:YES];
         } else {
             targetRegion = defaultRegion;
@@ -196,7 +201,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 {
     [super viewWillAppear:animated];
     
-    if (shouldRefocusRegion) {
+    if (shouldRefocusRegion && (targetRegion.span.latitudeDelta > 0 && targetRegion.span.longitudeDelta > 0)) {
         
         shouldRefocusRegion = NO;
         [map setRegion:targetRegion animated:NO];
@@ -263,6 +268,8 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 - (void)listingPinTappedInCluster:(UITapGestureRecognizer *)sender
 {
     [selectedAnnotationView setSelected:NO];
+    selectedCluster.selectedListingIndex = sender.view.tag;
+    
     [self mapView:map didSelectAnnotationView:(MKAnnotationView *) sender.view];
 }
 
@@ -285,9 +292,14 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+    return [self mapView:mapView viewForAnnotation:annotation reuse:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation reuse:(BOOL)reuse
+{
     if ([annotation isKindOfClass:Listing.class] || [annotation isKindOfClass:ListingCluster.class]) {
         
-        MKAnnotationView *view = [mapView dequeueReusableAnnotationViewWithIdentifier:@"ListingPin"];
+        MKAnnotationView *view = (reuse) ? [mapView dequeueReusableAnnotationViewWithIdentifier:@"ListingPin"] : nil;
         if (view == nil) {
             view = [[ListingAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"ListingPin"];
         }
@@ -301,38 +313,42 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 {
     for (MKAnnotationView *view in views) {
         if ([view.annotation isKindOfClass:MKUserLocation.class]) {
-            view.canShowCallout = NO;
+            // view.canShowCallout = NO;
         }
     }
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    selectedAnnotationView = view;
-    
     if ([view.annotation isKindOfClass:Listing.class]) {
+        selectedAnnotationView = view;
+    }
+    
+    id<MKAnnotation> annotation = view.annotation;
+        
+    if ([annotation isKindOfClass:Listing.class]) {
         
         if (cell.superview != self.view) {
             [self.view addSubview:cell];
         }
-        [cell setListing:view.annotation];
+        [cell setListing:annotation];
         
         [view setSelected:YES];
         
-        selectedListing = (Listing *) view.annotation;
+        selectedListing = (Listing *) annotation;
         
         [self performSelector:@selector(showOrHideCell) withObject:nil afterDelay:0.1];
         
-    } else if ([view.annotation isKindOfClass:ListingCluster.class]) {
+    } else if ([annotation isKindOfClass:ListingCluster.class]) {
         
-        ListingCluster *cluster = (ListingCluster *) view.annotation;
+        ListingCluster *cluster = (ListingCluster *) annotation;
         selectedCluster = cluster;
         
         UIScrollView *clusterView = [[UIScrollView alloc] init];
         clusterView.clipsToBounds = NO;
         
         int listingWidthInCluster = 36;
-        int clusterWidth = listingWidthInCluster * cluster.listings.count + 20;
+        int clusterWidth = listingWidthInCluster * cluster.listings.count + 25;
         
         if (clusterWidth < 270) {
             clusterView.frame = CGRectMake(0, 0, clusterWidth, 25);
@@ -342,51 +358,65 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             clusterView.contentSize = CGSizeMake(clusterWidth, 25);
         }
         
+        ListingAnnotationView *viewToPreselect = nil;
+        
         for (int i = 0; i < cluster.listings.count; i++) {
             
             Listing *listing = [cluster.listings objectAtIndex:i];
-            MKAnnotationView *listingPin = [self mapView:mapView viewForAnnotation:listing];
-            listingPin.frame = CGRectMake(listingWidthInCluster * i + 5, 0, listingPin.width, listingPin.height);
+            ListingAnnotationView *listingPin = (ListingAnnotationView *) [self mapView:mapView viewForAnnotation:listing reuse:NO];
+            listingPin.frame = CGRectMake(listingWidthInCluster * i + 5, -2, listingPin.width, listingPin.height);
             listingPin.tag = i;
+            listingPin.fillColor = kSharetribeBrownColor;
             [clusterView addSubview:listingPin];
+            
+            for (UIGestureRecognizer *recognizer in listingPin.gestureRecognizers) {
+                NSLog(@"removing a recognizer from %@", listing.title);
+                [listingPin removeGestureRecognizer:recognizer];
+            }
             
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(listingPinTappedInCluster:)];
             [listingPin addGestureRecognizer:tap];
+            
+            if (cluster.selectedListingIndex == i) {
+                viewToPreselect = listingPin;
+            }
         }
         view.leftCalloutAccessoryView = clusterView;
         
         UIButton *showDetailsButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         [showDetailsButton addTarget:self action:@selector(showSelectedClusterInDetail) forControlEvents:UIControlEventTouchUpInside];
-        view.rightCalloutAccessoryView = showDetailsButton;
+        UIView *rightCalloutAccessoryView = [[UIView alloc] initWithFrame:showDetailsButton.frame];
+        rightCalloutAccessoryView.width += 6;
+        [rightCalloutAccessoryView addSubview:showDetailsButton];
+        view.rightCalloutAccessoryView = rightCalloutAccessoryView;
         
-        for (UIView *calloutSubview in view.leftCalloutAccessoryView.subviews) {
-            if ([calloutSubview isKindOfClass:[ListingAnnotationView class]]) {
-                [self mapView:map didSelectAnnotationView:(ListingAnnotationView *) calloutSubview];
-                break;
-            }
+        if (viewToPreselect != nil) {
+            [self mapView:map didSelectAnnotationView:viewToPreselect];
         }
         
         if (clusterView.contentSize.width > clusterView.width) {
             clusterView.contentOffset = CGPointMake(clusterView.contentSize.width - clusterView.width, 0);
-            [clusterView performSelector:@selector(rewind) withObject:nil afterDelay:0.4];
+            [clusterView performSelector:@selector(rewind) withObject:nil afterDelay:0.7];
         }
     }
-    
+        
     CLLocationDegrees latitudeThreshold = map.centerCoordinate.latitude;
-    if ([view.annotation isKindOfClass:[ListingCluster class]]) {
+    if ([annotation isKindOfClass:[ListingCluster class]]) {
         latitudeThreshold -= 0.1 * map.region.span.latitudeDelta;
     }
     
-    if (view.annotation.coordinate.latitude > latitudeThreshold && [map.annotations containsObject:view.annotation]) {
+    if (annotation.coordinate.latitude > latitudeThreshold && [map.annotations containsObject:annotation]) {
         
-        CLLocationCoordinate2D newCenter = CLLocationCoordinate2DMake(view.annotation.coordinate.latitude, map.centerCoordinate.longitude);
+        CLLocationCoordinate2D newCenter = CLLocationCoordinate2DMake(annotation.coordinate.latitude, map.centerCoordinate.longitude);
         newCenter.latitude += 0.05 * map.region.span.latitudeDelta;
-        if ([view.annotation isKindOfClass:[ListingCluster class]]) {
+        if ([annotation isKindOfClass:[ListingCluster class]]) {
             newCenter.latitude += 0.05 * map.region.span.latitudeDelta;
         }
         CLLocation *newCenterLocation = [[CLLocation alloc] initWithLatitude:newCenter.latitude longitude:newCenter.longitude];
         [self performSelector:@selector(centerMapWithAnimationAt:) withObject:newCenterLocation afterDelay:0.2];
     }
+    
+    [view setSelected:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view

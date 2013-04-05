@@ -41,20 +41,20 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    // NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
-    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    // [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor viewFlipsideBackgroundColor];
     
     [application setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
     
-    self.offersViewController = [[ListingsTopViewController alloc] initWithListingType:kListingTypeOffer];
+    self.offersViewController   = [[ListingsTopViewController alloc] initWithListingType:kListingTypeOffer];
     self.requestsViewController = [[ListingsTopViewController alloc] initWithListingType:kListingTypeRequest];
     self.messagesViewController = [[ConversationListViewController alloc] init];
-    self.profileViewController = [[ProfileViewController alloc] init];
+    self.profileViewController  = [[ProfileViewController alloc] init];
     
     [offersViewController view];
     [requestsViewController view];
@@ -65,32 +65,32 @@ void uncaughtExceptionHandler(NSException *exception)
     UINavigationController *messagesNavigationController = [[UINavigationController alloc] initWithRootViewController:messagesViewController];
     UINavigationController *profileNavigationController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
     
-    offersNavigationController.delegate = self;
+    offersNavigationController.delegate   = self;
     requestsNavigationController.delegate = self;
     messagesNavigationController.delegate = self;
-    profileNavigationController.delegate = self;
+    profileNavigationController.delegate  = self;
     
     self.createListingViewController = [[CreateListingViewController alloc] init];
     self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:createListingViewController];
     
-    offersViewController.title = NSLocalizedString(@"tabs.offers", @"");
+    offersViewController.title   = NSLocalizedString(@"tabs.offers", @"");
     requestsViewController.title = NSLocalizedString(@"tabs.requests", @"");
     messagesViewController.title = NSLocalizedString(@"tabs.messages", @"");
-    profileViewController.title = NSLocalizedString(@"tabs.profile", @"");
+    profileViewController.title  = NSLocalizedString(@"tabs.profile", @"");
     
     User *currentUser = [User currentUser];
     profileViewController.user = currentUser;
     
-    offersNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-gift"];
+    offersNavigationController.tabBarItem.image   = [UIView imageWithIconNamed:@"camera" pointSize:28 color:[UIColor whiteColor]]; // [UIImage imageNamed:@"icon-gift"];
     requestsNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-bullhorn"];
     messagesNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-envelope"];
-    profileNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-kaapo"];
+    profileNavigationController.tabBarItem.image  = [UIImage imageNamed:@"icon-kaapo"];
     
     UIColor *tintColor = kSharetribeDarkBrownColor;
-    offersNavigationController.navigationBar.tintColor = tintColor;
-    requestsNavigationController.navigationBar.tintColor = tintColor;
-    messagesNavigationController.navigationBar.tintColor = tintColor;
-    profileNavigationController.navigationBar.tintColor = tintColor;
+    offersNavigationController.navigationBar.tintColor        = tintColor;
+    requestsNavigationController.navigationBar.tintColor      = tintColor;
+    messagesNavigationController.navigationBar.tintColor      = tintColor;
+    profileNavigationController.navigationBar.tintColor       = tintColor;
     createListingNavigationController.navigationBar.tintColor = tintColor;
             
     NSMutableArray *tabViewControllers = [NSMutableArray arrayWithCapacity:5];
@@ -100,7 +100,10 @@ void uncaughtExceptionHandler(NSException *exception)
     [tabViewControllers addObject:profileNavigationController];
     
     self.tabBarController = [[ButtonTabBarController alloc] initWithMiddleViewController:createListingNavigationController otherViewControllers:tabViewControllers];
-
+    
+    if ([tabBarController.tabBar respondsToSelector:@selector(setTintColor:)]) {
+        tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
+    }
     tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
     tabBarController.middleButtonNormalImage = [UIImage imageNamed:@"icon-bubble"];
     tabBarController.middleButtonHighlightedImage = [UIImage imageNamed:@"icon-bubble-white"];
@@ -116,16 +119,6 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // Register for push notifications
     [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
-    
-    if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
-        [self showLogin];
-    } else {
-        if ([[SharetribeAPIClient sharedClient] currentCommunityId] == NSNotFound) {
-            [self showCommunitySelection];
-        } else {
-            [self loadInitialContent];
-        }
-    }
     
     return YES;
 }
@@ -179,6 +172,17 @@ void uncaughtExceptionHandler(NSException *exception)
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New notification!" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
+}
+
+- (void)doInitialCheck
+{
+    if  (![[SharetribeAPIClient sharedClient] isLoggedIn]) {
+        [self showLogin];
+    } else if ([[SharetribeAPIClient sharedClient] currentCommunityId] == NSNotFound) {
+        [self showCommunitySelection];
+    } else {
+        [self loadInitialContent];
+    }
 }
 
 - (void)showLogin

@@ -60,6 +60,7 @@
 @synthesize agestampLabel;
 
 @synthesize respondButton;
+@synthesize messageButton;
 
 @synthesize commentsView;
 
@@ -169,7 +170,9 @@
     }
     [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
     
-    respondButton.hidden = (listing == nil) || (listing.author.isCurrentUser);  // one cannot respond to oneself
+    BOOL messagingDisabled = (listing == nil) || (listing.author.isCurrentUser);  // one cannot respond to oneself
+    respondButton.hidden = messagingDisabled;
+    messageButton.hidden = messagingDisabled;
     
     if (listing.author.isCurrentUser) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];

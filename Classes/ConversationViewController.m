@@ -16,7 +16,6 @@
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "NSObject+Observing.h"
-#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kAlertTagForConfirmingAccept  1000

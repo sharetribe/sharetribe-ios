@@ -16,6 +16,7 @@
 
 @property (readonly) NSMutableArray *listings;
 @property (readonly) CLLocationCoordinate2D coordinate;
+@property (assign) NSInteger selectedListingIndex;
 
 - (void)addListing:(Listing *)listing;
 - (void)removeListing:(Listing *)listing;

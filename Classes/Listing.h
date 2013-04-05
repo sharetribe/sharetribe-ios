@@ -54,6 +54,7 @@
 @property (assign, nonatomic) NSInteger numberOfTimesViewed;
 @property (assign, nonatomic) NSInteger numberOfComments;
 @property (strong, nonatomic) NSString *visibility;
+@property (strong, nonatomic) NSString *privacy;
 
 @property (strong, nonatomic) NSArray *comments;
 
@@ -62,6 +63,7 @@
 - (NSDictionary *)asJSON;
 
 + (UIImage *)iconForCategory:(NSString *)category;
++ (UIImage *)tinyIconForCategory:(NSString *)category;
 
 + (Listing *)listingFromDict:(NSDictionary *)dict;
 + (NSArray *)listingsFromArrayOfDicts:(NSArray *)dicts;

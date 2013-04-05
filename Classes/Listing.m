@@ -43,6 +43,7 @@
 @synthesize numberOfTimesViewed;
 @synthesize numberOfComments;
 @synthesize visibility;
+@synthesize privacy;
 
 @synthesize comments;
 
@@ -127,6 +128,15 @@
         [JSON setObject:visibility forKey:@"visibility"];
     }
     
+    if (privacy != nil) {
+        [JSON setObject:privacy forKey:@"privacy"];
+    }
+    
+    if (validUntil != nil) {
+        NSLog(@"validUntil: %@", validUntil);
+        [JSON setObject:[validUntil timestamp] forKey:@"valid_until"];
+    }
+    
     NSLog(@"listing as JSON: %@", JSON);
     
     return JSON;
@@ -143,6 +153,11 @@
 + (UIImage *)iconForCategory:(NSString *)category
 {
     return [UIImage imageNamed:[NSString stringWithFormat:@"icon-%@", category]];
+}
+
++ (UIImage *)tinyIconForCategory:(NSString *)category
+{
+    return [UIImage imageNamed:[NSString stringWithFormat:@"tinyicon-%@", category]];
 }
 
 + (Listing *)listingFromDict:(NSDictionary *)dict
@@ -188,6 +203,7 @@
     listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
     listing.numberOfTimesViewed = [[dict objectOrNilForKey:@"times_viewed"] intValue];
     listing.visibility = [dict objectOrNilForKey:@"visibility"];
+    listing.privacy = [dict objectOrNilForKey:@"privacy"];
     
     listing.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
     listing.updatedAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"updated_at"]];

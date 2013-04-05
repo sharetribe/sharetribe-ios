@@ -28,4 +28,6 @@
 @property (strong, nonatomic) CreateListingViewController *createListingViewController;
 @property (strong, nonatomic) UINavigationController *createListingNavigationController;
 
+- (void)doInitialCheck;
+
 @end

@@ -39,6 +39,13 @@
     }
 }
 
+- (NSString *)timestamp
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZ";
+    return [formatter stringFromDate:self];
+}
+
 + (NSDate *)dateFromTimestamp:(NSString *)timestamp
 {
     timestamp = [timestamp stringByReplacingOccurrencesOfString:@":" withString:@""];

@@ -49,7 +49,12 @@
 
 - (NSString *)title
 {
-    return @"";
+    return @" ";
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%d listings", listings.count];
 }
 
 - (void)addListing:(Listing *)listing

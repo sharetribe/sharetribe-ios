@@ -16,6 +16,7 @@
 @interface ListingsTopViewController () {
     
     UIViewController *frontViewer;
+    BOOL clearPreviousListingsOnGettingResults;
 }
 
 @end
@@ -76,6 +77,11 @@
 
 - (void)didReceiveListings:(NSNotification *)notification
 {
+    if (clearPreviousListingsOnGettingResults) {
+        [self clearAllListings];
+        clearPreviousListingsOnGettingResults = NO;
+    }
+    
     NSString *resultType = [notification.userInfo objectForKey:kInfoKeyForListingType];
     if ([resultType isEqual:self.listingType]) {
         
@@ -109,15 +115,14 @@
     [self.view addSubview:listViewer.view];
     [self.view addSubview:mapViewer.view];
     
-    int statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    listViewer.view.y -= statusBarHeight;
-    mapViewer.view.y -= statusBarHeight;
+    listViewer.view.frame = self.view.bounds;
+    mapViewer.view.frame = self.view.bounds;
     
     mapViewer.view.hidden = YES;
     frontViewer = listViewer;
     
-    listViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    mapViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    listViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    mapViewer.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
@@ -229,6 +234,10 @@
 
 - (void)viewController:(UIViewController *)viewer wantsToRefreshPage:(NSInteger)page
 {
+    if (page == kFirstPage) {
+        clearPreviousListingsOnGettingResults = YES;
+    }
+    
     if (search.length > 0) {
         [[SharetribeAPIClient sharedClient] getListingsOfType:listingType withSearch:search forPage:page];
     } else {

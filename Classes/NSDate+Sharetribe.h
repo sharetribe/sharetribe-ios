@@ -15,6 +15,7 @@
 @interface NSDate (Sharetribe)
 
 - (NSString *)agestamp;
+- (NSString *)timestamp;
 
 + (NSDate *)dateFromTimestamp:(NSString *)timestamp;
 

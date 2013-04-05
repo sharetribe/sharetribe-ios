@@ -12,6 +12,9 @@
 
 @protocol ListingCollectionViewDelegate <NSObject>
 
+- (NSString *)listingType;
+- (NSString *)listingCategory;
+
 - (void)viewController:(UIViewController *)viewer didSelectListing:(Listing *)listing;
 - (void)viewController:(UIViewController *)viewer didSelectListings:(NSArray *)listings;
 

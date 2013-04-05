@@ -13,7 +13,6 @@
 #import "User.h"
 #import "NSDate+Sharetribe.h"
 #import "UIImageView+Sharetribe.h"
-#import "UIView+XYWidthHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kSeparatorTag      7

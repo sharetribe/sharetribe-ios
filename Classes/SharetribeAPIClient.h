@@ -53,6 +53,8 @@
 #define kInfoKeyForNumberOfPages                           @"number of pages"
 #define kInfoKeyForItemsPerPage                            @"items per page"
 
+#define kInfoKeyForProgress                                @"progress"
+
 @class User;
 
 @interface SharetribeAPIClient : AFHTTPClient

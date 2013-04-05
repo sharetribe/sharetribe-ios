@@ -11,7 +11,6 @@
 #import "Location.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
-#import "UIView+XYWidthHeight.h"
 #import "GTMNSString+HTML.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -211,7 +210,10 @@
 
 - (void)uploadDidProgress:(NSNotification *)notification
 {
-    uploadProgressView.progress = [notification.object floatValue];
+    id progress = notification.object;
+    if ([progress respondsToSelector:@selector(floatValue)]) {
+        uploadProgressView.progress = [progress floatValue];
+    }
 }
 
 - (void)didPostListing:(NSNotification *)notification
@@ -459,7 +461,7 @@
         } else if (formItem.type == FormItemTypeDate) {
             
             NSString *datestamp = [listing valueForKey:formItem.mapsTo];
-            if (datestamp == nil || [datestamp isEqualToString:formItem.defaultAlternative]) {
+            if (datestamp == nil || [datestamp isEqual:formItem.defaultAlternative]) {
                 chosenAlternative = formItem.defaultAlternative;
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 formatter.dateFormat =  (formItem.includeTime) ? kDateAndTimeFormat : kDateFormat;
@@ -520,7 +522,7 @@
                     choiceLabel.text = [formItem localizedTitleForAlternative:alternative];
                 }
                 choiceLabel.textColor = [UIColor blackColor];
-                if (formItem.type == FormItemTypeDate && ![alternative isEqualToString:formItem.defaultAlternative]) {
+                if (formItem.type == FormItemTypeDate && ![alternative isEqual:formItem.defaultAlternative]) {
                     choiceLabel.textColor = kSharetribeDarkBrownColor;
                 }
                 
@@ -633,7 +635,7 @@
         
     } else if (formItem.type == FormItemTypePhoto) {
         
-        if (listing.image != nil) {
+        if (listing.image != nil && [listing.image isKindOfClass:UIImage.class]) {
             CGFloat photoWidth = listing.image.size.width;
             CGFloat photoHeight = listing.image.size.height;
             int photoViewWidth = (photoWidth >= photoHeight) ? 300 : 220;
@@ -904,7 +906,7 @@
         formatter.dateFormat = (formItem.includeTime) ? kDateAndTimeFormat : kDateFormat;
         if (currentChoice == nil) {
             currentChoice = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:formItem.defaultTimeIntervalInDays*24*60*60]];
-        } else if ([currentChoice isEqualToString:formItem.defaultAlternative]) {
+        } else if ([currentChoice isEqual:formItem.defaultAlternative]) {
             currentChoice = [formItem.alternatives objectAtIndex:formItem.alternatives.count-1];
         }
         datePicker.date = [formatter dateFromString:currentChoice];

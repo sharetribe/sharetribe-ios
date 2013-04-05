@@ -15,27 +15,46 @@
 
 @synthesize iconView;
 @synthesize countLabel;
-@synthesize pinHeadView;
+
+@synthesize strokeColor, fillColor;
+
+- (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+    [self setup];
+    return self;
+}
+
+- (id)init
+{
+    self = [super init];
+    [self setup];
+    return self;
+}
+
+- (void)setup
+{
+    self.frame = CGRectMake(0, 0, 30, 30);
+    self.opaque = NO;
+    self.strokeColor = [UIColor colorWithWhite:1 alpha:0.9];
+    
+    [self setSelected:NO];
+}
 
 - (void)setAnnotation:(id<MKAnnotation>)annotation
 {
     [super setAnnotation:annotation];
     
-    if (pinHeadView == nil) {
-        self.pinHeadView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pin-head"]];
-        pinHeadView.frame = CGRectMake(-7, -5, 28, 28);
-        [self addSubview:pinHeadView];
-    }
-    
     if ([annotation isKindOfClass:Listing.class]) {
         
         if (iconView == nil) {
             self.iconView = [[UIImageView alloc] init];
-            iconView.frame = CGRectMake(-5, -3, 24, 24);
+            iconView.frame = CGRectMake(3, 3, 24, 24);
+            iconView.contentMode = UIViewContentModeCenter;
             [self addSubview:iconView];
         }
         
-        iconView.image = [Listing iconForCategory:[(Listing *) annotation category]];
+        iconView.image = [Listing tinyIconForCategory:[(Listing *) annotation category]];
         
         iconView.hidden = NO;
         countLabel.hidden = YES;
@@ -46,13 +65,14 @@
         
         if (countLabel == nil) {
             self.countLabel = [[UILabel alloc] init];
-            countLabel.frame = pinHeadView.frame;
-            countLabel.font = [UIFont boldSystemFontOfSize:15];
-            countLabel.textColor = [UIColor darkGrayColor];
-            countLabel.shadowColor = [UIColor colorWithWhite:1 alpha:0.4];
+            countLabel.frame = CGRectMake(3, 3, 24, 24);
+            countLabel.font = [UIFont boldSystemFontOfSize:13];
+            countLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1];
+            countLabel.shadowColor = [UIColor colorWithWhite:1 alpha:0.2];
             countLabel.shadowOffset = CGSizeMake(0, 1);
             countLabel.backgroundColor = [UIColor clearColor];
             countLabel.textAlignment = UITextAlignmentCenter;
+            countLabel.userInteractionEnabled = NO;
             [self addSubview:countLabel];
         }
         
@@ -65,11 +85,27 @@
     }
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    
+    CGRect pinRect = CGRectMake(4, 4, rect.size.width - 2 * 4, rect.size.height - 2 * 4);
+    
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    CGContextClearRect(c, rect);
+    CGContextSetStrokeColorWithColor(c, strokeColor.CGColor);
+    CGContextSetFillColorWithColor(c, fillColor.CGColor);
+    CGContextFillEllipseInRect(c, pinRect);
+    CGContextStrokeEllipseInRect(c, pinRect);
+}
+
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
     
-    self.pinHeadView.image = (selected) ? [UIImage imageNamed:@"pin-head-active"] : [UIImage imageNamed:@"pin-head"];
+    self.fillColor = (self.selected) ? kSharetribeDarkOrangeColor : kSharetribeBrownColor;
+    
+    [self setNeedsDisplay];
 }
 
 @end

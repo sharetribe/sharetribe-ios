@@ -8,8 +8,6 @@
 
 #import "UILabel+SizeToHeight.h"
 
-#import "UIView+XYWidthHeight.h"
-
 @implementation UILabel (SizeToHeight)
 
 - (CGFloat)sizeToHeight

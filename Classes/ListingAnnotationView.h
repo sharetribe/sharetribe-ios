@@ -8,10 +8,12 @@
 
 #import <MapKit/MapKit.h>
 
-@interface ListingAnnotationView : MKPinAnnotationView
+@interface ListingAnnotationView : MKAnnotationView
 
 @property (strong) UIImageView *iconView;
 @property (strong) UILabel *countLabel;
-@property (strong) UIImageView *pinHeadView;
+
+@property (strong) UIColor *strokeColor;
+@property (strong) UIColor *fillColor;
 
 @end
