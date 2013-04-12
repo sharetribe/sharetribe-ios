@@ -27,10 +27,11 @@ typedef enum {
 @property (strong, nonatomic) NSString *mapsTo;
 @property (assign, nonatomic) BOOL providesExplanation;
 @property (assign, nonatomic) BOOL mandatory;
-@property (strong, nonatomic) NSArray *alternatives;
-@property (strong, nonatomic) NSString *defaultAlternative;
+@property (strong, nonatomic) NSMutableArray *alternatives;
+@property (strong, nonatomic) id defaultAlternative;
 @property (assign, nonatomic) NSInteger defaultTimeIntervalInDays;
 @property (assign, nonatomic) BOOL includeTime;
+@property (assign, nonatomic) BOOL allowsUndefined;
 @property (assign, nonatomic) UITextAutocapitalizationType autocapitalizationType;
 @property (strong, nonatomic) NSString *listSeparator;
 

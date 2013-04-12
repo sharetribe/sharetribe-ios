@@ -41,9 +41,9 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
+    // [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
     // [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

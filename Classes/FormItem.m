@@ -8,6 +8,8 @@
 
 #import "FormItem.h"
 
+#import "NSDate+Sharetribe.h"
+
 @implementation FormItem
 
 @synthesize type;
@@ -52,12 +54,23 @@
         item.subtitleKey = [dataDict valueForKey:@"subtitle"];
         item.mapsTo = [dataDict valueForKey:@"maps_to"];
         item.mandatory = [[dataDict valueForKey:@"mandatory"] boolValue];
-        item.alternatives = [dataDict valueForKey:@"alternatives"];
+        item.alternatives = [[dataDict valueForKey:@"alternatives"] mutableCopy];
         item.defaultAlternative = [dataDict valueForKey:@"default_alternative"];
         item.defaultTimeIntervalInDays = [[dataDict valueForKey:@"default_time_interval_in_days"] intValue];
         item.includeTime = [[dataDict valueForKey:@"include_time"] boolValue];
+        item.allowsUndefined = [[dataDict valueForKey:@"allows_undefined"] boolValue];
         item.providesExplanation = [[dataDict objectForKey:@"provides_explanation"] boolValue];
         item.listSeparator = [dataDict valueForKey:@"list_separator"];
+        
+        if (item.type == FormItemTypeDate) {
+            NSDate *defaultDate = [NSDate dateWithTimeIntervalSinceNow:(item.defaultTimeIntervalInDays * kOneDay)];
+            item.defaultAlternative = defaultDate;
+            if (item.allowsUndefined) {
+                item.alternatives = @[defaultDate, kValidForTheTimeBeing].mutableCopy;
+            } else {
+                item.alternatives = @[defaultDate].mutableCopy;
+            }
+        }
         
         // NSLog(@"%@ maps to %@", item.title, item.mapsTo);
         

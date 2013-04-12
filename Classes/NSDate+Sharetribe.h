@@ -16,6 +16,8 @@
 
 - (NSString *)agestamp;
 - (NSString *)timestamp;
+- (NSString *)dateString;
+- (NSString *)dateAndTimeString;
 
 + (NSDate *)dateFromTimestamp:(NSString *)timestamp;
 

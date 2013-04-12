@@ -6,6 +6,12 @@
 //
 //
 
+#import "NSArray+Sharetribe.h"
+#import "NSDate+Sharetribe.h"
+#import "NSDictionary+Sharetribe.h"
+#import "NSObject+Observing.h"
+#import "UIView+Sharetribe.h"
+
 // Colors
 
 #define kSharetribeLightBrownColor     [UIColor colorWithRed:247/255.0 green:245/255.0 blue:230/255.0 alpha:1]
@@ -36,3 +42,5 @@
 // Miscellaneous
 
 #define kFirstPage 1
+
+#define kValidForTheTimeBeing               @"for_the_time_being"

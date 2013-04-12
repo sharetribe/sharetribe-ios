@@ -39,6 +39,20 @@
     }
 }
 
+- (NSString *)dateString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = kDateFormat;
+    return [formatter stringFromDate:self];
+}
+
+- (NSString *)dateAndTimeString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = kDateAndTimeFormat;
+    return [formatter stringFromDate:self];
+}
+
 - (NSString *)timestamp
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

@@ -49,8 +49,8 @@
 	<dict>
 		<key>type</key>
 		<string>date</string>
-		<key>default_alternative</key>
-		<string>for_the_time_being</string>
+		<key>allows_undefined</key>
+		<true/>
 		<key>default_time_interval_in_days</key>
 		<integer>90</integer>
 		<key>include_time</key>

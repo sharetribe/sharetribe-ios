@@ -452,31 +452,9 @@
         id chosenAlternative = [listing valueForKey:formItem.mapsTo];
         
         if (formItem.type == FormItemTypeChoice) {
-            
             if (chosenAlternative == nil) {
-                chosenAlternative = [formItem.alternatives objectAtIndex:0];
+                chosenAlternative = formItem.alternatives[0];
                 [listing setValue:chosenAlternative forKey:formItem.mapsTo];
-            }
-            
-        } else if (formItem.type == FormItemTypeDate) {
-            
-            NSString *datestamp = [listing valueForKey:formItem.mapsTo];
-            if (datestamp == nil || [datestamp isEqual:formItem.defaultAlternative]) {
-                chosenAlternative = formItem.defaultAlternative;
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat =  (formItem.includeTime) ? kDateAndTimeFormat : kDateFormat;
-                datestamp = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:formItem.defaultTimeIntervalInDays*24*60*60]];
-                [listing setValue:datestamp forKey:formItem.mapsTo];
-            } else {
-                chosenAlternative = datestamp;
-            }
-            
-            if (formItem.defaultAlternative != nil) {
-                if (formItem.alternatives == nil) {
-                    formItem.alternatives = [NSArray arrayWithObjects:formItem.defaultAlternative, datestamp, nil];
-                }
-            } else {
-                formItem.alternatives = [NSArray arrayWithObject:datestamp];
             }
         }
         
@@ -489,7 +467,7 @@
             } else {
                 if (choiceView == nil) {
                     choiceView = [[UIView alloc] init];
-                    choiceView.frame = CGRectMake(10, 30+45*i, 300, 40);
+                    choiceView.frame = CGRectMake(10, 30 + 45 * i, 300, 40);
                     choiceView.layer.cornerRadius = 8;
                     choiceView.tag = kCellChoiceViewTagBase+i;
                     [cell addSubview:choiceView];
@@ -516,13 +494,18 @@
                 
                 UILabel *choiceLabel = (UILabel *) [choiceView viewWithTag:kChoiceCellLabelTag];
                 id alternative = [formItem.alternatives objectAtIndex:i];
-                if (formItem.type == FormItemTypeDate && ![alternative isEqual:formItem.defaultAlternative]) {
-                    choiceLabel.text = alternative;  // we don't localize timestamps the crude way, no
+                if (formItem.type == FormItemTypeDate && [alternative isKindOfClass:NSDate.class]) {
+                    if (formItem.includeTime) {
+                        choiceLabel.text = [alternative dateAndTimeString];
+                    } else {
+                        choiceLabel.text = [alternative dateString];
+                    }
+                    // we don't localize timestamps the crude way, no
                 } else {
                     choiceLabel.text = [formItem localizedTitleForAlternative:alternative];
                 }
                 choiceLabel.textColor = [UIColor blackColor];
-                if (formItem.type == FormItemTypeDate && ![alternative isEqual:formItem.defaultAlternative]) {
+                if (formItem.type == FormItemTypeDate && [alternative isKindOfClass:NSDate.class]) {
                     choiceLabel.textColor = kSharetribeDarkBrownColor;
                 }
                 
@@ -537,7 +520,9 @@
                 }
                 
                 [UIView beginAnimations:nil context:NULL];
-                if ([chosenAlternative isEqual:alternative] || choiceCheckmark.image == nil) {
+                if ([chosenAlternative isEqual:alternative] ||
+                        (chosenAlternative == nil && [alternative isEqual:kValidForTheTimeBeing]) ||
+                        choiceCheckmark.image == nil) {
                     choiceView.backgroundColor = kSharetribeLightBrownColor;
                     choiceCheckmark.alpha = 1;
                 } else {
@@ -581,7 +566,7 @@
             
             photoView.image = nil;
             photoView.backgroundColor = kSharetribeLightBrownColor;
-            photoView.frame = CGRectMake(10, 30, 300, rowHeight-30-rowSpacing);
+            photoView.frame = CGRectMake(10, 30, 300, rowHeight - 30 - rowSpacing);
             [photoButton setTitle:NSLocalizedString(@"listing.image.add", @"") forState:UIControlStateNormal];
             
             photoView.layer.cornerRadius = 8;            
@@ -639,23 +624,23 @@
             CGFloat photoWidth = listing.image.size.width;
             CGFloat photoHeight = listing.image.size.height;
             int photoViewWidth = (photoWidth >= photoHeight) ? 300 : 220;
-            rowHeight = 30 + photoViewWidth * (photoHeight/photoWidth);
+            rowHeight = 30 + photoViewWidth * (photoHeight / photoWidth);
         } else {
             rowHeight = 100;
         }
         
     } else if (formItem.type == FormItemTypeChoice) {
         
-        rowHeight = 30 + formItem.alternatives.count*45;
+        rowHeight = 30 + formItem.alternatives.count * 45;
     
     } else if (formItem.type == FormItemTypeLocation) {
         
-        rowHeight = 50+175;
+        rowHeight = 50 + 175;
     
     } else if (formItem.type == FormItemTypeDate) {
         
-        rowHeight = 30+45;
-        if (formItem.defaultAlternative != nil) {
+        rowHeight = 30 + 45;
+        if (formItem.allowsUndefined) {
             rowHeight += 45;
         }
     }
@@ -893,35 +878,37 @@
 - (IBAction)choiceButtonPressed:(UIButton *)sender
 {
     NSIndexPath *path = [table indexPathForRowAtPoint:[table convertPoint:CGPointZero fromView:sender]];    
-    FormItem *formItem = [formItems objectAtIndex:path.row];
-    id value = [formItem.alternatives objectAtIndex:sender.tag];
+    FormItem *formItem = formItems[path.row];
+    id value = formItem.alternatives[sender.tag];
     
-    if (formItem.type == FormItemTypeDate && ![value isEqual:formItem.defaultAlternative]) {
+    if (formItem.type == FormItemTypeDate) {
         
-        datePicker.minimumDate = [NSDate date];
-        datePicker.datePickerMode = (formItem.includeTime) ? UIDatePickerModeDateAndTime : UIDatePickerModeDate;
-        datePicker.minuteInterval = 10;
-        NSString *currentChoice = [listing valueForKey:formItem.mapsTo];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = (formItem.includeTime) ? kDateAndTimeFormat : kDateFormat;
-        if (currentChoice == nil) {
-            currentChoice = [formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:formItem.defaultTimeIntervalInDays*24*60*60]];
-        } else if ([currentChoice isEqual:formItem.defaultAlternative]) {
-            currentChoice = [formItem.alternatives objectAtIndex:formItem.alternatives.count-1];
+        if ([value isKindOfClass:NSDate.class]) {
+            
+            datePicker.minimumDate = [NSDate date];
+            datePicker.datePickerMode = (formItem.includeTime) ? UIDatePickerModeDateAndTime : UIDatePickerModeDate;
+            datePicker.minuteInterval = 10;
+            datePicker.date = value;
+            
+            [UIView beginAnimations:nil context:NULL];
+            datePicker.frame = CGRectMake(0, self.view.height - datePicker.height, datePicker.width, datePicker.height);
+            table.frame = CGRectMake(0, 0, table.width, self.view.height - datePicker.height);
+            [UIView commitAnimations];
+            
+            [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            
+            self.navigationItem.leftBarButtonItem = nil;
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.ok", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(dismissDatePicker)];
+            
+            self.formItemBeingEdited = formItem;
+
+        } else {
+            
+            value = nil;
+            if (datePicker.y < self.view.height) {
+                [self dismissDatePicker];
+            }
         }
-        datePicker.date = [formatter dateFromString:currentChoice];
-        
-        [UIView beginAnimations:nil context:NULL];
-        datePicker.frame = CGRectMake(0, self.view.height-datePicker.height, datePicker.width, datePicker.height);
-        table.frame = CGRectMake(0, 0, table.width, self.view.height-datePicker.height);
-        [UIView commitAnimations];
-        
-        [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
-        self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.ok", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(dismissDatePicker)];
-        
-        self.formItemBeingEdited = formItem;
         
     } else {
         
@@ -1005,13 +992,8 @@
 
 - (IBAction)datePickerValueChanged:(UIDatePicker *)picker
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = (formItemBeingEdited.includeTime) ? kDateAndTimeFormat : kDateFormat;
-    NSString *datestamp = [formatter stringFromDate:picker.date];
-    [listing setValue:datestamp forKey:formItemBeingEdited.mapsTo];
-    if (formItemBeingEdited.defaultAlternative != nil) {
-        formItemBeingEdited.alternatives = [NSArray arrayWithObjects:formItemBeingEdited.defaultAlternative, datestamp, nil];
-    }
+    [listing setValue:picker.date forKey:formItemBeingEdited.mapsTo];
+    [formItemBeingEdited.alternatives replaceObjectAtIndex:0 withObject:picker.date];
     [table reloadData];
 }
 
