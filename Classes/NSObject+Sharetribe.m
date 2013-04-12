@@ -6,9 +6,9 @@
 //
 //
 
-#import "NSObject+Observing.h"
+#import "NSObject+Sharetribe.h"
 
-@implementation NSObject (Observing)
+@implementation NSObject (Sharetribe)
 
 - (void)observeNotification:(NSString *)notification withSelector:(SEL)selector
 {
@@ -18,6 +18,11 @@
 - (void)stopObservingAllNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
++ (instancetype)cast:(id)object
+{
+    return [object isKindOfClass:self] ? object : nil;
 }
 
 @end

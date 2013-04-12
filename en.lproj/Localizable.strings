@@ -138,6 +138,7 @@
 
 "listing.offering_type.give_away" = "Giving away";
 "listing.offering_type.lend" = "Lending";
+"listing.offering_type.offer" = "Offering";
 "listing.offering_type.rent_out" = "Renting out";
 "listing.offering_type.sell" = "Selling";
 "listing.offering_type.share_for_free" = "Sharing for free";

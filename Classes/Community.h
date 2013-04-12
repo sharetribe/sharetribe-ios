@@ -14,6 +14,11 @@
 @property (strong) NSString *name;
 @property (strong) NSString *domain;
 
+@property (strong) NSURL *logoURL;
+@property (strong) NSURL *coverPhotoURL;
+@property (strong) UIColor *color1;
+@property (strong) UIColor *color2;
+
 + (Community *)communityFromDict:(NSDictionary *)dict;
 + (NSArray *)communitiesFromArrayOfDicts:(NSArray *)dicts;
 

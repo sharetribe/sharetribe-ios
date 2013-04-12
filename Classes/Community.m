@@ -10,17 +10,13 @@
 
 @implementation Community
 
-@synthesize communityId;
-@synthesize name;
-@synthesize domain;
-
 + (Community *)communityFromDict:(NSDictionary *)dict
 {
     Community *community = [[Community alloc] init];
     
-    community.communityId = [[dict objectForKey:@"id"] intValue];
-    community.name = [dict objectForKey:@"name"];
-    community.domain = [dict objectForKey:@"domain"];
+    community.communityId = [[NSNumber cast:dict[@"id"]] intValue];
+    community.name        = [NSString cast:dict[@"name"]];
+    community.domain      = [NSString cast:dict[@"domain"]];
     
     return community;
 }

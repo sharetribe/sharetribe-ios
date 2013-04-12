@@ -9,7 +9,7 @@
 #import "NSArray+Sharetribe.h"
 #import "NSDate+Sharetribe.h"
 #import "NSDictionary+Sharetribe.h"
-#import "NSObject+Observing.h"
+#import "NSObject+Sharetribe.h"
 #import "UIView+Sharetribe.h"
 
 // Colors

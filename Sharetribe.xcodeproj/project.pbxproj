@@ -58,7 +58,7 @@
 		48482629159BF09F00B15207 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482627159BF09F00B15207 /* LoginViewController.m */; };
 		4848262E159BF6F600B15207 /* sharetribe_logo_tagline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4848262C159BF6F600B15207 /* sharetribe_logo_tagline@2x.png */; };
 		48482638159C105D00B15207 /* Community.m in Sources */ = {isa = PBXBuildFile; fileRef = 48482637159C105C00B15207 /* Community.m */; };
-		484A034115D89C4B005A8417 /* NSObject+Observing.m in Sources */ = {isa = PBXBuildFile; fileRef = 484A034015D89C4B005A8417 /* NSObject+Observing.m */; };
+		484A034115D89C4B005A8417 /* NSObject+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 484A034015D89C4B005A8417 /* NSObject+Sharetribe.m */; };
 		484A034915D8B3F9005A8417 /* icon-location-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 484A034215D8B3F9005A8417 /* icon-location-white.png */; };
 		484A034A15D8B3F9005A8417 /* icon-location-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 484A034315D8B3F9005A8417 /* icon-location-white@2x.png */; };
 		484A034B15D8B3F9005A8417 /* icon-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 484A034415D8B3F9005A8417 /* icon-location.png */; };
@@ -297,8 +297,8 @@
 		48482634159BFF2C00B15207 /* Sharetribe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sharetribe-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		48482636159C105C00B15207 /* Community.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Community.h; sourceTree = "<group>"; };
 		48482637159C105C00B15207 /* Community.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Community.m; sourceTree = "<group>"; };
-		484A033F15D89C4B005A8417 /* NSObject+Observing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Observing.h"; sourceTree = "<group>"; };
-		484A034015D89C4B005A8417 /* NSObject+Observing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Observing.m"; sourceTree = "<group>"; };
+		484A033F15D89C4B005A8417 /* NSObject+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Sharetribe.h"; sourceTree = "<group>"; };
+		484A034015D89C4B005A8417 /* NSObject+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Sharetribe.m"; sourceTree = "<group>"; };
 		484A034215D8B3F9005A8417 /* icon-location-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-location-white.png"; sourceTree = "<group>"; };
 		484A034315D8B3F9005A8417 /* icon-location-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-location-white@2x.png"; sourceTree = "<group>"; };
 		484A034415D8B3F9005A8417 /* icon-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-location.png"; sourceTree = "<group>"; };
@@ -783,8 +783,8 @@
 				481DEAC314F9CB2800B2CA5D /* NSDate+Sharetribe.m */,
 				48D004EF159ED2570063E372 /* NSDictionary+Sharetribe.h */,
 				48D004F0159ED2570063E372 /* NSDictionary+Sharetribe.m */,
-				484A033F15D89C4B005A8417 /* NSObject+Observing.h */,
-				484A034015D89C4B005A8417 /* NSObject+Observing.m */,
+				484A033F15D89C4B005A8417 /* NSObject+Sharetribe.h */,
+				484A034015D89C4B005A8417 /* NSObject+Sharetribe.m */,
 				483D99BB15E1A3A600245A74 /* NSString+Sharetribe.h */,
 				483D99BC15E1A3A600245A74 /* NSString+Sharetribe.m */,
 				48E1C43415C4C7D30058F4EB /* UIDevice+Sharetribe.h */,
@@ -1236,7 +1236,7 @@
 				48E1C44C15C517500058F4EB /* UINavigationController+Sharetribe.m in Sources */,
 				48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */,
 				48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */,
-				484A034115D89C4B005A8417 /* NSObject+Observing.m in Sources */,
+				484A034115D89C4B005A8417 /* NSObject+Sharetribe.m in Sources */,
 				483D99A015E17A9600245A74 /* Feedback.m in Sources */,
 				483D99A315E1859000245A74 /* Badge.m in Sources */,
 				483D99A615E18FDE00245A74 /* Grade.m in Sources */,

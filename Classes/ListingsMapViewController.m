@@ -16,7 +16,6 @@
 #import "ListingAnnotationView.h"
 #import "Location.h"
 #import "SharetribeAPIClient.h"
-#import "NSObject+Observing.h"
 #import "UIScrollView+Sharetribe.h"
 #import <QuartzCore/QuartzCore.h>
 

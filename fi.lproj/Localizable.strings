@@ -138,6 +138,7 @@
 
 "listing.offering_type.give_away" = "Annetaan";
 "listing.offering_type.lend" = "Annetaan lainaksi";
+"listing.offering_type.offer" = "Tarjotaan";
 "listing.offering_type.rent_out" = "Annetaan vuokralle";
 "listing.offering_type.sell" = "Myydään";
 "listing.offering_type.share_for_free" = "Tarjotaan käyttöön ilmaiseksi";

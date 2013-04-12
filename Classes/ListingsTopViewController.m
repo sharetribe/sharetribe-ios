@@ -126,8 +126,9 @@
     
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
-        
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-map"] style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
+    
+    UIImage *mapIcon = [UIView imageWithIconNamed:@"map" pointSize:17 color:[UIColor whiteColor]];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:mapIcon style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForDidFlipView object:nil];
 }
@@ -180,12 +181,14 @@
         frontViewer = mapViewer;
         mapViewer.view.hidden = NO;
         listViewer.view.hidden = YES;
-        [self.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"icon-list"]];
+        UIImage *listIcon = [UIView imageWithIconNamed:@"list" pointSize:17 color:[UIColor whiteColor]];
+        self.navigationItem.leftBarButtonItem.image = listIcon;
     } else {
         frontViewer = listViewer;
         listViewer.view.hidden = NO;
         mapViewer.view.hidden = YES;
-        [self.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"icon-map"]];
+        UIImage *mapIcon = [UIView imageWithIconNamed:@"map" pointSize:17 color:[UIColor whiteColor]];
+        self.navigationItem.leftBarButtonItem.image = mapIcon;
     }
         
     [frontViewer viewWillAppear:animated];

@@ -29,13 +29,17 @@
         }
         NSString *hoursFormat = NSLocalizedString(@"agestamp.format.hours_ago", @"");
         return [NSString stringWithFormat:hoursFormat, hours];
-    } else {
+    } else if (interval < 30 * kOneDay) {
         int days = (int)(interval/kOneDay);
         if (days == 1) {
             return NSLocalizedString(@"agestamp.one_day_ago", @"");
         }
         NSString *daysFormat = NSLocalizedString(@"agestamp.format.days_ago", @"");
         return [NSString stringWithFormat:daysFormat, days];
+    } else {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];  // TODO no no no, too wasteful
+        formatter.dateStyle = NSDateFormatterMediumStyle;
+        return [formatter stringFromDate:self];
     }
 }
 

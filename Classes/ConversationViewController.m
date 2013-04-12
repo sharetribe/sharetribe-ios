@@ -15,7 +15,6 @@
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
-#import "NSObject+Observing.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kAlertTagForConfirmingAccept  1000

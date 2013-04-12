@@ -81,9 +81,9 @@ void uncaughtExceptionHandler(NSException *exception)
     User *currentUser = [User currentUser];
     profileViewController.user = currentUser;
     
-    offersNavigationController.tabBarItem.image   = [UIView imageWithIconNamed:@"camera" pointSize:28 color:[UIColor whiteColor]]; // [UIImage imageNamed:@"icon-gift"];
-    requestsNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-bullhorn"];
-    messagesNavigationController.tabBarItem.image = [UIImage imageNamed:@"icon-envelope"];
+    offersNavigationController.tabBarItem.image   = [UIView imageWithIconNamed:@"share" pointSize:21 color:[UIColor whiteColor]];
+    requestsNavigationController.tabBarItem.image = [UIView imageWithIconNamed:@"tip" pointSize:21 color:[UIColor whiteColor]];
+    messagesNavigationController.tabBarItem.image = [UIView imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor]];
     profileNavigationController.tabBarItem.image  = [UIImage imageNamed:@"icon-kaapo"];
     
     UIColor *tintColor = kSharetribeDarkBrownColor;
@@ -105,8 +105,8 @@ void uncaughtExceptionHandler(NSException *exception)
         tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
     }
     tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
-    tabBarController.middleButtonNormalImage = [UIImage imageNamed:@"icon-bubble"];
-    tabBarController.middleButtonHighlightedImage = [UIImage imageNamed:@"icon-bubble-white"];
+    tabBarController.middleButtonNormalImage = [UIView imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor grayColor]];
+    tabBarController.middleButtonHighlightedImage = [UIView imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor whiteColor]];
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
