@@ -83,7 +83,7 @@
 
 - (void)userDidLogIn:(NSNotification *)notification
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)loginConnectionDidFail:(NSNotification *)notification

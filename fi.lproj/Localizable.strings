@@ -147,6 +147,7 @@
 "listing.requesting_type.borrow" = "Lainataan";
 "listing.requesting_type.buy" = "Ostetaan";
 "listing.requesting_type.rent" = "Vuokrataan";
+"listing.requesting_type.request" = "Pyydetään";
 "listing.requesting_type.trade" = "Vaihdetaan";
 "listing.requesting_type.take_for_free" = "Otetaan vastaan";
 

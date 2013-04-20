@@ -39,7 +39,7 @@
     descriptionLabel.text = badge.description;
     dateLabel.text = [badge.createdAt agestamp];
     
-    descriptionLabel.height = [descriptionLabel.text sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(descriptionLabel.width, 1000) lineBreakMode:UILineBreakModeCharacterWrap].height;
+    descriptionLabel.height = [descriptionLabel.text sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(descriptionLabel.width, 1000) lineBreakMode:NSLineBreakByCharWrapping].height;
     dateLabel.y = descriptionLabel.y+descriptionLabel.height;
     
     [iconView setImageWithURL:badge.pictureURL];
@@ -47,7 +47,7 @@
 
 - (CGFloat)heightWithBadge:(Badge *)aBadge
 {
-    int y = descriptionLabel.y + [aBadge.description sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(descriptionLabel.width, 1000) lineBreakMode:UILineBreakModeCharacterWrap].height;
+    int y = descriptionLabel.y + [aBadge.description sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(descriptionLabel.width, 1000) lineBreakMode:NSLineBreakByCharWrapping].height;
     y += dateLabel.height+8;
     return y;
 }

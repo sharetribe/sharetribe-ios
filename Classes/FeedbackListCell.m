@@ -34,7 +34,7 @@
     
     authorNameLabel.width = [authorNameLabel.text sizeWithFont:authorNameLabel.font].width;
     timestampLabel.x = authorNameLabel.x+authorNameLabel.width+8;
-    textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 1000) lineBreakMode:UILineBreakModeWordWrap].height;
+    textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 1000) lineBreakMode:NSLineBreakByWordWrapping].height;
 }
 
 + (FeedbackListCell *)newInstance

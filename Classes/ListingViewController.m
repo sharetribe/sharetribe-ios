@@ -114,7 +114,7 @@
     addressLabel.textColor = [UIColor darkGrayColor];
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.numberOfLines = 0;
-    addressLabel.lineBreakMode = UILineBreakModeWordWrap;
+    addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.scrollView addSubview:addressLabel];
     
     self.commentsView = [[MessagesView alloc] init];
@@ -133,6 +133,8 @@
     respondButton.layer.cornerRadius = 8;
     respondButton.clipsToBounds = YES;
     [respondButton addTarget:self action:@selector(respondButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    [messageButton setImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:kSharetribeDarkOrangeColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
     
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
@@ -163,10 +165,10 @@
     NSString *respondTextKey;
     if (listing == nil) {
         respondTextKey = @"";
-    } else if ([listing.category isEqual:kListingCategoryFavor] || [listing.category isEqual:kListingCategoryRideshare]) {
-        respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@", listing.category, listing.type];
+    } else if (listing.shareType == nil) {
+        respondTextKey = [NSString stringWithFormat:@"listing.button_for_%@", listing.type];
     } else {
-        respondTextKey = [NSString stringWithFormat:@"listing.label_for_%@_%@_%@", listing.category, listing.type, listing.shareType];
+        respondTextKey = [NSString stringWithFormat:@"listing.button_for_%@_%@", listing.type, listing.shareType];
     }
     [respondButton setTitle:NSLocalizedString(respondTextKey, @"") forState:UIControlStateNormal];
     
@@ -218,14 +220,14 @@
     }
     
     titleLabel.text = listing.fullTitle;
-    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
+    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
     
     int yOffset = titleLabel.y+titleLabel.height+14;
     
     textLabel.text = listing.description;
     if (textLabel.text != nil) {
         textLabel.y = yOffset;
-        textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
+        textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
         yOffset = textLabel.y+textLabel.height+14;
     }
     
@@ -235,7 +237,7 @@
         tagTitleLabel.y = yOffset;
         tagListLabel.y = yOffset;
         [tagTitleLabel sizeToFit];
-        tagListLabel.height = [tagListLabel.text sizeWithFont:tagListLabel.font constrainedToSize:CGSizeMake(tagListLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
+        tagListLabel.height = [tagListLabel.text sizeWithFont:tagListLabel.font constrainedToSize:CGSizeMake(tagListLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
         yOffset = tagListLabel.y+tagListLabel.height+14;
     } else {
         tagTitleLabel.text = nil;
@@ -253,7 +255,7 @@
         addressLabel.text = listing.location.address;
         if (listing.location.address != nil) {
             addressLabel.y = yOffset;
-            addressLabel.height = [addressLabel.text sizeWithFont:addressLabel.font constrainedToSize:CGSizeMake(addressLabel.width, 100) lineBreakMode:UILineBreakModeWordWrap].height;
+            addressLabel.height = [addressLabel.text sizeWithFont:addressLabel.font constrainedToSize:CGSizeMake(addressLabel.width, 100) lineBreakMode:NSLineBreakByWordWrapping].height;
             yOffset += addressLabel.height+3;
         }
         yOffset += 7;
@@ -285,11 +287,11 @@
     
     UILabel *titleViewLabel = [[UILabel alloc] init];
     titleViewLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleViewLabel.minimumFontSize = 13;
+    titleViewLabel.minimumScaleFactor = 0.75;
     titleViewLabel.numberOfLines = 3;
-    titleViewLabel.lineBreakMode = UILineBreakModeWordWrap;
+    titleViewLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleViewLabel.adjustsFontSizeToFitWidth = YES;
-    titleViewLabel.textAlignment = UITextAlignmentCenter;
+    titleViewLabel.textAlignment = NSTextAlignmentCenter;
     titleViewLabel.textColor = [UIColor whiteColor];
     titleViewLabel.backgroundColor = [UIColor clearColor];
     titleViewLabel.shadowColor = [UIColor blackColor];
@@ -382,7 +384,7 @@
     composer.isDirectReplyToListing = isDirectReply;
     
     UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentModalViewController:composerNavigationController animated:YES];
+    [self presentViewController:composerNavigationController animated:YES completion:nil];
 
 }
 
@@ -514,7 +516,7 @@
             editor.listing = listing;
             listing.image = imageView.image;
             UINavigationController *editorNavigator = [[UINavigationController alloc] initWithRootViewController:editor];
-            [self presentModalViewController:editorNavigator animated:YES];
+            [self presentViewController:editorNavigator animated:YES completion:nil];
         }
     }
 }

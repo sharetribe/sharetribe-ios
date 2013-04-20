@@ -31,7 +31,7 @@
         updateIntroLabel.text = NSLocalizedString(@"header.pull_down_to_update", @"");
         updateIntroLabel.textColor = [UIColor whiteColor];
         updateIntroLabel.backgroundColor = [UIColor clearColor];
-        updateIntroLabel.textAlignment = UITextAlignmentCenter;
+        updateIntroLabel.textAlignment = NSTextAlignmentCenter;
         // updateIntroLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         updateIntroLabel.alpha = 0.8;
         
@@ -40,7 +40,7 @@
         updateTimeLabel.font = [UIFont systemFontOfSize:12];
         updateTimeLabel.textColor = [UIColor whiteColor];
         updateTimeLabel.backgroundColor = [UIColor clearColor];
-        updateTimeLabel.textAlignment = UITextAlignmentCenter;
+        updateTimeLabel.textAlignment = NSTextAlignmentCenter;
         // updateTimeLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         updateTimeLabel.alpha = 0.8;
         

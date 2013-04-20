@@ -152,12 +152,19 @@
 
 + (UIImage *)iconForCategory:(NSString *)category
 {
-    return [UIImage imageNamed:[NSString stringWithFormat:@"icon-%@", category]];
+    return [self iconForCategory:category withPointSize:32];
 }
 
 + (UIImage *)tinyIconForCategory:(NSString *)category
 {
-    return [UIImage imageNamed:[NSString stringWithFormat:@"tinyicon-%@", category]];
+    return [self iconForCategory:category withPointSize:12];
+}
+
++ (UIImage *)iconForCategory:(NSString *)category withPointSize:(CGFloat)pointSize
+{
+    NSDictionary *iconNames = @{ @"item": @"box", @"favor": @"heart", @"rideshare": @"car", @"space": @"warehouse" };
+    NSString *iconName = (iconNames[category]) ? iconNames[category]: @"box";
+    return [UIImage imageWithIconNamed:iconName pointSize:pointSize color:[UIColor blackColor] insets:UIEdgeInsetsMake((int) (pointSize / 6), 0, 0, 0)];
 }
 
 + (Listing *)listingFromDict:(NSDictionary *)dict

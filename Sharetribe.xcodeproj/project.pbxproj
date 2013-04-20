@@ -104,6 +104,8 @@
 		4873FF6E15E6D2F10066C58E /* kaapo-big-grade-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6415E6D2F10066C58E /* kaapo-big-grade-4@2x.png */; };
 		4873FF6F15E6D2F10066C58E /* kaapo-big-grade-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6515E6D2F10066C58E /* kaapo-big-grade-5.png */; };
 		4873FF7015E6D2F10066C58E /* kaapo-big-grade-5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF6615E6D2F10066C58E /* kaapo-big-grade-5@2x.png */; };
+		48744ACF171DD66100D2729F /* UIImage+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48744ACE171DD66100D2729F /* UIImage+Sharetribe.m */; };
+		48744AD2171E09AE00D2729F /* UIColor+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48744AD1171E09AE00D2729F /* UIColor+Sharetribe.m */; };
 		487AA37F14B7B51A007C4CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA37E14B7B51A007C4CCF /* UIKit.framework */; };
 		487AA38114B7B51A007C4CCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA38014B7B51A007C4CCF /* Foundation.framework */; };
 		487AA38314B7B51A007C4CCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487AA38214B7B51A007C4CCF /* CoreGraphics.framework */; };
@@ -212,7 +214,7 @@
 		48E1C44C15C517500058F4EB /* UINavigationController+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */; };
 		48E1C44E15C55D760058F4EB /* ListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48E1C44D15C55D740058F4EB /* ListingViewController.xib */; };
 		48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */; };
-		48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */; };
+		48E1C45F15C7671B0058F4EB /* UILabel+Sharetribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E1C45E15C767150058F4EB /* UILabel+Sharetribe.m */; };
 		48E9D4D015DD963F005307E3 /* icon-envelope-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 48E9D4CE15DD963E005307E3 /* icon-envelope-white.png */; };
 		48E9D4D115DD963F005307E3 /* icon-envelope-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48E9D4CF15DD963E005307E3 /* icon-envelope-white@2x.png */; };
 		48EC380B15C8A35400491C40 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EC380A15C8A35400491C40 /* libz.dylib */; };
@@ -349,6 +351,10 @@
 		4873FF6415E6D2F10066C58E /* kaapo-big-grade-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-4@2x.png"; sourceTree = "<group>"; };
 		4873FF6515E6D2F10066C58E /* kaapo-big-grade-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-5.png"; sourceTree = "<group>"; };
 		4873FF6615E6D2F10066C58E /* kaapo-big-grade-5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-5@2x.png"; sourceTree = "<group>"; };
+		48744ACD171DD66100D2729F /* UIImage+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Sharetribe.h"; sourceTree = "<group>"; };
+		48744ACE171DD66100D2729F /* UIImage+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Sharetribe.m"; sourceTree = "<group>"; };
+		48744AD0171E09AE00D2729F /* UIColor+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Sharetribe.h"; sourceTree = "<group>"; };
+		48744AD1171E09AE00D2729F /* UIColor+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Sharetribe.m"; sourceTree = "<group>"; };
 		487AA37A14B7B51A007C4CCF /* Sharetribe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharetribe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		487AA37E14B7B51A007C4CCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		487AA38014B7B51A007C4CCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -503,8 +509,8 @@
 		48E1C45915C7560C0058F4EB /* ListingCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListingCollectionView.h; sourceTree = "<group>"; };
 		48E1C45A15C75BCE0058F4EB /* PullDownToRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullDownToRefreshHeaderView.h; sourceTree = "<group>"; };
 		48E1C45B15C75BD20058F4EB /* PullDownToRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullDownToRefreshHeaderView.m; sourceTree = "<group>"; };
-		48E1C45D15C767110058F4EB /* UILabel+SizeToHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeToHeight.h"; sourceTree = "<group>"; };
-		48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeToHeight.m"; sourceTree = "<group>"; };
+		48E1C45D15C767110058F4EB /* UILabel+Sharetribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Sharetribe.h"; sourceTree = "<group>"; };
+		48E1C45E15C767150058F4EB /* UILabel+Sharetribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Sharetribe.m"; sourceTree = "<group>"; };
 		48E9D4CE15DD963E005307E3 /* icon-envelope-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-envelope-white.png"; sourceTree = "<group>"; };
 		48E9D4CF15DD963E005307E3 /* icon-envelope-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-envelope-white@2x.png"; sourceTree = "<group>"; };
 		48EC380A15C8A35400491C40 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -787,12 +793,16 @@
 				484A034015D89C4B005A8417 /* NSObject+Sharetribe.m */,
 				483D99BB15E1A3A600245A74 /* NSString+Sharetribe.h */,
 				483D99BC15E1A3A600245A74 /* NSString+Sharetribe.m */,
+				48744AD0171E09AE00D2729F /* UIColor+Sharetribe.h */,
+				48744AD1171E09AE00D2729F /* UIColor+Sharetribe.m */,
 				48E1C43415C4C7D30058F4EB /* UIDevice+Sharetribe.h */,
 				48E1C43515C4C7D40058F4EB /* UIDevice+Sharetribe.m */,
+				48744ACD171DD66100D2729F /* UIImage+Sharetribe.h */,
+				48744ACE171DD66100D2729F /* UIImage+Sharetribe.m */,
 				48E1C42C15C43E3E0058F4EB /* UIImageView+Sharetribe.h */,
 				48E1C42D15C43E3F0058F4EB /* UIImageView+Sharetribe.m */,
-				48E1C45D15C767110058F4EB /* UILabel+SizeToHeight.h */,
-				48E1C45E15C767150058F4EB /* UILabel+SizeToHeight.m */,
+				48E1C45D15C767110058F4EB /* UILabel+Sharetribe.h */,
+				48E1C45E15C767150058F4EB /* UILabel+Sharetribe.m */,
 				48E1C44A15C5174C0058F4EB /* UINavigationController+Sharetribe.h */,
 				48E1C44B15C5174E0058F4EB /* UINavigationController+Sharetribe.m */,
 				4820EB54160D009400A4F11F /* UIScrollView+Sharetribe.h */,
@@ -1011,7 +1021,7 @@
 		487AA37114B7B51A007C4CCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 487AA37414B7B51A007C4CCF /* Build configuration list for PBXProject "Sharetribe" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1235,7 +1245,7 @@
 				48E1C43615C4C7D50058F4EB /* UIDevice+Sharetribe.m in Sources */,
 				48E1C44C15C517500058F4EB /* UINavigationController+Sharetribe.m in Sources */,
 				48E1C45C15C75BD60058F4EB /* PullDownToRefreshHeaderView.m in Sources */,
-				48E1C45F15C7671B0058F4EB /* UILabel+SizeToHeight.m in Sources */,
+				48E1C45F15C7671B0058F4EB /* UILabel+Sharetribe.m in Sources */,
 				484A034115D89C4B005A8417 /* NSObject+Sharetribe.m in Sources */,
 				483D99A015E17A9600245A74 /* Feedback.m in Sources */,
 				483D99A315E1859000245A74 /* Badge.m in Sources */,
@@ -1253,6 +1263,8 @@
 				4820EB56160D009400A4F11F /* UIScrollView+Sharetribe.m in Sources */,
 				4870CA85161137B60095EB52 /* SettingsViewController.m in Sources */,
 				48834B06170DB29800A3E4B5 /* UIView+Sharetribe.m in Sources */,
+				48744ACF171DD66100D2729F /* UIImage+Sharetribe.m in Sources */,
+				48744AD2171E09AE00D2729F /* UIColor+Sharetribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,6 +1289,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1290,8 +1306,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1302,14 +1319,19 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1329,10 +1351,9 @@
 				GCC_PREFIX_HEADER = "Sharetribe-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sharetribe-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/External/TestFlightSDK1.1\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1355,10 +1376,9 @@
 				GCC_PREFIX_HEADER = "Sharetribe-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "Sharetribe-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/TestFlightSDK1.0\"",
 					"\"$(SRCROOT)/External/TestFlightSDK1.1\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

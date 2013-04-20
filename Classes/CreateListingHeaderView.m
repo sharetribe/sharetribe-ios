@@ -69,6 +69,11 @@
     [self addSubview:topBackgroundView];
     [self sendSubviewToBack:topBackgroundView];
     
+    [listingCategoryButtonForItems setImage:[UIImage imageWithIconNamed:@"box" pointSize:30 color:kSharetribeDarkBrownColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
+    [listingCategoryButtonForFavors setImage:[UIImage imageWithIconNamed:@"heart" pointSize:32 color:kSharetribeDarkBrownColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
+    [listingCategoryButtonForRides setImage:[UIImage imageWithIconNamed:@"car" pointSize:32 color:kSharetribeDarkBrownColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
+    [listingCategoryButtonForSpace setImage:[UIImage imageWithIconNamed:@"warehouse" pointSize:32 color:kSharetribeDarkBrownColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
+    
     listingCategoryButtonForItems.tag = kListingCategoryButtonTagForItems;
     listingCategoryButtonForFavors.tag = kListingCategoryButtonTagForFavors;
     listingCategoryButtonForRides.tag = kListingCategoryButtonTagForRides;

@@ -13,6 +13,8 @@
 - (void)observeNotification:(NSString *)notification withSelector:(SEL)selector;
 - (void)stopObservingAllNotifications;
 
+- (BOOL)exists;
+
 + (instancetype)cast:(id)object;
 
 @end

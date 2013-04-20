@@ -68,6 +68,10 @@
 
 + (Location *)locationFromDict:(NSDictionary *)dict
 {
+    if (dict == nil) {
+        return nil;
+    }
+    
     CLLocationDegrees latitude = [[dict objectOrNilForKey:@"latitude"] doubleValue];
     CLLocationDegrees longitude = [[dict objectOrNilForKey:@"longitude"] doubleValue];
     NSString *address = [dict objectOrNilForKey:@"address"];

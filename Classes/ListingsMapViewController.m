@@ -206,7 +206,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
         [map setRegion:targetRegion animated:NO];
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-location-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(focusOnUserLocation)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithIconNamed:@"locate" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 3, 0, 3)] style:UIBarButtonItemStyleBordered target:self action:@selector(focusOnUserLocation)];
 }
 
 - (void)viewDidAppear:(BOOL)animated

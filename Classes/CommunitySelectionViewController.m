@@ -84,7 +84,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForDidSelectCommunity object:community];
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

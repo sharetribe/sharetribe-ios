@@ -213,7 +213,7 @@
             dateLabel.font = [UIFont systemFontOfSize:12];
             dateLabel.textColor = kSharetribeDarkBrownColor;
             dateLabel.backgroundColor = [UIColor clearColor];
-            dateLabel.textAlignment = UITextAlignmentRight;
+            dateLabel.textAlignment = NSTextAlignmentRight;
             dateLabel.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-12, 16);
             [self addSubview:dateLabel];
             [dateLabels addObject:dateLabel];
@@ -238,13 +238,13 @@
             textLabel.backgroundColor = [UIColor clearColor];
             textLabel.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-10, 50);
             textLabel.numberOfLines = 0;
-            textLabel.lineBreakMode = UILineBreakModeWordWrap;
+            textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             [self addSubview:textLabel];
             [textLabels addObject:textLabel];
         }
         textLabel.text = message.content;
         textLabel.y = yOffset;
-        textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
+        textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
         textLabel.hidden = NO;
         
         UIView *separator;

@@ -84,7 +84,7 @@
     self.conversationTitleLabel = [[UILabel alloc] init];
     conversationTitleLabel.font = [UIFont boldSystemFontOfSize:16];
     conversationTitleLabel.numberOfLines = 0;
-    conversationTitleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    conversationTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     conversationTitleLabel.textColor = [UIColor blackColor];
     conversationTitleLabel.backgroundColor = [UIColor clearColor];
     conversationTitleLabel.x = 10;
@@ -210,7 +210,7 @@
             conversationTitleLabel.text = listing.title;
         }
     }
-    conversationTitleLabel.height = [conversationTitleLabel.text sizeWithFont:conversationTitleLabel.font constrainedToSize:CGSizeMake(conversationTitleLabel.width, 10000) lineBreakMode:UILineBreakModeWordWrap].height;
+    conversationTitleLabel.height = [conversationTitleLabel.text sizeWithFont:conversationTitleLabel.font constrainedToSize:CGSizeMake(conversationTitleLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
     
     if (listing != nil) {
         
@@ -367,13 +367,13 @@
 - (IBAction)cancelButtonPressed
 {
     messagesView.alpha = 0;
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)sendButtonPressed
 {
     [self messagesView:messagesView didSaveMessageText:messagesView.composeField.text];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)goBack

@@ -72,9 +72,9 @@
     middleButtonLabel.textColor = [UIColor lightGrayColor];
     middleButtonLabel.backgroundColor = [UIColor clearColor];
     middleButtonLabel.frame = CGRectMake(10, 42, 50, 24);
-    middleButtonLabel.textAlignment = UITextAlignmentCenter;
+    middleButtonLabel.textAlignment = NSTextAlignmentCenter;
     middleButtonLabel.numberOfLines = 2;
-    middleButtonLabel.lineBreakMode = UILineBreakModeWordWrap;
+    middleButtonLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [middleButton addSubview:middleButtonLabel];
 }
 
@@ -116,7 +116,7 @@
 
 - (IBAction)middleButtonPressed:(UIButton *)sender
 {
-    [self presentModalViewController:middleViewController animated:YES];
+    [self presentViewController:middleViewController animated:YES completion:nil];
 }
 
 @end

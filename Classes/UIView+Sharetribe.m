@@ -124,24 +124,4 @@
     }    
 }
 
-+ (UIImage *)imageWithIconNamed:(NSString *)name pointSize:(CGFloat)pointSize color:(UIColor *)color
-{
-    UIFont *font = [UIFont fontWithName:@"SSPika" size:pointSize];
-
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:name];
-    [string setAttributes:@{NSFontAttributeName: font,
-                            NSForegroundColorAttributeName: color,
-                            (NSString *) kCTLigatureAttributeName: @(2)}
-                    range:NSMakeRange(0, string.length)];
-    
-    UIGraphicsBeginImageContextWithOptions(string.size, NO, 0.0);
-    
-    [string drawAtPoint:CGPointMake(0.0, 0.0)];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();    
-    
-    return image;
-}
-
 @end

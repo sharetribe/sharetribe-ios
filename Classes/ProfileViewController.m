@@ -20,7 +20,7 @@
 #import "SharetribeAPIClient.h"
 #import "User.h"
 #import "UIImageView+Sharetribe.h"
-#import "UILabel+SizeToHeight.h"
+#import "UILabel+Sharetribe.h"
 
 #define kAlertTagForConfirmingLogOut     1
 #define kAlertTagForConfirmingPhoneCall  2
@@ -110,7 +110,7 @@
     self.title = (user.isCurrentUser) ? NSLocalizedString(@"tabs.profile", @"") : user.givenName;
     
     nameLabel.text = user.name;
-    nameLabel.height = [nameLabel.text sizeWithFont:nameLabel.font constrainedToSize:CGSizeMake(nameLabel.width, 100) lineBreakMode:UILineBreakModeWordWrap].height;
+    nameLabel.height = [nameLabel.text sizeWithFont:nameLabel.font constrainedToSize:CGSizeMake(nameLabel.width, 100) lineBreakMode:NSLineBreakByWordWrapping].height;
     locationLabel.y = nameLabel.y+nameLabel.height+7;
     locationIconView.y = locationLabel.y+1;
     
@@ -122,7 +122,7 @@
         [self.mapView addAnnotation:user.location];
         [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(user.location.coordinate, 1500, 3000) animated:NO];
         locationLabel.text = user.location.address;
-        locationLabel.height = [locationLabel.text sizeWithFont:locationLabel.font constrainedToSize:CGSizeMake(locationLabel.width, 200) lineBreakMode:UILineBreakModeWordWrap].height;
+        locationLabel.height = [locationLabel.text sizeWithFont:locationLabel.font constrainedToSize:CGSizeMake(locationLabel.width, 200) lineBreakMode:NSLineBreakByWordWrapping].height;
         phoneButton.y = locationLabel.y+locationLabel.height;
         locationLabel.hidden = NO;
         locationIconView.hidden = NO;
@@ -152,7 +152,7 @@
             self.navigationItem.rightBarButtonItem = nil;
         }
     } else {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-envelope-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(messageButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)] style:UIBarButtonItemStyleBordered target:self action:@selector(messageButtonPressed)];
     }
     
     descriptionLabel.y = MAX(108, detailsHeight);
@@ -181,7 +181,7 @@
     composer.inModalComposerMode = YES;
     
     UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentModalViewController:composerNavigationController animated:YES];
+    [self presentViewController:composerNavigationController animated:YES completion:nil];
 }
 
 - (IBAction)phoneButtonPressed

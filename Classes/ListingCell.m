@@ -80,12 +80,12 @@
     }
     
     int oneRowHeight = [@"Something" sizeWithFont:titleLabel.font].height;
-    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 3*oneRowHeight) lineBreakMode:UILineBreakModeWordWrap].height;
+    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 3*oneRowHeight) lineBreakMode:NSLineBreakByWordWrapping].height;
     
     subtitleLabel.hidden = (titleLabel.height > 50);
     
     subtitleLabel.y = titleLabel.y + titleLabel.height + 3;
-    subtitleLabel.height = [subtitleLabel.text sizeWithFont:subtitleLabel.font constrainedToSize:CGSizeMake(subtitleLabel.width, (usernameLabel.y-subtitleLabel.y-2)) lineBreakMode:UILineBreakModeWordWrap].height;
+    subtitleLabel.height = [subtitleLabel.text sizeWithFont:subtitleLabel.font constrainedToSize:CGSizeMake(subtitleLabel.width, (usernameLabel.y-subtitleLabel.y-2)) lineBreakMode:NSLineBreakByWordWrapping].height;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

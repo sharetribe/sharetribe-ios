@@ -8,16 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+@class Location;
+
 @interface Community : NSObject
 
-@property (assign) NSInteger communityId;
-@property (strong) NSString *name;
-@property (strong) NSString *domain;
+@property (assign, nonatomic) NSInteger communityId;
+@property (copy, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *domain;
 
-@property (strong) NSURL *logoURL;
-@property (strong) NSURL *coverPhotoURL;
-@property (strong) UIColor *color1;
-@property (strong) UIColor *color2;
+@property (copy, nonatomic) NSString *slogan;
+@property (copy, nonatomic) NSString *description;
+@property (copy, nonatomic) NSString *serviceName;
+@property (copy, nonatomic) NSString *serviceLogoStyle;
+@property (assign, nonatomic) NSInteger membersCount;
+
+@property (strong, nonatomic) NSURL *logoURL;
+@property (strong, nonatomic) NSURL *coverPhotoURL;
+@property (strong, nonatomic) UIColor *color1;
+@property (strong, nonatomic) UIColor *color2;
+
+@property (strong, nonatomic) Location *location;
+
+@property (strong, nonatomic) NSDictionary *categoriesTree;
 
 + (Community *)communityFromDict:(NSDictionary *)dict;
 + (NSArray *)communitiesFromArrayOfDicts:(NSArray *)dicts;

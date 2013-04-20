@@ -74,7 +74,7 @@
     
     messageLabel.x = (iconView.image != nil) ? iconView.x+iconView.width+4 : titleLabel.x;
     messageLabel.width = 210-(messageLabel.x-titleLabel.x);
-    messageLabel.height = [messageLabel.text sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(messageLabel.width, 32) lineBreakMode:UILineBreakModeWordWrap].height;
+    messageLabel.height = [messageLabel.text sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(messageLabel.width, 32) lineBreakMode:NSLineBreakByWordWrapping].height;
     
     iconView.y = messageLabel.y;
     iconView.height = messageLabel.height;

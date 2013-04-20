@@ -19,6 +19,9 @@
     BOOL clearPreviousListingsOnGettingResults;
 }
 
+@property (strong, nonatomic) UIImage *mapIcon;
+@property (strong, nonatomic) UIImage *listIcon;
+
 @end
 
 @implementation ListingsTopViewController
@@ -127,8 +130,10 @@
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
     
-    UIImage *mapIcon = [UIView imageWithIconNamed:@"map" pointSize:17 color:[UIColor whiteColor]];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:mapIcon style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
+    self.mapIcon = [UIImage imageWithIconNamed:@"map" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
+    self.listIcon = [UIImage imageWithIconNamed:@"list" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:self.mapIcon style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForDidFlipView object:nil];
 }
@@ -181,14 +186,12 @@
         frontViewer = mapViewer;
         mapViewer.view.hidden = NO;
         listViewer.view.hidden = YES;
-        UIImage *listIcon = [UIView imageWithIconNamed:@"list" pointSize:17 color:[UIColor whiteColor]];
-        self.navigationItem.leftBarButtonItem.image = listIcon;
+        self.navigationItem.leftBarButtonItem.image = self.listIcon;
     } else {
         frontViewer = listViewer;
         listViewer.view.hidden = NO;
         mapViewer.view.hidden = YES;
-        UIImage *mapIcon = [UIView imageWithIconNamed:@"map" pointSize:17 color:[UIColor whiteColor]];
-        self.navigationItem.leftBarButtonItem.image = mapIcon;
+        self.navigationItem.leftBarButtonItem.image = self.mapIcon;
     }
         
     [frontViewer viewWillAppear:animated];

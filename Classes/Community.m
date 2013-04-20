@@ -8,6 +8,8 @@
 
 #import "Community.h"
 
+#import "Location.h"
+
 @implementation Community
 
 + (Community *)communityFromDict:(NSDictionary *)dict
@@ -17,6 +19,13 @@
     community.communityId = [[NSNumber cast:dict[@"id"]] intValue];
     community.name        = [NSString cast:dict[@"name"]];
     community.domain      = [NSString cast:dict[@"domain"]];
+    
+    community.color1 = [UIColor colorWithHexString:[NSString cast:dict[@"custom_color1"]]];
+    community.color2 = [UIColor colorWithHexString:[NSString cast:dict[@"custom_color2"]]];
+    
+    community.location = [Location locationFromDict:[NSDictionary cast:dict[@"location"]]];
+    
+    community.categoriesTree = [NSDictionary cast:dict[@"categories_tree"]];
     
     return community;
 }

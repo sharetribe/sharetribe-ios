@@ -26,6 +26,4 @@
 
 - (void)setIconWithName:(NSString *)name;
 
-+ (UIImage *)imageWithIconNamed:(NSString *)name pointSize:(CGFloat)pointSize color:(UIColor *)color;
-
 @end

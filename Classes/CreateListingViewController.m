@@ -219,7 +219,7 @@
 - (void)didPostListing:(NSNotification *)notification
 {    
     self.listing = nil;
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alert.listing.posted", @"") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"button.ok", @"") otherButtonTitles:nil];
     [alert show];
@@ -262,7 +262,7 @@
     self.listing = nil;
     self.formItems = nil;
     table.tableFooterView = nil;
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -317,7 +317,7 @@
         UILabel *subtitleLabel = [[UILabel alloc] init];
         subtitleLabel.frame = CGRectMake(10, 3, 300, 16);
         subtitleLabel.font = [UIFont boldSystemFontOfSize:12];
-        subtitleLabel.textAlignment = UITextAlignmentLeft;
+        subtitleLabel.textAlignment = NSTextAlignmentLeft;
         subtitleLabel.backgroundColor = [UIColor clearColor];
         subtitleLabel.tag = kCellSubtitleLabelTag;
         [cell addSubview:subtitleLabel];
@@ -769,7 +769,7 @@
             }
             imagePicker.allowsEditing = NO;
             imagePicker.delegate = self;
-            [self presentModalViewController:imagePicker animated:YES];
+            [self presentViewController:imagePicker animated:YES completion:nil];
             preserveFormItemsOnNextAppearance = YES;
         }
     }
@@ -793,7 +793,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)convertImageToData
@@ -937,7 +937,7 @@
         uploadProgressLabel.shadowColor = [UIColor darkTextColor];
         uploadProgressLabel.shadowOffset = CGSizeMake(0, 1);
         uploadProgressLabel.backgroundColor = [UIColor clearColor];
-        uploadProgressLabel.textAlignment = UITextAlignmentCenter;
+        uploadProgressLabel.textAlignment = NSTextAlignmentCenter;
         self.uploadProgressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 22, 160, 9)];
         [uploadTitleView addSubview:uploadProgressLabel];
         [uploadTitleView addSubview:uploadProgressView];

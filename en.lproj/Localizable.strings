@@ -147,6 +147,7 @@
 "listing.requesting_type.borrow" = "Borrowing";
 "listing.requesting_type.buy" = "Buying";
 "listing.requesting_type.rent" = "Renting";
+"listing.requesting_type.request" = "Requesting";
 "listing.requesting_type.trade" = "Trading";
 "listing.requesting_type.take_for_free" = "Taking for free";
 
@@ -200,34 +201,20 @@
 
 "profile.explanation.badges" = "You can earn several different badges in Sharetribe as a recognition of your actions in the service. You earn badges from actions like adding new offers and requests, commenting on others' content, from all types of resource exchange that takes place (selling and borrowing items, doing favors, organizing car pooling and so on) and just generally being an active user of the service. Note that you only get badges from those exchanges where you have received positive feedback.\n\nYou can view the badges the people have earned in their profile page. A person with lots of badges is most likely active, reliable and liked by other users. So be active in Sharetribe: buy, sell, lend and borrow items, do others favors, share rides and watch your badge arsenal grow!";
 
-"listing.label_for_favor_offer"                  = "Request this service";
-"listing.label_for_favor_request"                = "Offer this service";
-"listing.label_for_space_offer_sell"             = "Buy this space";
-"listing.label_for_space_offer_rent_out"         = "Rent this space";
-"listing.label_for_space_offer_share_for_free"   = "Request this space";
-"listing.label_for_space_request_buy"            = "Offer to sell this space";
-"listing.label_for_space_request_rent"           = "Offer to rent out this space";
-"listing.label_for_item_offer_lend"              = "Borrow this item";
-"listing.label_for_item_offer_rent_out"          = "Rent this item";
-"listing.label_for_item_offer_sell"              = "Buy this item";
-"listing.label_for_item_offer_give_away"         = "Request this item";
-"listing.label_for_item_offer_trade"             = "Swap this item";
-"listing.label_for_item_request_borrow"          = "Offer to lend this item";
-"listing.label_for_item_request_rent"            = "Offer to rent out this item";
-"listing.label_for_item_request_buy"             = "Offer to sell this item";
-"listing.label_for_item_request_receive"         = "Give this item to requester";
-"listing.label_for_item_request_trade"           = "Offer to swap this item";
-"listing.label_for_rideshare_offer"              = "Request this ride";
-"listing.label_for_rideshare_request"            = "Offer ride";
+"listing.button_for_offer"                = "Request this";
+"listing.button_for_offer_give_away"      = "Request this";
+"listing.button_for_offer_lend"           = "Borrow this";
+"listing.button_for_offer_rent_out"       = "Rent this";
+"listing.button_for_offer_sell"           = "Buy this";
+"listing.button_for_offer_share_for_free" = "Request this";
+"listing.button_for_offer_trade"          = "Swap this";
 
-"listing.title_for_favor_offer"                  = "Service request";
-"listing.title_for_favor_request"                = "Service offer";
-"listing.title_for_space_offer"                  = "Space request";
-"listing.title_for_space_request"                = "Space available";
-"listing.title_for_item_offer"                   = "Item request";
-"listing.title_for_item_request"                 = "Item offer";
-"listing.title_for_rideshare_offer"              = "Rideshare request";
-"listing.title_for_rideshare_request"            = "Rideshare offer";
+"listing.button_for_request"              = "Offer this";
+"listing.button_for_request_borrow"       = "Offer to lend this";
+"listing.button_for_request_buy"          = "Offer to sell this";
+"listing.button_for_request_receive"      = "Offer to give this";
+"listing.button_for_request_rent"         = "Offer to rent this out";
+"listing.button_for_request_trade"        = "Offer to swap this";
 
 "messaging.conversation.title" = "Conversation";
 "messaging.no_conversations_yet" = "No conversations yet";

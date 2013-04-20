@@ -180,6 +180,37 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     }];
 }
 
+- (void)getCommunityWithId:(NSInteger)communityId
+                 onSuccess:(void (^)(Community *))onSuccess
+                 onFailure:(void (^)(NSError *))onFailure
+{
+    [self getPath:[NSString stringWithFormat:@"communities/%d", communityId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"got community: %@", responseObject);
+        Community *community = [Community communityFromDict:responseObject];
+        onSuccess(community);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        onFailure(error);
+    }];
+}
+
+- (void)getClassificationsForCommunityWithId:(NSInteger)communityId
+                                   onSuccess:(void (^)(id classifications))onSuccess
+                                   onFailure:(void (^)(NSError *error))onFailure
+{
+    [self getPath:[NSString stringWithFormat:@"communities/%d/classifications", communityId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"got community classifications: %@", responseObject);
+        onSuccess(responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        onFailure(error);
+    }];
+}
+
 - (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category forPage:(NSInteger)page
 {
     [self getListingsOfType:type inCategory:category withSearch:nil forPage:page];
@@ -383,6 +414,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [self getListingWithId:listing.listingId];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         [self handleFailureWithOperation:operation error:error];
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostComment object:comment];
     }];

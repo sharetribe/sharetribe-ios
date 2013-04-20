@@ -81,9 +81,9 @@ void uncaughtExceptionHandler(NSException *exception)
     User *currentUser = [User currentUser];
     profileViewController.user = currentUser;
     
-    offersNavigationController.tabBarItem.image   = [UIView imageWithIconNamed:@"share" pointSize:21 color:[UIColor whiteColor]];
-    requestsNavigationController.tabBarItem.image = [UIView imageWithIconNamed:@"tip" pointSize:21 color:[UIColor whiteColor]];
-    messagesNavigationController.tabBarItem.image = [UIView imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor]];
+    offersNavigationController.tabBarItem.image   = [UIImage imageWithIconNamed:@"share" pointSize:21 color:[UIColor whiteColor]];
+    requestsNavigationController.tabBarItem.image = [UIImage imageWithIconNamed:@"tip" pointSize:21 color:[UIColor whiteColor]];
+    messagesNavigationController.tabBarItem.image = [UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor]];
     profileNavigationController.tabBarItem.image  = [UIImage imageNamed:@"icon-kaapo"];
     
     UIColor *tintColor = kSharetribeDarkBrownColor;
@@ -105,8 +105,8 @@ void uncaughtExceptionHandler(NSException *exception)
         tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
     }
     tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
-    tabBarController.middleButtonNormalImage = [UIView imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor grayColor]];
-    tabBarController.middleButtonHighlightedImage = [UIView imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor whiteColor]];
+    tabBarController.middleButtonNormalImage = [UIImage imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor grayColor]];
+    tabBarController.middleButtonHighlightedImage = [UIImage imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor whiteColor]];
         
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
@@ -137,6 +137,10 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    User *currentUser = [User currentUser];
+    if (currentUser != nil && self.community == nil) {
+        [self loadInitialContent];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -144,7 +148,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
     NSString *deviceToken = [[deviceTokenData description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -181,14 +185,14 @@ void uncaughtExceptionHandler(NSException *exception)
     } else if ([[SharetribeAPIClient sharedClient] currentCommunityId] == NSNotFound) {
         [self showCommunitySelection];
     } else {
-        [self loadInitialContent];
+        // [self loadInitialContent];
     }
 }
 
 - (void)showLogin
 {
     LoginViewController *loginViewer = [[LoginViewController alloc] init];
-    [self.tabBarController presentModalViewController:loginViewer animated:NO];
+    [self.tabBarController presentViewController:loginViewer animated:NO completion:nil];
     
     [tabBarController setSelectedIndex:0];
 }
@@ -196,16 +200,31 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)showCommunitySelection
 {
     CommunitySelectionViewController *communitySelectionViewer = [[CommunitySelectionViewController alloc] init];
-    [self.tabBarController presentModalViewController:communitySelectionViewer animated:YES];
+    [self.tabBarController presentViewController:communitySelectionViewer animated:YES completion:nil];
 }
 
 - (void)loadInitialContent
 {
-    [offersViewController refreshListings];
-    [requestsViewController refreshListings];
-    [messagesViewController refreshConversations];
-    
-    [tabBarController setSelectedIndex:0];
+    NSInteger currentCommunityId = [[SharetribeAPIClient sharedClient] currentCommunityId];
+    [[SharetribeAPIClient sharedClient] getCommunityWithId:currentCommunityId onSuccess:^(Community *community) {
+        
+        self.community = community;
+        
+        [offersViewController refreshListings];
+        [requestsViewController refreshListings];
+        [messagesViewController refreshConversations];
+        
+        [tabBarController setSelectedIndex:0];
+        
+        [[SharetribeAPIClient sharedClient] getClassificationsForCommunityWithId:currentCommunityId onSuccess:^(id classifications) {
+            
+        } onFailure:^(NSError *error) {
+            
+        }];
+        
+    } onFailure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)userDidLogIn:(NSNotification *)notification

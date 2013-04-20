@@ -175,7 +175,7 @@
         UITableViewCell *cell = [[UITableViewCell alloc] init];
         cell.textLabel.text = NSLocalizedString(@"messaging.no_conversations_yet", @"");
         cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.textLabel.textColor = [UIColor darkGrayColor];
         cell.textLabel.shadowColor = [UIColor whiteColor];
         cell.textLabel.shadowOffset = CGSizeMake(0, 1);

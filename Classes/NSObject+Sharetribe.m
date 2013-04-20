@@ -20,6 +20,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (BOOL)exists
+{
+    return ![self isKindOfClass:[NSNull class]];
+}
+
 + (instancetype)cast:(id)object
 {
     return [object isKindOfClass:self] ? object : nil;

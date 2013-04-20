@@ -71,7 +71,7 @@
             countLabel.shadowColor = [UIColor colorWithWhite:1 alpha:0.2];
             countLabel.shadowOffset = CGSizeMake(0, 1);
             countLabel.backgroundColor = [UIColor clearColor];
-            countLabel.textAlignment = UITextAlignmentCenter;
+            countLabel.textAlignment = NSTextAlignmentCenter;
             countLabel.userInteractionEnabled = NO;
             [self addSubview:countLabel];
         }

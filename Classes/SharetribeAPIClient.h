@@ -55,6 +55,7 @@
 
 #define kInfoKeyForProgress                                @"progress"
 
+@class Community;
 @class User;
 
 @interface SharetribeAPIClient : AFHTTPClient
@@ -69,6 +70,14 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
 - (void)logInWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logOut;
 - (void)registerCurrentDeviceWithToken:(NSString *)token;
+
+- (void)getCommunityWithId:(NSInteger)communityId
+                 onSuccess:(void (^)(Community *community))onSuccess
+                 onFailure:(void (^)(NSError *error))onFailure;
+
+- (void)getClassificationsForCommunityWithId:(NSInteger)communityId
+                                   onSuccess:(void (^)(id classifications))onSuccess
+                                   onFailure:(void (^)(NSError *error))onFailure;
 
 - (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category forPage:(NSInteger)page;
 - (void)getListingsOfType:(NSString *)type withSearch:(NSString *)search forPage:(NSInteger)page;

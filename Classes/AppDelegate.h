@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Community.h"
 #import "ListingsTopViewController.h"
 #import "CreateListingViewController.h"
 #import "ConversationListViewController.h"
@@ -27,6 +28,8 @@
 
 @property (strong, nonatomic) CreateListingViewController *createListingViewController;
 @property (strong, nonatomic) UINavigationController *createListingNavigationController;
+
+@property (strong, nonatomic) Community *community;
 
 - (void)doInitialCheck;
 

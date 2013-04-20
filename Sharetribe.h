@@ -10,12 +10,16 @@
 #import "NSDate+Sharetribe.h"
 #import "NSDictionary+Sharetribe.h"
 #import "NSObject+Sharetribe.h"
+#import "UIColor+Sharetribe.h"
+#import "UIImage+Sharetribe.h"
 #import "UIView+Sharetribe.h"
 
 // Colors
 
-#define kSharetribeLightBrownColor     [UIColor colorWithRed:247/255.0 green:245/255.0 blue:230/255.0 alpha:1]
-#define kSharetribeLightishBrownColor  [UIColor colorWithRed:225/255.0 green:222/255.0 blue:205/255.0 alpha:1]
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define kSharetribeLightBrownColor     [UIColor whiteColor]
+#define kSharetribeLightishBrownColor  [UIColor colorWithRed:247/255.0 green:245/255.0 blue:230/255.0 alpha:1]
 #define kSharetribeBrownColor          [UIColor colorWithRed:209/255.0 green:201/255.0 blue:180/255.0 alpha:1]
 #define kSharetribeDarkBrownColor      [UIColor colorWithRed:118/255.0 green: 93/255.0 blue: 58/255.0 alpha:1]
 #define kSharetribeDarkGreenColor      [UIColor colorWithRed: 50/255.0 green: 85/255.0 blue: 14/255.0 alpha:1]
