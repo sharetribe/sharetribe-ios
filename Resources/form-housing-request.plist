@@ -4,25 +4,9 @@
 <array>
 	<dict>
 		<key>type</key>
-		<string>choice</string>
-		<key>alternatives</key>
-		<array>
-			<string>rent_out</string>
-			<string>sell</string>
-			<string>share_for_free</string>
-		</array>
-		<key>id</key>
-		<string>offer_type</string>
-		<key>maps_to</key>
-		<string>shareType</string>
-		<key>mandatory</key>
-		<true/>
-	</dict>
-	<dict>
-		<key>type</key>
 		<string>textfield</string>
 		<key>id</key>
-		<string>offered_space</string>
+		<string>requested_space</string>
 		<key>maps_to</key>
 		<string>title</string>
 		<key>mandatory</key>
@@ -39,8 +23,6 @@
 	<dict>
 		<key>type</key>
 		<string>date</string>
-		<key>allows_undefined</key>
-		<true/>
 		<key>default_time_interval_in_days</key>
 		<integer>90</integer>
 		<key>include_time</key>

@@ -16,66 +16,35 @@
 
 @implementation Listing
 
-@synthesize listingId;
-@synthesize title;
-@synthesize description;
-
-@synthesize category;
-@synthesize type;
-@synthesize shareType;
-@synthesize tags;
-
-@synthesize thumbnailURL;
-@synthesize imageURLs;
-
-@synthesize image;
-@synthesize imageData;
-
-@synthesize location;
-@synthesize destination;
-
-@synthesize author;
-@synthesize createdAt;
-@synthesize updatedAt;
-@synthesize validUntil;
-@synthesize status;
-
-@synthesize numberOfTimesViewed;
-@synthesize numberOfComments;
-@synthesize visibility;
-@synthesize privacy;
-
-@synthesize comments;
-
 @dynamic coordinate;
 @dynamic fullTitle;
 
 - (CLLocationCoordinate2D)coordinate
 {
-    return location.coordinate;
+    return self.location.coordinate;
 }
 
 - (NSString *)fullTitle
 {
-    if (shareType != nil) {
-        NSString *labelKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", type, shareType];
-        return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(labelKey, @""), title];
+    if (self.shareType != nil) {
+        NSString *labelKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", self.type, self.shareType];
+        return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(labelKey, @""), self.title];
     } else {
-        return title;
+        return self.title;
     }
 }
 
 - (NSString *)subtitle
 {
-    return description;
+    return self.description;
 }
 
 - (void)setCategory:(NSString *)newCategory
 {
-    category = newCategory;
+    _category = newCategory;
     
-    if (![category isEqual:kListingCategoryItem] && ![category isEqual:kListingCategorySpace]) {
-        shareType = nil;
+    if (![self.category isEqual:@"item"] && ![self.category isEqual:@"space"]) {
+        self.shareType = nil;
     }
 }
 
@@ -83,58 +52,55 @@
 {
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
     
-    [JSON setObject:type forKey:@"listing_type"];
-    [JSON setObject:category forKey:@"category"];
-
-    if (title != nil) {
-        [JSON setObject:title forKey:@"title"];
+    JSON[@"listing_type"] = self.type;
+    JSON[@"category"] = self.category;
+    
+    if (self.subcategory) {
+        JSON[@"subcategory"] = self.subcategory;
     }
     
-    if (description != nil) {
-        [JSON setObject:description forKey:@"description"];
+    if (self.shareType) {
+        JSON[@"share_type"] = self.shareType;
     }
     
-    if (shareType != nil) {
-        [JSON setObject:shareType forKey:@"share_type"];
+    if (self.title) {
+        JSON[@"title"] = self.title;
     }
     
-    if (tags.count > 0) {
-        [JSON setObject:tags forKey:@"tags"];
+    if (self.description) {
+        JSON[@"description"] = self.description;
     }
     
-    if (location != nil) {
-        // [JSON setObject:[location asJSON] forKey:@"origin_location"];
-        [JSON setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
-        [JSON setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
-        if (location.address != nil) {
-            if ([category isEqual:kListingCategoryRideshare]) {
-                [JSON setObject:location.address forKey: @"origin"];
+    if (self.location) {
+        JSON[@"latitude"] = @(self.location.coordinate.latitude);
+        JSON[@"longitude"] = @(self.location.coordinate.longitude);
+        if (self.location.address != nil) {
+            if ([self.category isEqual:@"rideshare"]) {
+                JSON[@"origin"] = self.location.address;
             } else {
-                [JSON setObject:location.address forKey: @"address"];
+                JSON[@"address"] = self.location.address;
             }
         }
     }
     
-    if ([category isEqual:kListingCategoryRideshare] && destination != nil) {
-        // [JSON setObject:[destination asJSON] forKey:@"destination_location"];
-        [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.latitude] forKey:@"destination_latitude"];
-        [JSON setObject:[NSNumber numberWithDouble:destination.coordinate.longitude] forKey:@"destination_longitude"];
-        if (destination.address != nil) {
-            [JSON setObject:destination.address forKey:@"destination"];
+    if ([self.category isEqual:@"rideshare"] && self.destination != nil) {
+        JSON[@"destination_latitude"] = @(self.destination.coordinate.latitude);
+        JSON[@"destination_longitude"] = @(self.destination.coordinate.longitude);
+        if (self.destination.address != nil) {
+            JSON[@"destination"] = self.destination.address;
         }
     }
     
-    if (visibility != nil) {
-        [JSON setObject:visibility forKey:@"visibility"];
+    if (self.visibility) {
+        JSON[@"visibility"] = self.visibility;
     }
     
-    if (privacy != nil) {
-        [JSON setObject:privacy forKey:@"privacy"];
+    if (self.privacy) {
+        JSON[@"privacy"] = self.privacy;
     }
     
-    if (validUntil != nil) {
-        NSLog(@"validUntil: %@", validUntil);
-        [JSON setObject:[validUntil timestamp] forKey:@"valid_until"];
+    if (self.validUntil) {
+        JSON[@"valid_until"] = [self.validUntil timestamp];
     }
     
     NSLog(@"listing as JSON: %@", JSON);
@@ -147,7 +113,7 @@
     if (![object isKindOfClass:Listing.class]) {
         return NO;
     }
-    return (listingId == [object listingId]);
+    return (self.listingId == [object listingId]);
 }
 
 + (UIImage *)iconForCategory:(NSString *)category
@@ -178,10 +144,9 @@
     listing.type = [dict objectOrNilForKey:@"listing_type"];
     listing.category = [dict objectOrNilForKey:@"category"];
     listing.shareType = [dict objectOrNilForKey:@"share_type"];
-    listing.tags = [dict objectOrNilForKey:@"tags"];
     
     if ([listing.category isEqual:@"housing"]) {
-        listing.category = kListingCategorySpace;
+        listing.category = @"space";
     }
     
     NSString *thumbnailURLString = [dict objectOrNilForKey:@"thumbnail_url"];

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Community.h"
-#import "ListingsTopViewController.h"
-#import "CreateListingViewController.h"
-#import "ConversationListViewController.h"
-#import "ProfileViewController.h"
 #import "ButtonTabBarController.h"
+#import "Community.h"
+#import "ConversationListViewController.h"
+#import "ListingsTopViewController.h"
+#import "NewListingViewController.h"
+#import "ProfileViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate>
 
@@ -26,7 +26,7 @@
 @property (strong, nonatomic) ConversationListViewController *messagesViewController;
 @property (strong, nonatomic) ProfileViewController *profileViewController;
 
-@property (strong, nonatomic) CreateListingViewController *createListingViewController;
+@property (strong, nonatomic) NewListingViewController *listingComposer;
 @property (strong, nonatomic) UINavigationController *createListingNavigationController;
 
 @property (strong, nonatomic) Community *community;

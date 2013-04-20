@@ -28,7 +28,7 @@
 @synthesize messagesViewController;
 @synthesize profileViewController;
 
-@synthesize createListingViewController;
+@synthesize listingComposer;
 @synthesize createListingNavigationController;
 
 void uncaughtExceptionHandler(NSException *exception);
@@ -70,8 +70,9 @@ void uncaughtExceptionHandler(NSException *exception)
     messagesNavigationController.delegate = self;
     profileNavigationController.delegate  = self;
     
-    self.createListingViewController = [[CreateListingViewController alloc] init];
-    self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:createListingViewController];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard_iPhone" bundle:[NSBundle mainBundle]];
+    self.listingComposer = [storyboard instantiateViewControllerWithIdentifier:@"NewListing"];
+    self.createListingNavigationController = [[UINavigationController alloc] initWithRootViewController:listingComposer];
     
     offersViewController.title   = NSLocalizedString(@"tabs.offers", @"");
     requestsViewController.title = NSLocalizedString(@"tabs.requests", @"");
@@ -210,13 +211,17 @@ void uncaughtExceptionHandler(NSException *exception)
         
         self.community = community;
         
+        listingComposer.categoriesTree = community.categoriesTree;
+        
         [offersViewController refreshListings];
         [requestsViewController refreshListings];
         [messagesViewController refreshConversations];
         
         [tabBarController setSelectedIndex:0];
         
-        [[SharetribeAPIClient sharedClient] getClassificationsForCommunityWithId:currentCommunityId onSuccess:^(id classifications) {
+        [[SharetribeAPIClient sharedClient] getClassificationsForCommunityWithId:currentCommunityId onSuccess:^(NSDictionary *classifications) {
+            
+            listingComposer.classifications = classifications;
             
         } onFailure:^(NSError *error) {
             

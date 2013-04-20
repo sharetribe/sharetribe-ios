@@ -197,13 +197,19 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 }
 
 - (void)getClassificationsForCommunityWithId:(NSInteger)communityId
-                                   onSuccess:(void (^)(id classifications))onSuccess
+                                   onSuccess:(void (^)(NSDictionary *classifications))onSuccess
                                    onFailure:(void (^)(NSError *error))onFailure
 {
     [self getPath:[NSString stringWithFormat:@"communities/%d/classifications", communityId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"got community classifications: %@", responseObject);
-        onSuccess(responseObject);
+        
+        NSMutableDictionary *classifications = [NSMutableDictionary dictionary];
+        for (NSDictionary *dict in responseObject) {
+            classifications[dict[@"name"]] = dict;
+        }
+        
+        onSuccess(classifications);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

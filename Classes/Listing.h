@@ -13,11 +13,6 @@
 #define kListingTypeOffer           @"offer"
 #define kListingTypeRequest         @"request"
 
-#define kListingCategoryItem        @"item"
-#define kListingCategoryFavor       @"favor"
-#define kListingCategoryRideshare   @"rideshare"
-#define kListingCategorySpace       @"space"
-
 #define kListingStatusOpen          @"open"
 #define kListingStatusClosed        @"closed"
 
@@ -33,8 +28,8 @@
 
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *category;
+@property (strong, nonatomic) NSString *subcategory;
 @property (strong, nonatomic) NSString *shareType;
-@property (strong, nonatomic) NSArray *tags;
 
 @property (strong, nonatomic) NSURL *thumbnailURL;
 @property (strong, nonatomic) NSArray *imageURLs;

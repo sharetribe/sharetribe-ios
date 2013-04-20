@@ -11,10 +11,9 @@
 #import <MapKit/MapKit.h>
 #import "Listing.h"
 #import "FormItem.h"
-#import "CreateListingHeaderView.h"
 #import "LocationPickerViewController.h"
 
-@interface CreateListingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MKMapViewDelegate, ListingTypeSelectionDelegate, LocationPickerDelegate> {
+@interface CreateListingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MKMapViewDelegate, LocationPickerDelegate> {
     
     NSInteger rowSpacing;
 }
@@ -23,7 +22,6 @@
 @property (strong, nonatomic) NSArray *formItems;
 
 @property (strong, nonatomic) UITableView *table;
-@property (strong, nonatomic) CreateListingHeaderView *header;
 @property (strong, nonatomic) UIView *footer;
 
 @property (strong, nonatomic) UIButton *submitButton;

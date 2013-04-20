@@ -44,8 +44,6 @@
 
 @synthesize titleLabel;
 @synthesize textLabel;
-@synthesize tagTitleLabel;
-@synthesize tagListLabel;
 
 @synthesize mapView;
 @synthesize addressLabel;
@@ -230,20 +228,7 @@
         textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
         yOffset = textLabel.y+textLabel.height+14;
     }
-    
-    if (listing.tags.count > 0) {
-        tagTitleLabel.text = [NSLocalizedString(@"listing.tags", @"") stringByAppendingString:@":"];
-        tagListLabel.text = [[tagTitleLabel.text equalWhitespaceWithFont:tagListLabel.font] stringByAppendingString:[listing.tags componentsJoinedByString:@", "]];
-        tagTitleLabel.y = yOffset;
-        tagListLabel.y = yOffset;
-        [tagTitleLabel sizeToFit];
-        tagListLabel.height = [tagListLabel.text sizeWithFont:tagListLabel.font constrainedToSize:CGSizeMake(tagListLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
-        yOffset = tagListLabel.y+tagListLabel.height+14;
-    } else {
-        tagTitleLabel.text = nil;
-        tagListLabel.text = nil;
-    }
-    
+        
     if (listing.location != nil) {
         if (![mapView.annotations containsObject:listing]) {
             [mapView addAnnotation:listing];

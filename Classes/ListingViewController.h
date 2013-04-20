@@ -23,8 +23,6 @@
 
 @property (strong) IBOutlet UILabel *titleLabel;
 @property (strong) IBOutlet UILabel *textLabel;
-@property (strong) IBOutlet UILabel *tagTitleLabel;
-@property (strong) IBOutlet UILabel *tagListLabel;
 
 @property (strong) MKMapView *mapView;
 @property (strong) UILabel *addressLabel;

@@ -76,7 +76,7 @@ CWL_DECLARE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClient)
                  onFailure:(void (^)(NSError *error))onFailure;
 
 - (void)getClassificationsForCommunityWithId:(NSInteger)communityId
-                                   onSuccess:(void (^)(id classifications))onSuccess
+                                   onSuccess:(void (^)(NSDictionary *classifications))onSuccess
                                    onFailure:(void (^)(NSError *error))onFailure;
 
 - (void)getListingsOfType:(NSString *)type inCategory:(NSString *)category forPage:(NSInteger)page;

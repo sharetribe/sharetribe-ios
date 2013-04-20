@@ -107,19 +107,17 @@
 "header.updated" = "Updated!";
 "header.last_updated" = "Last updated";
 
-"listing.intro.general" = "Item, service, ride, or space?";
-"listing.intro.offer" = "I want to offer";
-"listing.intro.request" = "I need";
+"listing.new.listing_type.intro" = "What do you want to do?";
+"listing.new.offer_category.intro" = "What can you offer to others?";
+"listing.new.request_category.intro" = "What do you need?";
+"listing.new.item_subcategory.intro" = "What kind of an item are we talking about?";
+"listing.new.offer_share_type.intro" = "How do you want to share it?";
+"listing.new.request_share_type.intro" = "How do you want to get it?";
 
-"listing.intro.offer_target.item" = "an item";
-"listing.intro.offer_target.favor" = "a service";
-"listing.intro.offer_target.rideshare" = "a ride";
-"listing.intro.offer_target.space" = "a space";
-
-"listing.intro.request_target.item" = "an item";
-"listing.intro.request_target.favor" = "a service";
-"listing.intro.request_target.rideshare" = "a ride";
-"listing.intro.request_target.space" = "a space";
+"listing.new.listing_type.title" = "Listing type";
+"listing.new.category.title" = "Category";
+"listing.new.subcategory.title" = "Subcategory";
+"listing.new.share_type.title" = "Share type";
 
 "listing.offer_type" = "Offer type";
 "listing.offer_type.give_away" = "Give away";
@@ -161,8 +159,6 @@
 
 "listing.description" = "Detailed description";
 
-"listing.tags" = "Tags";
-
 "listing.valid_until" = "Valid until";
 "listing.valid_until.for_the_time_being" = "For the time being";
 
@@ -192,8 +188,6 @@
 
 "listing.offered_by" = "Offered by";
 "listing.requested_by" = "Requested by";
-
-"listing.explanation.tags" = "With tags you can help others find your content easier. For instance, if you need an armchair, you might tag your listing &quot;furniture&quot; and &quot;seating&quot;. If you&apos;re offering help in computer problems, proper tags might include &quot;help&quot; and &quot;computers&quot;.\n\nYou can add as many tags to a listing as you like. Separate tags with commas.";
 
 "listing.explanation.valid_until" = "You can determine how long your listing is open. After the expiration date the listing will close automatically. Closed listings are not visible in any normal listing views. You can change the expiration date any time from the &quot;edit listing&quot; menu. You can also reopen the listing after it has closed from the same menu, if it is still topical.\n\nIf you are offering something for the other Sharetribe users, you can leave the listing open for the time being. This means that it will not close automatically. On the other hand, if you are requesting something, your listing must always have an expiration date. The date cannot be more than one year from the current date.";
 

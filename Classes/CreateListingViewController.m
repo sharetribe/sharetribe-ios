@@ -31,7 +31,6 @@
 @synthesize formItems;
 
 @synthesize table;
-@synthesize header;
 @synthesize footer;
 
 @synthesize submitButton;
@@ -59,10 +58,6 @@
         table.backgroundColor = [UIColor clearColor];
         table.separatorColor = kSharetribeBrownColor;
         table.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        
-        self.header = [CreateListingHeaderView instance];
-        header.delegate = self;
-        table.tableHeaderView = header;
         
         self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         submitButton.frame = CGRectMake(10, 24, 300, 40);
@@ -150,9 +145,6 @@
             
             [table setContentOffset:CGPointZero animated:NO];
             
-            [header setListingType:listing.type];
-            [header setListingCategory:nil];
-            
             self.navigationItem.titleView = nil;
             
             convertingImage = NO;
@@ -161,9 +153,7 @@
             submitButton.enabled = YES;
             [submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
             [uploadSpinner stopAnimating];
-            
-            table.tableHeaderView = header;
-            
+                        
             self.title = NSLocalizedString(@"tabs.new_listing", @"");
             
         } else {
@@ -251,7 +241,6 @@
     
     [table reloadData];
     
-    table.tableHeaderView = header;
     table.tableFooterView = footer;
     
     submitButton.hidden = (listing.category == nil);
