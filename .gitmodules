@@ -1,3 +1,6 @@
 [submodule "External/AFNetworking"]
 	path = External/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "External/TestFlight"]
+	path = External/TestFlight
+	url = https://github.com/danielctull-forks/TestFlight-SDK.git
