@@ -19,6 +19,7 @@
     NSMutableArray *listings;
     BOOL refreshingTopOfList;
     BOOL gettingNextPage;
+    BOOL gettingSearchResults;
     BOOL hasPerformedSearch;
 }
 
@@ -49,6 +50,8 @@
     if (listings == nil) {
         listings = [NSMutableArray array];
     }
+    
+    gettingSearchResults = NO;
     
     NSInteger addedListingsCount = 0;
     for (Listing *newListing in newListings) {
@@ -221,12 +224,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (listings.count == 0 && !refreshingTopOfList) ? 1 : listings.count;
+    return (listings.count == 0 && !refreshingTopOfList && !gettingSearchResults) ? 1 : listings.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (listings.count == 0 && !refreshingTopOfList) {
+    if (listings.count == 0 && !refreshingTopOfList && !gettingSearchResults) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         if (self.searchBar.text.length > 0) {
             cell.textLabel.text = NSLocalizedString(@"listings.list.no_listings.search", nil);
@@ -246,7 +249,7 @@
         cell = [ListingCell instance];
     }
     
-    Listing *listing = [listings objectAtIndex:indexPath.row];
+    Listing *listing = (indexPath.row < listings.count) ? listings[indexPath.row] : 0;
     [cell setListing:listing];
     
     return cell;
@@ -317,8 +320,9 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [listingCollectionViewDelegate viewController:self wantsToSearch:searchBar.text];
+    gettingSearchResults = YES;
     hasPerformedSearch = YES;
+    [listingCollectionViewDelegate viewController:self wantsToSearch:searchBar.text];
     [searchBar resignFirstResponder];
     [footerSpinner startAnimating];
 }
@@ -332,6 +336,7 @@
         [searchBar resignFirstResponder];
     }
     hasPerformedSearch = NO;
+    gettingSearchResults = NO;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

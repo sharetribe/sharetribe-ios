@@ -73,8 +73,7 @@
     int oneRowHeight = [@"Something" sizeWithFont:self.titleLabel.font].height;
     self.titleLabel.height = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.titleLabel.width, 2 * oneRowHeight) lineBreakMode:NSLineBreakByWordWrapping].height;
     
-    NSString *shareTypeKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", listing.type, listing.shareType];
-    self.shareTypeLabel.text = NSLocalizedString(shareTypeKey, nil);
+    self.shareTypeLabel.text = listing.localizedShareType;
     [self.shareTypeLabel sizeToFit];
     self.shareTypeLabel.height = self.categoryIconView.height;
     [self.categoryIconView setIconWithName:[Listing iconNameForItem:listing.category]];

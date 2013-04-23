@@ -134,6 +134,8 @@
     
     [messageButton setImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:kSharetribeThemeColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
     
+    self.authorNameLabel.textColor = kSharetribeThemeColor;
+    
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
     leftEdgeLine.backgroundColor = [UIColor lightGrayColor];
@@ -146,8 +148,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRefreshListing:) name:kNotificationForDidRefreshListing object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPostMessage:) name:kNotificationForDidPostMessage object:nil];
     
-    [self reloadData];
-    
     if (listing == nil) {
         [[SharetribeAPIClient sharedClient] getListingWithId:listingId];
     }
@@ -156,6 +156,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self reloadData];    
 }
     
 - (void)reloadData
@@ -217,18 +219,74 @@
         [[backgroundView.layer.sublayers objectOrNilAtIndex:0] removeFromSuperlayer];
     }
     
-    titleLabel.text = listing.fullTitle;
+    titleLabel.text = listing.title;
     titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
     
-    int yOffset = titleLabel.y+titleLabel.height+14;
+    int yOffset = titleLabel.y + titleLabel.height + 10;
+    
+    UIView *(^valueViewWithIconAndTextAndFontSize)(NSString *icon, NSString *text, CGFloat pointSize) = ^UIView *(NSString *icon, NSString *text, CGFloat pointSize) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        UILabel *iconLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, 30, 0)];
+        iconLabel.font = [UIFont boldSystemFontOfSize:(int) (1.2 * pointSize)];
+        [iconLabel setIconWithName:icon];
+        iconLabel.textAlignment = NSTextAlignmentCenter;
+        [iconLabel sizeToFit];
+        [view addSubview:iconLabel];
+        UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(iconLabel.right + 5, 0, 0, iconLabel.height)];
+        valueLabel.font = [UIFont boldSystemFontOfSize:pointSize];
+        valueLabel.text = text;
+        valueLabel.width = [valueLabel.text sizeWithFont:valueLabel.font].width;
+        [view addSubview:valueLabel];
+        view.height = iconLabel.height;
+        view.width = valueLabel.right;
+        return view;
+    };
+    
+    [self.categoryView removeFromSuperview];
+    self.categoryView = valueViewWithIconAndTextAndFontSize([Listing iconNameForItem:listing.category], listing.localizedShareType, 15);
+    self.categoryView.x = self.titleLabel.left;
+    self.categoryView.y = yOffset;
+    [self.scrollView addSubview:self.categoryView];
+    
+    yOffset += self.categoryView.height + 14;
     
     textLabel.text = listing.description;
     if (textLabel.text != nil) {
         textLabel.y = yOffset;
         textLabel.height = [textLabel.text sizeWithFont:textLabel.font constrainedToSize:CGSizeMake(textLabel.width, 10000) lineBreakMode:NSLineBreakByWordWrapping].height;
-        yOffset = textLabel.y+textLabel.height+14;
+        yOffset = textLabel.y + textLabel.height + 14;
+    }
+    
+    if (self.valueViews == nil) {
+        self.valueViews = [NSMutableArray array];
+    }
+    for (UIView *view in self.valueViews) {
+        [view removeFromSuperview];
+    }
+    [self.valueViews removeAllObjects];
+    
+    if (listing.priceInCents > 0) {
+        [self.valueViews addObject:valueViewWithIconAndTextAndFontSize(@"tag", listing.formattedPrice, 13)];
+    }
+    [self.valueViews addObject:valueViewWithIconAndTextAndFontSize(@"calendar", [NSString stringWithFormat:@"Created %@", listing.createdAt.agestamp], 13)];
+    [self.valueViews addObject:valueViewWithIconAndTextAndFontSize(@"eye", [NSString stringWithFormat:@"Viewed %d times", listing.numberOfTimesViewed], 13)];
+    if (listing.validUntil) {
+        [self.valueViews addObject:valueViewWithIconAndTextAndFontSize(@"alarmclock", [NSString stringWithFormat:@"Open until %@", listing.validUntil.dateAndTimeString], 13)];
     }
         
+    int valueViewX = textLabel.left;
+    for (UIView *view in self.valueViews) {
+        if (valueViewX + view.width > self.view.width - 20) {
+            valueViewX = textLabel.left;
+            yOffset += view.height + 2;
+        }
+        view.x = valueViewX;
+        view.y = yOffset;
+        valueViewX += view.width + 12;
+        [self.scrollView addSubview:view];
+    }
+    yOffset += [self.valueViews.lastObject height] + 14;
+    
     if (listing.location != nil) {
         if (![mapView.annotations containsObject:listing]) {
             [mapView addAnnotation:listing];
@@ -270,21 +328,23 @@
     
     self.title = listing.title;
     
-    UILabel *titleViewLabel = [[UILabel alloc] init];
-    titleViewLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleViewLabel.minimumScaleFactor = 0.75;
-    titleViewLabel.numberOfLines = 3;
-    titleViewLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    titleViewLabel.adjustsFontSizeToFitWidth = YES;
-    titleViewLabel.textAlignment = NSTextAlignmentCenter;
-    titleViewLabel.textColor = [UIColor whiteColor];
-    titleViewLabel.backgroundColor = [UIColor clearColor];
-    titleViewLabel.shadowColor = [UIColor blackColor];
-    titleViewLabel.shadowOffset = CGSizeMake(0, 1);
-    titleViewLabel.text = listing.title;
-    [titleViewLabel sizeToFit];
-    titleViewLabel.height = 20;
-    self.navigationItem.titleView = titleViewLabel;
+    self.topBarTitleLabel = [[UILabel alloc] init];
+    self.topBarTitleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.topBarTitleLabel.minimumScaleFactor = 0.6;
+    self.topBarTitleLabel.numberOfLines = 3;
+    self.topBarTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.topBarTitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.topBarTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.topBarTitleLabel.textColor = [UIColor whiteColor];
+    self.topBarTitleLabel.backgroundColor = [UIColor clearColor];
+    self.topBarTitleLabel.shadowColor = [UIColor blackColor];
+    self.topBarTitleLabel.shadowOffset = CGSizeMake(0, 1);
+    self.topBarTitleLabel.text = listing.title;
+    self.topBarTitleLabel.frame = CGRectMake(0, 44, 220, 44);
+    
+    self.navigationItem.titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.topBarTitleLabel.width, 44)];
+    self.navigationItem.titleView.clipsToBounds = YES;
+    [self.navigationItem.titleView addSubview:self.topBarTitleLabel];
 }
 
 - (void)viewDidUnload
@@ -465,23 +525,16 @@
         CGFloat imageViewBaselineY = -(imageView.height - 200) / 2;
         CGFloat y = imageViewBaselineY - scrollView.contentOffset.y / 2;
         imageView.frame = CGRectMake(0, y, imageView.width, imageView.height);
-                
-//        CGFloat sceneY = 448 + scrollView.contentOffset.y / 2;
-//        if (sceneY > 368) {
-//            self.imageView.frame = CGRectMake(0, sceneY, 320, 320);
-//        } else {
-//            CGFloat bleed = 368 - sceneY;
-//            self.imageView.frame = CGRectMake(-bleed,
-//                                                   368 - 2 * bleed,
-//                                                   320 + 2 * bleed,
-//                                                   320 + 2 * bleed);
-//        }
-//        
-//        self.sceneImageSpinner.center = self.sceneImageView.center;
         
+        int titleY = [self.titleLabel convertPoint:CGPointZero toView:self.view].y;
+        if (self.topBarTitleLabel.height > 0) {
+            self.topBarTitleLabel.y = MAX((self.navigationItem.titleView.height + titleY * (self.topBarTitleLabel.height / self.titleLabel.height)),
+                                          (self.navigationItem.titleView.height - self.topBarTitleLabel.height) / 2 - 1);
+        }
+
         int buttonY;
-        if (scrollView.contentOffset.y > titleLabel.y-68) {
-            buttonY = titleLabel.y-68-scrollView.contentOffset.y+10;
+        if (scrollView.contentOffset.y > titleLabel.y - 68) {
+            buttonY = titleLabel.y - 68 - scrollView.contentOffset.y + 10;
         } else {
             buttonY = 10;
         }

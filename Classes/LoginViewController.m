@@ -36,7 +36,7 @@
     self.view.backgroundColor = kSharetribeThemeColor;
     
     [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
-    [self.ouishareLogoView setShadowWithOpacity:0.8 radius:1];
+    [self.ouishareView setShadowWithOpacity:0.8 radius:1];
     
     usernameField.delegate = self;
     passwordField.delegate = self;
@@ -50,6 +50,11 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
+    NSDate *ouishareExpirationDate = [NSDate dateFromTimestamp:@"2013-05-09T10:00:00Z"];
+    if ([[NSDate date] timeIntervalSinceDate:ouishareExpirationDate] > 0) {
+        self.ouishareView.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

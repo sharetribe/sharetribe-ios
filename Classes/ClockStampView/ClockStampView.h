@@ -34,7 +34,7 @@
 @property (unsafe_unretained, nonatomic) id<ClockStampViewDelegate> delegate;
 
 @property (strong, nonatomic) UIImageView *backgroundView;
-@property (strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) UILabel *yearLabel;
 @property (strong, nonatomic) UILabel *dateLabel;
 
 @property (copy, nonatomic) NSDate *time;

@@ -30,6 +30,7 @@
 @property (strong, nonatomic) NSString *category;
 @property (strong, nonatomic) NSString *subcategory;
 @property (strong, nonatomic) NSString *shareType;
+@property (readonly) NSString *localizedShareType;
 
 @property (strong, nonatomic) NSURL *thumbnailURL;
 @property (strong, nonatomic) NSArray *imageURLs;

@@ -27,8 +27,7 @@
 - (NSString *)fullTitle
 {
     if (self.shareType != nil) {
-        NSString *labelKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", self.type, self.shareType];
-        return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(labelKey, @""), self.title];
+        return [NSString stringWithFormat:@"%@: %@", self.localizedShareType, self.title];
     } else {
         return self.title;
     }
@@ -54,6 +53,12 @@
         price = [price stringByAppendingFormat:@"%@", self.priceQuantity];
     }
     return price;
+}
+
+- (NSString *)localizedShareType
+{
+    NSString *key = [NSString stringWithFormat:@"listing.%@ing_type.%@", self.type, self.shareType];
+    return NSLocalizedString(key, nil);
 }
 
 - (void)setCategory:(NSString *)newCategory

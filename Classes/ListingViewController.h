@@ -23,6 +23,9 @@
 
 @property (strong) IBOutlet UILabel *titleLabel;
 @property (strong) IBOutlet UILabel *textLabel;
+@property (strong) UIView *categoryView;
+@property (strong) NSMutableArray *valueViews;
+@property (strong) UILabel *topBarTitleLabel;
 
 @property (strong) MKMapView *mapView;
 @property (strong) UILabel *addressLabel;

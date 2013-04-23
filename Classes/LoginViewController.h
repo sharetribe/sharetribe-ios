@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginSpinner;
 
-@property (weak, nonatomic) IBOutlet UIImageView *ouishareLogoView;
+@property (weak, nonatomic) IBOutlet UIView *ouishareView;
 
 - (IBAction)performLogin;
 - (IBAction)openSharetribeWebsite;
