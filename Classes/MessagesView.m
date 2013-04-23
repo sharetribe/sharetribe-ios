@@ -165,8 +165,7 @@
             avatarView = [[UIImageView alloc] init];
             avatarView.contentMode = UIViewContentModeScaleAspectFill;
             avatarView.clipsToBounds = YES;
-            avatarView.layer.borderColor = kSharetribeBackgroundColor.CGColor;
-            avatarView.layer.borderWidth = 1;
+            avatarView.layer.cornerRadius = 3;
             avatarView.frame = CGRectMake(10, 0, 30, 30);
             [self addSubview:avatarView];
             [avatarViews addObject:avatarView];

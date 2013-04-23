@@ -149,6 +149,10 @@
         phoneIconView.hidden = YES;
     }
     
+    locationIconView.image = [UIImage imageWithIconNamed:@"home" pointSize:12 color:[UIColor blackColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)];
+    phoneIconView.image = [UIImage imageWithIconNamed:@"phone" pointSize:12 color:[UIColor blackColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)];
+    [phoneButton setTitleColor:kSharetribeThemeColor forState:UIControlStateNormal];
+    
     if (user.isCurrentUser) {
         if (self.navigationController.viewControllers.count == 1) {
             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.log_out", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed)];

@@ -136,6 +136,9 @@
     
     self.authorNameLabel.textColor = kSharetribeThemeColor;
     
+    self.authorImageView.clipsToBounds = YES;
+    self.authorImageView.layer.cornerRadius = 5;
+    
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
     leftEdgeLine.backgroundColor = [UIColor lightGrayColor];
@@ -329,7 +332,7 @@
     self.title = listing.title;
     
     self.topBarTitleLabel = [[UILabel alloc] init];
-    self.topBarTitleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.topBarTitleLabel.font = [UIFont boldSystemFontOfSize:15];
     self.topBarTitleLabel.minimumScaleFactor = 0.6;
     self.topBarTitleLabel.numberOfLines = 3;
     self.topBarTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -340,7 +343,7 @@
     self.topBarTitleLabel.shadowColor = [UIColor blackColor];
     self.topBarTitleLabel.shadowOffset = CGSizeMake(0, 1);
     self.topBarTitleLabel.text = listing.title;
-    self.topBarTitleLabel.frame = CGRectMake(0, 44, 220, 44);
+    self.topBarTitleLabel.frame = CGRectMake(0, 44, 220, 40);
     
     self.navigationItem.titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.topBarTitleLabel.width, 44)];
     self.navigationItem.titleView.clipsToBounds = YES;

@@ -64,15 +64,15 @@
     timeLabel.text = [conversation.lastMessage.createdAt agestamp];
     
     if (conversation.isUnread) {
-        iconView.image = [UIImage imageNamed:@"icon-unread"];
+        iconView.image = [UIImage imageWithIconNamed:@"bonfire" pointSize:16 color:[UIColor grayColor] insets:UIEdgeInsetsMake(3, 0, 0, 0)];
     } else if (conversation.isReplied) {
-        iconView.image = [UIImage imageNamed:@"icon-reply"];
+        iconView.image = [UIImage imageWithIconNamed:@"reply" pointSize:16 color:[UIColor grayColor] insets:UIEdgeInsetsMake(3, 0, 0, 0)];
     } else {
         iconView.image = nil;
     }
     
-    messageLabel.x = (iconView.image != nil) ? iconView.x+iconView.width+4 : titleLabel.x;
-    messageLabel.width = 210-(messageLabel.x-titleLabel.x);
+    messageLabel.x = (iconView.image) ? (iconView.x + iconView.width + 4) : titleLabel.x;
+    messageLabel.width = 210 - (messageLabel.x - titleLabel.x);
     messageLabel.height = [messageLabel.text sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(messageLabel.width, 32) lineBreakMode:NSLineBreakByWordWrapping].height;
     
     iconView.y = messageLabel.y;
