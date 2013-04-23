@@ -9,6 +9,7 @@
 #import "NewListingViewController.h"
 
 #import "AppDelegate.h"
+#import "ChoicesViewController.h"
 #import "FormItem.h"
 #import "Location.h"
 #import "User.h"
@@ -91,6 +92,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView *uploadSpinner;
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
+@property (strong, nonatomic) ChoicesViewController *currencyChooser;
 
 @property (strong, nonatomic) UIView *activeTextInput;
 @property (strong, nonatomic) FormItem *formItemBeingEdited;
@@ -118,7 +120,7 @@
     self.submitButton.frame = CGRectMake(20, 24, 280, 40);
     self.submitButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
-    [self.submitButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+    [self.submitButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeSecondaryThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
     [self.submitButton setShadowWithOpacity:0.5 radius:1];
     [self.submitButton addTarget:self action:@selector(postButtonPressed:) forControlEvents:UIControlEventTouchUpInside],
     
@@ -279,7 +281,7 @@
     NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", self.listing.category, self.listing.type];
     propertyListName = [propertyListName stringByReplacingOccurrencesOfString:@"other" withString:@"item"];
     NSMutableArray *formItems = [[FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]] mutableCopy];
-    if ([self.listing.shareType isEqualToString:@"sell"] || [self.listing.shareType isEqualToString:@"rent_out"]) {
+    if ([self.classifications[self.listing.shareType][@"price"] boolValue]) {
         FormItem *priceItem = [[FormItem alloc] init];
         priceItem.type = FormItemTypePrice;
         priceItem.typeAsString = @"price";
@@ -288,7 +290,7 @@
         NSMutableDictionary *values = [NSMutableDictionary dictionary];
         values[@"priceInCents"] = @(0);
         values[@"priceCurrency"] = @"EUR";
-        if ([self.listing.shareType isEqualToString:@"rent_out"]) {
+        if ([NSString cast:self.classifications[self.listing.shareType][@"price_quantity_placeholder"]]) {
             values[@"priceQuantity"] = @"";
         }
         [self.listing setValue:values forKey:priceItem.mapsTo];
@@ -539,6 +541,7 @@
                 priceField.delegate = self;
                 [cell addSubview:priceField];
                 
+                // NSArray *currencies = [AppDelegate sharedAppDelegate].community.availableCurrencies;
                 UIButton *currencyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                 currencyButton.frame = CGRectMake(priceField.right + 10, priceField.y, 60, priceField.height);
                 [currencyButton setTitle:@"EUR" forState:UIControlStateNormal];
@@ -554,7 +557,6 @@
                 [cell addSubview:quantityLabel];
                 
                 UITextField *quantityField = [[UITextField alloc] init];
-                quantityField.placeholder = NSLocalizedString(@"listing.price.quantity.placeholder", nil);
                 quantityField.frame = CGRectMake(quantityLabel.right + 10, quantityLabel.y, 0, quantityLabel.height);
                 quantityField.width = cell.width - quantityField.x - 20;
                 quantityField.font = [UIFont systemFontOfSize:15];
@@ -780,6 +782,8 @@
                 quantityLabel.hidden = YES;
                 quantityField.hidden = YES;
             }
+            
+            quantityField.placeholder = [NSString cast:self.classifications[self.listing.shareType][@"price_quantity_placeholder"]];
         }
         
         return cell;
@@ -1222,6 +1226,18 @@
 
 - (IBAction)currencyButtonPressed:(UIButton *)sender
 {
+    NSArray *currencies = [AppDelegate sharedAppDelegate].community.availableCurrencies;
+    if (currencies.count > 1) {
+        self.currencyChooser = [[ChoicesViewController alloc] initWithChoices:currencies];
+        [self.currencyChooser presentAsPopoverFromButton:sender onChoice:^(id choice) {
+            [sender setTitle:choice forState:UIControlStateNormal];
+            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:[self.tableView convertPoint:CGPointZero fromView:sender]];
+            FormItem *formItem = self.formItems[path.row];
+            NSMutableDictionary *priceValues = [self.listing valueForKey:formItem.mapsTo];
+            priceValues[@"priceCurrency"] = choice;
+            [self.listing setValue:priceValues forKey:formItem.mapsTo];
+        }];
+    }
 }
 
 - (IBAction)postButtonPressed:(UIButton *)sender

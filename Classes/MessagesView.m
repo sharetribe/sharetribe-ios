@@ -96,7 +96,7 @@
         sendMessageButton.frame = CGRectMake(50, self.height-40, 150, 30);
         sendMessageButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         sendMessageButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
-        [sendMessageButton setBackgroundImage:[[UIImage imageNamed:@"dark-brown.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+        [sendMessageButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeSecondaryThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
         [sendMessageButton addTarget:self action:@selector(sendMessagePressed) forControlEvents:UIControlEventTouchUpInside];
         sendMessageButton.hidden = YES;
         [self addSubview:sendMessageButton];
@@ -106,7 +106,7 @@
         cancelMessageButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         cancelMessageButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
         [cancelMessageButton setTitle:NSLocalizedString(@"button.cancel", @"") forState:UIControlStateNormal];
-        [cancelMessageButton setBackgroundImage:[[UIImage imageNamed:@"dark-brown.png"] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+        [cancelMessageButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeSecondaryThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
         [cancelMessageButton addTarget:self action:@selector(cancelMessagePressed) forControlEvents:UIControlEventTouchUpInside];
         cancelMessageButton.hidden = YES;
         [self addSubview:cancelMessageButton];
@@ -211,7 +211,7 @@
         } else {
             dateLabel = [[UILabel alloc] init];
             dateLabel.font = [UIFont systemFontOfSize:12];
-            dateLabel.textColor = kSharetribeThemeColor;
+            dateLabel.textColor = [UIColor darkGrayColor];
             dateLabel.backgroundColor = [UIColor clearColor];
             dateLabel.textAlignment = NSTextAlignmentRight;
             dateLabel.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-12, 16);

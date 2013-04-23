@@ -25,6 +25,7 @@
 
 #define kSharetribeBackgroundColor     [UIColor whiteColor]
 #define kSharetribeThemeColor          ([AppDelegate sharedAppDelegate].community.color1 ?: [UIColor colorWithRed:212/255.0 green:82/255.0 blue:7/255.0 alpha:1])
+#define kSharetribeSecondaryThemeColor ([AppDelegate sharedAppDelegate].community.color2 ?: kSharetribeThemeColor)
 #define kSharetribeLightThemeColor     [kSharetribeThemeColor colorWithAlphaComponent:0.3]
 
 // Timestamps

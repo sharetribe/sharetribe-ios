@@ -83,12 +83,8 @@
     NSMutableDictionary *JSON = [NSMutableDictionary dictionary];
     
     JSON[@"listing_type"] = self.type;
-    JSON[@"category"] = self.category;
-    
-    if (self.subcategory) {
-        JSON[@"subcategory"] = self.subcategory;
-    }
-    
+    JSON[@"category"] = (self.subcategory) ? self.subcategory : self.category;
+        
     if (self.shareType) {
         JSON[@"share_type"] = self.shareType;
     }
@@ -103,7 +99,7 @@
     
     if (self.priceInCents > 0) {
         JSON[@"price_cents"] = @(self.priceInCents);
-        JSON[@"price_currency"] = self.priceCurrency;
+        JSON[@"currency"] = self.priceCurrency;
         JSON[@"quantity"] = self.priceQuantity;
     }
     
@@ -172,7 +168,7 @@
     }
     
     listing.priceInCents = [[NSNumber cast:dict[@"price_cents"]] integerValue];
-    listing.priceCurrency = [NSString cast:dict[@"price_currency"]];
+    listing.priceCurrency = [NSString cast:dict[@"currency"]];
     listing.priceQuantity = [NSString cast:dict[@"quantity"]];
     
     NSString *thumbnailURLString = [NSString cast:dict[@"thumbnail_url"]];

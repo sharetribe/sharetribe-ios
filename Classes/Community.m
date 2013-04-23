@@ -30,6 +30,7 @@
     community.location = [Location locationFromDict:[NSDictionary cast:dict[@"location"]]];
     
     community.categoriesTree = [NSDictionary cast:dict[@"categories_tree"]];
+    community.availableCurrencies = [NSArray cast:dict[@"available_currencies"]];
     
     return community;
 }

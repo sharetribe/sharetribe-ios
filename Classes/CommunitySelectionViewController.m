@@ -34,7 +34,7 @@
     
     self.view.backgroundColor = kSharetribeThemeColor;
     
-    [self.logoView setShadowWithColor:[UIColor whiteColor] opacity:0.5 radius:2 offset:CGSizeZero usingDefaultPath:NO];
+    [self.logoView setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
 }
 
 - (void)viewDidUnload

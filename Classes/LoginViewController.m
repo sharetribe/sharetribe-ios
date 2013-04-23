@@ -39,12 +39,14 @@
     
     [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
     [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.loginButton setBackgroundImage:[UIImage imageWithColor:kSharetribeThemeColor] forState:UIControlStateNormal];
-    [self.loginButton setShadowWithOpacity:0.6 radius:1];
+    [self.loginButton setBackgroundImage:[UIImage imageWithColor:[kSharetribeThemeColor colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
+    [self.loginButton setShadowWithColor:[UIColor whiteColor] opacity:0.6 radius:1 offset:CGSizeZero usingDefaultPath:YES];
     [self.ouishareView setShadowWithOpacity:0.8 radius:2];
     
     usernameField.delegate = self;
     passwordField.delegate = self;
+    
+    usernameField.keyboardType = UIKeyboardTypeEmailAddress;
     
     usernameField.placeholder = NSLocalizedString(@"placeholder.username_or_email", @"");
     passwordField.placeholder = NSLocalizedString(@"placeholder.password", @"");

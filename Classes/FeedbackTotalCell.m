@@ -20,6 +20,7 @@
     if (nibContents.count > 0) {
         FeedbackTotalCell *cell = [nibContents objectAtIndex:0];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.whatIsThisButton setTitleColor:kSharetribeThemeColor forState:UIControlStateNormal];
         return cell;
     }
     return nil;

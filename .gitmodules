@@ -4,3 +4,6 @@
 [submodule "External/TestFlight"]
 	path = External/TestFlight
 	url = https://github.com/danielctull-forks/TestFlight-SDK.git
+[submodule "External/PopoverView"]
+	path = External/PopoverView
+	url = https://github.com/runway20/PopoverView.git

@@ -36,6 +36,7 @@
 
 @interface SharetribeAPIClient () {
     NSInteger currentCommunityId;
+    BOOL printJSONs;
 }
 
 @property (readonly) NSMutableDictionary *baseParams;
@@ -50,8 +51,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
-    // self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
+    // self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
+    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
         [self registerHTTPOperationClass:SharetribeJSONRequestOperation.class];
@@ -72,6 +73,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         } else {
             currentCommunityId = NSNotFound;
         }
+        
+        printJSONs = NO;
     }
     return self;
 }
@@ -163,7 +166,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kAPITokenKeyForUserDefaults];
     [defaults removeObjectForKey:kCurrentUserIdKeyForUserDefaults];
+    [defaults removeObjectForKey:kCurrentCommunityIdKeyForUserDefaults];
     [defaults synchronize];
+    
+    currentCommunityId = NSNotFound;
     
     [self setDefaultHeader:@"Sharetribe-API-Token" value:nil];
     
@@ -211,12 +217,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         
         NSLog(@"got community classifications: %@", responseObject);
         
-        NSMutableDictionary *classifications = [NSMutableDictionary dictionary];
-        for (NSDictionary *dict in [NSArray cast:responseObject]) {
-            classifications[dict[@"name"]] = dict;
+        if ([NSArray cast:responseObject]) {
+            NSMutableDictionary *classifications = [NSMutableDictionary dictionary];
+            for (NSDictionary *dict in responseObject) {
+                classifications[dict[@"name"]] = dict;
+            }
+            onSuccess(classifications);
+            return;
         }
         
-        onSuccess(classifications);
+        onSuccess([NSDictionary cast:responseObject]);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -253,8 +263,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        NSLog(@"request: %@ done with response: %@ json: %@", request, response, JSON);
-        
+        if (printJSONs) {
+            NSLog(@"request: %@ done with response: %@ json: %@", request, response, JSON);
+        }
+            
         NSArray *listingDicts = [JSON objectOrNilForKey:@"listings"];
         NSArray *listings = [Listing listingsFromArrayOfDicts:listingDicts];
         
@@ -578,7 +590,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (void)logSuccessWithOperation:(AFHTTPRequestOperation *)operation responseObject:(id)responseObject
 {
-    NSLog(@"requested: %@\ngot response: %@", operation.request.URL, responseObject);
+    if (printJSONs) {
+        NSLog(@"requested: %@\ngot response: %@", operation.request.URL, responseObject);
+    }
 }
 
 - (void)handleFailureWithOperation:(AFHTTPRequestOperation *)operation error:(NSError *)error

@@ -31,6 +31,7 @@
 
 @property (strong, nonatomic) NSDictionary *categoriesTree;
 @property (strong, nonatomic) NSDictionary *classifications;
+@property (strong, nonatomic) NSArray *availableCurrencies;
 
 + (Community *)communityFromDict:(NSDictionary *)dict;
 + (NSArray *)communitiesFromArrayOfDicts:(NSArray *)dicts;

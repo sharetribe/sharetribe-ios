@@ -107,6 +107,8 @@
 		487233271726CB43004E4EDC /* ouisharefestlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 487233251726CB43004E4EDC /* ouisharefestlogo.png */; };
 		487233281726CB43004E4EDC /* ouisharefestlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 487233261726CB43004E4EDC /* ouisharefestlogo@2x.png */; };
 		4872332E1726F2F0004E4EDC /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4872332A1726F2F0004E4EDC /* libTestFlight.a */; };
+		4872337417271C6E004E4EDC /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4872337217271C6E004E4EDC /* PopoverView.m */; };
+		4872337717271FF4004E4EDC /* ChoicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4872337617271FF3004E4EDC /* ChoicesViewController.m */; };
 		4873FF6715E6D2F10066C58E /* kaapo-big-grade-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */; };
 		4873FF6815E6D2F10066C58E /* kaapo-big-grade-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */; };
 		4873FF6915E6D2F10066C58E /* kaapo-big-grade-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */; };
@@ -366,6 +368,11 @@
 		487233261726CB43004E4EDC /* ouisharefestlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ouisharefestlogo@2x.png"; sourceTree = "<group>"; };
 		4872332A1726F2F0004E4EDC /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		4872332D1726F2F0004E4EDC /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		4872337117271C6E004E4EDC /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
+		4872337217271C6E004E4EDC /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
+		4872337317271C6E004E4EDC /* PopoverView_Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView_Configuration.h; sourceTree = "<group>"; };
+		4872337517271FF2004E4EDC /* ChoicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoicesViewController.h; sourceTree = "<group>"; };
+		4872337617271FF3004E4EDC /* ChoicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoicesViewController.m; sourceTree = "<group>"; };
 		4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1.png"; sourceTree = "<group>"; };
 		4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1@2x.png"; sourceTree = "<group>"; };
 		4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-2.png"; sourceTree = "<group>"; };
@@ -610,6 +617,17 @@
 			path = External/TestFlight;
 			sourceTree = SOURCE_ROOT;
 		};
+		4872337017271C6E004E4EDC /* PopoverView */ = {
+			isa = PBXGroup;
+			children = (
+				4872337117271C6E004E4EDC /* PopoverView.h */,
+				4872337217271C6E004E4EDC /* PopoverView.m */,
+				4872337317271C6E004E4EDC /* PopoverView_Configuration.h */,
+			);
+			name = PopoverView;
+			path = External/PopoverView/PopoverView;
+			sourceTree = SOURCE_ROOT;
+		};
 		487AA36F14B7B51A007C4CCF = {
 			isa = PBXGroup;
 			children = (
@@ -851,6 +869,8 @@
 			children = (
 				48C9F66615037847001F785A /* ButtonTabBarController.h */,
 				48C9F66715037847001F785A /* ButtonTabBarController.m */,
+				4872337517271FF2004E4EDC /* ChoicesViewController.h */,
+				4872337617271FF3004E4EDC /* ChoicesViewController.m */,
 				48E1C42F15C4A3E70058F4EB /* CommunitySelectionViewController.h */,
 				48E1C43015C4A3E70058F4EB /* CommunitySelectionViewController.m */,
 				48E1C43115C4A3E70058F4EB /* CommunitySelectionViewController.xib */,
@@ -956,6 +976,7 @@
 			children = (
 				48723306172608D3004E4EDC /* AFNetworking */,
 				483EF27D15E836EA008BED22 /* JSONKit */,
+				4872337017271C6E004E4EDC /* PopoverView */,
 				489179CD159BC9C9004D6FF3 /* Reachability */,
 				487233291726F2F0004E4EDC /* TestFlight */,
 				489179CA159BC9C9004D6FF3 /* CWLSynthesizeSingleton.h */,
@@ -1268,6 +1289,8 @@
 				48723320172608D3004E4EDC /* AFURLConnectionOperation.m in Sources */,
 				48723321172608D3004E4EDC /* AFXMLRequestOperation.m in Sources */,
 				48723322172608D3004E4EDC /* UIImageView+AFNetworking.m in Sources */,
+				4872337417271C6E004E4EDC /* PopoverView.m in Sources */,
+				4872337717271FF4004E4EDC /* ChoicesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
