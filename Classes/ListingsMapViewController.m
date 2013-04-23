@@ -92,58 +92,12 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     
     [map addAnnotations:annotationsToAdd];
     
-    CLLocationCoordinate2D min, max;
-    min.longitude = 0;
-    min.latitude = 0;
-    max.latitude = 0;
-    max.longitude = 0;
-    double latitudeSum = 0;
-    double longitudeSum = 0;
-    int numberOfItems = 0;
-    
-    NSMutableArray *mappedListings = [NSMutableArray arrayWithCapacity:map.annotations.count];
-    for (id<MKAnnotation> annotation in map.annotations) {
-        if ([annotation isKindOfClass:Listing.class]) {
-            [mappedListings addObject:annotation];
-        } else if ([annotation isKindOfClass:ListingCluster.class]) {
-            [mappedListings addObjectsFromArray:[(ListingCluster *) annotation listings]];
-        }
+    Location *communityLocation = [AppDelegate sharedAppDelegate].community.location;
+    if (communityLocation) {
+        defaultRegion = MKCoordinateRegionMakeWithDistance(communityLocation.coordinate, 2000, 2000);
+    } else if (map.userLocation) {
+        defaultRegion = MKCoordinateRegionMakeWithDistance(map.userLocation.coordinate, 2000, 2000);
     }
-    
-    if (mappedListings.count > 10) {
-        [mappedListings sortUsingFunction:compareByLatitude context:NULL];
-        [mappedListings removeObjectAtIndex:0];
-        [mappedListings removeLastObject];
-        [mappedListings sortUsingFunction:compareByLongitude context:NULL];
-        [mappedListings removeObjectAtIndex:0];
-        [mappedListings removeLastObject];
-    }
-    
-    for (Listing *listing in mappedListings) {
-        CLLocationCoordinate2D coordinate = listing.coordinate;
-        latitudeSum += coordinate.latitude;
-        longitudeSum += coordinate.longitude;
-        numberOfItems += 1;
-        if (coordinate.latitude < min.latitude || min.latitude == 0) {
-            min.latitude = coordinate.latitude;
-        }
-        if (coordinate.latitude > max.latitude || max.latitude == 0) {
-            max.latitude = coordinate.latitude;
-        }
-        if (coordinate.longitude < min.longitude || min.longitude == 0) {
-            min.longitude = coordinate.longitude;
-        }
-        if (coordinate.longitude > max.longitude || max.longitude == 0) {
-            max.longitude = coordinate.longitude;
-        }
-    }
-    CLLocationCoordinate2D averageCoordinate;
-    averageCoordinate.latitude = latitudeSum/numberOfItems;
-    averageCoordinate.longitude = longitudeSum/numberOfItems;
-    MKCoordinateSpan span;
-    span.latitudeDelta = (max.latitude-min.latitude)*0.8;
-    span.longitudeDelta = (max.longitude-min.longitude)*0.8;
-    defaultRegion = MKCoordinateRegionMake(averageCoordinate, span);
     if (shouldFocusToDefaultRegion) {
         if (self.isViewLoaded
                 && self.view.window

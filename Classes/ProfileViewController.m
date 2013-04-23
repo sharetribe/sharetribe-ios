@@ -128,6 +128,10 @@
         locationIconView.hidden = NO;
         detailsHeight = locationLabel.y+locationLabel.height+7;
     } else {
+        Location *communityLocation = [AppDelegate sharedAppDelegate].community.location;
+        if (communityLocation) {
+            [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(communityLocation.coordinate, 1500, 3000) animated:NO];
+        }
         phoneButton.y = locationLabel.y;
         locationLabel.hidden = YES;
         locationIconView.hidden = YES;
