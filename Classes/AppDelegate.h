@@ -32,5 +32,8 @@
 @property (strong, nonatomic) Community *community;
 
 - (void)doInitialCheck;
+- (void)refreshInitialContent;
+
++ (AppDelegate *)sharedAppDelegate;
 
 @end

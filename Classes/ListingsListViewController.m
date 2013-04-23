@@ -141,6 +141,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.tableView.scrollsToTop = YES;
+    
     [self.tableView reloadData];
 }
 
@@ -152,6 +154,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    self.tableView.scrollsToTop = NO;
+    
     [clockStampView hide];
 }
 
@@ -167,7 +172,9 @@
 
 - (void)startIndicatingRefresh
 {
+    refreshingTopOfList = YES;
     [header startIndicatingRefreshWithTableView:self.tableView];
+    [self.tableView reloadData];
 }
 
 - (void)updateFinished
@@ -214,11 +221,26 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return listings.count;
+    return (listings.count == 0 && !refreshingTopOfList) ? 1 : listings.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (listings.count == 0 && !refreshingTopOfList) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        if (self.searchBar.text.length > 0) {
+            cell.textLabel.text = NSLocalizedString(@"listings.list.no_listings.search", nil);
+        } else if ([[self.listingCollectionViewDelegate listingType] isEqualToString:kListingTypeOffer]) {
+            cell.textLabel.text = NSLocalizedString(@"listings.list.no_listings.offer", nil);
+        } else {
+            cell.textLabel.text = NSLocalizedString(@"listings.list.no_listings.request", nil);
+        }
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    
     ListingCell *cell = (ListingCell *) [tableView dequeueReusableCellWithIdentifier:[ListingCell reuseIdentifier]];
     if (cell == nil) {
         cell = [ListingCell instance];

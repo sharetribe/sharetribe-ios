@@ -32,6 +32,8 @@
 NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context);
 NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *context);
 
+@property (strong, nonatomic) UIBarButtonItem *locateBarButton;
+
 @end
 
 @implementation ListingsMapViewController
@@ -194,6 +196,13 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     
     [self observeNotification:kNotificationForDidChangeRegion withSelector:@selector(regionChangedByMapView:)];
     [self observeNotification:kNotificationForDidRefreshListing withSelector:@selector(refreshedListing:)];
+    
+    UIButton *locateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    locateButton.frame = CGRectMake(0, 0, 44, 44);
+    [locateButton setImage:[UIImage imageWithIconNamed:@"locate" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 3, 0, 3)] forState:UIControlStateNormal];
+    [locateButton addTarget:self action:@selector(focusOnUserLocation) forControlEvents:UIControlEventTouchUpInside];
+    [locateButton setShadowWithOpacity:0.5 radius:2 offset:CGSizeMake(0, 1) usingDefaultPath:NO];
+    self.locateBarButton = [[UIBarButtonItem alloc] initWithCustomView:locateButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -206,7 +215,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
         [map setRegion:targetRegion animated:NO];
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithIconNamed:@"locate" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 3, 0, 3)] style:UIBarButtonItemStyleBordered target:self action:@selector(focusOnUserLocation)];
+    self.navigationItem.rightBarButtonItem = self.locateBarButton;
 }
 
 - (void)viewDidAppear:(BOOL)animated

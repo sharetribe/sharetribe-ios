@@ -9,10 +9,10 @@
 #import "ListingViewController.h"
 
 #import "ConversationViewController.h"
-#import "CreateListingViewController.h"
 #import "Location.h"
 #import "LocationPickerViewController.h"
 #import "Message.h"
+#import "NewListingViewController.h"
 #import "ProfileViewController.h"
 #import "SharetribeAPIClient.h"
 #import "User.h"
@@ -175,7 +175,7 @@
     messageButton.hidden = messagingDisabled;
     
     if (listing.author.isCurrentUser) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
+        self.navigationItem.rightBarButtonItem = nil; // [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
     } else {
         self.navigationItem.rightBarButtonItem = nil;
     }
@@ -497,7 +497,8 @@
         
         } else if ([buttonTitle isEqualToString:NSLocalizedString(@"button.listing.edit", @"")]) {
             
-            CreateListingViewController *editor = [[CreateListingViewController alloc] init];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard_iPhone" bundle:[NSBundle mainBundle]];
+            NewListingViewController *editor = [storyboard instantiateViewControllerWithIdentifier:@"NewListing"];
             editor.listing = listing;
             listing.image = imageView.image;
             UINavigationController *editorNavigator = [[UINavigationController alloc] initWithRootViewController:editor];

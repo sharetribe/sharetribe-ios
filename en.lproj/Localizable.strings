@@ -107,6 +107,10 @@
 "header.updated" = "Updated!";
 "header.last_updated" = "Last updated";
 
+"listings.list.no_listings.offer" = "No offers yet";
+"listings.list.no_listings.request" = "No requests yet";
+"listings.list.no_listings.search" = "No matching listings";
+
 "listing.new.listing_type.intro" = "What do you want to do?";
 "listing.new.offer_category.intro" = "What can you offer to others?";
 "listing.new.request_category.intro" = "What do you need?";
@@ -198,6 +202,7 @@
 "listing.button_for_offer"                = "Request this";
 "listing.button_for_offer_give_away"      = "Request this";
 "listing.button_for_offer_lend"           = "Borrow this";
+"listing.button_for_offer_offer"          = "Request this";
 "listing.button_for_offer_rent_out"       = "Rent this";
 "listing.button_for_offer_sell"           = "Buy this";
 "listing.button_for_offer_share_for_free" = "Request this";
@@ -208,6 +213,7 @@
 "listing.button_for_request_buy"          = "Offer to sell this";
 "listing.button_for_request_receive"      = "Offer to give this";
 "listing.button_for_request_rent"         = "Offer to rent this out";
+"listing.button_for_request_request"      = "Offer this";
 "listing.button_for_request_trade"        = "Offer to swap this";
 
 "messaging.conversation.title" = "Conversation";

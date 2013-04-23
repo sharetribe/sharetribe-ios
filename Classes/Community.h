@@ -30,6 +30,7 @@
 @property (strong, nonatomic) Location *location;
 
 @property (strong, nonatomic) NSDictionary *categoriesTree;
+@property (strong, nonatomic) NSDictionary *classifications;
 
 + (Community *)communityFromDict:(NSDictionary *)dict;
 + (NSArray *)communitiesFromArrayOfDicts:(NSArray *)dicts;

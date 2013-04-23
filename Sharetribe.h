@@ -13,6 +13,9 @@
 #import "UIColor+Sharetribe.h"
 #import "UIImage+Sharetribe.h"
 #import "UIView+Sharetribe.h"
+#import "GTMNSString+HTML.h"
+
+#import <QuartzCore/QuartzCore.h>
 
 // Colors
 

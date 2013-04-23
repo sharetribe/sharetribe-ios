@@ -152,7 +152,11 @@
             self.navigationItem.rightBarButtonItem = nil;
         }
     } else {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)] style:UIBarButtonItemStyleBordered target:self action:@selector(messageButtonPressed)];
+        UIButton *mailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        mailButton.frame = CGRectMake(0, 0, 44, 44);
+        [mailButton setImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 3, 0, 3)] forState:UIControlStateNormal];
+        [mailButton addTarget:self action:@selector(messageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:mailButton];
     }
     
     descriptionLabel.y = MAX(108, detailsHeight);

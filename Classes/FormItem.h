@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    FormItemTypeTextField = 0,
+    FormItemTypeTextField = 1,
     FormItemTypeTextArea,
     FormItemTypeChoice,
     FormItemTypeDate,

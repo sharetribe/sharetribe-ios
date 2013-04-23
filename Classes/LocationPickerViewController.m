@@ -59,7 +59,14 @@
     }
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow-back"] style:UIBarButtonItemStyleBordered target:self action:@selector(pop)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-location-white"] style:UIBarButtonItemStyleBordered target:self action:@selector(locate)];
+    
+    UIButton *locateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    locateButton.frame = CGRectMake(0, 0, 44, 44);
+    [locateButton setImage:[UIImage imageWithIconNamed:@"locate" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 3, 0, 3)] forState:UIControlStateNormal];
+    [locateButton addTarget:self action:@selector(locate) forControlEvents:UIControlEventTouchUpInside];
+    [locateButton setShadowWithOpacity:0.5 radius:2 offset:CGSizeMake(0, 1) usingDefaultPath:NO];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:locateButton];
+    
     self.navigationItem.titleView = [[UIView alloc] init];
 }
 

@@ -63,7 +63,6 @@
     self.scrollView = [[UIScrollView alloc] init];
     scrollView.frame = CGRectMake(0, 0, self.view.width, self.view.height - 2*44 - 5);
     scrollView.alwaysBounceVertical = YES;
-    scrollView.scrollsToTop = YES;
     [self.view addSubview:scrollView];
     
     self.messagesView = [[MessagesView alloc] init];
@@ -179,6 +178,32 @@
             [[SharetribeAPIClient sharedClient] getListingWithId:conversation.listingId];
         }
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    scrollView.scrollsToTop = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    conversation.unread = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    scrollView.scrollsToTop = YES;
+    
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)refreshView
@@ -334,29 +359,6 @@
 {
     int contentHeight = messagesView.y + messagesView.height + 10;
     scrollView.contentSize = CGSizeMake(320, contentHeight);
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    conversation.unread = NO;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

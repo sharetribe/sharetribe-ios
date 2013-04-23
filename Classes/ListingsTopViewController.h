@@ -29,6 +29,7 @@
 - (id)initWithListingType:(NSString *)type;
 
 - (void)refreshListings;
+- (void)startIndicatingRefresh;
 
 - (void)setViewChoice:(NSString *)viewChoice animated:(BOOL)animated;
 - (NSString *)viewChoice;

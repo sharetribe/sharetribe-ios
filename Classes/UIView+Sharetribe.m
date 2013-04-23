@@ -113,7 +113,7 @@
     UIFont *font = [UIFont fontWithName:@"SSPika" size:label.font.pointSize];
     label.font = font;
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:name];
+    NSMutableAttributedString *string = (name) ? [[NSMutableAttributedString alloc] initWithString:name] : nil;
     [string setAttributes:@{(NSString *) kCTLigatureAttributeName: @(2)}
                     range:NSMakeRange(0, string.length)];
     

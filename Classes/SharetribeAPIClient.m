@@ -47,9 +47,9 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     // self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
-        [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [self registerHTTPOperationClass:AFJSONRequestOperation.class];
         [self setParameterEncoding:AFJSONParameterEncoding];
-        [self setDefaultHeader:@"Accept" value:@"application/vnd.sharetribe+json; version=2"];
+        [self setDefaultHeader:@"Accept" value:@"application/json"];  // application/vnd.sharetribe+json; version=2
         [self setDefaultHeader:@"Accept-Encoding" value:@"gzip"];
         
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -187,7 +187,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     [self getPath:[NSString stringWithFormat:@"communities/%d", communityId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"got community: %@", responseObject);
-        Community *community = [Community communityFromDict:responseObject];
+        Community *community = [Community communityFromDict:[NSDictionary cast:responseObject]];
         onSuccess(community);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -205,7 +205,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         NSLog(@"got community classifications: %@", responseObject);
         
         NSMutableDictionary *classifications = [NSMutableDictionary dictionary];
-        for (NSDictionary *dict in responseObject) {
+        for (NSDictionary *dict in [NSArray cast:responseObject]) {
             classifications[dict[@"name"]] = dict;
         }
         
@@ -263,7 +263,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         NSLog(@"request: %@ failed with response: %@ error: %@ json: %@", request, response, error, JSON);
     }];
     
-    [operation setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         double progress = ((double) totalBytesRead) / ((double) totalBytesExpectedToRead);
         NSLog(@"progress in getting listings: %.02f / %.02f MB", totalBytesExpectedToRead/kOneMegabyte, totalBytesExpectedToRead/kOneMegabyte);
         NSMutableDictionary *progressInfo = [NSMutableDictionary dictionary];
@@ -384,7 +384,7 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationForFailedToPostListing object:JSON];
     }];
     
-    [operation setUploadProgressBlock:^(NSInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
         double progress = ((double) totalBytesWritten) / ((double) totalBytesExpectedToWrite);
         NSMutableDictionary *progressInfo = [NSMutableDictionary dictionary];
         progressInfo[kInfoKeyForProgress] = @(progress);

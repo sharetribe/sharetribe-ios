@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) UIImage *mapIcon;
 @property (strong, nonatomic) UIImage *listIcon;
+@property (strong, nonatomic) UIButton *viewChangeButton;
 
 @end
 
@@ -70,12 +71,17 @@
 
 - (void)refreshListings
 {
-    [listViewer startIndicatingRefresh];
+    [self startIndicatingRefresh];
     if (search.length > 0) {
         [[SharetribeAPIClient sharedClient] getListingsOfType:listingType withSearch:search forPage:kFirstPage];
     } else {
         [[SharetribeAPIClient sharedClient] getListingsOfType:listingType inCategory:listingCategory forPage:kFirstPage];
     }
+}
+
+- (void)startIndicatingRefresh
+{
+    [listViewer startIndicatingRefresh];
 }
 
 - (void)didReceiveListings:(NSNotification *)notification
@@ -130,11 +136,16 @@
     listViewer.listingCollectionViewDelegate = self;
     mapViewer.listingCollectionViewDelegate = self;
     
-    self.mapIcon = [UIImage imageWithIconNamed:@"map" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
-    self.listIcon = [UIImage imageWithIconNamed:@"list" pointSize:20 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
+    self.mapIcon = [UIImage imageWithIconNamed:@"map" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
+    self.listIcon = [UIImage imageWithIconNamed:@"list" pointSize:24 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(5, 4, 0, 4)];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:self.mapIcon style:UIBarButtonItemStyleBordered target:self action:@selector(viewChangeButtonPressed:)];
-    
+    self.viewChangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.viewChangeButton.frame = CGRectMake(0, 0, 44, 44);
+    [self.viewChangeButton setImage:self.mapIcon forState:UIControlStateNormal];
+    [self.viewChangeButton addTarget:self action:@selector(viewChangeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.viewChangeButton setShadowWithOpacity:0.5 radius:2 offset:CGSizeMake(0, 1) usingDefaultPath:NO];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.viewChangeButton];
+        
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewChoiceChanged:) name:kNotificationForDidFlipView object:nil];
 }
 
@@ -186,12 +197,12 @@
         frontViewer = mapViewer;
         mapViewer.view.hidden = NO;
         listViewer.view.hidden = YES;
-        self.navigationItem.leftBarButtonItem.image = self.listIcon;
+        [self.viewChangeButton setImage:self.listIcon forState:UIControlStateNormal];
     } else {
         frontViewer = listViewer;
         listViewer.view.hidden = NO;
         mapViewer.view.hidden = YES;
-        self.navigationItem.leftBarButtonItem.image = self.mapIcon;
+        [self.viewChangeButton setImage:self.mapIcon forState:UIControlStateNormal];
     }
         
     [frontViewer viewWillAppear:animated];

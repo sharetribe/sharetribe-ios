@@ -43,7 +43,7 @@
 {
     _category = newCategory;
     
-    if (![self.category isEqual:@"item"] && ![self.category isEqual:@"space"]) {
+    if (![self.category isEqual:@"item"] && ![self.category isEqual:@"housing"]) {
         self.shareType = nil;
     }
 }
@@ -145,8 +145,11 @@
     listing.category = [dict objectOrNilForKey:@"category"];
     listing.shareType = [dict objectOrNilForKey:@"share_type"];
     
-    if ([listing.category isEqual:@"housing"]) {
-        listing.category = @"space";
+    // if ([listing.category isEqual:@"housing"]) {
+    //    listing.category = @"space";
+    // } else
+    if ([listing.category isEqual:@"other"]) {
+        listing.category = @"item";
     }
     
     NSString *thumbnailURLString = [dict objectOrNilForKey:@"thumbnail_url"];

@@ -43,7 +43,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    // [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
+    [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
     // [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -140,7 +140,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     User *currentUser = [User currentUser];
     if (currentUser != nil && self.community == nil) {
-        [self loadInitialContent];
+        [self refreshInitialContent];
     }
 }
 
@@ -204,15 +204,15 @@ void uncaughtExceptionHandler(NSException *exception)
     [self.tabBarController presentViewController:communitySelectionViewer animated:YES completion:nil];
 }
 
-- (void)loadInitialContent
+- (void)refreshInitialContent
 {
+    [offersViewController startIndicatingRefresh];
+    [requestsViewController startIndicatingRefresh];
     NSInteger currentCommunityId = [[SharetribeAPIClient sharedClient] currentCommunityId];
     [[SharetribeAPIClient sharedClient] getCommunityWithId:currentCommunityId onSuccess:^(Community *community) {
         
         self.community = community;
-        
-        listingComposer.categoriesTree = community.categoriesTree;
-        
+                
         [offersViewController refreshListings];
         [requestsViewController refreshListings];
         [messagesViewController refreshConversations];
@@ -221,7 +221,8 @@ void uncaughtExceptionHandler(NSException *exception)
         
         [[SharetribeAPIClient sharedClient] getClassificationsForCommunityWithId:currentCommunityId onSuccess:^(NSDictionary *classifications) {
             
-            listingComposer.classifications = classifications;
+            self.community.classifications = classifications;
+            [listingComposer reloadData];
             
         } onFailure:^(NSError *error) {
             
@@ -238,7 +239,7 @@ void uncaughtExceptionHandler(NSException *exception)
     profileViewController.user = currentUser;
     
     if (currentUser.communities.count < 2) {
-        [self loadInitialContent];
+        [self refreshInitialContent];
     } else {
         [self performSelector:@selector(showCommunitySelection) withObject:nil afterDelay:0.5];
     }
@@ -246,7 +247,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)userDidSelectCommunity:(NSNotification *)notification
 {
-    [self loadInitialContent];
+    [self refreshInitialContent];
 }
 
 - (void)userDidLogOut:(NSNotification *)notification
@@ -269,6 +270,11 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     [controller.navigationController popToRootViewControllerAnimated:NO];
     [controller viewController:controller didSelectListing:listing];
+}
+
++ (AppDelegate *)sharedAppDelegate
+{
+    return (AppDelegate *) [[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - UINavigationControllerDelegate
