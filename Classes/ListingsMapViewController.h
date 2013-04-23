@@ -19,6 +19,8 @@
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) ListingCell *cell;
 
+@property (assign, nonatomic) Location *defaultLocation;
+
 @property (unsafe_unretained) id<ListingCollectionViewDelegate> listingCollectionViewDelegate;
 
 @end

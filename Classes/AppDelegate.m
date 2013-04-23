@@ -218,6 +218,11 @@ void uncaughtExceptionHandler(NSException *exception)
         [messagesViewController refreshConversations];
         [self refreshTintColors];
         
+        if (community.location) {
+            offersViewController.mapViewer.defaultLocation = community.location;
+            requestsViewController.mapViewer.defaultLocation = community.location;
+        }
+            
         [tabBarController setSelectedIndex:0];
         
         [[SharetribeAPIClient sharedClient] getClassificationsForCommunityWithId:currentCommunityId onSuccess:^(NSDictionary *classifications) {

@@ -22,15 +22,15 @@
 @interface ListingsMapViewController () {
     BOOL shouldRefocusRegion;
     MKCoordinateRegion targetRegion;
-    MKCoordinateRegion defaultRegion;
-    Listing *selectedListing;
-    ListingCluster *selectedCluster;
-    MKAnnotationView *selectedAnnotationView;
-    NSMutableDictionary *listingsByRoughCoordinate;
 }
 
 NSComparisonResult compareByLatitude(id annotation1, id annotation2, void *context);
 NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *context);
+
+@property (weak, nonatomic) Listing *selectedListing;
+@property (weak, nonatomic) ListingCluster *selectedCluster;
+@property (weak, nonatomic) MKAnnotationView *selectedAnnotationView;
+@property (strong, nonatomic) NSMutableDictionary *listingsByRoughCoordinate;
 
 @property (strong, nonatomic) UIBarButtonItem *locateBarButton;
 
@@ -49,12 +49,10 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
         return;
     }
     
-    if (listingsByRoughCoordinate == nil) {
-        listingsByRoughCoordinate = [NSMutableDictionary dictionaryWithCapacity:100];
+    if (self.listingsByRoughCoordinate == nil) {
+        self.listingsByRoughCoordinate = [NSMutableDictionary dictionaryWithCapacity:100];
     }
-    
-    BOOL shouldFocusToDefaultRegion = (map.annotations.count < 2);
-    
+        
     NSMutableArray *annotationsToAdd = [NSMutableArray arrayWithCapacity:100];
     
     for (Listing *newListing in newListings) {
@@ -64,19 +62,19 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             }
             
             NSString *roughCoordinate = [NSString stringWithFormat:@"%.3f %.2f", newListing.coordinate.latitude, newListing.coordinate.longitude];
-            id listingAtRoughCoordinate = [listingsByRoughCoordinate objectForKey:roughCoordinate];
+            id listingAtRoughCoordinate = self.listingsByRoughCoordinate[roughCoordinate];
             // NSLog(@"%@: %@", roughCoordinate, listingAtRoughCoordinate);
             if (listingAtRoughCoordinate == nil || [listingAtRoughCoordinate isEqual:newListing]) {
                 
                 [annotationsToAdd addObject:newListing];
-                [listingsByRoughCoordinate setObject:newListing forKey:roughCoordinate];
+                self.listingsByRoughCoordinate[roughCoordinate] = newListing;
                 
             } else if ([listingAtRoughCoordinate isKindOfClass:Listing.class]) {
                 
                 ListingCluster *cluster = [[ListingCluster alloc] init];
                 [cluster addListing:listingAtRoughCoordinate];
                 [cluster addListing:newListing];
-                [listingsByRoughCoordinate setObject:cluster forKey:roughCoordinate];
+                self.listingsByRoughCoordinate[roughCoordinate] = cluster;
                 [annotationsToAdd addObject:cluster];
                 [annotationsToAdd removeObject:listingAtRoughCoordinate];
                 
@@ -91,35 +89,34 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     }
     
     [map addAnnotations:annotationsToAdd];
-    
-    Location *communityLocation = [AppDelegate sharedAppDelegate].community.location;
-    if (communityLocation) {
-        defaultRegion = MKCoordinateRegionMakeWithDistance(communityLocation.coordinate, 2000, 2000);
-    } else if (map.userLocation) {
-        defaultRegion = MKCoordinateRegionMakeWithDistance(map.userLocation.coordinate, 2000, 2000);
-    }
-    if (shouldFocusToDefaultRegion) {
-        if (self.isViewLoaded
-                && self.view.window
-                && defaultRegion.span.latitudeDelta > 0
-                && defaultRegion.span.longitudeDelta > 0) {
-            [map setRegion:defaultRegion animated:YES];
-        } else {
-            targetRegion = defaultRegion;
-            shouldRefocusRegion = YES;
-        }
-    }
 }
 
 - (void)clearAllListings
 {
     [map removeAnnotations:map.annotations];
-    [listingsByRoughCoordinate removeAllObjects];
+    [self.listingsByRoughCoordinate removeAllObjects];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)setDefaultLocation:(Location *)defaultLocation
+{
+    _defaultLocation = defaultLocation;
+    
+    MKCoordinateRegion defaultRegion = MKCoordinateRegionMakeWithDistance(defaultLocation.coordinate, 2000, 2000);
+    
+    if (self.isViewLoaded
+            && self.view.window
+            && (defaultLocation.coordinate.latitude != 0 || defaultRegion.span.longitudeDelta != 0)) {
+        [map setRegion:defaultRegion animated:YES];
+    } else {
+        targetRegion = defaultRegion;
+        shouldRefocusRegion = YES;
+    }
+
 }
 
 #pragma mark - View lifecycle
@@ -222,22 +219,22 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 
 - (void)showOrHideCell
 {
-    [UIView beginAnimations:nil context:NULL];
-    cell.alpha = (selectedListing != nil) ? 1 : 0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.3 animations:^{
+        cell.alpha = (self.selectedListing) ? 1 : 0;
+    }];
 }
 
 - (void)listingPinTappedInCluster:(UITapGestureRecognizer *)sender
 {
-    [selectedAnnotationView setSelected:NO];
-    selectedCluster.selectedListingIndex = sender.view.tag;
+    [self.selectedAnnotationView setSelected:NO];
+    self.selectedCluster.selectedListingIndex = sender.view.tag;
     
     [self mapView:map didSelectAnnotationView:(MKAnnotationView *) sender.view];
 }
 
 - (void)showSelectedClusterInDetail
 {
-    [listingCollectionViewDelegate viewController:self didSelectListings:selectedCluster.listings];
+    [listingCollectionViewDelegate viewController:self didSelectListings:self.selectedCluster.listings];
 }
 
 - (void)centerMapWithAnimationAt:(CLLocation *)location
@@ -283,7 +280,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     if ([view.annotation isKindOfClass:Listing.class]) {
-        selectedAnnotationView = view;
+        self.selectedAnnotationView = view;
     }
     
     id<MKAnnotation> annotation = view.annotation;
@@ -297,14 +294,14 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
         
         [view setSelected:YES];
         
-        selectedListing = (Listing *) annotation;
+        self.selectedListing = (Listing *) annotation;
         
         [self performSelector:@selector(showOrHideCell) withObject:nil afterDelay:0.1];
         
     } else if ([annotation isKindOfClass:ListingCluster.class]) {
         
         ListingCluster *cluster = (ListingCluster *) annotation;
-        selectedCluster = cluster;
+        self.selectedCluster = cluster;
         
         UIScrollView *clusterView = [[UIScrollView alloc] init];
         clusterView.clipsToBounds = NO;
@@ -385,18 +382,18 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
 {
     if ([view.annotation isKindOfClass:Listing.class]) {
         
-        if (selectedListing == view.annotation) {
-            selectedListing = nil;
+        if (self.selectedListing == view.annotation) {
+            self.selectedListing = nil;
         }
         [self performSelector:@selector(showOrHideCell) withObject:nil afterDelay:0.1];
 
     } else if ([view.annotation isKindOfClass:ListingCluster.class]) {
         
-        [self mapView:map didDeselectAnnotationView:selectedAnnotationView];
+        [self mapView:mapView didDeselectAnnotationView:self.selectedAnnotationView];
     }
     
-    if (selectedAnnotationView == view) {
-        selectedAnnotationView = nil;
+    if (self.selectedAnnotationView == view) {
+        self.selectedAnnotationView = nil;
     }
 }
 
