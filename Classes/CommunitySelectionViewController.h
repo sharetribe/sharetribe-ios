@@ -10,6 +10,8 @@
 
 @interface CommunitySelectionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView *logoView;
+@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

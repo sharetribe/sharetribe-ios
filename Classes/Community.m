@@ -23,6 +23,10 @@
     community.color1 = [UIColor colorWithHexString:[NSString cast:dict[@"custom_color1"]]];
     community.color2 = [UIColor colorWithHexString:[NSString cast:dict[@"custom_color2"]]];
     
+    if (community.color1 == nil) {
+        community.color1 = kSharetribeThemeColor;
+    }
+    
     community.location = [Location locationFromDict:[NSDictionary cast:dict[@"location"]]];
     
     community.categoriesTree = [NSDictionary cast:dict[@"categories_tree"]];

@@ -10,12 +10,16 @@
 
 @interface LoginViewController : UIViewController
 
-@property (strong) IBOutlet UITextField *usernameField;
-@property (strong) IBOutlet UITextField *passwordField;
-@property (strong) IBOutlet UIButton *loginButton;
-@property (strong) IBOutlet UIActivityIndicatorView *loginSpinner;
+@property (weak, nonatomic) IBOutlet UIButton *logoButton;
+@property (weak, nonatomic) IBOutlet UITextField *usernameField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginSpinner;
+
+@property (weak, nonatomic) IBOutlet UIImageView *ouishareLogoView;
 
 - (IBAction)performLogin;
 - (IBAction)openSharetribeWebsite;
+- (IBAction)openOuishareSignUp;
 
 @end

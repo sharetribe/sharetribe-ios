@@ -31,6 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = kSharetribeThemeColor;
+    
+    [self.logoView setShadowWithColor:[UIColor whiteColor] opacity:0.5 radius:2 offset:CGSizeZero usingDefaultPath:NO];
 }
 
 - (void)viewDidUnload

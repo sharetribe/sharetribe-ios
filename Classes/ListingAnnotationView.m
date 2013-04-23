@@ -54,7 +54,8 @@
             [self addSubview:iconView];
         }
         
-        iconView.image = [Listing tinyIconForCategory:[(Listing *) annotation category]];
+        NSString *iconName = [Listing iconNameForItem:[(Listing *) annotation category]];
+        iconView.image = [UIImage imageWithIconNamed:iconName pointSize:14 color:[UIColor blackColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)];
         
         iconView.hidden = NO;
         countLabel.hidden = YES;
@@ -103,7 +104,7 @@
 {
     [super setSelected:selected];
     
-    self.fillColor = (self.selected) ? kSharetribeDarkOrangeColor : kSharetribeBrownColor;
+    self.fillColor = (self.selected) ? kSharetribeThemeColor : kSharetribeBackgroundColor;
     
     [self setNeedsDisplay];
 }

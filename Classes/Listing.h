@@ -40,6 +40,11 @@
 @property (strong, nonatomic) Location *location;
 @property (strong, nonatomic) Location *destination;
 
+@property (assign, nonatomic) NSInteger priceInCents;
+@property (strong, nonatomic) NSString *priceCurrency;
+@property (strong, nonatomic) NSString *priceQuantity;
+@property (readonly) NSString *formattedPrice;
+
 @property (strong, nonatomic) User *author;
 @property (strong, nonatomic) NSDate *createdAt;
 @property (strong, nonatomic) NSDate *updatedAt;
@@ -57,8 +62,7 @@
 
 - (NSDictionary *)asJSON;
 
-+ (UIImage *)iconForCategory:(NSString *)category;
-+ (UIImage *)tinyIconForCategory:(NSString *)category;
++ (NSString *)iconNameForItem:(NSString *)item;
 
 + (Listing *)listingFromDict:(NSDictionary *)dict;
 + (NSArray *)listingsFromArrayOfDicts:(NSArray *)dicts;

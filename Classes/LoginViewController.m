@@ -33,6 +33,11 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = kSharetribeThemeColor;
+    
+    [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
+    [self.ouishareLogoView setShadowWithOpacity:0.8 radius:1];
+    
     usernameField.delegate = self;
     passwordField.delegate = self;
     
@@ -42,6 +47,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginConnectionDidFail:) name:kNotificationForLoginConnectionDidFail object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginAuthDidFail:) name:kNotificationForLoginAuthDidFail object:nil];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,7 +59,7 @@
     loginSpinner.alpha = 0;
     loginButton.alpha = 1;
     
-    [usernameField becomeFirstResponder];
+    // [usernameField becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -66,9 +74,20 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)hideKeyboard
+{
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+}
+
 - (IBAction)openSharetribeWebsite
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.sharetribe.com"]];
+}
+
+- (IBAction)openOuishareSignUp
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://share.ouisharefest.com/en/signup?no_fb=true"]];
 }
 
 - (IBAction)performLogin

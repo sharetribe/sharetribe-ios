@@ -26,7 +26,7 @@
     
     self.title = NSLocalizedString(@"profile.feedback", @"");
     
-    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeBackgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 

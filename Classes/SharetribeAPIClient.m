@@ -43,8 +43,8 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
-    // self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
+    // self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
+    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
         [self registerHTTPOperationClass:AFJSONRequestOperation.class];

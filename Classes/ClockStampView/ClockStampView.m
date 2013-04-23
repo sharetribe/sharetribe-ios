@@ -39,16 +39,16 @@
     self.backgroundView = bgView;
     backgroundView.alpha = 0.6;
     
-    self.timeLabel = [[UILabel alloc] init];
-    timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:10];
-    timeLabel.textColor = [UIColor whiteColor];
-    timeLabel.shadowColor = [UIColor clearColor];
-    timeLabel.shadowOffset = CGSizeMake(0, -1);
-    timeLabel.backgroundColor = [UIColor clearColor];
-    timeLabel.x = 5;
-    timeLabel.y = 3;
-    timeLabel.width = self.width-self.timeLabel.x;
-    timeLabel.height = 14;
+//    self.timeLabel = [[UILabel alloc] init];
+//    timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:10];
+//    timeLabel.textColor = [UIColor whiteColor];
+//    timeLabel.shadowColor = [UIColor clearColor];
+//    timeLabel.shadowOffset = CGSizeMake(0, -1);
+//    timeLabel.backgroundColor = [UIColor clearColor];
+//    timeLabel.x = 5;
+//    timeLabel.y = 3;
+//    timeLabel.width = self.width-self.timeLabel.x;
+//    timeLabel.height = 14;
     
     self.dateLabel = [[UILabel alloc] init];
     dateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:10];
@@ -57,12 +57,12 @@
     dateLabel.shadowOffset = CGSizeMake(0, -1);
     dateLabel.backgroundColor = [UIColor clearColor];
     dateLabel.x = 5;
-    dateLabel.y = 14;
+    dateLabel.y = 3;
     dateLabel.width = self.width-self.dateLabel.x;
-    dateLabel.height = 14;
+    dateLabel.height = 25;
     
     [self addSubview:backgroundView];
-    [self addSubview:timeLabel];
+//    [self addSubview:timeLabel];
     [self addSubview:dateLabel];
     
     self.x = [self activeRightX];
@@ -86,8 +86,8 @@
     time = [newTime copy];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"HH:mm";
-    timeLabel.text = [formatter stringFromDate:time];
+//    formatter.dateFormat = @"HH:mm";
+//    timeLabel.text = [formatter stringFromDate:time];
     formatter.dateFormat = @"MMM dd";
     dateLabel.text = [formatter stringFromDate:time];
 }

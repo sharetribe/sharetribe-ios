@@ -37,11 +37,10 @@
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"ConversationListCell" owner:self options:nil];
     if (nibContents.count > 0) {
         ConversationListCell *cell = [nibContents objectAtIndex:0];
-        cell.backgroundColor = kSharetribeLightBrownColor;
+        cell.backgroundColor = kSharetribeBackgroundColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.imageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
-        cell.imageView.layer.borderWidth = 1;
-        cell.imageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+        cell.avatarView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+        cell.avatarView.layer.cornerRadius = 5;
         return cell;
     }
     return nil;
@@ -78,6 +77,8 @@
     
     iconView.y = messageLabel.y;
     iconView.height = messageLabel.height;
+    
+    usernameLabel.textColor = kSharetribeThemeColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -85,9 +86,11 @@
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.backgroundColor = kSharetribeLightOrangeColor;
+        self.backgroundColor = kSharetribeThemeColor;
+        usernameLabel.textColor = [UIColor whiteColor];
     } else {
-        self.backgroundColor = kSharetribeLightBrownColor;
+        self.backgroundColor = kSharetribeBackgroundColor;
+        usernameLabel.textColor = kSharetribeThemeColor;
     }
 }
 

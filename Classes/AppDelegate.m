@@ -87,7 +87,7 @@ void uncaughtExceptionHandler(NSException *exception)
     messagesNavigationController.tabBarItem.image = [UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor]];
     profileNavigationController.tabBarItem.image  = [UIImage imageNamed:@"icon-kaapo"];
     
-    UIColor *tintColor = kSharetribeDarkBrownColor;
+    UIColor *tintColor = kSharetribeThemeColor;
     offersNavigationController.navigationBar.tintColor        = tintColor;
     requestsNavigationController.navigationBar.tintColor      = tintColor;
     messagesNavigationController.navigationBar.tintColor      = tintColor;
@@ -103,7 +103,7 @@ void uncaughtExceptionHandler(NSException *exception)
     self.tabBarController = [[ButtonTabBarController alloc] initWithMiddleViewController:createListingNavigationController otherViewControllers:tabViewControllers];
     
     if ([tabBarController.tabBar respondsToSelector:@selector(setTintColor:)]) {
-        tabBarController.tabBar.selectedImageTintColor = [UIColor orangeColor];
+        tabBarController.tabBar.selectedImageTintColor = tintColor;
     }
     tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
     tabBarController.middleButtonNormalImage = [UIImage imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor grayColor]];
@@ -212,10 +212,11 @@ void uncaughtExceptionHandler(NSException *exception)
     [[SharetribeAPIClient sharedClient] getCommunityWithId:currentCommunityId onSuccess:^(Community *community) {
         
         self.community = community;
-                
+        
         [offersViewController refreshListings];
         [requestsViewController refreshListings];
         [messagesViewController refreshConversations];
+        [self refreshTintColors];
         
         [tabBarController setSelectedIndex:0];
         
@@ -231,6 +232,21 @@ void uncaughtExceptionHandler(NSException *exception)
     } onFailure:^(NSError *error) {
         
     }];
+}
+
+- (void)refreshTintColors
+{
+    UIColor *color = self.community.color1;
+    
+    if ([tabBarController.tabBar respondsToSelector:@selector(setTintColor:)]) {
+        tabBarController.tabBar.selectedImageTintColor = color;
+    }
+    for (UIViewController *controller in tabBarController.viewControllers) {
+        if ([controller isKindOfClass:UINavigationController.class]) {
+            [(UINavigationController *) controller navigationBar].tintColor = color;
+        }
+    }
+    createListingNavigationController.navigationBar.tintColor = color;
 }
 
 - (void)userDidLogIn:(NSNotification *)notification

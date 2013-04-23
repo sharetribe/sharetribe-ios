@@ -183,7 +183,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
     [self.view addSubview:map];
     
     self.cell = [ListingCell instance];
-    cell.frame = CGRectMake(0, 0, self.view.width, kListingCellHeight-5);
+    cell.frame = CGRectMake(0, 0, self.view.width, kListingCellHeight);
     cell.alpha = 0;
     
     CAGradientLayer *cellShadow = [[CAGradientLayer alloc] init];
@@ -374,7 +374,7 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             ListingAnnotationView *listingPin = (ListingAnnotationView *) [self mapView:mapView viewForAnnotation:listing reuse:NO];
             listingPin.frame = CGRectMake(listingWidthInCluster * i + 5, -2, listingPin.width, listingPin.height);
             listingPin.tag = i;
-            listingPin.fillColor = kSharetribeBrownColor;
+            listingPin.fillColor = kSharetribeBackgroundColor;
             [clusterView addSubview:listingPin];
             
             for (UIGestureRecognizer *recognizer in listingPin.gestureRecognizers) {

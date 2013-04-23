@@ -107,6 +107,8 @@
 		48723321172608D3004E4EDC /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 48723317172608D3004E4EDC /* AFXMLRequestOperation.m */; };
 		48723322172608D3004E4EDC /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 48723319172608D3004E4EDC /* UIImageView+AFNetworking.m */; };
 		4872332417260972004E4EDC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4872332317260971004E4EDC /* MobileCoreServices.framework */; };
+		487233271726CB43004E4EDC /* ouisharefestlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 487233251726CB43004E4EDC /* ouisharefestlogo.png */; };
+		487233281726CB43004E4EDC /* ouisharefestlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 487233261726CB43004E4EDC /* ouisharefestlogo@2x.png */; };
 		4873FF6715E6D2F10066C58E /* kaapo-big-grade-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */; };
 		4873FF6815E6D2F10066C58E /* kaapo-big-grade-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */; };
 		4873FF6915E6D2F10066C58E /* kaapo-big-grade-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */; };
@@ -143,7 +145,6 @@
 		48894F5814DF6072009CD965 /* tab-bar-bezel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48894F5614DF6072009CD965 /* tab-bar-bezel@2x.png */; };
 		48894F5B14DF6393009CD965 /* icon-bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 48894F5914DF6393009CD965 /* icon-bubble.png */; };
 		48894F5C14DF6393009CD965 /* icon-bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48894F5A14DF6393009CD965 /* icon-bubble@2x.png */; };
-		48894F6014DF6CA0009CD965 /* CreateListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48894F5F14DF6CA0009CD965 /* CreateListingViewController.m */; };
 		48894F6314DF6CD2009CD965 /* ListingsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48894F6214DF6CD2009CD965 /* ListingsListViewController.m */; };
 		48894F6614DF6CE8009CD965 /* ListingsMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48894F6514DF6CE8009CD965 /* ListingsMapViewController.m */; };
 		48894F6914DF71B1009CD965 /* ListingsTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48894F6814DF71B1009CD965 /* ListingsTopViewController.m */; };
@@ -367,6 +368,8 @@
 		48723318172608D3004E4EDC /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		48723319172608D3004E4EDC /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		4872332317260971004E4EDC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		487233251726CB43004E4EDC /* ouisharefestlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ouisharefestlogo.png; sourceTree = "<group>"; };
+		487233261726CB43004E4EDC /* ouisharefestlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ouisharefestlogo@2x.png"; sourceTree = "<group>"; };
 		4873FF5D15E6D2F00066C58E /* kaapo-big-grade-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1.png"; sourceTree = "<group>"; };
 		4873FF5E15E6D2F00066C58E /* kaapo-big-grade-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-1@2x.png"; sourceTree = "<group>"; };
 		4873FF5F15E6D2F00066C58E /* kaapo-big-grade-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kaapo-big-grade-2.png"; sourceTree = "<group>"; };
@@ -408,8 +411,6 @@
 		48894F5614DF6072009CD965 /* tab-bar-bezel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-bar-bezel@2x.png"; sourceTree = "<group>"; };
 		48894F5914DF6393009CD965 /* icon-bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble.png"; sourceTree = "<group>"; };
 		48894F5A14DF6393009CD965 /* icon-bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-bubble@2x.png"; sourceTree = "<group>"; };
-		48894F5E14DF6CA0009CD965 /* CreateListingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CreateListingViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		48894F5F14DF6CA0009CD965 /* CreateListingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreateListingViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		48894F6114DF6CD2009CD965 /* ListingsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingsListViewController.h; sourceTree = "<group>"; };
 		48894F6214DF6CD2009CD965 /* ListingsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingsListViewController.m; sourceTree = "<group>"; };
 		48894F6414DF6CE8009CD965 /* ListingsMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingsMapViewController.h; sourceTree = "<group>"; };
@@ -790,6 +791,8 @@
 				483D99AE15E1962200245A74 /* kaapo-grade-4@2x.png */,
 				483D99AF15E1962200245A74 /* kaapo-grade-5.png */,
 				483D99B015E1962200245A74 /* kaapo-grade-5@2x.png */,
+				487233251726CB43004E4EDC /* ouisharefestlogo.png */,
+				487233261726CB43004E4EDC /* ouisharefestlogo@2x.png */,
 				48FF002914FB178B00AFB1AC /* pin-head.png */,
 				48FF002A14FB178B00AFB1AC /* pin-head@2x.png */,
 				48FF002D14FB19BC00AFB1AC /* pin-head-active.png */,
@@ -861,8 +864,6 @@
 				48C9F6C415042393001F785A /* ConversationListViewController.m */,
 				48C9F6BA15040AE8001F785A /* ConversationViewController.h */,
 				48C9F6BB15040AEA001F785A /* ConversationViewController.m */,
-				48894F5E14DF6CA0009CD965 /* CreateListingViewController.h */,
-				48894F5F14DF6CA0009CD965 /* CreateListingViewController.m */,
 				48A755DA15E1F639002638BF /* FeedbackListViewController.h */,
 				48A755DB15E1F639002638BF /* FeedbackListViewController.m */,
 				48894F6114DF6CD2009CD965 /* ListingsListViewController.h */,
@@ -1198,6 +1199,8 @@
 				4872322B172247F6004E4EDC /* icons-by-item.json in Resources */,
 				4872330417260898004E4EDC /* README.md in Resources */,
 				4872330517260898004E4EDC /* release_notes.md in Resources */,
+				487233271726CB43004E4EDC /* ouisharefestlogo.png in Resources */,
+				487233281726CB43004E4EDC /* ouisharefestlogo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,7 +1213,6 @@
 			files = (
 				487AA3BB14B7B608007C4CCF /* main.m in Sources */,
 				487AA3BC14B7B608007C4CCF /* AppDelegate.m in Sources */,
-				48894F6014DF6CA0009CD965 /* CreateListingViewController.m in Sources */,
 				48894F6314DF6CD2009CD965 /* ListingsListViewController.m in Sources */,
 				48894F6614DF6CE8009CD965 /* ListingsMapViewController.m in Sources */,
 				48894F6914DF71B1009CD965 /* ListingsTopViewController.m in Sources */,

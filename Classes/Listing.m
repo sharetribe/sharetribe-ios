@@ -39,6 +39,23 @@
     return self.description;
 }
 
+- (NSString *)formattedPrice
+{
+    static NSNumberFormatter *priceFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        priceFormatter = [[NSNumberFormatter alloc] init];
+        priceFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    });
+    priceFormatter.currencyCode = self.priceCurrency;
+    NSString *price = [priceFormatter stringFromNumber:@(self.priceInCents / 100)];
+    price = [price stringByReplacingOccurrencesOfString:@".00" withString:@""];
+    if (self.priceQuantity) {
+        price = [price stringByAppendingFormat:@"%@", self.priceQuantity];
+    }
+    return price;
+}
+
 - (void)setCategory:(NSString *)newCategory
 {
     _category = newCategory;
@@ -116,34 +133,17 @@
     return (self.listingId == [object listingId]);
 }
 
-+ (UIImage *)iconForCategory:(NSString *)category
-{
-    return [self iconForCategory:category withPointSize:32];
-}
-
-+ (UIImage *)tinyIconForCategory:(NSString *)category
-{
-    return [self iconForCategory:category withPointSize:12];
-}
-
-+ (UIImage *)iconForCategory:(NSString *)category withPointSize:(CGFloat)pointSize
-{
-    NSDictionary *iconNames = @{ @"item": @"box", @"favor": @"heart", @"rideshare": @"car", @"space": @"warehouse" };
-    NSString *iconName = (iconNames[category]) ? iconNames[category]: @"box";
-    return [UIImage imageWithIconNamed:iconName pointSize:pointSize color:[UIColor blackColor] insets:UIEdgeInsetsMake((int) (pointSize / 6), 0, 0, 0)];
-}
-
 + (Listing *)listingFromDict:(NSDictionary *)dict
 {
     Listing *listing = [[Listing alloc] init];
     
-    listing.listingId = [[dict objectOrNilForKey:@"id"] intValue];
-    listing.title = [dict objectOrNilForKey:@"title"];
-    listing.description = [dict objectOrNilForKey:@"description"];
+    listing.listingId = [[NSNumber cast:dict[@"id"]] intValue];
+    listing.title = [NSString cast:dict[@"title"]];
+    listing.description = [NSString cast:dict[@"description"]];
     
-    listing.type = [dict objectOrNilForKey:@"listing_type"];
-    listing.category = [dict objectOrNilForKey:@"category"];
-    listing.shareType = [dict objectOrNilForKey:@"share_type"];
+    listing.type = [NSString cast:dict[@"listing_type"]];
+    listing.category = [NSString cast:dict[@"category"]];
+    listing.shareType = [NSString cast:dict[@"share_type"]];
     
     // if ([listing.category isEqual:@"housing"]) {
     //    listing.category = @"space";
@@ -152,10 +152,14 @@
         listing.category = @"item";
     }
     
-    NSString *thumbnailURLString = [dict objectOrNilForKey:@"thumbnail_url"];
+    listing.priceInCents = [[NSNumber cast:dict[@"price_cents"]] integerValue];
+    listing.priceCurrency = [NSString cast:dict[@"price_currency"]];
+    listing.priceQuantity = [NSString cast:dict[@"quantity"]];
+    
+    NSString *thumbnailURLString = [NSString cast:dict[@"thumbnail_url"]];
     listing.thumbnailURL = (thumbnailURLString != nil) ? [NSURL URLWithString:thumbnailURLString] : nil;
     
-    NSArray *imageURLStrings = [dict objectOrNilForKey:@"image_urls"];
+    NSArray *imageURLStrings = [NSArray cast:dict[@"image_urls"]];
     if (imageURLStrings.count > 0) {
         NSMutableArray *imageURLs = [NSMutableArray array];
         for (NSString *imageURLString in imageURLStrings) {
@@ -165,26 +169,26 @@
         listing.imageURLs = imageURLs;
     }
     
-    NSDictionary *locationDict = [dict objectOrNilForKey:@"origin_location"];
+    NSDictionary *locationDict = [NSDictionary cast:dict[@"origin_location"]];
     if (locationDict != nil) {
         listing.location = [Location locationFromDict:locationDict];
     }
     
-    NSDictionary *destinationDict = [dict objectOrNilForKey:@"destination_location"];
+    NSDictionary *destinationDict = [NSDictionary cast:dict[@"destination_location"]];
     if (destinationDict != nil) {
         listing.destination = [Location locationFromDict:destinationDict];
     }
     
-    listing.author = [User userFromDict:[dict objectOrNilForKey:@"author"]];
-    listing.numberOfTimesViewed = [[dict objectOrNilForKey:@"times_viewed"] intValue];
-    listing.visibility = [dict objectOrNilForKey:@"visibility"];
-    listing.privacy = [dict objectOrNilForKey:@"privacy"];
+    listing.author = [User userFromDict:[NSDictionary cast:dict[@"author"]]];
+    listing.numberOfTimesViewed = [[NSNumber cast:dict[@"times_viewed"]] intValue];
+    listing.visibility = [NSString cast:dict[@"visibility"]];
+    listing.privacy = [NSString cast:dict[@"privacy"]];
     
-    listing.createdAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"created_at"]];
-    listing.updatedAt = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"updated_at"]];
-    listing.validUntil = [NSDate dateFromTimestamp:[dict objectOrNilForKey:@"valid_until"]];
+    listing.createdAt = [NSDate dateFromTimestamp:[NSString cast:dict[@"created_at"]]];
+    listing.updatedAt = [NSDate dateFromTimestamp:[NSString cast:dict[@"updated_at"]]];
+    listing.validUntil = [NSDate dateFromTimestamp:[NSString cast:dict[@"valid_until"]]];
         
-    listing.comments = [Message messagesFromArrayOfDicts:[dict objectOrNilForKey:@"comments"]];
+    listing.comments = [Message messagesFromArrayOfDicts:[NSArray cast:dict[@"comments"]]];
     
     // NSLog(@"parsed listing: %@", dict);
     
@@ -201,6 +205,17 @@
     }
     
     return listings;
+}
+
++ (NSString *)iconNameForItem:(NSString *)item
+{
+    static NSDictionary *iconsByItem = nil;
+    static dispatch_once_t onceTokenForIconsByItem;
+    dispatch_once(&onceTokenForIconsByItem, ^{
+        NSData *iconsByItemData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icons-by-item" ofType:@"json"]];
+        iconsByItem = [NSJSONSerialization JSONObjectWithData:iconsByItemData options:0 error:nil];
+    });
+    return iconsByItem[item];
 }
 
 NSComparisonResult compareListingsByDate(id object1, id object2, void *context)

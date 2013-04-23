@@ -12,24 +12,30 @@
 
 #define kListingCellHeight 90
 
-@interface ListingCell : UITableViewCell {
+@interface ListingCell : UITableViewCell
 
-    Listing *listing;
-}
+@property (nonatomic, strong) Listing *listing;
 
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
-@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
-@property (nonatomic, strong) IBOutlet UILabel *subtitleLabel;
-@property (nonatomic, strong) IBOutlet UILabel *usernameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *timeLabel;
-@property (nonatomic, strong) IBOutlet UIImageView *commentIconView;
-@property (nonatomic, strong) IBOutlet UILabel *commentCountLabel;
-@property (nonatomic, strong) IBOutlet UIView *separator;
+@property (nonatomic, weak) IBOutlet UIImageView *userImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *listingImageView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *listingImageSpinner;
+
+@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *usernameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *categoryView;
+@property (nonatomic, weak) IBOutlet UILabel *categoryIconView;
+@property (nonatomic, weak) IBOutlet UILabel *shareTypeLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *priceView;
+@property (nonatomic, weak) IBOutlet UILabel *priceIconView;
+@property (nonatomic, weak) IBOutlet UILabel *priceLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *separator;
 
 + (ListingCell *)instance;
 + (NSString *)reuseIdentifier;
-
-- (Listing *)listing;
-- (void)setListing:(Listing *)listing;
 
 @end

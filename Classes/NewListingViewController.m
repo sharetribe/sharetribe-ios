@@ -76,8 +76,6 @@
 @property (strong, nonatomic) NSArray *formItems;
 @property (assign, nonatomic) BOOL allCategoriesFilled;
 
-@property (strong, nonatomic) NSDictionary *iconsByItem;
-
 @property (strong, nonatomic) UIView *footer;
 
 @property (strong, nonatomic) UIButton *submitButton;
@@ -108,9 +106,6 @@
 {
     [super viewDidLoad];
         
-    NSData *iconsByItemData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"icons-by-item" ofType:@"json"]];
-    self.iconsByItem = [NSJSONSerialization JSONObjectWithData:iconsByItemData options:0 error:nil];
-    
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 20)];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 20)];
     
@@ -118,7 +113,7 @@
     self.submitButton.frame = CGRectMake(20, 24, 280, 40);
     self.submitButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.submitButton setTitle:NSLocalizedString(@"button.post", @"") forState:UIControlStateNormal];
-    [self.submitButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeDarkOrangeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+    [self.submitButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
     [self.submitButton setShadowWithOpacity:0.5 radius:1];
     [self.submitButton addTarget:self action:@selector(postButtonPressed:) forControlEvents:UIControlEventTouchUpInside],
     
@@ -218,7 +213,7 @@
         self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
         self.navigationItem.leftBarButtonItem = self.cancelButton;
         
-        self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
+        self.navigationController.navigationBar.tintColor = [AppDelegate sharedAppDelegate].community.color1;
     }
     
     preserveFormItemsOnNextAppearance = NO;
@@ -376,7 +371,7 @@
             cell.titleLabel.text = [NSString stringWithFormat:@"%@: %@", categoryTitle, (value) ? valueTitle : @"—"];
             cell.container.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
         }
-        [cell.iconLabel setIconWithName:self.iconsByItem[value]];
+        [cell.iconLabel setIconWithName:[Listing iconNameForItem:value]];
         
         return cell;
         
@@ -409,8 +404,8 @@
             UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
             NSString *helpButtonTitle = NSLocalizedString(@"listing.explanation", @"");
             [helpButton setTitle:helpButtonTitle forState:UIControlStateNormal];
-            [helpButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-            [helpButton setTitleShadowColor:kSharetribeLightBrownColor forState:UIControlStateNormal];
+            [helpButton setTitleColor:kSharetribeThemeColor forState:UIControlStateNormal];
+            [helpButton setTitleShadowColor:kSharetribeBackgroundColor forState:UIControlStateNormal];
             helpButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
             helpButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
             helpButton.width = [helpButtonTitle sizeWithFont:helpButton.titleLabel.font].width;
@@ -426,7 +421,7 @@
                 UITextField *textField = [[UITextField alloc] init];
                 textField.font = [UIFont systemFontOfSize:15];
                 textField.tag = kCellTextFieldTag;
-                textField.backgroundColor = kSharetribeLightBrownColor;
+                textField.backgroundColor = kSharetribeBackgroundColor;
                 textField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 textField.borderStyle = UITextBorderStyleRoundedRect;
                 textField.returnKeyType = UIReturnKeyDone;
@@ -458,8 +453,8 @@
                 [cell addSubview:photoView];
                 
                 UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                [photoButton setTitleColor:kSharetribeDarkBrownColor forState:UIControlStateNormal];
-                [photoButton setTitleColor:kSharetribeBrownColor forState:UIControlStateHighlighted];
+                [photoButton setTitleColor:kSharetribeThemeColor forState:UIControlStateNormal];
+                [photoButton setTitleColor:[kSharetribeThemeColor colorWithAlphaComponent:0.8] forState:UIControlStateHighlighted];
                 [photoButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 // [photoButton setShadowWithOpacity:0.5 radius:1];
                 photoButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -475,7 +470,7 @@
                 textField.frame = CGRectMake(20, 30, 280, 40);
                 textField.font = [UIFont systemFontOfSize:15];
                 textField.tag = kCellTextFieldTag;
-                textField.backgroundColor = kSharetribeLightBrownColor;
+                textField.backgroundColor = kSharetribeBackgroundColor;
                 textField.borderStyle = UITextBorderStyleRoundedRect;
                 textField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 textField.returnKeyType = UIReturnKeyDone;
@@ -490,7 +485,7 @@
                 mapView.userInteractionEnabled = NO;
                 mapView.showsUserLocation = NO;
                 mapView.layer.borderWidth = 1;
-                mapView.layer.borderColor = kSharetribeLightBrownColor.CGColor;
+                mapView.layer.borderColor = kSharetribeBackgroundColor.CGColor;
                 mapView.layer.cornerRadius = 8;
                 mapView.alpha = 1;
                 mapView.tag = kCellMapViewTag;
@@ -565,7 +560,6 @@
                     if (choiceView == nil) {
                         choiceView = [[UIView alloc] init];
                         choiceView.frame = CGRectMake(20, 30 + 45 * i, 280, 40);
-                        [choiceView setShadowWithOpacity:0.5 radius:1];
                         choiceView.tag = kCellChoiceViewTagBase+i;
                         [cell addSubview:choiceView];
                         
@@ -578,6 +572,7 @@
                         
                         UIImageView *choiceCheckmark = [[UIImageView alloc] init];
                         choiceCheckmark.frame = CGRectMake(15, 14, 15, 12);
+                        choiceCheckmark.contentMode = UIViewContentModeCenter;
                         choiceCheckmark.tag = kChoiceCellCheckmarkTag;
                         [choiceView addSubview:choiceCheckmark];
                         
@@ -603,7 +598,7 @@
                     }
                     choiceLabel.textColor = [UIColor blackColor];
                     if (formItem.type == FormItemTypeDate && [alternative isKindOfClass:NSDate.class]) {
-                        choiceLabel.textColor = kSharetribeDarkBrownColor;
+                        choiceLabel.textColor = [UIColor blackColor];
                     }
                     
                     UIImageView *choiceCheckmark = (UIImageView *) [choiceView viewWithTag:kChoiceCellCheckmarkTag];
@@ -612,7 +607,7 @@
                         choiceCheckmark.image = nil;
                         choiceLabel.x = 16;
                     } else {
-                        choiceCheckmark.image = [UIImage imageNamed:@"checkmark"];
+                        choiceCheckmark.image = [UIImage imageWithIconNamed:@"check" pointSize:16 color:[UIColor whiteColor] insets:UIEdgeInsetsMake(4, 0, 0, 0)];
                         choiceLabel.x = 42;
                     }
                     
@@ -620,11 +615,13 @@
                     if ([chosenAlternative isEqual:alternative] ||
                         (chosenAlternative == nil && [alternative isEqual:kValidForTheTimeBeing]) ||
                         choiceCheckmark.image == nil) {
-                        choiceView.backgroundColor = kSharetribeLightBrownColor;
+                        choiceView.backgroundColor = kSharetribeLightThemeColor;
                         choiceCheckmark.alpha = 1;
+                        [choiceView setShadowWithOpacity:0 radius:0];
                     } else {
-                        choiceView.backgroundColor = kSharetribeLightishBrownColor;
+                        choiceView.backgroundColor = kSharetribeBackgroundColor;
                         choiceCheckmark.alpha = 0;
+                        [choiceView setShadowWithOpacity:0.5 radius:1];
                     }
                     
                     [UIView commitAnimations];
@@ -636,7 +633,7 @@
             UIImageView *photoView = (UIImageView *) [cell viewWithTag:kCellPhotoViewTag];
             UIButton *photoButton = (UIButton *) [cell viewWithTag:kCellPhotoButtonTag];
             
-            photoView.backgroundColor = kSharetribeLightOrangeColor;
+            photoView.backgroundColor = kSharetribeBackgroundColor;
             // [photoView setShadowWithOpacity:0.7 radius:2];
             
             if (self.listing.image != nil) {
@@ -659,13 +656,13 @@
                 [photoButton setTitle:nil forState:UIControlStateNormal];
                 
                 photoView.layer.cornerRadius = 0;
-                photoView.layer.borderColor = kSharetribeDarkBrownColor.CGColor;
+                photoView.layer.borderColor = kSharetribeThemeColor.CGColor;
                 photoView.layer.borderWidth = 1;
                 
             } else {
                 
                 photoView.image = nil;
-                photoView.backgroundColor = kSharetribeLightBrownColor;
+                photoView.backgroundColor = kSharetribeBackgroundColor;
                 photoView.frame = CGRectMake(20, 30, 280, rowHeight - 30 - rowSpacing);
                 [photoButton setTitle:NSLocalizedString(@"listing.image.add", @"") forState:UIControlStateNormal];
                 
@@ -832,12 +829,14 @@
         readyToShowNewestCategory = NO;
         [CATransaction begin];
         [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView deleteRowsAtIndexPaths:otherRows withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView endUpdates];
         [CATransaction setCompletionBlock:^{
             readyToShowNewestCategory = YES;
+            [self.tableView beginUpdates];
             [self.tableView insertSections:sectionsToInsert withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView endUpdates];
         }];
         [CATransaction commit];
         
@@ -1257,8 +1256,8 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.titleLabel.textColor = kSharetribeDarkOrangeColor;
-    self.iconLabel.textColor = kSharetribeDarkOrangeColor;
+    self.titleLabel.textColor = kSharetribeThemeColor;
+    self.iconLabel.textColor = kSharetribeThemeColor;
     [self.container setShadowWithOpacity:0.5 radius:1];
 }
 @end

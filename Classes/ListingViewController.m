@@ -84,7 +84,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kSharetribeLightBrownColor;
+    self.view.backgroundColor = kSharetribeBackgroundColor;
     
     // self.hidesBottomBarWhenPushed = YES;
         
@@ -132,7 +132,7 @@
     respondButton.clipsToBounds = YES;
     [respondButton addTarget:self action:@selector(respondButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    [messageButton setImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:kSharetribeDarkOrangeColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
+    [messageButton setImage:[UIImage imageWithIconNamed:@"mail" pointSize:24 color:kSharetribeThemeColor insets:UIEdgeInsetsMake(4, 0, 0, 0)] forState:UIControlStateNormal];
     
     UIView *leftEdgeLine = [[UIView alloc] init];
     leftEdgeLine.frame = CGRectMake(-1, 0, 1, 460);
@@ -461,9 +461,23 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.scrollView) {
-        CGFloat imageViewBaselineY = -(imageView.height-200)/2;
-        CGFloat y = imageViewBaselineY - scrollView.contentOffset.y/2;
+        
+        CGFloat imageViewBaselineY = -(imageView.height - 200) / 2;
+        CGFloat y = imageViewBaselineY - scrollView.contentOffset.y / 2;
         imageView.frame = CGRectMake(0, y, imageView.width, imageView.height);
+                
+//        CGFloat sceneY = 448 + scrollView.contentOffset.y / 2;
+//        if (sceneY > 368) {
+//            self.imageView.frame = CGRectMake(0, sceneY, 320, 320);
+//        } else {
+//            CGFloat bleed = 368 - sceneY;
+//            self.imageView.frame = CGRectMake(-bleed,
+//                                                   368 - 2 * bleed,
+//                                                   320 + 2 * bleed,
+//                                                   320 + 2 * bleed);
+//        }
+//        
+//        self.sceneImageSpinner.center = self.sceneImageView.center;
         
         int buttonY;
         if (scrollView.contentOffset.y > titleLabel.y-68) {

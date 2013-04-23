@@ -56,7 +56,7 @@
         UIView *headerBackground = [[UIView alloc] init];
         headerBackground.frame = CGRectMake(0, -460, 320, 460);
         headerBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-        headerBackground.backgroundColor = kSharetribeDarkOrangeColor;
+        headerBackground.backgroundColor = kSharetribeThemeColor;
         
         self.backgroundColor = [UIColor clearColor];
         [self addSubview:headerBackground];

@@ -64,7 +64,7 @@
     [headerView removeFromSuperview];
     self.tableView.tableHeaderView = headerView;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeBackgroundColor;
     
     [self observeNotification:kNotificationForDidReceiveUser withSelector:@selector(gotUser:)];
     [self observeNotification:kNotificationForDidReceiveBadgesForUser withSelector:@selector(gotBadges:)];
@@ -454,7 +454,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *header = [[UIView alloc] init];
-    header.backgroundColor = kSharetribeDarkBrownColor;
+    header.backgroundColor = kSharetribeThemeColor;
     UILabel *headerLabel = [[UILabel alloc] init];
     headerLabel.font = [UIFont boldSystemFontOfSize:12];
     headerLabel.textColor = [UIColor whiteColor];

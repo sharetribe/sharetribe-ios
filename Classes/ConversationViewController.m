@@ -163,8 +163,8 @@
     [self observeNotification:kNotificationForDidChangeConversationStatus withSelector:@selector(didChangeConversationStatus:)];
     [self observeNotification:kNotificationForFailedToChangeConversationStatus withSelector:@selector(failedToChangeConversationStatus:)];
 
-    self.navigationController.navigationBar.tintColor = kSharetribeDarkBrownColor;
-    self.view.backgroundColor = kSharetribeLightBrownColor;
+    self.navigationController.navigationBar.tintColor = kSharetribeThemeColor;
+    self.view.backgroundColor = kSharetribeBackgroundColor;
     
     [self refreshView];
     
@@ -313,7 +313,7 @@
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
         
-        self.view.backgroundColor = kSharetribeBrownColor;
+        self.view.backgroundColor = kSharetribeLightThemeColor;
         
         messagesView.x = 0;
         messagesView.width = 320;
@@ -495,7 +495,7 @@
 {    
     [UIView beginAnimations:nil context:NULL];
     scrollView.height = self.view.height;
-    // self.view.backgroundColor = kSharetribeLightBrownColor;
+    // self.view.backgroundColor = kSharetribeBackgroundColor;
     [UIView commitAnimations];
     
     [self refreshContentHeight];

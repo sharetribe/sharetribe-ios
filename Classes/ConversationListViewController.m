@@ -56,7 +56,7 @@
     self.header = [[PullDownToRefreshHeaderView alloc] init];
     self.tableView.tableHeaderView = header;
     
-    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeBackgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotConversations:) name:kNotificationForDidReceiveConversations object:nil];

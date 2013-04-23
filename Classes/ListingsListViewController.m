@@ -99,14 +99,14 @@
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.tableView];
     
-    self.tableView.backgroundColor = kSharetribeLightBrownColor;
+    self.tableView.backgroundColor = kSharetribeBackgroundColor;
     self.tableView.separatorColor = [UIColor clearColor];
     
     self.clockStampView = [[ClockStampView alloc] initWithDelegate:self];
     
     self.searchBar = [[UISearchBar alloc] init];
     self.searchBar.frame = CGRectMake(0, 0, 320, 44);
-    self.searchBar.tintColor = kSharetribeBrownColor;
+    self.searchBar.tintColor = [kSharetribeThemeColor colorWithAlphaComponent:0.7];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = NSLocalizedString(@"placeholder.search", @"");
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;

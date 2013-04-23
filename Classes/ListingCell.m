@@ -15,28 +15,25 @@
 
 @implementation ListingCell
 
-@synthesize imageView;
-@synthesize titleLabel;
-@synthesize subtitleLabel;
-@synthesize usernameLabel;
-@synthesize timeLabel;
-@synthesize commentIconView;
-@synthesize commentCountLabel;
-@synthesize separator;
-
 + (ListingCell *)instance
 {
     NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"ListingCell" owner:self options:nil];
     if (nibContents.count > 0) {
         ListingCell *cell = [nibContents objectAtIndex:0];
-        cell.backgroundColor = kSharetribeLightBrownColor;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.imageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
-        cell.imageView.layer.borderWidth = 1;
-        cell.imageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         return cell;
     }
     return nil;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.userImageView.layer.cornerRadius = 5;
+    self.listingImageView.layer.cornerRadius = 5;
+    
+    [self setSelected:NO];
 }
 
 + (NSString *)reuseIdentifier
@@ -44,48 +41,63 @@
     return @"ListingCell";
 }
 
-- (Listing *)listing
+- (void)setListing:(Listing *)listing
 {
-    return listing;
-}
-
-- (void)setListing:(Listing *)newListing
-{
-    listing = newListing;
+    _listing = listing;
     
-    titleLabel.text = listing.fullTitle;
-    subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
-    usernameLabel.text = listing.author.shortName;
-    timeLabel.text = [listing.createdAt agestamp];
+    self.titleLabel.text = listing.title;
+    self.subtitleLabel.text = [listing.description stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
+    self.usernameLabel.text = listing.author.shortName;
+    self.timeLabel.text = [listing.createdAt agestamp];
     
-    usernameLabel.width = [usernameLabel.text sizeWithFont:usernameLabel.font].width;
-    timeLabel.x = usernameLabel.x + usernameLabel.width + 10;
+    self.usernameLabel.width = [self.usernameLabel.text sizeWithFont:self.usernameLabel.font].width;
+    self.timeLabel.x = self.usernameLabel.x + self.usernameLabel.width + 5;
     
-    UIImage *categoryImage = [Listing iconForCategory:listing.category];
     NSURL *imageURL = [listing.imageURLs lastObject];
     if (imageURL != nil) {
-        [imageView setImageWithURL:imageURL placeholderImage:nil];
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.listingImageView.hidden = NO;
+        self.listingImageSpinner.hidden = NO;
+        [self.listingImageSpinner startAnimating];
+        self.listingImageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.listingImageView setImageWithURL:imageURL placeholderImage:nil];
+        self.titleLabel.width = self.listingImageView.left - self.titleLabel.x - 10;
     } else {
-        imageView.image = categoryImage;
-        imageView.contentMode = UIViewContentModeCenter;
+        self.listingImageView.hidden = YES;
+        self.listingImageSpinner.hidden = YES;
+        [self.listingImageSpinner stopAnimating];
+        self.titleLabel.width = self.listingImageView.right - self.titleLabel.x;
     }
     
-    if (listing.comments.count > 0) {
-        commentCountLabel.text = [NSString stringWithFormat:@"%d", listing.comments.count];
-        commentIconView.hidden = NO;
+    [self.userImageView setImageWithURL:listing.author.pictureURL placeholderImage:nil];
+    
+    int oneRowHeight = [@"Something" sizeWithFont:self.titleLabel.font].height;
+    self.titleLabel.height = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(self.titleLabel.width, 2 * oneRowHeight) lineBreakMode:NSLineBreakByWordWrapping].height;
+    
+    NSString *shareTypeKey = [NSString stringWithFormat:@"listing.%@ing_type.%@", listing.type, listing.shareType];
+    self.shareTypeLabel.text = NSLocalizedString(shareTypeKey, nil);
+    [self.shareTypeLabel sizeToFit];
+    self.shareTypeLabel.height = self.categoryIconView.height;
+    [self.categoryIconView setIconWithName:[Listing iconNameForItem:listing.category]];
+    
+    self.categoryView.x = self.titleLabel.x;
+    self.categoryView.y = self.titleLabel.bottom + 1;
+    self.categoryView.width = self.shareTypeLabel.right;
+    
+    if (listing.priceInCents > 0) {
+        [self.priceIconView setIconWithName:@"tag"];
+        self.priceLabel.text = listing.formattedPrice;
+        self.priceView.hidden = NO;
+        self.priceView.x = self.categoryView.right + 10;
+        self.priceView.y = self.categoryView.y;
     } else {
-        commentCountLabel.text = nil;
-        commentIconView.hidden = YES;
+        self.priceView.hidden = YES;
     }
     
-    int oneRowHeight = [@"Something" sizeWithFont:titleLabel.font].height;
-    titleLabel.height = [titleLabel.text sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(titleLabel.width, 3*oneRowHeight) lineBreakMode:NSLineBreakByWordWrapping].height;
+    self.subtitleLabel.width = self.titleLabel.width;
+    self.subtitleLabel.y = self.categoryView.bottom + 1;
+    self.subtitleLabel.height = [self.subtitleLabel.text sizeWithFont:self.subtitleLabel.font constrainedToSize:CGSizeMake(self.subtitleLabel.width, (self.separator.y - self.subtitleLabel.y - 2)) lineBreakMode:NSLineBreakByWordWrapping].height;
     
-    subtitleLabel.hidden = (titleLabel.height > 50);
-    
-    subtitleLabel.y = titleLabel.y + titleLabel.height + 3;
-    subtitleLabel.height = [subtitleLabel.text sizeWithFont:subtitleLabel.font constrainedToSize:CGSizeMake(subtitleLabel.width, (usernameLabel.y-subtitleLabel.y-2)) lineBreakMode:NSLineBreakByWordWrapping].height;
+    self.subtitleLabel.hidden = (self.subtitleLabel.bottom > self.separator.y);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -93,9 +105,13 @@
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        self.backgroundColor = kSharetribeLightOrangeColor;
+        self.backgroundView.backgroundColor = kSharetribeThemeColor;
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.usernameLabel.textColor = [UIColor whiteColor];
     } else {
-        self.backgroundColor = kSharetribeLightBrownColor;
+        self.backgroundView.backgroundColor = [UIColor whiteColor];
+        self.titleLabel.textColor = kSharetribeThemeColor;
+        self.usernameLabel.textColor = kSharetribeThemeColor;
     }
 }
 

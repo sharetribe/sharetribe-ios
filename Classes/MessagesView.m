@@ -65,7 +65,7 @@
         
         self.backgroundView = [[UIView alloc] init];
         backgroundView.frame = CGRectMake(0, 0, self.width, 86);
-        backgroundView.backgroundColor = kSharetribeBrownColor;
+        backgroundView.backgroundColor = kSharetribeLightThemeColor;
         backgroundView.layer.cornerRadius = 5;
         [self addSubview:backgroundView];
         
@@ -165,7 +165,7 @@
             avatarView = [[UIImageView alloc] init];
             avatarView.contentMode = UIViewContentModeScaleAspectFill;
             avatarView.clipsToBounds = YES;
-            avatarView.layer.borderColor = kSharetribeLightBrownColor.CGColor;
+            avatarView.layer.borderColor = kSharetribeBackgroundColor.CGColor;
             avatarView.layer.borderWidth = 1;
             avatarView.frame = CGRectMake(10, 0, 30, 30);
             [self addSubview:avatarView];
@@ -193,7 +193,7 @@
             usernameButton = [UIButton buttonWithType:UIButtonTypeCustom];
             usernameButton.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-10, 16);
             usernameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
-            [usernameButton setTitleColor:kSharetribeDarkBrownColor forState:UIControlStateNormal];
+            [usernameButton setTitleColor:kSharetribeThemeColor forState:UIControlStateNormal];
             [usernameButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
             [usernameButton addTarget:self action:@selector(usernameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             usernameButton.tag = i;
@@ -211,7 +211,7 @@
         } else {
             dateLabel = [[UILabel alloc] init];
             dateLabel.font = [UIFont systemFontOfSize:12];
-            dateLabel.textColor = kSharetribeDarkBrownColor;
+            dateLabel.textColor = kSharetribeThemeColor;
             dateLabel.backgroundColor = [UIColor clearColor];
             dateLabel.textAlignment = NSTextAlignmentRight;
             dateLabel.frame = CGRectMake(leftEdgeX, 24, self.width-leftEdgeX-12, 16);
@@ -252,7 +252,7 @@
             separator = [separators objectAtIndex:i];
         } else {
             separator = [[UIView alloc] init];
-            separator.backgroundColor = kSharetribeLightBrownColor;
+            separator.backgroundColor = kSharetribeBackgroundColor;
             separator.frame = CGRectMake(0, 0, self.width, 1);
             [self addSubview:separator];
             [separators addObject:separator];
