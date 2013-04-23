@@ -48,6 +48,8 @@
             item.type = FormItemTypeLocation;
         } else if ([item.typeAsString isEqualToString:@"photo"]) {
             item.type = FormItemTypePhoto;
+        } else if ([item.typeAsString isEqualToString:@"price"]) {
+            item.type = FormItemTypePrice;
         }
         
         item.formItemId = [dataDict valueForKey:@"id"];

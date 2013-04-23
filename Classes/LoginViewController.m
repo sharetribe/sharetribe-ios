@@ -35,6 +35,8 @@
     
     self.view.backgroundColor = kSharetribeThemeColor;
     
+    self.fieldsBackgroundView.layer.cornerRadius = 8;
+    
     [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
     [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.loginButton setBackgroundImage:[UIImage imageWithColor:kSharetribeThemeColor] forState:UIControlStateNormal];
@@ -53,11 +55,6 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
-    
-    NSDate *ouishareExpirationDate = [NSDate dateFromTimestamp:@"2013-05-09T10:00:00Z"];
-    if ([[NSDate date] timeIntervalSinceDate:ouishareExpirationDate] > 0) {
-        self.ouishareView.hidden = YES;
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -67,7 +64,11 @@
     loginSpinner.alpha = 0;
     loginButton.alpha = 1;
     
-    // [usernameField becomeFirstResponder];
+    NSDate *ouishareExpirationDate = [NSDate dateFromTimestamp:@"2013-05-09T10:00:00Z"];
+    if ([[NSDate date] timeIntervalSinceDate:ouishareExpirationDate] > 0) {
+        self.ouishareView.hidden = YES;
+        [self.usernameField becomeFirstResponder];
+    }
 }
 
 - (void)viewDidUnload

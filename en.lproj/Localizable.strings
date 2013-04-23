@@ -169,6 +169,10 @@
 "listing.departure_time" = "Departure time";
 "listing.departure_time.repeated" = "Repeated (add details below)";
 
+"listing.price" = "Price";
+"listing.price.quantity.label" = "per";
+"listing.price.quantity.placeholder" = "hour, day, week, ...";
+
 "listing.location" = "Location";
 "listing.origin" = "Origin";
 "listing.destination" = "Destination";

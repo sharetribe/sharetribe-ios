@@ -14,7 +14,8 @@ typedef enum {
     FormItemTypeChoice,
     FormItemTypeDate,
     FormItemTypeLocation,
-    FormItemTypePhoto
+    FormItemTypePhoto,
+    FormItemTypePrice
 } FormItemType;
 
 @interface FormItem : NSObject

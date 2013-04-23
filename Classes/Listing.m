@@ -50,7 +50,7 @@
     NSString *price = [priceFormatter stringFromNumber:@(self.priceInCents / 100)];
     price = [price stringByReplacingOccurrencesOfString:@".00" withString:@""];
     if (self.priceQuantity) {
-        price = [price stringByAppendingFormat:@"%@", self.priceQuantity];
+        price = [price stringByAppendingFormat:@" / %@", self.priceQuantity.lowercaseString];
     }
     return price;
 }
@@ -68,6 +68,14 @@
     if (![self.category isEqual:@"item"] && ![self.category isEqual:@"housing"]) {
         self.shareType = nil;
     }
+}
+
+- (void)setPriceDict:(NSMutableDictionary *)priceDict
+{
+    _priceDict = priceDict;
+    self.priceInCents  = [[NSNumber cast:priceDict[@"priceInCents"]] integerValue];
+    self.priceCurrency = [NSString cast:priceDict[@"priceCurrency"]];
+    self.priceQuantity = [NSString cast:priceDict[@"priceQuantity"]];
 }
 
 - (NSDictionary *)asJSON
@@ -91,6 +99,12 @@
     
     if (self.description) {
         JSON[@"description"] = self.description;
+    }
+    
+    if (self.priceInCents > 0) {
+        JSON[@"price_cents"] = @(self.priceInCents);
+        JSON[@"price_currency"] = self.priceCurrency;
+        JSON[@"quantity"] = self.priceQuantity;
     }
     
     if (self.location) {

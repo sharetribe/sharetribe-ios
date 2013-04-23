@@ -27,6 +27,13 @@
 
 #define kOneMegabyte (1024 * 1024.0)
 
+#define kSharetribeContentType @"application/vnd.sharetribe+json; version=2"
+
+
+@interface SharetribeJSONRequestOperation : AFJSONRequestOperation
+@end
+
+
 @interface SharetribeAPIClient () {
     NSInteger currentCommunityId;
 }
@@ -43,13 +50,13 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
 
 - (id)init
 {
-    // self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
-    self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
+    self = [super initWithBaseURL:[NSURL URLWithString:@"http://api.sharetribe.fi"]];   // for alpha
+    // self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.sharetribe.com"]];   // for the real thing
     if (self != nil) {
         
-        [self registerHTTPOperationClass:AFJSONRequestOperation.class];
+        [self registerHTTPOperationClass:SharetribeJSONRequestOperation.class];
         [self setParameterEncoding:AFJSONParameterEncoding];
-        [self setDefaultHeader:@"Accept" value:@"application/json"];  // application/vnd.sharetribe+json; version=2
+        [self setDefaultHeader:@"Accept" value:@"application/json"];
         [self setDefaultHeader:@"Accept-Encoding" value:@"gzip"];
         
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -582,6 +589,16 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
     if (operation.response.statusCode == 401) {
         [self logOut];
     }
+}
+
+@end
+
+
+@implementation SharetribeJSONRequestOperation
+
++ (NSSet *)acceptableContentTypes
+{
+    return [NSSet setWithObjects:kSharetribeContentType, @"application/json", nil];
 }
 
 @end

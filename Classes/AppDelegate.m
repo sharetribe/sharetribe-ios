@@ -43,7 +43,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    [TestFlight takeOff:@"a0c477498dc30ddc9c5fc29292aa7134_NjYwNTYyMDEyLTA3LTMxIDIwOjExOjQzLjYxNDkzMw"];
+    [TestFlight takeOff:@"cc6ffc3a-6fd0-4e04-bc53-d0e1ac0f5c5b"];
     // [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

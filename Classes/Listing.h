@@ -44,6 +44,7 @@
 @property (assign, nonatomic) NSInteger priceInCents;
 @property (strong, nonatomic) NSString *priceCurrency;
 @property (strong, nonatomic) NSString *priceQuantity;
+@property (strong, nonatomic) NSMutableDictionary *priceDict;
 @property (readonly) NSString *formattedPrice;
 
 @property (strong, nonatomic) User *author;

@@ -30,6 +30,11 @@
 #define kChoiceCellLabelTag     3000
 #define kChoiceCellCheckmarkTag 3001
 
+#define kCellPriceFieldTag      4000
+#define kCellCurrencyButtonTag  4001
+#define kCellQuantityLabelTag   4002
+#define kCellQuantityFieldTag   4003
+
 #define kMaxAlternativeCount    10
 
 #define kCellMapViewTag         1500
@@ -273,7 +278,23 @@
 {
     NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", self.listing.category, self.listing.type];
     propertyListName = [propertyListName stringByReplacingOccurrencesOfString:@"other" withString:@"item"];
-    self.formItems = [FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]];
+    NSMutableArray *formItems = [[FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]] mutableCopy];
+    if ([self.listing.shareType isEqualToString:@"sell"] || [self.listing.shareType isEqualToString:@"rent_out"]) {
+        FormItem *priceItem = [[FormItem alloc] init];
+        priceItem.type = FormItemTypePrice;
+        priceItem.typeAsString = @"price";
+        priceItem.formItemId = @"price";
+        priceItem.mapsTo = @"priceDict";
+        NSMutableDictionary *values = [NSMutableDictionary dictionary];
+        values[@"priceInCents"] = @(0);
+        values[@"priceCurrency"] = @"EUR";
+        if ([self.listing.shareType isEqualToString:@"rent_out"]) {
+            values[@"priceQuantity"] = @"";
+        }
+        [self.listing setValue:values forKey:priceItem.mapsTo];
+        [formItems insertObject:priceItem atIndex:1];
+    }
+    self.formItems = formItems;
     
     self.submitButton.hidden = (self.listing.category == nil);
 }
@@ -400,7 +421,7 @@
             subtitleLabel.backgroundColor = [UIColor clearColor];
             subtitleLabel.tag = kCellSubtitleLabelTag;
             [cell addSubview:subtitleLabel];
-            
+                        
             UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
             NSString *helpButtonTitle = NSLocalizedString(@"listing.explanation", @"");
             [helpButton setTitle:helpButtonTitle forState:UIControlStateNormal];
@@ -475,7 +496,6 @@
                 textField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 textField.returnKeyType = UIReturnKeyDone;
                 textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                textField.layer.cornerRadius = 8;
                 textField.delegate = self;
                 [cell addSubview:textField];
                 
@@ -502,6 +522,52 @@
                 //                textField.text = location.address;
                 //                [mapView addAnnotation:location];
                 //            }
+                
+            } else if (formItem.type == FormItemTypePrice) {
+                
+                UITextField *priceField = [[UITextField alloc] init];
+                priceField.placeholder = @"0";
+                priceField.frame = CGRectMake(20, 30, 60, 40);
+                priceField.font = [UIFont systemFontOfSize:15];
+                priceField.tag = kCellPriceFieldTag;
+                priceField.borderStyle = UITextBorderStyleRoundedRect;
+                priceField.keyboardType = UIKeyboardTypeDecimalPad;
+                priceField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                priceField.returnKeyType = UIReturnKeyDone;
+                priceField.textAlignment = NSTextAlignmentRight;
+                priceField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+                priceField.delegate = self;
+                [cell addSubview:priceField];
+                
+                UIButton *currencyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                currencyButton.frame = CGRectMake(priceField.right + 10, priceField.y, 60, priceField.height);
+                [currencyButton setTitle:@"EUR" forState:UIControlStateNormal];
+                [currencyButton addTarget:self action:@selector(currencyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:currencyButton];
+                
+                UILabel *quantityLabel = [[UILabel alloc] init];
+                quantityLabel.font = [UIFont systemFontOfSize:13];
+                quantityLabel.text = NSLocalizedString(@"listing.price.quantity.label", nil);
+                [quantityLabel sizeToFit];
+                quantityLabel.frame = CGRectMake(currencyButton.right + 10, priceField.y, quantityLabel.width, priceField.height);
+                quantityLabel.tag = kCellQuantityLabelTag;
+                [cell addSubview:quantityLabel];
+                
+                UITextField *quantityField = [[UITextField alloc] init];
+                quantityField.placeholder = NSLocalizedString(@"listing.price.quantity.placeholder", nil);
+                quantityField.frame = CGRectMake(quantityLabel.right + 10, quantityLabel.y, 0, quantityLabel.height);
+                quantityField.width = cell.width - quantityField.x - 20;
+                quantityField.font = [UIFont systemFontOfSize:15];
+                quantityField.tag = kCellQuantityFieldTag;
+                quantityField.borderStyle = UITextBorderStyleRoundedRect;
+                quantityField.keyboardType = UIKeyboardTypeAlphabet;
+                quantityField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+                quantityField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                quantityField.returnKeyType = UIReturnKeyDone;
+                quantityField.textAlignment = NSTextAlignmentLeft;
+                quantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+                quantityField.delegate = self;
+                [cell addSubview:quantityField];
             }
         }
         
@@ -695,6 +761,25 @@
                     [mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, 2000, 4000) animated:NO];
                 }
             }
+            
+        } else if (formItem.type == FormItemTypePrice) {
+            
+            UITextField *priceField = (UITextField *) [cell viewWithTag:kCellPriceFieldTag];
+            UIButton *currencyButton = (UIButton *) [cell viewWithTag:kCellCurrencyButtonTag];
+            UILabel *quantityLabel = (UILabel *) [cell viewWithTag:kCellQuantityLabelTag];
+            UITextField *quantityField = (UITextField *) [cell viewWithTag:kCellQuantityFieldTag];
+            
+            NSDictionary *priceValues = [self.listing valueForKey:formItem.mapsTo];
+            priceField.text = ([priceValues[@"priceInCents"] integerValue] > 0) ? [NSString stringWithFormat:@"%d", [priceValues[@"priceInCents"] integerValue]] : nil;
+            [currencyButton setTitle:priceValues[@"priceCurrency"] forState:UIControlStateNormal];
+            if (priceValues[@"priceQuantity"]) {
+                quantityField.text = ([priceValues[@"priceQuantity"] length] > 0) ? priceValues[@"priceQuantity"] : nil;
+                quantityLabel.hidden = NO;
+                quantityField.hidden = NO;
+            } else {
+                quantityLabel.hidden = YES;
+                quantityField.hidden = YES;
+            }
         }
         
         return cell;
@@ -762,6 +847,10 @@
             if (formItem.allowsUndefined) {
                 rowHeight += 45;
             }
+            
+        } else if (formItem.type == FormItemTypePrice) {
+            
+            rowHeight = 74;
         }
         
         return rowHeight + rowSpacing;
@@ -920,12 +1009,18 @@
         location.addressIsAutomatic = NO;
     } else {
         id value = [(id) textInputView text];
-        if (formItem.listSeparator != nil && [value isKindOfClass:NSString.class]) {
-            value = [value stringByReplacingOccurrencesOfString:@"  " withString:@" "];
-            value = [value stringByReplacingOccurrencesOfString:[formItem.listSeparator stringByAppendingString:@" "] withString:formItem.listSeparator];
-            value = [value componentsSeparatedByString:formItem.listSeparator];
+        if (formItem.type == FormItemTypePrice) {
+            NSMutableDictionary *priceValues = [self.listing valueForKey:formItem.mapsTo];
+            if (textInputView.tag == kCellPriceFieldTag) {
+                NSInteger priceInCents = [value doubleValue] * 100;
+                priceValues[@"priceInCents"] = @(priceInCents);
+            } else if (textInputView.tag == kCellQuantityFieldTag) {
+                priceValues[@"priceQuantity"] = value ?: @"";
+            }
+            [self.listing setValue:priceValues forKey:formItem.mapsTo];
+        } else {
+            [self.listing setValue:value forKey:formItem.mapsTo];
         }
-        [self.listing setValue:value forKey:formItem.mapsTo];
     }
 }
 
@@ -1030,20 +1125,6 @@
     }
 }
 
-#pragma mark - ListingTypeSelectionDelegate
-
-- (void)listingTypeSelected:(NSString *)type
-{
-    self.listing.type = type;
-    [self reloadFormItems];
-}
-
-- (void)listingCategorySelected:(NSString *)category
-{
-    self.listing.category = category;
-    [self reloadFormItems];
-}
-
 #pragma mark - LocationPickerDelegate
 
 - (void)locationPicker:(LocationPickerViewController *)picker pickedCoordinate:(CLLocationCoordinate2D)coordinate withAddress:(NSString *)address
@@ -1137,6 +1218,10 @@
     
     [self.listing setValue:value forKey:formItem.mapsTo];
     [self.tableView reloadData];
+}
+
+- (IBAction)currencyButtonPressed:(UIButton *)sender
+{
 }
 
 - (IBAction)postButtonPressed:(UIButton *)sender
