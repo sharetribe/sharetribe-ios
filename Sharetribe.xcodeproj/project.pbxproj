@@ -1356,8 +1356,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/TestFlightSDK1.1\"",
-					"\"$(SRCROOT)/External/TestFlightSDK1.2\"",
 					"\"$(SRCROOT)/External/TestFlight\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1383,8 +1381,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/TestFlightSDK1.1\"",
-					"\"$(SRCROOT)/External/TestFlightSDK1.2\"",
 					"\"$(SRCROOT)/External/TestFlight\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

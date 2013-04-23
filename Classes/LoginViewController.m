@@ -36,7 +36,10 @@
     self.view.backgroundColor = kSharetribeThemeColor;
     
     [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
-    [self.ouishareView setShadowWithOpacity:0.8 radius:1];
+    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.loginButton setBackgroundImage:[UIImage imageWithColor:kSharetribeThemeColor] forState:UIControlStateNormal];
+    [self.loginButton setShadowWithOpacity:0.6 radius:1];
+    [self.ouishareView setShadowWithOpacity:0.8 radius:2];
     
     usernameField.delegate = self;
     passwordField.delegate = self;
