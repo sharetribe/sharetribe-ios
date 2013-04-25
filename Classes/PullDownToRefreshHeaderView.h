@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView *updateSpinner;
 @property (strong, nonatomic) UIProgressView *updateProgressView;
 @property (strong, nonatomic) UISearchBar *searchBar;
+@property (weak, nonatomic) UIView *backgroundView;
 
 - (void)tableViewDidScroll:(UITableView *)tableView;
 - (BOOL)triggersRefreshAsTableViewEndsDragging:(UITableView *)tableView;

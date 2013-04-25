@@ -112,11 +112,10 @@ NSComparisonResult compareByLongitude(id annotation1, id annotation2, void *cont
             && self.view.window
             && (defaultLocation.coordinate.latitude != 0 || defaultRegion.span.longitudeDelta != 0)) {
         [map setRegion:defaultRegion animated:YES];
-    } else {
-        targetRegion = defaultRegion;
-        shouldRefocusRegion = YES;
     }
-
+    
+    targetRegion = defaultRegion;
+    shouldRefocusRegion = YES;
 }
 
 #pragma mark - View lifecycle

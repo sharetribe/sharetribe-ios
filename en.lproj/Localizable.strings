@@ -6,6 +6,8 @@
   Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 */
 
+"lang" = "en";
+
 "tabs.offers" = "Offers";
 "tabs.requests" = "Requests";
 "tabs.new_listing" = "New Listing";
@@ -13,6 +15,7 @@
 "tabs.profile" = "Me";
 
 "title.edit_listing" = "Edit Listing";
+"title.select_community" = "Select your community.";
 
 "agestamp.format.minutes_ago" = "%d minutes ago";
 "agestamp.format.hours_ago" = "%d hours ago";
@@ -33,6 +36,7 @@
 "button.listing.edit" = "Edit listing";
 "button.listing.respond" = "Respond";
 "button.listing.message" = "Message";
+"button.log_in" = "Log In";
 "button.log_out" = "Log Out";
 "button.no" = "No";
 "button.ok" = "OK";
@@ -154,11 +158,11 @@
 "listing.requesting_type.take_for_free" = "Taking for free";
 
 "listing.offered_item" = "Item you offer";
-"listing.offered_favor" = "Service you offer";
+"listing.offered_favor" = "Listing title";
 "listing.offered_space" = "Space you offer";
 
 "listing.requested_item" = "Item you need";
-"listing.requested_favor" = "Service you need";
+"listing.requested_favor" = "Listing title";
 "listing.requested_space" = "Space you need";
 
 "listing.description" = "Detailed description";
@@ -189,8 +193,6 @@
 "listing.privacy" = "Privacy";
 "listing.privacy.public" = "Public (all visitors)";
 "listing.privacy.private" = "Private (only logged-in users)";
-
-"listing.subtitle.separate_with_comma" = "(separate with comma)";
 
 "listing.explanation" = "What's this?";
 

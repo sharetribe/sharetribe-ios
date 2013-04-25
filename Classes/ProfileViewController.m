@@ -87,6 +87,13 @@
     
     [self setUser:self.user];  // a refresh!
     
+    if (user) {
+        [self refreshUserInfo];
+    }
+}
+
+- (void)refreshUserInfo
+{
     [[SharetribeAPIClient sharedClient] getUserWithId:user.userId];  // load detailed info
     [[SharetribeAPIClient sharedClient] getBadgesForUser:user];
     [[SharetribeAPIClient sharedClient] getFeedbackForUser:user];
@@ -192,8 +199,7 @@
     composer.recipient = user;
     composer.inModalComposerMode = YES;
     
-    UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentViewController:composerNavigationController animated:YES completion:nil];
+    [self.navigationController pushViewController:composer animated:YES];
 }
 
 - (IBAction)phoneButtonPressed

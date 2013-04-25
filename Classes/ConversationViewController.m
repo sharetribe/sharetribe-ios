@@ -58,7 +58,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.scrollView = [[UIScrollView alloc] init];
     scrollView.frame = CGRectMake(0, 0, self.view.width, self.view.height - 2*44 - 5);
@@ -163,8 +163,7 @@
     [self observeNotification:kNotificationForDidChangeConversationStatus withSelector:@selector(didChangeConversationStatus:)];
     [self observeNotification:kNotificationForFailedToChangeConversationStatus withSelector:@selector(failedToChangeConversationStatus:)];
 
-    self.navigationController.navigationBar.tintColor = kSharetribeThemeColor;
-    self.view.backgroundColor = kSharetribeBackgroundColor;
+    // self.navigationController.navigationBar.tintColor = kSharetribeThemeColor;
     
     [self refreshView];
     
@@ -313,7 +312,9 @@
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.send", @"") style:UIBarButtonItemStyleDone target:self action:@selector(sendButtonPressed)];
         
-        self.view.backgroundColor = kSharetribeLightThemeColor;
+        self.view.backgroundColor = kSharetribeBackgroundColor;
+        messagesView.backgroundColor = kSharetribeBackgroundColor;
+        messagesView.backgroundView.backgroundColor = kSharetribeBackgroundColor;
         
         messagesView.x = 0;
         messagesView.width = 320;
@@ -333,8 +334,10 @@
         
         self.title = conversation.recipient.name;
         
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.profile", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(showRecipientProfile)];
-        
+        if (conversation.recipient) {
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"button.profile", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(showRecipientProfile)];
+        }
+            
         messagesView.x = 10;
         messagesView.width = 300;
     }
@@ -369,13 +372,13 @@
 - (IBAction)cancelButtonPressed
 {
     messagesView.alpha = 0;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)sendButtonPressed
 {
     [self messagesView:messagesView didSaveMessageText:messagesView.composeField.text];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)goBack
@@ -398,9 +401,12 @@
 - (IBAction)showListing
 {
     ListingViewController *listingViewer = [[ListingViewController alloc] init];
-    listingViewer.listingId = conversation.listingId;
-    if (conversation.listing != nil) {
+    if (self.listing != nil) {
+        listingViewer.listing = self.listing;
+    } else if (conversation.listing != nil) {
         listingViewer.listing = conversation.listing;
+    } else {
+        listingViewer.listingId = conversation.listingId;
     }
     [self.navigationController pushViewController:listingViewer animated:YES];
 }
@@ -474,7 +480,6 @@
     if (self.navigationController.tabBarController != nil) {
         scrollView.height += 44;
     }
-    // self.view.backgroundColor = kSharetribeBrownColor;
     [UIView commitAnimations];
     
     int contentHeight = messagesView.y + messagesView.height + ((inModalComposerMode) ? 0 : 10);
@@ -495,7 +500,6 @@
 {    
     [UIView beginAnimations:nil context:NULL];
     scrollView.height = self.view.height;
-    // self.view.backgroundColor = kSharetribeBackgroundColor;
     [UIView commitAnimations];
     
     [self refreshContentHeight];

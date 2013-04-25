@@ -6,6 +6,8 @@
  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
  */
 
+"lang" = "fi";
+
 "tabs.offers" = "Tarjoukset";
 "tabs.requests" = "Pyynnöt";
 "tabs.new_listing" = "Uusi ilmoitus";
@@ -13,6 +15,7 @@
 "tabs.profile" = "Minä";
 
 "title.edit_listing" = "Muokkaa ilmoitusta";
+"title.select_community" = "Valitse yhteisö.";
 
 "agestamp.format.minutes_ago" = "%d minuuttia sitten";
 "agestamp.format.hours_ago" = "%d tuntia sitten";
@@ -33,6 +36,7 @@
 "button.listing.edit" = "Muokkaa ilmoitusta";
 "button.listing.respond" = "Vastaa";
 "button.listing.message" = "Viesti";
+"button.log_in" = "Kirjaudu";
 "button.log_out" = "Kirjaudu ulos";
 "button.no" = "Ei";
 "button.ok" = "OK";
@@ -107,19 +111,21 @@
 "header.updated" = "Päivitä!";
 "header.last_updated" = "Viimeksi päivitetty";
 
-"listing.intro.general" = "Tavara, palvelu, kyyti vai tila?";
-"listing.intro.offer" = "Voin tarjota muille";
-"listing.intro.request" = "Tarvitsen";
+"listings.list.no_listings.offer" = "Ei vielä yhtään tarjousta";
+"listings.list.no_listings.request" = "Ei vielä yhtään pyyntöä";
+"listings.list.no_listings.search" = "Ei hakua vastaaviia ilmoituksia";
 
-"listing.intro.offer_target.item" = "tavaran";
-"listing.intro.offer_target.favor" = "palvelun";
-"listing.intro.offer_target.rideshare" = "kyydin";
-"listing.intro.offer_target.space" = "tilan";
+"listing.new.listing_type.intro" = "Mitä haluat tehdä?";
+"listing.new.offer_category.intro" = "Mitä haluat tarjota muille?";
+"listing.new.request_category.intro" = "Mitä tarvitset?";
+"listing.new.item_subcategory.intro" = "Millaisesta tavarasta on kyse?";
+"listing.new.offer_share_type.intro" = "Millä tavalla haluat jakaa sen?";
+"listing.new.request_share_type.intro" = "Millä tavalla haluat saada sen?";
 
-"listing.intro.request_target.item" = "tavaran";
-"listing.intro.request_target.favor" = "palvelun";
-"listing.intro.request_target.rideshare" = "kyydin";
-"listing.intro.request_target.space" = "tilan";
+"listing.new.listing_type.title" = "Ilmoitustyyppi";
+"listing.new.category.title" = "Kategoria";
+"listing.new.subcategory.title" = "Alakategoria";
+"listing.new.share_type.title" = "Jakamistapa";
 
 "listing.offer_type" = "Tarjoustapa";
 "listing.offer_type.give_away" = "Annetaan";
@@ -161,13 +167,15 @@
 
 "listing.description" = "Tarkempi kuvaus";
 
-"listing.tags" = "Avainsanat";
-
 "listing.valid_until" = "Viimeinen voimassaolopäivä";
 "listing.valid_until.for_the_time_being" = "Toistaiseksi";
 
 "listing.departure_time" = "Lähtöaika";
 "listing.departure_time.repeated" = "Toistuva";
+
+"listing.price" = "Hinta";
+"listing.price.quantity.label" = "per";
+"listing.price.quantity.placeholder" = "tunti, päivä, viikko, ...";
 
 "listing.location" = "Sijainti";
 "listing.origin" = "Lähtöpaikka";
@@ -186,14 +194,10 @@
 "listing.privacy.public" = "Julkinen (myös kirjautumattomille)";
 "listing.privacy.private" = "Yksityinen (vain kirjautuneille)";
 
-"listing.subtitle.separate_with_comma" = "(erota pilkulla)";
-
-"listing.explanation" = "Mikä tämä on?";
+"listing.explanation" = "Mikä?";
 
 "listing.offered_by" = "Tarjoaja";
 "listing.requested_by" = "Pyytäjä";
-
-"listing.explanation.tags" = "Avainsanojen avulla voit auttaa muita löytämään ilmoituksesi helpommin. Jos esimerkiksi olet myymässä tuolia, sopivia avainsanoja voisivat olla &quot;huonekalut&quot; ja &quot;istuimet&quot;. Jos tarjoat apua tietokoneongelmissa, ilmoituksesi löytää parhaiten, kun lisäät siihen avainsanat &quot;apu&quot; ja &quot;tietokoneet&quot;.\n\nVoit lisätä ilmoitukselle niin monta avainsanaa kuin haluat. Erota avainsanat pilkulla.";
 
 "listing.explanation.valid_until" = "Voit asettaa ilmoituksellesi viimeisen voimassaolopäivän. Tämän päivän jälkeen ilmoitus sulkeutuu automaattisesti. Suljetut ilmoitukset eivät näy normaaleissa ilmoituslistauksissa. Voit muuttaa voimassaolopäivää koska tahansa muokkaa ilmoitusta -valikosta, ja myös avata ilmoituksen uudestaan sen sulkeuduttua, jos se on vielä ajankohtainen.\n\nJos olet tarjoamassa jotain muille Sharetriben käyttäjille, voit jättää tarjouksen voimaan toistaiseksi, jolloin se ei sulkeudu automaattisesti. Pyynnöllä sen sijaan tulee aina olla viimeinen voimassaolopäivä. Maksimiaika ilmoituksen voimassaololle on vuosi ilmoituksen luontihetkestä.";
 
@@ -201,34 +205,22 @@
 
 "profile.explanation.badges" = "Voit ansaita Sharetribessa erilaisia merkkejä tunnustuksena aktiivisesta toiminnastasi palvelussa. Merkkejä myönnetään esimerkiksi ahkerasta pyyntöjen ja tarjousten jättämisestä, toisten ilmoitusten kommentoinnista, kaikesta mahdollisesta resurssinvaihdosta (tavaroiden lainaamisesta ja myymisestä, palvelusten tekemisestä, kimppakyytien järjestämisestä ja niin edelleen) sekä ylipäänsä aktiivisesta palvelun käytöstä. Huomattakoon, että merkkeihin oikeuttavat ainoastaan sellaiset vaihdot, joista saatu palaute on ollut positiivista.\n\nNäet kunkin käyttäjän ansaitsemat merkit tämän profiilissa. Paljon merkkejä kerännyt käyttäjä on todennäköisesti aktiivinen ja myös muiden käyttäjien arvostama. Lainaa siis paljon tavaroita, tee palveluksia, kulje kimppakyydeillä ja kerää koko merkkisarja!";
 
-"listing.label_for_favor_offer" = "Pyydä palvelusta";
-"listing.label_for_favor_request" = "Tarjoa apuasi";
-"listing.label_for_space_offer_sell" = "Osta";
-"listing.label_for_space_offer_rent_out" = "Vuokraa";
-"listing.label_for_space_offer_share_for_free" = "Pyydä käyttöoikeutta";
-"listing.label_for_space_request_buy" = "Myy pyydetty tila";
-"listing.label_for_space_request_rent" = "Tarjoa vuokralle pyydetty tila";
-"listing.label_for_item_offer_lend" = "Pyydä tämä tavara lainaan";
-"listing.label_for_item_offer_rent_out" = "Vuokraa tämä tavara";
-"listing.label_for_item_offer_sell" = "Osta tämä tavara";
-"listing.label_for_item_offer_give_away" = "Pyydä tavara itsellesi";
-"listing.label_for_item_offer_trade" = "Vaihda tämä tavara";
-"listing.label_for_item_request_borrow" = "Tarjoa tämä tavara lainaan";
-"listing.label_for_item_request_rent" = "Tarjoa tämä tavara vuokralle";
-"listing.label_for_item_request_buy" = "Tarjoudu myymään tämä tavara";
-"listing.label_for_item_request_receive" = "Anna pyydetty tavara pyytäjälle";
-"listing.label_for_item_request_trade" = "Tarjoudu vaihtamaan tämä tavara";
-"listing.label_for_rideshare_offer" = "Pyydä kyytiä";
-"listing.label_for_rideshare_request" = "Tarjoa kyytiä";
+"listing.button_for_offer"                = "Pyydä tätä";
+"listing.button_for_offer_give_away"      = "Pyydä tätä";
+"listing.button_for_offer_lend"           = "Lainaa tämä";
+"listing.button_for_offer_offer"          = "Pyydä tätä";
+"listing.button_for_offer_rent_out"       = "Vuokraa tämä";
+"listing.button_for_offer_sell"           = "Osta tämä";
+"listing.button_for_offer_share_for_free" = "Pyydä tätä";
+"listing.button_for_offer_trade"          = "Vaihda tämä johonkin";
 
-"listing.title_for_favor_offer"                  = "Palvelupyyntö";
-"listing.title_for_favor_request"                = "Palvelutarjous";
-"listing.title_for_space_offer"                  = "Tilapyyntö";
-"listing.title_for_space_request"                = "Tila tarjolla";
-"listing.title_for_item_offer"                   = "Tavarapyyntö";
-"listing.title_for_item_request"                 = "Tavaratarjous";
-"listing.title_for_rideshare_offer"              = "Kyytipyyntö";
-"listing.title_for_rideshare_request"            = "Kyytitarjous";
+"listing.button_for_request"              = "Tarjoa tätä";
+"listing.button_for_request_borrow"       = "Tarjoudu lainaamaan tämä";
+"listing.button_for_request_buy"          = "Tarjoudu myymään tämä";
+"listing.button_for_request_receive"      = "Tarjoudu antamaan tämä";
+"listing.button_for_request_rent"         = "Tarjoudu vuokraamaan tämä";
+"listing.button_for_request_request"      = "Tarjoa tätä";
+"listing.button_for_request_trade"        = "Tarjoudu vaihtamaan tämä";
 
 "messaging.conversation.title" = "Keskustelu";
 "messaging.no_conversations_yet" = "Ei keskusteluja";
@@ -238,6 +230,9 @@
 "grade.as_expected" = "Vastasi odotuksia";
 "grade.slightly_less_than_expected" = "Ei täysin vastannut odotuksia";
 "grade.less_than_expected" = "Ei vastannut lainkaan odotuksia";
+
+"grade.negative" = "Negatiivinen";
+"grade.positive" = "Positiivinen";
 
 "profile.open_listings_title_format" = "%d avointa ilmoitusta";
 "profile.no_open_listings" = "Ei avoimia ilmoituksia";

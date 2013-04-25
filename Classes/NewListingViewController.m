@@ -278,7 +278,13 @@
 
 - (void)reloadFormItems
 {
-    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", self.listing.category, self.listing.type];
+    NSString *category = self.listing.category;
+    if ([category isEqual:@"accommodation"] || [category isEqual:@"space"]) {
+        category = @"housing";
+    } else if ([category isEqual:@"mealsharing"] || [category isEqual:@"activities"] || [category isEqual:@"service"]) {
+        category = @"favor";
+    }
+    NSString *propertyListName = [NSString stringWithFormat:@"form-%@-%@", category, self.listing.type];
     propertyListName = [propertyListName stringByReplacingOccurrencesOfString:@"other" withString:@"item"];
     NSMutableArray *formItems = [[FormItem formItemsFromDataArray:[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:propertyListName ofType:@"plist"]]] mutableCopy];
     if ([self.classifications[self.listing.shareType][@"price"] boolValue]) {

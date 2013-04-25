@@ -33,14 +33,18 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kSharetribeThemeColor;
+    self.view.backgroundColor = kSharetribeBackgroundColor;
     
     self.fieldsBackgroundView.layer.cornerRadius = 8;
+    self.fieldsBackgroundView.layer.borderWidth = 1;
+    self.fieldsBackgroundView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
-    [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
+    // [self.logoButton setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
+    
     [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.loginButton setBackgroundImage:[UIImage imageWithColor:[kSharetribeThemeColor colorWithAlphaComponent:0.9]] forState:UIControlStateNormal];
-    [self.loginButton setShadowWithColor:[UIColor whiteColor] opacity:0.6 radius:1 offset:CGSizeZero usingDefaultPath:YES];
+    [self.loginButton setBackgroundImage:[UIImage imageWithColor:kSharetribeThemeColor] forState:UIControlStateNormal];
+    [self.loginButton setShadowWithColor:[UIColor blackColor] opacity:0.6 radius:1 offset:CGSizeZero usingDefaultPath:YES];
+    
     [self.ouishareView setShadowWithOpacity:0.8 radius:2];
     
     usernameField.delegate = self;
@@ -50,6 +54,7 @@
     
     usernameField.placeholder = NSLocalizedString(@"placeholder.username_or_email", @"");
     passwordField.placeholder = NSLocalizedString(@"placeholder.password", @"");
+    [self.loginButton setTitle:NSLocalizedString(@"button.log_in", @"") forState:UIControlStateNormal];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogIn:) name:kNotificationForUserDidLogIn object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginConnectionDidFail:) name:kNotificationForLoginConnectionDidFail object:nil];

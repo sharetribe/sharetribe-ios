@@ -32,7 +32,9 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = kSharetribeThemeColor;
+    self.view.backgroundColor = kSharetribeBackgroundColor;
+    
+    self.promptLabel.text = NSLocalizedString(@"title.select_community", nil);
     
     [self.logoView setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1 offset:CGSizeZero usingDefaultPath:NO];
 }

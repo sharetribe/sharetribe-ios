@@ -213,7 +213,10 @@ CWL_SYNTHESIZE_SINGLETON_FOR_CLASS_WITH_ACCESSOR(SharetribeAPIClient, sharedClie
                                    onSuccess:(void (^)(NSDictionary *classifications))onSuccess
                                    onFailure:(void (^)(NSError *error))onFailure
 {
-    [self getPath:[NSString stringWithFormat:@"communities/%d/classifications", communityId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"lang"] = NSLocalizedString(@"lang", nil);
+    
+    [self getPath:[NSString stringWithFormat:@"communities/%d/classifications", communityId] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"got community classifications: %@", responseObject);
         

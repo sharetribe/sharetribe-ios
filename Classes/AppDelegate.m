@@ -41,7 +41,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    // NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     [TestFlight takeOff:@"cc6ffc3a-6fd0-4e04-bc53-d0e1ac0f5c5b"];
     // [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
@@ -50,7 +50,7 @@ void uncaughtExceptionHandler(NSException *exception)
     self.window.backgroundColor = [UIColor viewFlipsideBackgroundColor];
     
     [application setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
-    
+        
     self.offersViewController   = [[ListingsTopViewController alloc] initWithListingType:kListingTypeOffer];
     self.requestsViewController = [[ListingsTopViewController alloc] initWithListingType:kListingTypeRequest];
     self.messagesViewController = [[ConversationListViewController alloc] init];
@@ -87,13 +87,6 @@ void uncaughtExceptionHandler(NSException *exception)
     messagesNavigationController.tabBarItem.image = [UIImage imageWithIconNamed:@"mail" pointSize:24 color:[UIColor whiteColor]];
     profileNavigationController.tabBarItem.image  = [UIImage imageNamed:@"icon-kaapo"];
     
-    UIColor *tintColor = kSharetribeThemeColor;
-    offersNavigationController.navigationBar.tintColor        = tintColor;
-    requestsNavigationController.navigationBar.tintColor      = tintColor;
-    messagesNavigationController.navigationBar.tintColor      = tintColor;
-    profileNavigationController.navigationBar.tintColor       = tintColor;
-    createListingNavigationController.navigationBar.tintColor = tintColor;
-            
     NSMutableArray *tabViewControllers = [NSMutableArray arrayWithCapacity:5];
     [tabViewControllers addObject:offersNavigationController];
     [tabViewControllers addObject:requestsNavigationController];
@@ -102,9 +95,6 @@ void uncaughtExceptionHandler(NSException *exception)
     
     self.tabBarController = [[ButtonTabBarController alloc] initWithMiddleViewController:createListingNavigationController otherViewControllers:tabViewControllers];
     
-    if ([tabBarController.tabBar respondsToSelector:@selector(setTintColor:)]) {
-        tabBarController.tabBar.selectedImageTintColor = tintColor;
-    }
     tabBarController.middleButtonTitle = NSLocalizedString(@"tabs.new_listing", @"");
     tabBarController.middleButtonNormalImage = [UIImage imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor grayColor]];
     tabBarController.middleButtonHighlightedImage = [UIImage imageWithIconNamed:@"addfile" pointSize:20 color:[UIColor whiteColor]];
@@ -120,6 +110,8 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // Register for push notifications
     [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound)];
+    
+    [self refreshTintColors];
     
     return YES;
 }
@@ -241,7 +233,19 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)refreshTintColors
 {
-    UIColor *color = self.community.color1;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    UIColor *color;
+    if (self.community) {
+        color = kSharetribeThemeColor;
+    } else {
+        NSData *savedColorData = [defaults objectForKey:kDefaultsKeyForThemeColor];
+        UIColor *savedColor = [NSKeyedUnarchiver unarchiveObjectWithData:savedColorData];
+        color = savedColor ?: kSharetribeThemeColor;
+    }
+    
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    [defaults setObject:colorData forKey:kDefaultsKeyForThemeColor];
+    [defaults synchronize];
     
     if ([tabBarController.tabBar respondsToSelector:@selector(setTintColor:)]) {
         tabBarController.tabBar.selectedImageTintColor = color;
@@ -252,6 +256,12 @@ void uncaughtExceptionHandler(NSException *exception)
         }
     }
     createListingNavigationController.navigationBar.tintColor = color;
+    
+    requestsViewController.listViewer.searchBar.tintColor = [color colorWithAlphaComponent:0.7];
+    offersViewController.listViewer.searchBar.tintColor = [color colorWithAlphaComponent:0.7];
+    
+    requestsViewController.listViewer.header.backgroundView.backgroundColor = color;
+    offersViewController.listViewer.header.backgroundView.backgroundColor = color;
 }
 
 - (void)userDidLogIn:(NSNotification *)notification

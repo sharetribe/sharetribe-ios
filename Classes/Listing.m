@@ -169,6 +169,9 @@
     
     listing.priceInCents = [[NSNumber cast:dict[@"price_cents"]] integerValue];
     listing.priceCurrency = [NSString cast:dict[@"currency"]];
+    if (listing.priceCurrency == nil) {
+        listing.priceCurrency = [NSString cast:dict[@"price_currency"]];
+    }
     listing.priceQuantity = [NSString cast:dict[@"quantity"]];
     
     NSString *thumbnailURLString = [NSString cast:dict[@"thumbnail_url"]];

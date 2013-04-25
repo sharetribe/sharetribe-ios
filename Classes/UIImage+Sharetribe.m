@@ -34,6 +34,10 @@
 
 + (UIImage *)imageWithIconNamed:(NSString *)name pointSize:(CGFloat)pointSize color:(UIColor *)color insets:(UIEdgeInsets)insets
 {
+    if (name == nil) {
+        return nil;
+    }
+    
     UIFont *font = [UIFont fontWithName:@"SSPika" size:pointSize];
 
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:name];

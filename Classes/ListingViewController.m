@@ -29,6 +29,7 @@
 
 @interface ListingViewController () <UIActionSheetDelegate, UIAlertViewDelegate> {
     Listing *listing;
+    BOOL firstAppearance;
 }
 @end
 
@@ -122,7 +123,7 @@
     [self.scrollView addSubview:commentsView];
     
     [respondButton setImage:[UIImage imageNamed:@"icon-contact"] forState:UIControlStateNormal];
-    [respondButton setBackgroundImage:[[UIImage imageNamed:@"button-pattern-orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:19] forState:UIControlStateNormal];
+    [respondButton setBackgroundImage:[[UIImage imageWithColor:kSharetribeThemeColor] stretchableImageWithLeftCapWidth:5 topCapHeight:19] forState:UIControlStateNormal];
     [respondButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [respondButton setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.7] forState:UIControlStateNormal];
     respondButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -154,15 +155,20 @@
     if (listing == nil) {
         [[SharetribeAPIClient sharedClient] getListingWithId:listingId];
     }
+    
+    firstAppearance = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self reloadData];    
+    if (firstAppearance) {
+        firstAppearance = NO;
+        [self reloadData];
+    }
 }
-    
+
 - (void)reloadData
 {
     NSString *respondTextKey;
@@ -177,7 +183,7 @@
     
     BOOL messagingDisabled = (listing == nil) || (listing.author.isCurrentUser);  // one cannot respond to oneself
     respondButton.hidden = messagingDisabled;
-    messageButton.hidden = messagingDisabled;
+    // messageButton.hidden = messagingDisabled;
     
     if (listing.author.isCurrentUser) {
         self.navigationItem.rightBarButtonItem = nil; // [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed)];
@@ -428,11 +434,10 @@
     ConversationViewController *composer = [[ConversationViewController alloc] init];
     composer.recipient = listing.author;
     composer.listing = (isDirectReply) ? listing : nil;
-    composer.inModalComposerMode = YES;
+    // composer.inModalComposerMode = YES;
     composer.isDirectReplyToListing = isDirectReply;
     
-    UINavigationController *composerNavigationController = [[UINavigationController alloc] initWithRootViewController:composer];
-    [self presentViewController:composerNavigationController animated:YES completion:nil];
+    [self.navigationController pushViewController:composer animated:YES];
 
 }
 

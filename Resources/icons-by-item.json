@@ -30,5 +30,8 @@
     "clothes": "hanger",
     "garden": "tree",
     "travel": "departure",
-    "other": "file"
+    "other": "file",
+    "mealsharing": "sidedish",
+    "activities": "usergroup",
+    "accommodation": "lodging"
 }

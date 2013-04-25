@@ -44,6 +44,7 @@
 
 #define kDefaultsKeyForViewChoice           @"view choice"
 #define kDefaultsKeyForDeviceToken          @"device token"
+#define kDefaultsKeyForThemeColor           @"theme color"
 
 // Miscellaneous
 

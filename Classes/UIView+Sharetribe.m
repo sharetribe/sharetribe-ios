@@ -102,6 +102,10 @@
 
 - (void)setIconWithName:(NSString *)name
 {
+    if (name == nil) {
+        return;
+    }
+    
     UILabel *label = nil;
     UIButton *button = nil;
     if ([self isKindOfClass:UIButton.class]) {
@@ -113,7 +117,7 @@
     UIFont *font = [UIFont fontWithName:@"SSPika" size:label.font.pointSize];
     label.font = font;
     
-    NSMutableAttributedString *string = (name) ? [[NSMutableAttributedString alloc] initWithString:name] : nil;
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:name];
     [string setAttributes:@{(NSString *) kCTLigatureAttributeName: @(2)}
                     range:NSMakeRange(0, string.length)];
     
@@ -121,7 +125,7 @@
         [button setAttributedTitle:string forState:UIControlStateNormal];
     } else {
         label.attributedText = string;
-    }    
+    }
 }
 
 @end
